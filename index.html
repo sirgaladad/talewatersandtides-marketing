@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tale Waters &amp; Tides — Arkansas fishing intelligence. Real-time water data, spawn tracking, and fishing guides powered by live USGS, NWS, and USACE data." />
+  <meta name="theme-color" content="#0d2137" />
+  <title>Tale Waters &amp; Tides — Arkansas Fishing Intelligence</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- GA4 Analytics — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+
+    // GA4 event helpers
+    function trackEvent(name, params) {
+      if (typeof gtag === 'function') gtag('event', name, params || {});
+    }
+  </script>
+
+  <style>
+    /* ── Reset & Tokens ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0d2137;
+      --navy-mid:   #132d48;
+      --navy-light: #1a3a52;
+      --teal:       #2aa4b8;
+      --teal-light: #4ec9db;
+      --gold:       #f0a500;
+      --white:      #ffffff;
+      --gray-100:   #f3f6f9;
+      --gray-300:   #c4cdd6;
+      --gray-500:   #7a8fa3;
+      --green:      #27ae60;
+      --red:        #e74c3c;
+      --radius:     12px;
+      --radius-sm:  8px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.3);
+      --font-body:  'Inter', system-ui, sans-serif;
+      --font-head:  'Space Grotesk', system-ui, sans-serif;
+      --touch:      44px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: var(--teal-light); text-decoration: none; }
+    a:hover, a:focus { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--teal-light); outline-offset: 3px; border-radius: 3px; }
+
+    /* ── Skip Link ───────────────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -9999px;
+      left: 1rem;
+      background: var(--teal);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      z-index: 9999;
+      font-weight: 600;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ── Header / Nav ────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 1rem;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .brand-name span { color: var(--teal-light); }
+
+    /* Desktop nav */
+    .main-nav { display: none; }
+
+    @media (min-width: 768px) {
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        list-style: none;
+      }
+
+      .main-nav a {
+        color: var(--gray-300);
+        font-size: 0.9rem;
+        font-weight: 500;
+        min-height: var(--touch);
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+      }
+
+      .main-nav a:hover, .main-nav a:focus { color: var(--white); text-decoration: none; }
+    }
+
+    /* Mobile menu toggle */
+    .menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--touch);
+      height: var(--touch);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--white);
+      font-size: 1.3rem;
+      transition: background 0.2s;
+    }
+
+    .menu-btn:hover { background: rgba(255,255,255,0.08); }
+
+    @media (min-width: 768px) { .menu-btn { display: none; } }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+      display: none;
+      flex-direction: column;
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem;
+      gap: 0.25rem;
+    }
+
+    .mobile-drawer.open { display: flex; }
+
+    .mobile-drawer a {
+      color: var(--gray-300);
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      min-height: var(--touch);
+      display: flex;
+      align-items: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .mobile-drawer a:hover { background: rgba(255,255,255,0.06); color: var(--white); text-decoration: none; }
+
+    /* PFG Banner */
+    .pfg-banner {
+      background: linear-gradient(90deg, var(--teal) 0%, #1a7a8f 100%);
+      padding: 0.6rem 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .pfg-banner a {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    .pfg-banner a:hover { text-decoration: none; }
+
+    /* ── Layout helpers ──────────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    section { padding: 3rem 0; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-body {
+      color: var(--gray-300);
+      font-size: 1rem;
+      max-width: 600px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────── */
+    .hero {
+      padding: 3rem 0 2rem;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 2rem 0 3rem;
+      }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(42,164,184,0.15);
+      border: 1px solid rgba(42,164,184,0.3);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal-light);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span { color: var(--teal-light); }
+
+    .hero-desc {
+      color: var(--gray-300);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: var(--touch);
+      padding: 0 1.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: filter 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .btn:hover { filter: brightness(1.12); text-decoration: none; }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary { background: var(--teal); color: var(--white); }
+    .btn-outline  { background: transparent; border: 1.5px solid var(--teal); color: var(--teal-light); }
+
+    .hero-image-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    /* ── Live Water Status Dashboard ─────────────────────────────── */
+    .dashboard { background: var(--navy-mid); }
+
+    .status-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 600px)  { .status-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px)  { .status-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .status-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--teal);
+    }
+
+    .status-card.warning::before  { background: var(--gold); }
+    .status-card.critical::before { background: var(--red); }
+    .status-card.good::before     { background: var(--green); }
+
+    .status-source {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 0.5rem;
+    }
+
+    .status-lake {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .status-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.875rem;
+    }
+
+    .status-metric:last-child { border-bottom: none; }
+    .status-metric-label { color: var(--gray-500); }
+    .status-metric-value { font-weight: 600; color: var(--white); }
+    .status-metric-value.hot  { color: var(--gold); }
+    .status-metric-value.cool { color: var(--teal-light); }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      margin-top: 0.75rem;
+      background: rgba(42,164,184,0.15);
+      color: var(--teal-light);
+      border: 1px solid rgba(42,164,184,0.25);
+    }
+
+    .status-badge.stub {
+      background: rgba(240,165,0,0.12);
+      color: var(--gold);
+      border-color: rgba(240,165,0,0.25);
+    }
+
+    .data-notice {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(42,164,184,0.07);
+      border: 1px solid rgba(42,164,184,0.2);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--gray-300);
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .data-notice-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+    /* ── Features ────────────────────────────────────────────────── */
+    .features { background: var(--navy); }
+
+    .features-grid {
+      display: grid;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 600px)  { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px)  { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .feature-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--gray-300);
+      line-height: 1.5;
+    }
+
+    /* ── App Screenshot / PFG Integration ───────────────────────── */
+    .pfg-section { background: var(--navy-mid); }
+
+    .pfg-grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 900px) { .pfg-grid { grid-template-columns: 1fr 1fr; } }
+
+    .pfg-screenshot-wrap {
+      max-width: 320px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .pfg-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pfg-feature-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .pfg-feature-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .pfg-feature-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .pfg-feature-body {
+      font-size: 0.85rem;
+      color: var(--gray-300);
+    }
+
+    /* ── Data Pipeline Section ───────────────────────────────────── */
+    .pipeline { background: var(--navy); }
+
+    .pipeline-diagram {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--gray-300);
+      overflow-x: auto;
+      margin-top: 2rem;
+      line-height: 2;
+    }
+
+    .pipeline-diagram .highlight { color: var(--teal-light); font-weight: bold; }
+    .pipeline-diagram .comment   { color: var(--gray-500); }
+
+    .sources-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 600px) { .sources-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .source-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .source-logo {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .source-name {
+      font-family: var(--font-head);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .source-desc {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    .source-status {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(240,165,0,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(240,165,0,0.25);
+    }
+
+    /* ── FAQ ─────────────────────────────────────────────────────── */
+    .faq { background: var(--navy-mid); }
+
+    .faq-list {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 720px;
+    }
+
+    details {
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: var(--touch);
+      gap: 1rem;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--teal-light);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::after { transform: rotate(45deg); }
+
+    .faq-answer {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.9rem;
+      color: var(--gray-300);
+      line-height: 1.6;
+    }
+
+    /* ── Brand Section ───────────────────────────────────────────── */
+    .brand-section { background: var(--navy); }
+
+    .brand-image-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-top: 2rem;
+      max-width: 860px;
+    }
+
+    /* ── CTA ─────────────────────────────────────────────────────── */
+    .cta {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .cta .section-title { max-width: 640px; margin: 0 auto 1rem; }
+    .cta .section-body  { max-width: 500px; margin: 0 auto 2rem; }
+    .cta .btn-row       { justify-content: center; }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 2.5rem 1rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-brand-name span { color: var(--teal-light); }
+
+    .footer-desc {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-col-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-300);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--teal-light); text-decoration: none; }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    /* ── Utilities ───────────────────────────────────────────────── */
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- PFG Integration Banner -->
+  <div class="pfg-banner" role="banner" aria-label="Partner app">
+    🎣 Powered by live data from
+    <a href="https://pocketfishingguide.com" target="_blank" rel="noopener noreferrer"
+       onclick="trackEvent('pfg_banner_click', {location: 'top_banner'})">
+      Pocket Fishing Guide ↗
+    </a>
+    — real-time Arkansas water intelligence
+  </div>
+
+  <!-- Header -->
+  <header role="banner">
+    <div class="header-inner">
+      <a href="#" class="brand" aria-label="Tale Waters and Tides home">
+        <div class="brand-icon" aria-hidden="true">🐋</div>
+        <div class="brand-name">Tale <span>Waters</span> &amp; Tides</div>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="main-nav" role="list">
+          <li><a href="#dashboard"  onclick="trackEvent('nav_click', {item:'dashboard'})">Water Status</a></li>
+          <li><a href="#features"   onclick="trackEvent('nav_click', {item:'features'})">Features</a></li>
+          <li><a href="#pfg"        onclick="trackEvent('nav_click', {item:'pfg'})">PFG App</a></li>
+          <li><a href="#pipeline"   onclick="trackEvent('nav_click', {item:'pipeline'})">Data Pipeline</a></li>
+          <li><a href="#faq"        onclick="trackEvent('nav_click', {item:'faq'})">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileDrawer"
+              aria-label="Open menu" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <nav id="mobileDrawer" class="mobile-drawer" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="#dashboard" onclick="closeMenu(); trackEvent('nav_click', {item:'dashboard', source:'mobile'})">📊 Water Status</a>
+      <a href="#features"  onclick="closeMenu(); trackEvent('nav_click', {item:'features',  source:'mobile'})">✨ Features</a>
+      <a href="#pfg"       onclick="closeMenu(); trackEvent('nav_click', {item:'pfg',       source:'mobile'})">🎣 PFG App</a>
+      <a href="#pipeline"  onclick="closeMenu(); trackEvent('nav_click', {item:'pipeline',  source:'mobile'})">⚡ Data Pipeline</a>
+      <a href="#faq"       onclick="closeMenu(); trackEvent('nav_click', {item:'faq',        source:'mobile'})">❓ FAQ</a>
+      <a href="https://pocketfishingguide.com" target="_blank" rel="noopener noreferrer"
+         onclick="trackEvent('pfg_click', {source:'mobile_menu'})">🌐 Pocket Fishing Guide ↗</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <!-- ── Hero ───────────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-eyebrow">
+              <span aria-hidden="true">🐟</span> Arkansas Fishing Intelligence
+            </div>
+            <h1 class="hero-title" id="hero-title">
+              Know the Water.<br />
+              <span>Catch More Fish.</span>
+            </h1>
+            <p class="hero-desc">
+              Tale Waters &amp; Tides brings real-time USGS water temperatures, NWS forecasts,
+              and spawn-phase intelligence to Arkansas anglers — right on your phone, no app install needed.
+            </p>
+            <div class="btn-row">
+              <a href="https://pocketfishingguide.com" class="btn btn-primary"
+                 target="_blank" rel="noopener noreferrer"
+                 onclick="trackEvent('cta_click', {label:'launch_app', location:'hero'})"
+                 aria-label="Launch Pocket Fishing Guide app (opens in new tab)">
+                🎣 Launch the App
+              </a>
+              <a href="#dashboard" class="btn btn-outline"
+                 onclick="trackEvent('cta_click', {label:'view_water_status', location:'hero'})">
+                📊 View Water Status
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-image-wrap">
+            <img src="https://github.com/user-attachments/assets/4ed28c5b-6459-49b2-aaf5-870235613947"
+                 alt="Tale Waters and Tides branding — branded truck and building with whale tail logo"
+                 loading="eager"
+                 width="800" height="534" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Live Water Status Dashboard ───────────────────────────── -->
+    <section id="dashboard" class="dashboard" aria-labelledby="dashboard-title">
+      <div class="container">
+        <p class="section-label">Live Data · Updated Every 6 Hours</p>
+        <h2 class="section-title" id="dashboard-title">Arkansas Water Status</h2>
+        <p class="section-body">
+          Real-time conditions pulled from USGS Water Services, NWS forecasts, and USACE lake levels.
+          Data pipeline stubs are live — full integration coming soon.
+        </p>
+
+        <div class="status-grid" id="statusGrid" role="list">
+          <!-- Cards injected by JS below; static fallback shown if JS disabled -->
+          <noscript>
+            <p style="color:var(--gray-300); margin-top:1rem;">
+              Enable JavaScript to see live water status cards.
+            </p>
+          </noscript>
+        </div>
+
+        <div class="data-notice" role="note">
+          <span class="data-notice-icon" aria-hidden="true">ℹ️</span>
+          <span>
+            Live USGS/NWS/USACE data integration is in progress. Values shown are from the
+            <code>data/water-status.json</code> snapshot. See
+            <a href="#pipeline">Data Pipeline</a> for integration architecture.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features ───────────────────────────────────────────────── -->
+    <section id="features" class="features" aria-labelledby="features-title">
+      <div class="container">
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title" id="features-title">Built for Anglers on the Water</h2>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🌡️</div>
+            <h3 class="feature-title">Live Water Temperature</h3>
+            <p class="feature-desc">
+              Real-time temps from USGS sensor networks at lakes, rivers, and tailwaters
+              across Arkansas. Know if the spawn is on before you launch.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔥</div>
+            <h3 class="feature-title">Spawn Phase Tracking</h3>
+            <p class="feature-desc">
+              Temperature-driven spawn phases for White Bass and Crappie —
+              Staging, Spawn, and Peak Run — with science-backed lure recommendations.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⛅</div>
+            <h3 class="feature-title">7-Day NWS Forecasts</h3>
+            <p class="feature-desc">
+              National Weather Service 7-day forecasts integrated per water body
+              so you can plan the ideal day to be on the water.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🗺️</div>
+            <h3 class="feature-title">Access Point Directory</h3>
+            <p class="feature-desc">
+              Boat ramps, GPS coordinates, seasonal restrictions, and crowd patterns
+              for 39 Arkansas water bodies — lakes, rivers, tailwaters, and streams.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📱</div>
+            <h3 class="feature-title">Mobile-First Design</h3>
+            <p class="feature-desc">
+              Optimized for phones on the water. No app install — works instantly in your
+              browser with offline-capable data snapshots.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🎯</div>
+            <h3 class="feature-title">Condition-Ranked Lures</h3>
+            <p class="feature-desc">
+              Top-5 lures scored by water clarity, flow rate, and temperature for each
+              species and spawn phase. Includes live bait toggle and How-To links.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PFG App Integration ─────────────────────────────────────── -->
+    <section id="pfg" class="pfg-section" aria-labelledby="pfg-title">
+      <div class="container">
+        <p class="section-label">Partner App · Live Now</p>
+        <h2 class="section-title" id="pfg-title">Pocket Fishing Guide</h2>
+        <p class="section-body">
+          The full fishing intelligence platform is live today at
+          <a href="https://pocketfishingguide.com" target="_blank" rel="noopener noreferrer"
+             onclick="trackEvent('pfg_click', {location:'pfg_section'})">pocketfishingguide.com</a>.
+          Tale Waters &amp; Tides is powered by the same real-time data engine.
+        </p>
+
+        <div class="pfg-grid">
+          <div class="pfg-screenshot-wrap">
+            <img src="https://github.com/user-attachments/assets/814f7cd8-2aa5-4d6b-b177-9cffa2d3db3d"
+                 alt="Pocket Fishing Guide app screenshot showing live water temperature 57.2°F for Beaver Lake with spawn phase tracker and 7-day temperature trend chart"
+                 loading="lazy"
+                 width="390" height="844" />
+          </div>
+
+          <div class="pfg-features">
+            <div class="pfg-feature-row">
+              <div class="pfg-feature-icon" aria-hidden="true">📡</div>
+              <div>
+                <div class="pfg-feature-title">Live USGS Sensor Data</div>
+                <p class="pfg-feature-body">
+                  Water temperature pulled from USGS parameter 00010 across 3+ monitoring
+                  stations per lake. Updates every 15 minutes.
+                </p>
+              </div>
+            </div>
+
+            <div class="pfg-feature-row">
+              <div class="pfg-feature-icon" aria-hidden="true">📊</div>
+              <div>
+                <div class="pfg-feature-title">Spawn Temperature Tracker</div>
+                <p class="pfg-feature-body">
+                  Visual slider from 40°F Staging through 55°F Peak Run — see exactly
+                  where your lake sits on the spawn timeline.
+                </p>
+              </div>
+            </div>
+
+            <div class="pfg-feature-row">
+              <div class="pfg-feature-icon" aria-hidden="true">📈</div>
+              <div>
+                <div class="pfg-feature-title">7-Day Water Temp Trend</div>
+                <p class="pfg-feature-body">
+                  Bar chart trend with warming/cooling annotation so you can see if
+                  the spawn window is opening or closing.
+                </p>
+              </div>
+            </div>
+
+            <div class="pfg-feature-row">
+              <div class="pfg-feature-icon" aria-hidden="true">🏞️</div>
+              <div>
+                <div class="pfg-feature-title">39 Arkansas Waters</div>
+                <p class="pfg-feature-body">
+                  Beaver Lake, Greers Ferry, White River, Maumelle, and 35 more — lakes,
+                  rivers, tailwaters, and streams across the state.
+                </p>
+              </div>
+            </div>
+
+            <a href="https://pocketfishingguide.com" class="btn btn-primary"
+               target="_blank" rel="noopener noreferrer"
+               style="margin-top:0.5rem; max-width:260px;"
+               onclick="trackEvent('pfg_click', {location:'pfg_section_cta'})"
+               aria-label="Open Pocket Fishing Guide app (opens in new tab)">
+              Open the App ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Data Pipeline ───────────────────────────────────────────── -->
+    <section id="pipeline" class="pipeline" aria-labelledby="pipeline-title">
+      <div class="container">
+        <p class="section-label">Architecture · Open Source</p>
+        <h2 class="section-title" id="pipeline-title">Data Pipeline</h2>
+        <p class="section-body">
+          Three free public APIs feed the dashboard — no API keys required.
+          GitHub Actions fetches and snapshots data every 6 hours so the site renders
+          instantly even before API calls resolve.
+        </p>
+
+        <div class="pipeline-diagram" role="img" aria-label="Data pipeline diagram showing flow from USGS, NWS, and USACE APIs through GitHub Actions every 6 hours into JSON snapshot files, then into the HTML page, deployed on GitHub Pages">
+<span class="comment"># Data pipeline architecture — mirrors Pocket Fishing Guide</span>
+
+<span class="highlight">USGS Water Services</span>  →  water temp, flow rate, gage height
+<span class="highlight">NWS (Nat. Weather Service)</span>  →  7-day forecasts per water body
+<span class="highlight">USACE (Army Corps)</span>  →  dam lake level snapshots
+         ↓
+<span class="highlight">GitHub Actions</span> (every 6 hrs · <span class="comment">scripts/fetch_water_data.js</span>)
+         ↓
+<span class="highlight">data/water-status.json</span>  ← JSON snapshot (stub, integration in progress)
+         ↓
+<span class="highlight">index.html</span>  →  rendered dashboard
+         ↓
+<span class="highlight">GitHub Pages</span>  →  talewatersandtides.com
+        </div>
+
+        <div class="sources-grid">
+          <div class="source-card">
+            <div class="source-logo" aria-hidden="true">🌊</div>
+            <div class="source-name">USGS Water Services</div>
+            <p class="source-desc">
+              Real-time stream gauge data — temperature, flow rate, gage height.
+              Free, no API key required.
+            </p>
+            <span class="source-status">Stub · Integration Planned</span>
+          </div>
+
+          <div class="source-card">
+            <div class="source-logo" aria-hidden="true">⛅</div>
+            <div class="source-name">NWS Forecast API</div>
+            <p class="source-desc">
+              National Weather Service 7-day point forecasts per GPS coordinate.
+              Free, no API key required.
+            </p>
+            <span class="source-status">Stub · Integration Planned</span>
+          </div>
+
+          <div class="source-card">
+            <div class="source-logo" aria-hidden="true">🏗️</div>
+            <div class="source-name">USACE CWMS API</div>
+            <p class="source-desc">
+              Army Corps of Engineers lake level and dam release data.
+              Free, no API key required.
+            </p>
+            <span class="source-status">Stub · Integration Planned</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ────────────────────────────────────────────────────── -->
+    <section id="faq" class="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <p class="section-label">Questions</p>
+        <h2 class="section-title" id="faq-title">Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'what_is_twt'})">
+              What is Tale Waters &amp; Tides?
+            </summary>
+            <div class="faq-answer">
+              Tale Waters &amp; Tides is an Arkansas fishing intelligence platform that combines
+              real-time USGS water data, NWS weather forecasts, and USACE lake levels to give
+              anglers the most accurate picture of current fishing conditions. It's free, mobile-first,
+              and requires no app installation.
+            </div>
+          </details>
+
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'how_does_data_work'})">
+              Where does the water data come from?
+            </summary>
+            <div class="faq-answer">
+              Live data is sourced from three free public APIs: USGS Water Services (stream gauge
+              temperatures, flow rates, gage heights), the National Weather Service (7-day forecasts),
+              and the US Army Corps of Engineers (lake level and dam release data). No API keys are
+              required. Data is also pre-fetched every 6 hours by GitHub Actions and stored as JSON
+              snapshots so the site renders immediately.
+            </div>
+          </details>
+
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'which_waters'})">
+              Which Arkansas waters are covered?
+            </summary>
+            <div class="faq-answer">
+              The platform covers 39 Arkansas water bodies including Beaver Lake, Greers Ferry Lake,
+              Bull Shoals Lake, Lake Maumelle, Lake Ouachita, DeGray Lake, the White River, the Buffalo
+              National River, and 31 more lakes, rivers, tailwaters, and streams across the state.
+            </div>
+          </details>
+
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'pfg_relationship'})">
+              What is the relationship with Pocket Fishing Guide?
+            </summary>
+            <div class="faq-answer">
+              <a href="https://pocketfishingguide.com" target="_blank" rel="noopener noreferrer">
+                Pocket Fishing Guide
+              </a> is the live app that powers Tale Waters &amp; Tides data intelligence.
+              This marketing site documents the platform, showcases features, and will serve as the home
+              for the full product suite. The data pipeline, architecture, and best practices are borrowed
+              directly from PFG.
+            </div>
+          </details>
+
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'deploy_info'})">
+              How is the site deployed?
+            </summary>
+            <div class="faq-answer">
+              The site is deployed as a static GitHub Pages site with automatic deployment on every push
+              to the <code>main</code> branch via GitHub Actions. See
+              <a href="docs/DEPLOY-LIVE-SITE.md">docs/DEPLOY-LIVE-SITE.md</a> for the full deployment guide.
+              No build step, no npm, no server required.
+            </div>
+          </details>
+
+          <details>
+            <summary onclick="trackEvent('faq_opened', {question:'contribute'})">
+              How can I contribute?
+            </summary>
+            <div class="faq-answer">
+              Local fishing knowledge is as valuable as code. File a bug report, request a feature,
+              share local intel, or submit a PR on
+              <a href="https://github.com/sirgaladad/talewatersandtides-marketing"
+                 target="_blank" rel="noopener noreferrer">GitHub ↗</a>.
+              See the README for contribution guidelines.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Brand Visual Section ────────────────────────────────────── -->
+    <section class="brand-section" aria-labelledby="brand-title">
+      <div class="container">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title" id="brand-title">Tale Waters &amp; Tides</h2>
+        <p class="section-body">
+          Arkansas-born fishing intelligence for anglers who take the water seriously.
+          From tailwaters to trophy lakes — we bring the data to you.
+        </p>
+        <div class="brand-image-wrap">
+          <img src="https://github.com/user-attachments/assets/a094a081-c09e-4347-8fc4-c31136406cc8"
+               alt="Tale Waters and Tides branded building and Ford F-250 truck featuring the whale tail logo and company name, with a boat visible in the garage"
+               loading="lazy"
+               width="1320" height="880" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────────────── -->
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="container">
+        <p class="section-label">Ready to Fish Smarter?</p>
+        <h2 class="section-title" id="cta-title">Live Water Intelligence, Right in Your Pocket</h2>
+        <p class="section-body">
+          The Pocket Fishing Guide app is live now — free, no install, instant water data
+          for 39 Arkansas waters.
+        </p>
+        <div class="btn-row">
+          <a href="https://pocketfishingguide.com" class="btn btn-primary"
+             target="_blank" rel="noopener noreferrer"
+             onclick="trackEvent('cta_click', {label:'launch_app', location:'cta_section'})"
+             aria-label="Launch Pocket Fishing Guide app (opens in new tab)">
+            🎣 Launch Pocket Fishing Guide
+          </a>
+          <a href="https://github.com/sirgaladad/talewatersandtides-marketing"
+             class="btn btn-outline"
+             target="_blank" rel="noopener noreferrer"
+             onclick="trackEvent('github_click', {location:'cta_section'})"
+             aria-label="View source on GitHub (opens in new tab)">
+            ⭐ View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">Tale <span>Waters</span> &amp; Tides</div>
+        <p class="footer-desc">
+          Arkansas fishing intelligence platform. Real-time USGS, NWS, and USACE data
+          for anglers across 39 water bodies.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links" role="list">
+          <li><a href="#dashboard">Water Status</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pfg">PFG App</a></li>
+          <li><a href="#pipeline">Data Pipeline</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <ul class="footer-links" role="list">
+          <li>
+            <a href="https://pocketfishingguide.com" target="_blank" rel="noopener noreferrer"
+               onclick="trackEvent('footer_click', {item:'pfg_app'})">Pocket Fishing Guide ↗</a>
+          </li>
+          <li>
+            <a href="https://github.com/sirgaladad/talewatersandtides-marketing"
+               target="_blank" rel="noopener noreferrer"
+               onclick="trackEvent('footer_click', {item:'github'})">GitHub Repo ↗</a>
+          </li>
+          <li>
+            <a href="docs/DEPLOY-LIVE-SITE.md"
+               onclick="trackEvent('footer_click', {item:'deploy_docs'})">Deploy Docs</a>
+          </li>
+          <li>
+            <a href="ROADMAP.md"
+               onclick="trackEvent('footer_click', {item:'roadmap'})">Roadmap</a>
+          </li>
+          <li>
+            <a href="https://ko-fi.com/coreytheideaguy" target="_blank" rel="noopener noreferrer"
+               onclick="trackEvent('footer_click', {item:'kofi'})">Support on Ko-fi ↗</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Tale Waters &amp; Tides. MIT License.</span>
+      <span>
+        Data: <a href="https://waterservices.usgs.gov/" target="_blank" rel="noopener noreferrer">USGS</a> ·
+        <a href="https://api.weather.gov/" target="_blank" rel="noopener noreferrer">NWS</a> ·
+        <a href="https://www.swl.usace.army.mil/" target="_blank" rel="noopener noreferrer">USACE</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ──────────────────────────────────────────────────── -->
+  <script>
+    // ── Utilities ──────────────────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Mobile menu ────────────────────────────────────────────────
+    function toggleMenu() {
+      var btn    = document.getElementById('menuBtn');
+      var drawer = document.getElementById('mobileDrawer');
+      var open   = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      drawer.setAttribute('aria-hidden',  open ? 'false' : 'true');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    function closeMenu() {
+      var btn    = document.getElementById('menuBtn');
+      var drawer = document.getElementById('mobileDrawer');
+      drawer.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      btn.setAttribute('aria-label', 'Open menu');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      var btn    = document.getElementById('menuBtn');
+      var drawer = document.getElementById('mobileDrawer');
+      if (!btn.contains(e.target) && !drawer.contains(e.target)) closeMenu();
+    });
+
+    // ── Water Status Dashboard ─────────────────────────────────────
+    // Loads from data/water-status.json snapshot; falls back to stub data
+    var STUB_STATUS = [
+      {
+        lake: 'Beaver Lake',
+        source: 'USGS · Stub',
+        phase: 'warning',
+        metrics: [
+          { label: 'Water Temp', value: '57.2°F', cls: 'hot' },
+          { label: 'Spawn Phase', value: '🔥 Peak Spawn' },
+          { label: 'Flow Rate', value: 'N/A (lake)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      },
+      {
+        lake: 'Greers Ferry Lake',
+        source: 'USGS · Stub',
+        phase: 'good',
+        metrics: [
+          { label: 'Water Temp', value: '54.1°F', cls: 'cool' },
+          { label: 'Spawn Phase', value: '🌀 Staging' },
+          { label: 'Lake Level', value: 'N/A (stub)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      },
+      {
+        lake: 'White River',
+        source: 'USGS · Stub',
+        phase: 'good',
+        metrics: [
+          { label: 'Water Temp', value: '51.8°F', cls: 'cool' },
+          { label: 'Spawn Phase', value: '🌊 Pre-Spawn' },
+          { label: 'Flow Rate', value: 'N/A (stub)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      },
+      {
+        lake: 'Bull Shoals Lake',
+        source: 'USGS · Stub',
+        phase: '',
+        metrics: [
+          { label: 'Water Temp', value: '49.3°F', cls: '' },
+          { label: 'Spawn Phase', value: '❄️ Pre-Stage' },
+          { label: 'Lake Level', value: 'N/A (stub)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      },
+      {
+        lake: 'Lake Maumelle',
+        source: 'USGS · Stub',
+        phase: '',
+        metrics: [
+          { label: 'Water Temp', value: '56.0°F', cls: 'hot' },
+          { label: 'Spawn Phase', value: '🌀 Staging' },
+          { label: 'Lake Level', value: 'N/A (stub)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      },
+      {
+        lake: 'Lake Ouachita',
+        source: 'USGS · Stub',
+        phase: '',
+        metrics: [
+          { label: 'Water Temp', value: '52.4°F', cls: '' },
+          { label: 'Spawn Phase', value: '🌊 Pre-Spawn' },
+          { label: 'Lake Level', value: 'N/A (stub)' },
+          { label: 'Updated', value: 'Snapshot' }
+        ],
+        badge: { text: '⚡ Stub Data', type: 'stub' }
+      }
+    ];
+
+    function renderStatusCards(waters) {
+      var grid = document.getElementById('statusGrid');
+      grid.innerHTML = '';
+      waters.forEach(function(w) {
+        var metrics = w.metrics.map(function(m) {
+          return '<div class="status-metric">'
+            + '<span class="status-metric-label">' + m.label + '</span>'
+            + '<span class="status-metric-value' + (m.cls ? ' ' + m.cls : '') + '">' + m.value + '</span>'
+            + '</div>';
+        }).join('');
+
+        var badge = w.badge
+          ? '<span class="status-badge ' + (w.badge.type || '') + '">' + w.badge.text + '</span>'
+          : '';
+
+        var card = document.createElement('div');
+        card.className = 'status-card' + (w.phase ? ' ' + w.phase : '');
+        card.setAttribute('role', 'listitem');
+        card.innerHTML = '<div class="status-source">' + w.source + '</div>'
+          + '<div class="status-lake">' + w.lake + '</div>'
+          + metrics
+          + badge;
+        grid.appendChild(card);
+      });
+    }
+
+    // Try loading real snapshot; fall back to stub
+    fetch('data/water-status.json')
+      .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(data) {
+        trackEvent('data_loaded', { source: 'json_snapshot' });
+        renderStatusCards(data.waters || STUB_STATUS);
+      })
+      .catch(function() {
+        renderStatusCards(STUB_STATUS);
+      });
+  </script>
+
+</body>
+</html>

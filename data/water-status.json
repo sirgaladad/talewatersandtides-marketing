@@ -1,0 +1,93 @@
+{
+  "_comment": "Data snapshot for Tale Waters & Tides water status dashboard. Populated by scripts/fetch_water_data.js via GitHub Actions every 6 hours. Integration with live USGS/NWS/USACE APIs is in progress — see docs/DEPLOY-LIVE-SITE.md for pipeline architecture.",
+  "_schema": "1.0.0",
+  "_updated": "2026-03-17T00:00:00Z",
+  "_source": "stub",
+  "waters": [
+    {
+      "lake": "Beaver Lake",
+      "usgs_gauge": "07049000",
+      "source": "USGS · 07049000",
+      "phase": "warning",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Flow Rate", "value": "N/A (lake)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    },
+    {
+      "lake": "Greers Ferry Lake",
+      "usgs_gauge": "07075900",
+      "source": "USGS · 07075900",
+      "phase": "good",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Lake Level", "value": "N/A (stub)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    },
+    {
+      "lake": "White River",
+      "usgs_gauge": "07074500",
+      "source": "USGS · 07074500",
+      "phase": "good",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Flow Rate", "value": "N/A (stub)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    },
+    {
+      "lake": "Bull Shoals Lake",
+      "usgs_gauge": "07054500",
+      "source": "USGS · 07054500",
+      "phase": "",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Lake Level", "value": "N/A (stub)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    },
+    {
+      "lake": "Lake Maumelle",
+      "usgs_gauge": "072632995",
+      "source": "USGS · 072632995",
+      "phase": "",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Lake Level", "value": "N/A (stub)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    },
+    {
+      "lake": "Lake Ouachita",
+      "usgs_gauge": "07357000",
+      "source": "USGS · 07357000",
+      "phase": "",
+      "metrics": [
+        { "label": "Water Temp", "value": "--°F", "cls": "" },
+        { "label": "Spawn Phase", "value": "— Pending data", "cls": "" },
+        { "label": "Lake Level", "value": "N/A (stub)", "cls": "" },
+        { "label": "Updated", "value": "Stub", "cls": "" }
+      ],
+      "badge": { "text": "⚡ Stub Data", "type": "stub" }
+    }
+  ],
+  "pipeline": {
+    "usgs_endpoint": "https://waterservices.usgs.gov/nwis/iv/?format=json&parameterCd=00010,00060,00065",
+    "nws_endpoint":  "https://api.weather.gov/points/{lat},{lon}",
+    "usace_endpoint": "https://water.usace.army.mil/",
+    "fetch_script":  "scripts/fetch_water_data.js",
+    "schedule":      "every 6 hours via GitHub Actions"
+  }
+}
