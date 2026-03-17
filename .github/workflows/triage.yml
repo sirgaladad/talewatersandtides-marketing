@@ -1,0 +1,109 @@
+name: Green Team AI Triage
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  triage:
+    if: github.event.label.name == 'user-feedback'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Classify and Triage Issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title || '';
+            const body = issue.body || '';
+            const text = (title + ' ' + body).toLowerCase();
+
+            let prefix = '[Feedback]';
+            let classification = 'General Feedback';
+            let impact = 'Low';
+            let effort = 'S';
+            let recommendation = 'Backlog';
+
+            if (/broken|crash|error|not working|bug|fail|404|blank|missing/.test(text)) {
+              prefix = '[Bug]';
+              classification = 'Bug';
+              impact = 'High';
+              effort = 'M';
+              recommendation = 'Sprint';
+            } else if (/request|feature|add|would love|wish|suggestion|improve|enhancement/.test(text)) {
+              prefix = '[Feature]';
+              classification = 'Feature Request';
+              impact = 'Med';
+              effort = 'M';
+              recommendation = 'Backlog';
+            } else if (/confusing|hard to find|layout|design|ux|ui|interface|navigation|unclear/.test(text)) {
+              prefix = '[UX]';
+              classification = 'UX Feedback';
+              impact = 'Med';
+              effort = 'S';
+              recommendation = 'Backlog';
+            }
+
+            const cleanTitle = title.replace(/^\[(Bug|Feature|UX|Feedback)\]\s*/i, '');
+            const newTitle = prefix + ' ' + cleanTitle;
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              title: newTitle
+            });
+            console.log('Title updated to: ' + newTitle);
+
+            const lines = [
+              '## 🟢 Green Team AI Triage Report',
+              '',
+              '| Field | Value |',
+              '|-------|-------|',
+              '| 🏷️ Classification | ' + classification + ' |',
+              '| 📊 Impact | ' + impact + ' |',
+              '| 📏 Effort | ' + effort + ' |',
+              '| 🔗 Parent Epic | None |',
+              '| ✅ Recommendation | ' + recommendation + ' |',
+              '',
+              '---',
+              '*Triaged automatically by 🟢 Green Team AI. Handing off to Red Team for human review.*',
+              '',
+              '@sirgaladad — this issue is classified and ready for your review.'
+            ];
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: lines.join('\n')
+            });
+            console.log('Green Team comment posted.');
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: 'user-feedback'
+              });
+            } catch(e) { console.log('Remove label: ' + e.message); }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: ['red-team']
+            });
+            console.log('Labels swapped: user-feedback -> red-team');
+
+            console.log('Triage complete for issue #' + issue.number);
