@@ -418,8 +418,8 @@ body {
 /* ============================================================
    SECTIONS
    ============================================================ */
-section { padding: 52px 0; }
-@media(min-width: 768px) { section { padding: 72px 0; } }
+section { padding: 36px 0; }
+@media(min-width: 768px) { section { padding: 52px 0; } }
 
 .lb {
   font-size: 0.6875rem;
@@ -436,7 +436,7 @@ section { padding: 52px 0; }
 }
 
 .sf { background: var(--d2); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
-.sf .wrap { padding-top: 52px; padding-bottom: 52px; }
+.sf .wrap { padding-top: 0; padding-bottom: 0; }
 
 /* ============================================================
    NOW — Product showcase
@@ -574,7 +574,7 @@ section { padding: 52px 0; }
 /* ============================================================
    CTA SECTION
    ============================================================ */
-.cta { text-align: center; padding: 60px 0; }
+.cta { text-align: center; padding: 40px 0; max-width: 720px; margin: 0 auto; }
 .cta h2 {
   font-family: var(--fd);
   font-size: clamp(1.375rem, 3.5vw, 2rem);
@@ -583,7 +583,7 @@ section { padding: 52px 0; }
 .cta p {
   font-size: 1rem;
   color: var(--dm); margin-bottom: 10px;
-  max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65;
+  max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.65;
 }
 .cta .ways { font-size: 0.8125rem; color: var(--tl); margin-bottom: 28px; }
 .cta-btns { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
