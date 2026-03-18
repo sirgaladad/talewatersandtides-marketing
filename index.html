@@ -259,13 +259,16 @@ body {
   border: 1px solid rgba(245,240,232,.07);
   border-radius: 8px;
   padding: 7px 10px;
+  text-decoration: none;
   display: block;
-  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s;
 }
 @media(max-width: 479px) { .gw { display: none; } }
 @media(min-width: 420px) { .gw { padding: 9px 13px; border-radius: 10px; right: 14px; } }
 @media(min-width: 480px) { .gw { top: 8%; bottom: auto; } }
 @media(min-width: 768px) { .gw { top: 72px; right: 60px; padding: 10px 16px; } }
+.gw:hover, .gw:active { background: rgba(13,27,42,.48); }
 
 .gw-top { display: none; }
 .gw-label {
@@ -654,7 +657,7 @@ footer { padding: 28px 20px; border-top: 1px solid var(--bd); }
 
 <div class="hero" data-ga-section="hero">
   <div class="hero-img" id="heroBg">
-    <div class="gw" data-ga="hero_pfg_widget"><div class="gw-top"><span class="gw-label">pocketfishinguide.com</span><span class="gw-live">LIVE</span></div><div class="gw-lake">Lake Maumelle · Central AR</div><div class="gw-row"><div><span class="gw-temp">54.5</span><span class="gw-deg">°F</span></div><div class="gw-st"><div class="gw-v">GO FISH</div><div class="gw-ph">Pre-Spawn Active</div></div></div></div>
+    <a href="https://pocketfishinguide.com" class="gw" target="_blank" rel="noopener" data-ga="hero_pfg_widget"><div class="gw-top"><span class="gw-label">pocketfishinguide.com</span><span class="gw-live">LIVE</span></div><div class="gw-lake">Lake Maumelle · Central AR</div><div class="gw-row"><div><span class="gw-temp">54.5</span><span class="gw-deg">°F</span></div><div class="gw-st"><div class="gw-v">GO FISH</div><div class="gw-ph">Pre-Spawn Active</div></div></div></a>
   </div>
   <div class="hero-text"><div class="hero-ey r">Outdoor Recreation Innovation Lab</div><h1 class="r">We build what's next <em>above and below the surface.</em></h1><p class="hero-sub r">Software, strategy, and field-tested execution for outdoor and marine environments.</p><div class="hero-btns r"><a href="#collab" class="bg" data-ga="hero_collaborate">Collaborate With Us →</a><a href="#now" class="bo" data-ga="hero_see_lab">See What We're Building</a></div></div>
 </div>
