@@ -8,6 +8,7 @@ Thanks for your interest in improving the marketing site for [talewatersandtides
 - **Request a feature** — Use the [Feature Request](.github/ISSUE_TEMPLATE/feature_request.md) template
 - **Share feedback** — Use the [General Feedback](.github/ISSUE_TEMPLATE/feedback.md) template
 - **Flag a UX issue** — Use the [UX Evaluation](.github/ISSUE_TEMPLATE/ux_evaluation.md) template
+- **Document a design decision** — Use the [Design Decision](.github/ISSUE_TEMPLATE/design_decision.md) template
 
 ## Development Setup
 

@@ -52,6 +52,40 @@ Single-file static marketing page (`index.html`) deployed via GitHub Pages.
 
 ---
 
+## Repository Structure
+
+```
+talewatersandtides-marketing/
+├── index.html                          # Main marketing page (single-file, no build step)
+├── CNAME                               # Custom domain for GitHub Pages
+├── assets/                             # Images and media assets
+│   ├── AbbySims.jpeg                   # Team photo — Abby Sims, CTO
+│   ├── CoreyBoelkens.jpeg              # Team photo — Corey Boelkens, Founder
+│   ├── IMG_0393.png                    # Source photo (used for hero base64 embed)
+│   ├── TWT_Background.png              # Brand background image (source asset)
+│   └── TalewatersandTides_Logo_White_Horizontal.png  # Brand logo (source asset)
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md               # Bug report template
+│   │   ├── feature_request.md          # Feature request template
+│   │   ├── feedback.md                 # General feedback template
+│   │   ├── ux_evaluation.md            # UX evaluation template
+│   │   └── design_decision.md          # Design / architecture decision template
+│   └── workflows/
+│       ├── static.yml                  # Deploy to GitHub Pages on push to main
+│       └── triage.yml                  # Green Team AI auto-triage for issues
+├── README.md                           # This file
+├── CHANGELOG.md                        # Version history
+├── CONTRIBUTING.md                     # How to contribute
+├── SECURITY.md                         # Security / vulnerability reporting policy
+├── CODE_OF_CONDUCT.md                  # Contributor Covenant code of conduct
+├── LICENSE                             # MIT License
+├── .gitignore                          # Git ignore rules
+└── .prettierrc                         # Prettier formatting config
+```
+
+---
+
 ## Contact
 
 Collaborate: [corey@talewatersandtides.com](mailto:corey@talewatersandtides.com)  
