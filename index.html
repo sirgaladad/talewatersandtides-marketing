@@ -195,14 +195,20 @@ body {
 /* ============================================================
    HERO
    ============================================================ */
-.hero { position: relative; background: var(--dk); }
+.hero { position: relative; background: var(--dk); padding-top: 0; }
+@media(min-width: 480px) {
+  .hero { padding-top: 57px; }
+}
+@media(min-width: 768px) {
+  .hero { padding-top: 61px; }
+}
 
 .hero-img {
   width: 100%;
   aspect-ratio: 4 / 3;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: top center;
+  background-position: 50% 15%;
   margin-top: 56px;
   position: relative;
 }
@@ -246,7 +252,8 @@ body {
 
 .gw {
   position: absolute;
-  top: 8%;
+  top: auto;
+  bottom: 10%;
   right: 10px;
   z-index: 2;
   background: rgba(13,27,42,.32);
@@ -260,14 +267,13 @@ body {
   -webkit-tap-highlight-color: transparent;
   transition: background .2s;
 }
+
 @media(min-width: 420px) { .gw { padding: 9px 13px; border-radius: 10px; right: 14px; } }
+@media(min-width: 480px) { .gw { top: 8%; bottom: auto; } }
 @media(min-width: 768px) { .gw { top: 72px; right: 60px; padding: 10px 16px; } }
 .gw:hover, .gw:active { background: rgba(13,27,42,.48); }
 
-.gw-top {
-  display: flex; align-items: center;
-  justify-content: space-between; margin-bottom: 4px; gap: 8px;
-}
+.gw-top { display: none; }
 .gw-label {
   font-size: 0.625rem;
   color: rgba(245,240,232,.45); letter-spacing: .04em;
@@ -653,16 +659,14 @@ footer { padding: 28px 20px; border-top: 1px solid var(--bd); }
 
 <div class="hero" data-ga-section="hero">
   <div class="hero-img" id="heroBg">
-    <a href="https://pocketfishinguide.com" class="gw" data-ga="hero_pfg_widget"><div class="gw-top"><span class="gw-label">pocketfishinguide.com</span><span class="gw-live">LIVE</span></div><div class="gw-lake">Lake Maumelle · Central AR</div><div class="gw-row"><div><span class="gw-temp">54.5</span><span class="gw-deg">°F</span></div><div class="gw-st"><div class="gw-v">GO FISH</div><div class="gw-ph">Pre-Spawn Active</div></div></div></a>
+    <a href="https://pocketfishinguide.com" class="gw" target="_blank" rel="noopener" data-ga="hero_pfg_widget"><div class="gw-top"><span class="gw-label">pocketfishinguide.com</span><span class="gw-live">LIVE</span></div><div class="gw-lake">Lake Maumelle · Central AR</div><div class="gw-row"><div><span class="gw-temp">54.5</span><span class="gw-deg">°F</span></div><div class="gw-st"><div class="gw-v">GO FISH</div><div class="gw-ph">Pre-Spawn Active</div></div></div></a>
   </div>
   <div class="hero-text"><div class="hero-ey r">Outdoor Recreation Innovation Lab</div><h1 class="r">We build what's next <em>above and below the surface.</em></h1><p class="hero-sub r">Software, strategy, and field-tested execution for outdoor and marine environments.</p><div class="hero-btns r"><a href="#collab" class="bg" data-ga="hero_collaborate">Collaborate With Us →</a><a href="#now" class="bo" data-ga="hero_see_lab">See What We're Building</a></div></div>
 </div>
 
 <div class="belief r" data-ga-section="belief"><p>The best outdoor technology comes from people who use it.</p></div>
 
-<a href="https://pocketfishinguide.com" class="pfg-b r" data-ga="pfg_banner"><div class="pfg-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="pfg-b-t"><div class="pfg-b-h">Looking for Pocket Fishing Guide?</div><div class="pfg-b-s">Live intel · 39 AR waters · Free · No download</div></div><span class="pfg-b-a">→</span></a>
-
-<section id="now" data-ga-section="lab_now"><div class="wrap"><div class="lb r">Now</div><h2 class="st r">What we're building.</h2><div class="now r"><div class="phone-frame"><div class="phone"><div class="phone-screen" id="pfgImg"></div></div></div><div class="now-bd"><div class="now-hd"><div class="now-t">Pocket Fishing Guide</div><span class="bdg bdg-l">LIVE</span></div><div class="now-d">Live fishing intelligence for Arkansas anglers. Real-time USGS water temps, NWS barometric pressure, spawn phase data across 39 water bodies and 27 species.</div><div class="now-ev">AI-native. Solo-built. Learning and shipping every day. Could white-label. Could expand beyond fishing. We're letting the product lead.</div><a href="https://pocketfishinguide.com" class="now-link" data-ga="lab_open_pfg">Open Pocket Fishing Guide →</a></div></div></div></section>
+<a href="https://pocketfishinguide.com" class="pfg-b r" data-ga="pfg_banner"><div class="pfg-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="pfg-b-t"><div class="pfg-b-h">Looking for Pocket Fishing Guide?</div><div class="pfg-b-s">Live intel · 39 AR waters · Free · No download</div></div><span class="pfg-b-a">→</span></a><section id="now" data-ga-section="lab_now"><div class="wrap"><div class="lb r">Now</div><h2 class="st r">What we're building.</h2><div class="now r"><div class="phone-frame"><div class="phone"><div class="phone-screen" id="pfgImg"></div></div></div><div class="now-bd"><div class="now-hd"><div class="now-t">Pocket Fishing Guide</div><span class="bdg bdg-l">LIVE</span></div><div class="now-d">Live fishing intelligence for Arkansas anglers. Real-time USGS water temps, NWS barometric pressure, spawn phase data across 39 water bodies and 27 species.</div><div class="now-ev">AI-native. Solo-built. Learning and shipping every day. Could white-label. Could expand beyond fishing. We're letting the product lead.</div><a href="https://pocketfishinguide.com" class="now-link" data-ga="lab_open_pfg">Open Pocket Fishing Guide →</a></div></div></div></section>
 
 <section id="exploring" class="sf" data-ga-section="lab_exploring"><div class="wrap"><div class="lb r">Exploring</div><h2 class="st r">What we're learning toward.</h2><div class="ex-grid"><div class="ex r"><div class="ex-hd"><div class="ex-t">Guide marketplace</div><span class="bdg bdg-e">EXPLORING</span></div><div class="ex-tam">$89.8B</div><div class="ex-tam-s">Fishing tourism market (2025)</div><div class="ex-d">57 million Americans fish annually. No dominant platform connecting anglers with local guides.</div></div><div class="ex r"><div class="ex-hd"><div class="ex-t">Platform expansion</div><span class="bdg bdg-e">EXPLORING</span></div><div class="ex-d">White-label PFG for other states? Broader outdoor intelligence?</div><div class="ex-q">We don't have the answer yet. We're building toward it.</div></div></div></div></section>
 
