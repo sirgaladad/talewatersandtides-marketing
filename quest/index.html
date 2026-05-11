@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Quest for the Holy Grail (of Employment) — A Tale Waters & Tides Experiment</title>
+<meta name="description" content="A scroll-driven, mostly-medieval, somewhat-honest account of being laid off in May of 2026 and using AI to find honest work. A Tale Waters & Tides Innovation Lab experiment.">
+<meta name="theme-color" content="#7A1F1F">
+<meta property="og:title" content="The Quest for the Holy Grail (of Employment)">
+<meta property="og:description" content="A largely true account, with only some made-up bits about coconuts.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/quest/">
+<link rel="canonical" href="https://talewatersandtides.com/quest/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=UnifrakturCook:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE QUEST FOR THE HOLY GRAIL (of Employment)
+   A Tale Waters & Tides Innovation Lab experiment
+   ============================================================ */
+:root {
+  --parchment: #F2E6CC;
+  --parchment-shade: #E8D9B4;
+  --ink: #1C1208;
+  --ink-soft: #4A3826;
+  --blood: #7A1F1F;
+  --blood-soft: rgba(122,31,31,.08);
+  --gold: #f5a623;
+  --gold-deep: #b97608;
+  --twt-navy: #0d1b2a;
+  --fd: 'UnifrakturCook', serif;
+  --fb: 'EB Garamond', Georgia, serif;
+  --fu: 'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 22% 28%, rgba(28,18,8,.045), transparent 42%),
+    radial-gradient(circle at 78% 72%, rgba(122,31,31,.05), transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(28,18,8,.06), transparent 40%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.07 0 0 0 0 0.03 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='3' fill='%231C1208'/></svg>") 14 14, auto;
+}
+
+a, button, [role="button"], summary, label, input, select, textarea {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><path d='M6 22 L22 6 L19 5 L5 19 Z' fill='%237A1F1F' stroke='%231C1208' stroke-width='.8'/><rect x='3' y='20' width='8' height='2.5' fill='%23f5a623' transform='rotate(-45 7 21.25)'/></svg>") 4 24, pointer;
+}
+
+/* ============================================================
+   HEADER + SCROLL PROGRESS (sword from stone)
+   ============================================================ */
+.sword-progress {
+  position: fixed; top: 0; left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--blood) 100%);
+  width: 0%;
+  z-index: 50;
+  transition: width .12s linear;
+  box-shadow: 0 1px 4px rgba(122,31,31,.4);
+}
+.sword-progress::after {
+  content: '';
+  position: absolute; right: -8px; top: -6px;
+  width: 16px; height: 16px;
+  background: var(--gold);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+}
+
+header.parchment-hd {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  z-index: 40;
+  background: linear-gradient(to bottom, rgba(242,230,204,.92), rgba(242,230,204,.4));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: var(--fu);
+  font-size: 0.8125rem;
+}
+.parchment-hd .tag {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-family: var(--fb);
+  font-size: 0.9375rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.parchment-hd .controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.back-seal {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: var(--blood);
+  color: var(--parchment);
+  text-decoration: none;
+  border-radius: 999px;
+  font-family: var(--fu);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  box-shadow: 0 2px 0 var(--gold-deep), inset 0 1px 0 rgba(255,255,255,.18);
+  transition: transform .15s, box-shadow .15s;
+  white-space: nowrap;
+}
+.back-seal:hover, .back-seal:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--gold-deep), inset 0 1px 0 rgba(255,255,255,.18);
+  outline: none;
+}
+.back-seal .seal-icon {
+  width: 14px; height: 14px;
+  display: inline-block;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--blood);
+}
+
+#mute {
+  background: var(--parchment-shade);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  font-size: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform .15s, background .15s;
+  flex-shrink: 0;
+}
+#mute:hover { transform: scale(1.08); background: var(--gold); }
+#mute:focus-visible { outline: 2px solid var(--blood); outline-offset: 2px; }
+
+/* ============================================================
+   COMMON TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 { font-family: var(--fd); color: var(--blood); line-height: 1.1; letter-spacing: .01em; }
+em { font-style: italic; }
+.scribe { font-family: var(--fb); font-style: italic; color: var(--ink-soft); font-weight: 400; font-size: .55em; display: block; margin-top: 12px; letter-spacing: 0; }
+
+.dropcap::first-letter {
+  font-family: var(--fd);
+  font-size: 5.4em;
+  float: left;
+  line-height: .82;
+  padding: 6px 14px 0 0;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 var(--blood), 3px 3px 0 rgba(28,18,8,.18);
+}
+
+.margin-note {
+  font-family: var(--fu);
+  font-size: 0.8125rem;
+  background: var(--blood-soft);
+  border-left: 3px solid var(--blood);
+  padding: 12px 16px;
+  margin: 28px 0;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.margin-note strong { color: var(--blood); font-style: normal; font-weight: 600; }
+
+/* ============================================================
+   HERO (Chapter 0 — The Cold Open)
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 100px 22px 60px;
+  position: relative;
+}
+.hero-inner { max-width: 820px; }
+.experiment-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fu);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--blood);
+  background: var(--parchment-shade);
+  border: 1px solid rgba(122,31,31,.25);
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.experiment-tag::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(245,166,35,.25);
+}
+.hero h1 {
+  font-size: clamp(40px, 8vw, 92px);
+  color: var(--blood);
+  max-width: 18ch;
+  margin: 0 auto;
+}
+.hero h1 .small {
+  font-family: var(--fb);
+  font-style: italic;
+  font-weight: 400;
+  font-size: .42em;
+  color: var(--ink);
+  display: block;
+  margin-top: 8px;
+  letter-spacing: 0;
+}
+.hero .tag {
+  margin-top: 24px;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.0625rem;
+  max-width: 52ch;
+  margin-inline: auto;
+}
+.hero-svg {
+  display: block;
+  margin: 36px auto 0;
+  max-width: 100%;
+  height: auto;
+}
+.scroll-cue {
+  margin-top: 36px;
+  font-family: var(--fu);
+  font-size: 0.75rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob { 50% { transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .scroll-cue { animation: none; } }
+
+/* swallow flying across hero */
+.swallow {
+  position: absolute;
+  top: 25%; left: -80px;
+  width: 60px;
+  opacity: .85;
+  animation: fly 18s linear infinite;
+  pointer-events: none;
+}
+@keyframes fly {
+  0% { transform: translateX(0) translateY(0) rotate(-2deg); }
+  50% { transform: translateX(50vw) translateY(-20px) rotate(2deg); }
+  100% { transform: translateX(110vw) translateY(10px) rotate(-1deg); }
+}
+@media (prefers-reduced-motion: reduce) { .swallow { animation: none; opacity: .3; } }
+
+/* ============================================================
+   CHAPTER LAYOUT
+   ============================================================ */
+.chapter {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 22px;
+  position: relative;
+}
+.chapter + .chapter { padding-top: 30px; }
+.chapter-num {
+  font-family: var(--fu);
+  font-size: 0.6875rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.chapter h2 {
+  font-size: clamp(34px, 5.5vw, 56px);
+  margin-bottom: 28px;
+}
+.chapter p { margin-bottom: 20px; }
+.chapter .quote {
+  font-style: italic;
+  border-left: 3px solid var(--gold);
+  padding: 4px 0 4px 18px;
+  color: var(--ink-soft);
+  margin: 24px 0;
+}
+
+/* divider — illuminated flourish */
+.flourish {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin: 50px auto;
+  max-width: 320px;
+  color: var(--gold-deep);
+}
+.flourish::before, .flourish::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+}
+.flourish span { font-family: var(--fd); font-size: 22px; }
+
+/* ============================================================
+   INTERACTIVE BITS
+   ============================================================ */
+
+/* Chapter III: Bridge of Taxonomy dropdown */
+.bridge-box {
+  background: var(--parchment-shade);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 22px;
+  margin: 28px 0;
+  position: relative;
+}
+.bridge-box::before {
+  content: '';
+  position: absolute; inset: -6px;
+  border: 1px dashed rgba(28,18,8,.35);
+  border-radius: 10px;
+  pointer-events: none;
+}
+.bridge-q {
+  font-family: var(--fd);
+  font-size: 1.5rem;
+  color: var(--blood);
+  margin-bottom: 14px;
+}
+.bridge-box label {
+  display: block;
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.bridge-box select {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--parchment);
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  font-family: var(--fb);
+  font-size: 1rem;
+  color: var(--ink);
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'><path d='M3 5l4 4 4-4' fill='none' stroke='%231C1208' stroke-width='1.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.bridge-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  font-family: var(--fu);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+.bridge-toggle input { accent-color: var(--blood); width: 18px; height: 18px; }
+.bridge-verdict {
+  margin-top: 16px;
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  padding: 10px 14px;
+  background: var(--blood);
+  color: var(--parchment);
+  border-radius: 4px;
+  font-weight: 500;
+  display: none;
+}
+.bridge-verdict.show { display: block; animation: fall .8s ease-out; }
+.bridge-verdict.ok { background: var(--gold-deep); }
+@keyframes fall {
+  0% { transform: translateY(-12px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .bridge-verdict.show { animation: none; } }
+
+/* Chapter IV: Knights Who Say 500 */
+.knight-500 {
+  background: var(--parchment-shade);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 22px;
+  margin: 28px 0;
+}
+.knight-500 textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px 14px;
+  background: var(--parchment);
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  font-family: var(--fb);
+  font-size: 1rem;
+  color: var(--ink);
+  resize: vertical;
+}
+.char-count {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 10px;
+  font-family: var(--fu);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+.char-count.over { color: var(--blood); font-weight: 600; }
+.knight-yell {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--blood);
+  color: var(--parchment);
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  border-radius: 4px;
+  display: none;
+}
+.knight-yell.show { display: block; }
+.knight-yell strong { color: var(--gold); }
+
+/* Chapter V: Skills Tournament */
+.tournament {
+  background: var(--parchment-shade);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 22px;
+  margin: 28px 0;
+}
+.tournament h3 {
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.skill-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.skill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px;
+  background: var(--parchment);
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform .2s, opacity .35s, background .2s, border-color .2s;
+  user-select: none;
+}
+.skill:hover { background: var(--gold); transform: translateY(-1px); }
+.skill.kept { background: var(--gold-deep); color: var(--parchment); border-color: var(--gold-deep); }
+.skill.sliced {
+  opacity: 0;
+  transform: translateX(60px) rotate(15deg);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .skill.sliced { transform: none; } }
+.skill-verdict {
+  margin-top: 16px;
+  font-family: var(--fu);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  min-height: 22px;
+  font-style: italic;
+}
+
+/* Chapter VI: Killer Rabbit / recruiter inbox */
+.inbox {
+  background: var(--parchment-shade);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 22px;
+  margin: 28px 0;
+}
+.inbox-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(28,18,8,.18);
+}
+.inbox-row:last-child { border-bottom: 0; }
+.inbox-row .rabbit {
+  flex-shrink: 0;
+  width: 34px; height: 34px;
+  background: var(--parchment);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.inbox-row .body { flex: 1; min-width: 0; }
+.inbox-row .from {
+  font-family: var(--fu); font-size: 0.875rem; font-weight: 600; color: var(--ink);
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.inbox-row .from .when { font-weight: 400; color: var(--ink-soft); font-size: 0.75rem; }
+.inbox-row .subject { font-size: 0.9375rem; color: var(--ink-soft); }
+.inbox-row.danger .rabbit { background: var(--blood); color: var(--gold); border-color: var(--blood); }
+.inbox-row.danger .subject::after {
+  content: ' ⚔';
+  color: var(--blood);
+}
+
+/* Chapter VII: The Grail */
+.grail-panel {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(245,166,35,.35), transparent 55%),
+    var(--parchment-shade);
+  border: 3px double var(--gold-deep);
+  border-radius: 12px;
+  padding: 40px 28px;
+  margin: 32px 0;
+  text-align: center;
+  position: relative;
+}
+.grail-panel svg { display: block; margin: 0 auto 18px; }
+.grail-panel .reveal {
+  font-family: var(--fd);
+  font-size: clamp(28px, 4.5vw, 40px);
+  color: var(--blood);
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.grail-panel p { color: var(--ink); font-size: 1.0625rem; }
+
+/* Chapter VIII: credits */
+.credits {
+  background: var(--ink);
+  color: var(--parchment);
+  margin: 60px -22px 0;
+  padding: 60px 22px;
+  text-align: center;
+}
+.credits h3 {
+  font-family: var(--fd);
+  color: var(--gold);
+  font-size: 2rem;
+  margin-bottom: 18px;
+}
+.credits .scroll-list {
+  font-family: var(--fu);
+  font-size: 0.9375rem;
+  line-height: 2.2;
+  color: var(--parchment);
+  opacity: .9;
+}
+.credits .scroll-list .role { color: var(--gold); font-weight: 500; }
+.credits .real {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245,166,35,.35);
+  font-family: var(--fb);
+  font-style: italic;
+  font-size: 1rem;
+}
+.credits .real a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+.cta-row {
+  display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+  margin-top: 28px;
+}
+.cta-seal {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  background: var(--blood);
+  color: var(--parchment);
+  text-decoration: none;
+  font-family: var(--fu);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 999px;
+  box-shadow: 0 3px 0 var(--gold-deep), inset 0 1px 0 rgba(255,255,255,.2);
+  transition: transform .15s;
+}
+.cta-seal:hover { transform: translateY(-2px); }
+.cta-seal.gold { background: var(--gold); color: var(--ink); box-shadow: 0 3px 0 var(--gold-deep); }
+
+footer.parchment-ft {
+  padding: 30px 22px;
+  text-align: center;
+  font-family: var(--fu);
+  font-size: 0.75rem;
+  color: var(--parchment);
+  background: var(--ink);
+}
+footer.parchment-ft a { color: var(--gold); }
+
+/* ============================================================
+   KONAMI EASTER EGG — Spanish Inquisition modal
+   ============================================================ */
+.inquisition {
+  position: fixed; inset: 0;
+  background: rgba(13,27,42,.86);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 100;
+  padding: 22px;
+}
+.inquisition.show { display: flex; animation: pop .35s ease-out; }
+@keyframes pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+.inquisition-card {
+  background: var(--parchment);
+  max-width: 460px;
+  padding: 32px;
+  border-radius: 12px;
+  border: 3px double var(--blood);
+  text-align: center;
+}
+.inquisition-card h3 {
+  font-family: var(--fd);
+  color: var(--blood);
+  font-size: 1.75rem;
+  margin-bottom: 12px;
+}
+.inquisition-card p { color: var(--ink); margin-bottom: 18px; }
+.inquisition-card button {
+  background: none; border: 1px solid var(--ink); color: var(--ink);
+  padding: 8px 16px; border-radius: 4px;
+  font-family: var(--fu); font-size: 0.8125rem; margin-top: 12px;
+}
+
+/* ============================================================
+   MOBILE FINESSE
+   ============================================================ */
+@media (max-width: 540px) {
+  .parchment-hd .tag { font-size: 0.8125rem; }
+  .back-seal { padding: 7px 10px; font-size: 0.6875rem; }
+  body { font-size: 1.0625rem; }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+:focus-visible { outline: 2px solid var(--blood); outline-offset: 3px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="sword-progress" id="prog" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+<header class="parchment-hd">
+  <a class="back-seal" href="/" aria-label="Back to talewatersandtides.com">
+    <span class="seal-icon" aria-hidden="true"></span>
+    <span>Tale Waters &amp; Tides</span>
+  </a>
+  <span class="tag" aria-hidden="true">A largely true account, with only some made-up bits about coconuts.</span>
+  <div class="controls">
+    <button id="mute" aria-pressed="true" aria-label="Toggle coconut sound effects (currently off)" title="Coconuts: off">🥥</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     CHAPTER 0 — THE COLD OPEN
+     ============================================================ -->
+<section class="hero" aria-labelledby="hero-title">
+  <svg class="swallow" viewBox="0 0 80 30" aria-hidden="true">
+    <path d="M2 18 Q15 4 30 14 Q45 24 60 12 Q70 6 78 14" fill="none" stroke="#1C1208" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M30 14 L26 22 M30 14 L34 22" stroke="#1C1208" stroke-width="1.2" fill="none"/>
+    <path d="M48 18 L44 26 M48 18 L52 26" stroke="#1C1208" stroke-width="1.2" fill="none"/>
+    <rect x="32" y="16" width="6" height="2" fill="#f5a623" transform="rotate(-12 35 17)"/>
+  </svg>
+
+  <div class="hero-inner">
+    <span class="experiment-tag">Tale Waters &amp; Tides · Lab Experiment №1</span>
+    <h1 id="hero-title">
+      The Quest for the Holy Grail
+      <span class="small">(of Employment)</span>
+    </h1>
+    <p class="tag">
+      A long time ago, in a Little Rock not so far away, a marketing technologist was, in a perfectly modern fashion,
+      <em>made redundant</em> — and then asked an AI to help him fill out the unemployment paperwork.
+    </p>
+    <p class="tag" style="margin-top:14px;">This is what happened.</p>
+
+    <svg class="hero-svg" width="220" height="120" viewBox="0 0 220 120" role="img" aria-label="A hand-drawn castle with three towers, drawn in ink on parchment.">
+      <rect x="40" y="60" width="140" height="50" fill="none" stroke="#1C1208" stroke-width="2"/>
+      <rect x="40" y="60" width="20" height="10" fill="#1C1208"/>
+      <rect x="72" y="60" width="20" height="10" fill="#1C1208"/>
+      <rect x="104" y="60" width="20" height="10" fill="#1C1208"/>
+      <rect x="136" y="60" width="20" height="10" fill="#1C1208"/>
+      <rect x="160" y="60" width="20" height="10" fill="#1C1208"/>
+      <path d="M50 60 L50 30 L70 30 L70 60" fill="none" stroke="#1C1208" stroke-width="2"/>
+      <path d="M48 30 L50 22 L52 30 Z" fill="#7A1F1F"/>
+      <path d="M100 60 L100 20 L130 20 L130 60" fill="none" stroke="#1C1208" stroke-width="2"/>
+      <path d="M98 20 L100 8 L102 20 Z" fill="#7A1F1F"/>
+      <path d="M150 60 L150 32 L170 32 L170 60" fill="none" stroke="#1C1208" stroke-width="2"/>
+      <path d="M148 32 L150 24 L152 32 Z" fill="#7A1F1F"/>
+      <rect x="108" y="78" width="14" height="32" fill="#1C1208"/>
+      <path d="M0 110 L220 110" stroke="#1C1208" stroke-width="1.5"/>
+      <path d="M14 110 Q18 106 22 110 M186 110 Q190 106 194 110" stroke="#1C1208" stroke-width="1" fill="none"/>
+    </svg>
+
+    <div class="scroll-cue">Scroll, brave reader ↓</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CHAPTER I — THE LAYOFF
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch1">
+  <div class="chapter-num">Chapter I</div>
+  <h2 id="ch1">The Layoff
+    <span class="scribe">"He was laid off. It was only a flesh wound."</span>
+  </h2>
+  <p class="dropcap">On the 8th day of May, in the year of our lord 2026, a marketing technologist named Corey Boelkens was, in a perfectly modern fashion, <em>made redundant.</em> "'Tis but a flesh wound," he said, having read too much Monty Python. Reader, it was not but a flesh wound. It was, in fact, a layoff.</p>
+  <p>But what followed was so absurd that the only honest way to tell it is on a parchment scroll, with coconuts. Over the following weeks, Corey — armed with little but a LinkedIn account, a half-finished cup of coffee, and a rapidly maturing relationship with an AI assistant — set out across the long grey land of <strong>online job applications</strong>.</p>
+  <div class="margin-note"><strong>Marginalia, in a smaller hand:</strong> In modern English, "redundant" means "laid off." In medieval English, it means "thou art surplus to requirements, fare thee well." The vibe is similar. — <em>A. Knight</em></div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER II — THE QUEST BEGINS
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch2">
+  <div class="chapter-num">Chapter II</div>
+  <h2 id="ch2">The Quest Begins
+    <span class="scribe">"To find honest work, the Knight summoned a familiar."</span>
+  </h2>
+  <p class="dropcap">The familiar was an AI assistant — a kind of digital wizard, if wizards were trained on Reddit and had read every résumé ever written. Corey, having a long history with both wizards and résumés, decided to let the familiar drive the browser.</p>
+  <p>This was, depending on whom you asked, either <em>extremely 2026</em> or <em>extremely lazy.</em> Both turned out to be correct. The wizard read the Arkansas LAUNCH portal. The wizard parsed PDFs. The wizard, in a manner befitting all wizards, made small clucking noises about the user experience of government job boards.</p>
+  <div class="margin-note"><strong>Real talk:</strong> The actual experiment was using <em>computer-use AI</em> (Claude with browser access) to read job descriptions, map them to my résumé, and pre-fill applications. The medieval framing is a delivery vehicle. The boring lesson is: AI is great at the <em>tedious 80%</em> of job-hunt logistics. It is bad at deciding what you actually want next.</div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER III — THE BRIDGE OF TAXONOMY
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch3">
+  <div class="chapter-num">Chapter III</div>
+  <h2 id="ch3">The Bridge of Taxonomy
+    <span class="scribe">"STOP. Who would cross the Bridge of Death must answer me these questions three."</span>
+  </h2>
+  <p class="dropcap">"What… is your name?" <em>Corey.</em> "What… is your quest?" <em>To seek gainful employment.</em> "What… is your <strong>occupation?</strong>" <em>MarTech Solution Lead.</em></p>
+  <p style="text-align:center;font-family:var(--fd);font-size:1.6rem;color:var(--blood);">"AUUUUUUUGH—"</p>
+  <p style="text-align:center;color:var(--ink-soft);font-style:italic;">(<em>The bridgekeeper falls into the chasm.</em>)</p>
+
+  <div class="margin-note"><strong>Marginalia:</strong> The Arkansas LAUNCH job portal uses a Bureau of Labor Statistics taxonomy that does not contain the title "MarTech Solution Lead." The AI mapped my role to "Marketing Manager," with secondary mappings to "Chief Executive" and "Computer and Information Systems Manager." This was, as the bridgekeeper learned, the correct answer.</div>
+
+  <div class="bridge-box">
+    <div class="bridge-q">Choose thy occupation</div>
+    <label for="occ">The Bridgekeeper, with great impatience, awaits thy reply.</label>
+    <select id="occ" aria-describedby="bridge-help">
+      <option value="">— select an occupation —</option>
+      <option value="absurd">MarTech Solution Lead</option>
+      <option value="absurd">Senior Coconut Percussionist</option>
+      <option value="absurd">Vibes Engineer</option>
+      <option value="absurd">Møøse Wrangler, Senior</option>
+      <option value="absurd">Knight Who Says "Ni"</option>
+    </select>
+    <label class="bridge-toggle">
+      <input type="checkbox" id="reasonable" />
+      <span>Be reasonable. Show me the BLS occupations.</span>
+    </label>
+    <div id="bridge-verdict" class="bridge-verdict" role="status" aria-live="polite"></div>
+  </div>
+
+  <p>The lesson, dear reader: <strong>your job title is not the same as your job category.</strong> AI is genuinely useful at this translation step — give it a résumé and a target taxonomy and it will produce a clean mapping in seconds. Doing it by hand, you will misclassify yourself out of half your opportunities.</p>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER IV — THE KNIGHTS WHO SAY "500"
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch4">
+  <div class="chapter-num">Chapter IV</div>
+  <h2 id="ch4">The Knights Who Say "500"
+    <span class="scribe">"We are now the Knights Who Say… five hundred characters, or get out."</span>
+  </h2>
+  <p class="dropcap">Every government job portal in the known world has a description field. Every description field has a character limit. The Knights Who Say "500" guard this field jealously. Type 501 characters and they will, with great solemnity, demand a shrubbery.</p>
+
+  <div class="knight-500">
+    <label for="bullet" style="font-family:var(--fu);font-size:.875rem;color:var(--ink-soft);display:block;margin-bottom:8px;">Type a bullet from your résumé. The Knights are watching.</label>
+    <textarea id="bullet" placeholder="Led cross-functional team of 12 to launch a marine intelligence platform serving 30,000 anglers across the Mid-South, achieving…"></textarea>
+    <div class="char-count" id="charCount"><span><span id="chars">0</span> / 500 characters</span><span id="charNote">The Knights are content.</span></div>
+    <div class="knight-yell" id="knightYell" role="status" aria-live="polite">
+      <strong>NI! NI! NI!</strong> Thou hast exceeded 500 characters. The Knights demand a shrubbery. (Also: shorten thy bullet.)
+    </div>
+  </div>
+
+  <div class="margin-note"><strong>Real lesson:</strong> AI is excellent at character-budget compression. Paste your bullet, tell it the limit, ask for three variants — long, tight, headline. You'll learn more about your own bullets in 30 seconds than you will in an hour of staring at the field.</div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER V — THE SKILLS TOURNAMENT
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch5">
+  <div class="chapter-num">Chapter V</div>
+  <h2 id="ch5">The Skills Tournament
+    <span class="scribe">"'Tis but a skill," said the Black Knight, having lost three of them already."</span>
+  </h2>
+  <p class="dropcap">Every skill on your résumé is a limb on the Black Knight. Some are essential. Some are decorative. Most are, frankly, neither — they are there because a recruiter once told you to put them there in 2014.</p>
+  <p>Click each skill to ask the Tournament whether it serves the quest. The honest ones stay. The decorative ones lose a limb.</p>
+
+  <div class="tournament" id="tournament">
+    <h3>The Knight's Skill List</h3>
+    <div class="skill-chips" id="skillChips">
+      <button class="skill" data-keep="1" type="button">Product Strategy</button>
+      <button class="skill" data-keep="0" type="button">Microsoft Office</button>
+      <button class="skill" data-keep="1" type="button">CRM Architecture</button>
+      <button class="skill" data-keep="0" type="button">Synergy</button>
+      <button class="skill" data-keep="1" type="button">Computer-Use AI</button>
+      <button class="skill" data-keep="0" type="button">Team Player</button>
+      <button class="skill" data-keep="1" type="button">Marine Tech</button>
+      <button class="skill" data-keep="0" type="button">Detail-Oriented</button>
+      <button class="skill" data-keep="1" type="button">B2B GTM</button>
+    </div>
+    <div class="skill-verdict" id="skillVerdict">Click a skill. The Tournament shall decide.</div>
+  </div>
+
+  <div class="margin-note"><strong>Real lesson:</strong> Ask the AI to rank your skills <em>against a specific job description</em>, not in the abstract. "Synergy" and "Team Player" don't survive that test. "CRM Architecture" does, but only because someone in the job description searched for "Salesforce."</div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER VI — THE KILLER RABBIT OF CAERBANNOG
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch6">
+  <div class="chapter-num">Chapter VI</div>
+  <h2 id="ch6">The Killer Rabbit of Caerbannog
+    <span class="scribe">"It's just a harmless little bunny, isn't it?" — last words of many a job-seeker.</span>
+  </h2>
+  <p class="dropcap">Behold the recruiter inbox. It looks cute. It chirps with little notification sounds. It will, given the chance, exsanguinate your entire week. Reader, you must triage.</p>
+
+  <div class="inbox" aria-label="A sample recruiter inbox">
+    <div class="inbox-row">
+      <div class="rabbit" aria-hidden="true">🐰</div>
+      <div class="body">
+        <div class="from"><span>Maeve from a real company</span><span class="when">9:14 AM</span></div>
+        <div class="subject">Re: Director of Product, hybrid in Little Rock — quick chat this week?</div>
+      </div>
+    </div>
+    <div class="inbox-row danger">
+      <div class="rabbit" aria-hidden="true">🐰</div>
+      <div class="body">
+        <div class="from"><span>Brad — Top Talent Recruiting Solutions</span><span class="when">9:16 AM</span></div>
+        <div class="subject">URGENT contract opportunity, must relocate to Bangalore, $32/hr W2 only</div>
+      </div>
+    </div>
+    <div class="inbox-row danger">
+      <div class="rabbit" aria-hidden="true">🐰</div>
+      <div class="body">
+        <div class="from"><span>noreply@ai-leadgen-buddy.io</span><span class="when">9:18 AM</span></div>
+        <div class="subject">Hi Corey, I saw your profile and you'd be PERFECT for our blockchain dental practice</div>
+      </div>
+    </div>
+    <div class="inbox-row">
+      <div class="rabbit" aria-hidden="true">🐰</div>
+      <div class="body">
+        <div class="from"><span>Hiring Manager, an actual Arkansas company</span><span class="when">11:02 AM</span></div>
+        <div class="subject">Loved your RaftUp story — would you grab coffee at Mylo Coffee on Thursday?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="margin-note"><strong>Real lesson:</strong> AI triage on the inbox is the single highest-leverage move in a job hunt. Set up filters that flag (a) actual hiring managers vs. third-party recruiters, (b) local vs. relocation-required, (c) salary band disclosed vs. hidden. The rabbits are not all rabbits. But you cannot tell which is which by hand at the scale a layoff produces.</div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER VII — THE HOLY GRAIL
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch7">
+  <div class="chapter-num">Chapter VII</div>
+  <h2 id="ch7">The Holy Grail
+    <span class="scribe">"He found, at last, the Holy Grail. It was not a chalice."</span>
+  </h2>
+
+  <div class="grail-panel">
+    <svg width="80" height="100" viewBox="0 0 80 100" role="img" aria-label="An illuminated chalice, drawn in gold ink.">
+      <path d="M20 18 L60 18 L58 36 Q40 50 22 36 Z" fill="#f5a623" stroke="#1C1208" stroke-width="2"/>
+      <rect x="36" y="48" width="8" height="22" fill="#f5a623" stroke="#1C1208" stroke-width="2"/>
+      <path d="M22 70 L58 70 L60 80 L20 80 Z" fill="#f5a623" stroke="#1C1208" stroke-width="2"/>
+      <circle cx="40" cy="14" r="6" fill="#f5a623" stroke="#1C1208" stroke-width="1.5"/>
+      <path d="M16 14 L24 6 M64 14 L56 6 M40 4 L40 -2" stroke="#f5a623" stroke-width="1.5" fill="none"/>
+    </svg>
+    <div class="reveal">A job you actually want.</div>
+    <p>It is not a chalice. It is a job posting in Little Rock with a reasonable salary band, a thoughtful hiring manager, a hybrid schedule, and work that intersects with marine tech, outdoor recreation, or marketing engineering. Reader, I'm still looking for it. If you have one, I am at <a href="mailto:corey@talewatersandtides.com" style="color:var(--blood);text-decoration:underline;text-underline-offset:3px;">corey@talewatersandtides.com</a>. Bring coconuts.</p>
+  </div>
+
+  <div class="margin-note"><strong>The actual takeaway:</strong> AI does not get you the job. AI gets you to the point where the job hunt is a <em>human</em> problem (network, fit, judgment) rather than a <em>logistics</em> problem (forms, taxonomies, character limits). That's worth a quest.</div>
+</section>
+
+<div class="flourish" aria-hidden="true"><span>✦</span><span>❦</span><span>✦</span></div>
+
+<!-- ============================================================
+     CHAPTER VIII — THE CREDITS ROLL
+     ============================================================ -->
+<section class="chapter" aria-labelledby="ch8">
+  <div class="chapter-num">Chapter VIII</div>
+  <h2 id="ch8">The Credits Roll</h2>
+
+  <div class="credits">
+    <h3>And now, the credits.</h3>
+    <div class="scroll-list" aria-label="Joke credits">
+      <div><span class="role">Møøse wrangler:</span> Corey Boelkens</div>
+      <div><span class="role">Senior Coconut Percussionist:</span> Also Corey</div>
+      <div><span class="role">Holy Grail Consultant:</span> Anyone with a job opening</div>
+      <div><span class="role">Bridgekeeper, retired:</span> The BLS Occupation Taxonomy</div>
+      <div><span class="role">Familiar &amp; co-author:</span> Claude (Anthropic)</div>
+      <div><span class="role">Knight Who Said "500":</span> Every state unemployment portal</div>
+      <div><span class="role">Killer Rabbit Wrangler:</span> Gmail filters</div>
+    </div>
+    <div class="real">
+      Built as an Innovation Lab experiment by <a href="https://talewatersandtides.com">Tale Waters &amp; Tides</a> · <a href="https://www.linkedin.com/in/boelkens/">LinkedIn</a> · <a href="mailto:corey@talewatersandtides.com">corey@talewatersandtides.com</a>
+    </div>
+    <div class="cta-row">
+      <a class="cta-seal gold" href="mailto:corey@talewatersandtides.com">Send a Raven (Email)</a>
+      <a class="cta-seal" href="https://www.linkedin.com/in/boelkens/" target="_blank" rel="noopener">Find Me on LinkedIn</a>
+      <a class="cta-seal" href="/">← Back to Tale Waters &amp; Tides</a>
+    </div>
+  </div>
+</section>
+
+<footer class="parchment-ft">
+  <p>An experiment from the <a href="/">Tale Waters &amp; Tides</a> Innovation Lab · Little Rock, Arkansas · Press <kbd>↑↑↓↓←→←→BA</kbd> if you dare</p>
+</footer>
+
+<!-- Spanish Inquisition easter egg (Konami code) -->
+<div class="inquisition" id="inquisition" role="dialog" aria-modal="true" aria-labelledby="inq-title" aria-hidden="true">
+  <div class="inquisition-card">
+    <h3 id="inq-title">NOBODY expects…</h3>
+    <p>…the Spanish Inquisition! Our chief weapons are fear, surprise, ruthless efficiency, and a downloadable résumé.</p>
+    <p style="font-style:italic;color:var(--ink-soft);font-size:.875rem;">(Résumé coming soon — for now, please use the LinkedIn or email links above.)</p>
+    <button id="dismiss-inq" type="button">Dismiss the Inquisition</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ---- scroll progress (sword from stone) ----
+  var prog = document.getElementById('prog');
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    prog.style.width = pct + '%';
+    prog.setAttribute('aria-valuenow', Math.round(pct));
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ---- mute toggle (scaffold; audio off by default, persisted) ----
+  var mute = document.getElementById('mute');
+  var muted = localStorage.getItem('quest-muted') !== 'false';
+  function renderMute() {
+    mute.textContent = muted ? '🥥' : '🔊';
+    mute.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    mute.setAttribute('aria-label', 'Toggle coconut sound effects (currently ' + (muted ? 'off' : 'on') + ')');
+    mute.title = 'Coconuts: ' + (muted ? 'off' : 'on');
+  }
+  renderMute();
+  mute.addEventListener('click', function() {
+    muted = !muted;
+    localStorage.setItem('quest-muted', muted ? 'true' : 'false');
+    renderMute();
+    // Audio scaffolding: drop coconut.mp3 into /quest/assets/audio/ and wire Howler here.
+  });
+
+  // ---- Chapter III: Bridge of Taxonomy ----
+  var sel = document.getElementById('occ');
+  var verdict = document.getElementById('bridge-verdict');
+  var reasonable = document.getElementById('reasonable');
+  var absurdOptions = [
+    { v: 'absurd', t: 'MarTech Solution Lead' },
+    { v: 'absurd', t: 'Senior Coconut Percussionist' },
+    { v: 'absurd', t: 'Vibes Engineer' },
+    { v: 'absurd', t: 'Møøse Wrangler, Senior' },
+    { v: 'absurd', t: 'Knight Who Says "Ni"' }
+  ];
+  var blsOptions = [
+    { v: 'ok', t: 'Marketing Manager (BLS 11-2021)' },
+    { v: 'ok', t: 'Chief Executive (BLS 11-1011)' },
+    { v: 'ok', t: 'Computer & Information Systems Manager (BLS 11-3021)' },
+    { v: 'ok', t: 'Sales Manager (BLS 11-2022)' },
+    { v: 'ok', t: 'Software Developer (BLS 15-1252)' }
+  ];
+  function renderOptions(list) {
+    sel.innerHTML = '<option value="">— select an occupation —</option>' +
+      list.map(function(o) { return '<option value="' + o.v + '">' + o.t + '</option>'; }).join('');
+    verdict.classList.remove('show', 'ok');
+    verdict.textContent = '';
+  }
+  reasonable.addEventListener('change', function() {
+    renderOptions(reasonable.checked ? blsOptions : absurdOptions);
+  });
+  sel.addEventListener('change', function() {
+    if (sel.value === 'absurd') {
+      verdict.textContent = '"AUUUUUUUGH—" (The bridgekeeper falls into the chasm.) Try "Be reasonable" to see what the AI actually mapped to.';
+      verdict.classList.add('show'); verdict.classList.remove('ok');
+    } else if (sel.value === 'ok') {
+      verdict.textContent = '✓ Correct. The bridgekeeper, defeated, allows thee to pass.';
+      verdict.classList.add('show', 'ok');
+    } else {
+      verdict.classList.remove('show', 'ok');
+    }
+  });
+
+  // ---- Chapter IV: Knights Who Say 500 ----
+  var bullet = document.getElementById('bullet');
+  var chars = document.getElementById('chars');
+  var charNote = document.getElementById('charNote');
+  var charCount = document.getElementById('charCount');
+  var yell = document.getElementById('knightYell');
+  bullet.addEventListener('input', function() {
+    var n = bullet.value.length;
+    chars.textContent = n;
+    if (n > 500) {
+      charCount.classList.add('over');
+      charNote.textContent = 'NI! NI! NI!';
+      yell.classList.add('show');
+    } else if (n > 450) {
+      charCount.classList.remove('over');
+      charNote.textContent = 'The Knights stir restlessly. (' + (500 - n) + ' left.)';
+      yell.classList.remove('show');
+    } else {
+      charCount.classList.remove('over');
+      charNote.textContent = 'The Knights are content.';
+      yell.classList.remove('show');
+    }
+  });
+
+  // ---- Chapter V: Skills Tournament ----
+  var verdicts = {
+    keep: [
+      'The Knight keeps the limb. The Tournament approves.',
+      '"This one stays," nods the Black Knight, gravely.',
+      'A true skill. Worth defending.',
+      'The crowd murmurs in approval.'
+    ],
+    cut: [
+      "'Tis but a skill. The Black Knight loses a limb.",
+      'The Tournament is unimpressed. Off it comes.',
+      'A decorative skill. Severed without ceremony.',
+      'The recruiter ATS would not have searched for this.'
+    ]
+  };
+  document.querySelectorAll('#skillChips .skill').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var keep = chip.getAttribute('data-keep') === '1';
+      var verdict = document.getElementById('skillVerdict');
+      if (keep) {
+        chip.classList.add('kept');
+        chip.setAttribute('disabled', 'true');
+        verdict.textContent = verdicts.keep[Math.floor(Math.random() * verdicts.keep.length)];
+      } else {
+        chip.classList.add('sliced');
+        verdict.textContent = verdicts.cut[Math.floor(Math.random() * verdicts.cut.length)];
+      }
+    });
+  });
+
+  // ---- Konami code easter egg ----
+  var seq = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  var idx = 0;
+  var inquisition = document.getElementById('inquisition');
+  document.addEventListener('keydown', function(e) {
+    var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === seq[idx]) {
+      idx++;
+      if (idx === seq.length) {
+        inquisition.classList.add('show');
+        inquisition.setAttribute('aria-hidden', 'false');
+        idx = 0;
+      }
+    } else {
+      idx = key === seq[0] ? 1 : 0;
+    }
+    if (e.key === 'Escape' && inquisition.classList.contains('show')) {
+      inquisition.classList.remove('show');
+      inquisition.setAttribute('aria-hidden', 'true');
+    }
+  });
+  document.getElementById('dismiss-inq').addEventListener('click', function() {
+    inquisition.classList.remove('show');
+    inquisition.setAttribute('aria-hidden', 'true');
+  });
+  inquisition.addEventListener('click', function(e) {
+    if (e.target === inquisition) {
+      inquisition.classList.remove('show');
+      inquisition.setAttribute('aria-hidden', 'true');
+    }
+  });
+})();
+</script>
+</body>
+</html>
