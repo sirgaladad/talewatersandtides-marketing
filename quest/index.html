@@ -760,7 +760,7 @@ footer.parchment-ft a { color: var(--gold); }
   <div class="bridge-box">
     <div class="bridge-q">Choose thy occupation</div>
     <label for="occ">The Bridgekeeper, with great impatience, awaits thy reply.</label>
-    <select id="occ" aria-describedby="bridge-help">
+    <select id="occ">
       <option value="">— select an occupation —</option>
       <option value="absurd">MarTech Solution Lead</option>
       <option value="absurd">Senior Coconut Percussionist</option>
@@ -828,7 +828,7 @@ footer.parchment-ft a { color: var(--gold); }
       <button class="skill" data-keep="0" type="button">Detail-Oriented</button>
       <button class="skill" data-keep="1" type="button">B2B GTM</button>
     </div>
-    <div class="skill-verdict" id="skillVerdict">Click a skill. The Tournament shall decide.</div>
+    <div class="skill-verdict" id="skillVerdict" role="status" aria-live="polite">Click a skill. The Tournament shall decide.</div>
   </div>
 
   <div class="margin-note"><strong>Real lesson:</strong> Ask the AI to rank your skills <em>against a specific job description</em>, not in the abstract. "Synergy" and "Team Player" don't survive that test. "CRM Architecture" does, but only because someone in the job description searched for "Salesforce."</div>
@@ -1066,9 +1066,9 @@ footer.parchment-ft a { color: var(--gold); }
     chip.addEventListener('click', function() {
       var keep = chip.getAttribute('data-keep') === '1';
       var verdict = document.getElementById('skillVerdict');
+      chip.disabled = true;
       if (keep) {
         chip.classList.add('kept');
-        chip.setAttribute('disabled', 'true');
         verdict.textContent = verdicts.keep[Math.floor(Math.random() * verdicts.keep.length)];
       } else {
         chip.classList.add('sliced');
