@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buffalo National River Paddler Map — Tale Waters &amp; Tides</title>
+<meta name="description" content="A paddler-first conditions dashboard for America's first National River. Live USGS floatability, 7-day water-level trends, plain-English river reads, and a co-branded outfitter showcase. AI-native in design and build.">
+<meta name="theme-color" content="#0d1b2a">
+<meta property="og:title" content="Buffalo National River Paddler Map — Tale Waters &amp; Tides">
+<meta property="og:description" content="Live USGS floatability per section, 7-day water trends, plain-English reads, and outfitter showcase for the Buffalo. Beta — built with Riley's Outfitter.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/projects/buffalo-river/">
+<meta property="og:image" content="https://talewatersandtides.com/assets/paddler/paddler-map-desktop.png">
+<link rel="canonical" href="https://talewatersandtides.com/projects/buffalo-river/">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<style>
+:root {
+  --tl: #2a6b8a;
+  --dk: #0d1b2a;
+  --d2: #101f30;
+  --d3: #162840;
+  --cr: #f5f0e8;
+  --gd: #f5a623;
+  --tx: #b0c4d6;
+  --dm: #5a7a94;
+  --bd: rgba(42,107,138,.14);
+  --b2: rgba(42,107,138,.26);
+  --c-green: #34d399;
+  --c-green-bg: rgba(52,211,153,.10);
+  --c-green-border: rgba(52,211,153,.28);
+  --c-purple: #c084fc;
+  --c-purple-bg: rgba(192,132,252,.10);
+  --c-purple-border: rgba(192,132,252,.28);
+  --c-blue: #7dd3fc;
+  --c-blue-bg: rgba(125,211,252,.08);
+  --c-blue-border: rgba(125,211,252,.22);
+  --fd: 'Cinzel', serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 64px; }
+body { background: var(--dk); color: var(--tx); font-family: var(--fb); font-size: 1.0625rem; line-height: 1.65; overflow-x: hidden; }
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 20px; }
+@media(min-width: 768px) { .wrap { padding: 0 40px; } }
+
+/* NAV */
+.nv { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,27,42,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--bd); }
+.nv-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+@media(min-width: 768px) { .nv-in { padding: 0 40px; height: 60px; } }
+.nv-brand { font-family: var(--fd); font-size: clamp(0.55rem, 2.2vw, 0.9375rem); letter-spacing: .12em; text-transform: uppercase; color: var(--cr); text-decoration: none; white-space: nowrap; flex-shrink: 1; min-width: 0; }
+.nv-r { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.nv-desk { display: none; gap: 28px; align-items: center; }
+.nv-desk a { font-size: 0.9375rem; color: var(--cr); opacity: 0.82; text-decoration: none; letter-spacing: .01em; transition: opacity .2s; }
+.nv-desk a:hover { opacity: 1; }
+.nv-desk a.cur { opacity: 1; color: var(--gd); }
+.nv-desk .nv-cta { color: var(--dk); background: var(--gd); padding: 8px 20px; border-radius: 5px; font-weight: 600; font-size: 0.9375rem; opacity: 1; transition: opacity .2s; }
+.nv-desk .nv-cta:hover { opacity: .88; }
+.hm { background: none; border: none; cursor: pointer; padding: 8px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; min-width: 44px; min-height: 44px; }
+.hm span { display: block; width: 20px; height: 1.5px; background: var(--cr); border-radius: 1px; transition: all .25s; }
+.hm.on span:nth-child(1) { transform: rotate(45deg) translate(4.5px,4.5px); }
+.hm.on span:nth-child(2) { opacity: 0; }
+.hm.on span:nth-child(3) { transform: rotate(-45deg) translate(4.5px,-4.5px); }
+@media(min-width: 768px) { .hm { display: none; } .nv-desk { display: flex; } }
+
+.mn { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: var(--dk); z-index: 99; padding: 32px 24px; display: none; flex-direction: column; }
+.mn.on { display: flex; }
+.mn a { font-size: 1.125rem; color: var(--tx); text-decoration: none; padding: 18px 0; border-bottom: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; }
+.mn a.cur { color: var(--gd); }
+.mn a:active { color: var(--cr); }
+.mn a .a { color: var(--dm); font-size: 0.75rem; }
+.mn-pfg { background: var(--d3); border: 1px solid var(--b2); border-radius: 8px; padding: 16px 18px; margin-top: 24px; text-decoration: none; display: block; }
+.mn-pfg-t { font-size: 1rem; font-weight: 500; color: var(--cr); }
+.mn-pfg-s { font-size: 0.75rem; color: var(--dm); margin-top: 3px; }
+
+/* PAGE HEADER */
+.ph { padding: 96px 0 24px; }
+@media(min-width: 768px) { .ph { padding: 120px 0 36px; } }
+.ph .lb { font-size: 0.6875rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gd); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.ph .lb::before { content: ''; width: 20px; height: 1px; background: var(--gd); }
+.ph h1 { font-family: var(--fd); font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 400; line-height: 1.15; color: var(--cr); margin-bottom: 16px; max-width: 820px; }
+.ph h1 em { font-style: italic; color: var(--gd); }
+.ph p.lede { font-size: 1.0625rem; color: var(--tx); line-height: 1.65; max-width: 720px; margin-bottom: 22px; }
+
+.bc { font-size: 0.75rem; color: var(--dm); margin-bottom: 20px; letter-spacing: .04em; }
+.bc a { color: var(--dm); text-decoration: none; border-bottom: 1px solid var(--bd); transition: color .2s, border-color .2s; }
+.bc a:hover { color: var(--tx); border-color: var(--b2); }
+.bc .sep { margin: 0 8px; color: rgba(90,122,148,.5); }
+
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.pill { font-size: 0.6875rem; font-weight: 600; letter-spacing: .05em; padding: 4px 10px; border-radius: 4px; }
+.pill.live { color: var(--c-green); background: var(--c-green-bg); border: 1px solid var(--c-green-border); }
+.pill.beta { color: var(--gd); background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.34); }
+.pill.partner { color: var(--c-blue); background: var(--c-blue-bg); border: 1px solid var(--c-blue-border); }
+
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; min-height: 44px; background: var(--gd); color: var(--dk); font-size: 0.9375rem; font-weight: 600; border-radius: 6px; text-decoration: none; transition: opacity .2s; }
+.hero-cta:hover { opacity: .88; }
+
+/* SECTIONS */
+section { padding: 28px 0; }
+@media(min-width: 768px) { section { padding: 44px 0; } }
+.lb { font-size: 0.6875rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gd); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.lb::before { content: ''; width: 16px; height: 1px; background: var(--gd); }
+.st { font-family: var(--fd); font-size: clamp(1.25rem, 3vw, 1.625rem); color: var(--cr); line-height: 1.2; margin-bottom: 18px; }
+.sd { font-size: 1rem; color: var(--tx); max-width: 720px; }
+.sd + .sd { margin-top: 14px; }
+
+/* HERO IMAGE */
+.hero-img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--bd); margin-top: 8px; }
+
+/* FEATURE GRID */
+.fg { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 20px; }
+@media(min-width: 600px) { .fg { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 900px) { .fg { grid-template-columns: 1fr 1fr 1fr; } }
+.fc { background: var(--d2); border: 1px solid var(--bd); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 8px; min-height: 150px; }
+.fc-t { font-family: var(--fd); font-size: 1rem; color: var(--cr); font-weight: 400; line-height: 1.25; }
+.fc-d { font-size: 0.875rem; color: var(--tx); line-height: 1.6; }
+
+/* SCREENSHOT GALLERY */
+.gal { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 20px; }
+@media(min-width: 720px) { .gal { grid-template-columns: 1fr 1fr; } }
+.gi { background: var(--d2); border: 1px solid var(--bd); border-radius: 10px; padding: 12px; }
+.gi img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.gi-c { font-size: 0.8125rem; color: var(--dm); margin-top: 10px; padding: 0 4px; line-height: 1.5; }
+.gi.mobile { display: flex; flex-direction: column; align-items: center; }
+.gi.mobile img { max-width: 360px; width: 100%; }
+
+/* AI ROLES TABLE */
+.tbl { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 0.9375rem; }
+.tbl th, .tbl td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--bd); }
+.tbl th { font-family: var(--fd); font-size: 0.75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gd); font-weight: 500; }
+.tbl td { color: var(--tx); }
+.tbl td:first-child { color: var(--cr); font-weight: 500; }
+
+/* PERSONA CARDS */
+.pe { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 20px; }
+@media(min-width: 720px) { .pe { grid-template-columns: 1fr 1fr 1fr; } }
+.pc { background: var(--d2); border: 1px solid var(--bd); border-left: 3px solid var(--tl); border-radius: 8px; padding: 18px 20px; }
+.pc-w { font-size: 0.6875rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gd); margin-bottom: 8px; }
+.pc-t { font-family: var(--fd); font-size: 1rem; color: var(--cr); margin-bottom: 6px; }
+.pc-d { font-size: 0.875rem; color: var(--tx); line-height: 1.6; }
+
+/* CALLOUT */
+.cl { background: var(--d2); border: 1px solid var(--bd); border-left: 3px solid var(--gd); border-radius: 8px; padding: 22px; margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+@media(min-width: 600px) { .cl { flex-direction: row; align-items: center; justify-content: space-between; padding: 22px 28px; } }
+.cl-t { font-family: var(--fd); font-size: 1rem; color: var(--cr); }
+.cl-d { font-size: 0.875rem; color: var(--dm); margin-top: 3px; }
+.cl-a { display: inline-flex; align-items: center; gap: 6px; padding: 11px 20px; min-height: 44px; background: var(--gd); color: var(--dk); font-size: 0.9375rem; font-weight: 600; border-radius: 6px; text-decoration: none; transition: opacity .2s; flex-shrink: 0; }
+.cl-a:hover { opacity: .88; }
+
+/* FOOTER */
+footer { padding: 28px 20px; border-top: 1px solid var(--bd); margin-top: 36px; }
+.ft-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; max-width: var(--mw); margin-left: auto; margin-right: auto; }
+.ft-br { font-family: var(--fd); font-size: 0.6875rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dm); }
+.ft-social { display: flex; gap: 14px; align-items: center; }
+.ft-social a { color: var(--dm); text-decoration: none; display: flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; transition: color .2s; }
+.ft-social a:hover { color: var(--tx); }
+.ft-social svg { width: 18px; height: 18px; }
+.ft-lk { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.ft-lk a { font-size: 0.8125rem; color: var(--dm); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--tx); }
+.ft-cp { font-size: 0.6875rem; color: rgba(90,122,148,.5); text-align: center; }
+
+.r { opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .5s; }
+.r.v { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<nav class="nv" id="nv" data-ga="nav"><div class="nv-in"><a href="/" class="nv-brand" data-ga="nav_brand">Tale Waters &amp; Tides</a><div class="nv-desk"><a href="/#now" data-ga="nav_lab">Lab</a><a href="/projects/" class="cur" data-ga="nav_projects">Projects</a><a href="/#team" data-ga="nav_about">About</a><a href="/#collab" class="nv-cta" data-ga="nav_collaborate">Collaborate</a></div><div class="nv-r"><button class="hm" id="hm" aria-label="Menu"><span></span><span></span><span></span></button></div></div></nav>
+<div class="mn" id="mn"><a href="/#now" onclick="cm()" data-ga="menu_lab">The Lab <span class="a">→</span></a><a href="/projects/" class="cur" onclick="cm()" data-ga="menu_projects">Projects <span class="a">→</span></a><a href="/#team" onclick="cm()" data-ga="menu_about">About <span class="a">→</span></a><a href="/#collab" onclick="cm()" data-ga="menu_collaborate">Collaborate <span class="a">→</span></a><a href="https://pocketfishinguide.com/paddler.html" class="mn-pfg" onclick="cm()" target="_blank" rel="noopener" data-ga="menu_paddler"><div class="mn-pfg-t">Open the Paddler Map →</div><div class="mn-pfg-s">Live floatability for the Buffalo National River</div></a></div>
+
+<header class="ph" data-ga-section="buffalo_header">
+  <div class="wrap">
+    <div class="bc"><a href="/" data-ga="bc_home">Tale Waters &amp; Tides</a><span class="sep">/</span><a href="/projects/" data-ga="bc_projects">Projects</a><span class="sep">/</span><span>Buffalo National River</span></div>
+    <div class="lb r">The Lab · Latest Beta</div>
+    <h1 class="r">Paddler intelligence for <em>America's first National River.</em></h1>
+    <p class="lede r">A mobile-first conditions dashboard built for paddlers, anglers, tourists, and the outfitters who serve them. Live USGS floatability per section, 7-day water-level trends, plain-English river reads, and a co-branded operator showcase &mdash; all on one screen, in one glance, in plain Arkansan.</p>
+    <div class="pills r"><span class="pill live">LIVE</span><span class="pill beta">BETA</span><span class="pill partner">Built with Riley's Outfitter</span></div>
+    <a href="https://pocketfishinguide.com/paddler.html" target="_blank" rel="noopener" class="hero-cta r" data-ga="buffalo_hero_cta">Open the Paddler Map →</a>
+  </div>
+</header>
+
+<section data-ga-section="buffalo_hero_img">
+  <div class="wrap">
+    <img class="hero-img r" src="/assets/paddler/paddler-map-desktop.png" alt="Buffalo National River Paddler Map — desktop view showing color-coded floatability across seven river sections, today's conditions, live USGS gauge, water temperature, 24-hour trend, and plan-your-run controls." loading="lazy" decoding="async" width="1280" height="860">
+  </div>
+</section>
+
+<section data-ga-section="buffalo_problem">
+  <div class="wrap">
+    <div class="lb r">What it solves</div>
+    <h2 class="st r">Five outfitter websites. Three USGS gauges. One paddler trying to decide if Saturday's float is on.</h2>
+    <p class="sd r">The Buffalo runs 153 miles through three districts &mdash; Upper, Middle, and Lower &mdash; each with its own gauges, its own access points, its own seasonal personality. Today, a paddler planning a weekend has to cross-reference raw <em>cfs</em> from three USGS sites, hunt for NPS regs, call an outfitter for their take, and still guess whether the section they want is too low, too pushy, or just right.</p>
+    <p class="sd r">The Paddler Map collapses all of that into a single live view. Color-coded floatability per section. A plain-English read for each gauge. 7-day water-level and temperature trends. NPS &amp; AGFC regs at every access. And a co-branded outfitter showcase so the operators who keep the river running get featured, not buried.</p>
+  </div>
+</section>
+
+<section data-ga-section="buffalo_features">
+  <div class="wrap">
+    <div class="lb r">What's unique</div>
+    <h2 class="st r">Six things that don't exist anywhere else on the Buffalo.</h2>
+    <div class="fg">
+      <div class="fc r">
+        <div class="fc-t">Live floatability per section</div>
+        <div class="fc-d">USGS feeds for every reach, translated into a color band on the river: too low, runnable, pushy, closed. Not raw numbers &mdash; an answer.</div>
+      </div>
+      <div class="fc r">
+        <div class="fc-t">7-day water level &amp; temperature trend</div>
+        <div class="fc-d">Rising or falling? Warming or cooling? Two charts, one glance. Plan tomorrow's float around today's direction.</div>
+      </div>
+      <div class="fc r">
+        <div class="fc-t">Plain-English river reads</div>
+        <div class="fc-d">&ldquo;She's at a friendly 4.1 and dropping &mdash; easy Class I cruise, bring a fishing rod.&rdquo; Deterministic, no LLM required, written like the river guide your uncle wishes he was.</div>
+      </div>
+      <div class="fc r">
+        <div class="fc-t">Outfitter showcase mode</div>
+        <div class="fc-d">Authorized operators get a co-branded panel with a logo, contact tap, and a popular-runs list per section &mdash; built so Riley's and friends keep their voice on the river.</div>
+      </div>
+      <div class="fc r">
+        <div class="fc-t">NPS regs &amp; AGFC fishing intel</div>
+        <div class="fc-d">Camping rules, day-use rules, life-jacket law, smallmouth slot limits &mdash; surfaced inline at the access where you actually need them.</div>
+      </div>
+      <div class="fc r">
+        <div class="fc-t">Spawn-phase intel for anglers</div>
+        <div class="fc-d">Layered on top of the PFG data engine: smallmouth bass spawn phase per section, water temp targets, and what the bite should be doing this week.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-ga-section="buffalo_gallery">
+  <div class="wrap">
+    <div class="lb r">In the wild</div>
+    <h2 class="st r">Screen grabs from the live Beta.</h2>
+    <div class="gal">
+      <div class="gi r">
+        <img src="/assets/paddler/paddler-section-sheet.png" alt="Lower-district section sheet on the Paddler Map showing Gilbert to Buffalo Point reach, gauge 4.50 ft, 380 cfs, water temp 57.8 degrees warming, 24-hour trend rising 0.2 ft, status HIGH with medium confidence, and the river read: 'Bigger water on the lower river. Strong paddlers fine; new paddlers tire fast.'" loading="lazy" decoding="async">
+        <div class="gi-c">Switch districts, tap a section, and the right-side panel rewrites itself &mdash; live cfs, water temp, trend direction, confidence, and a written read.</div>
+      </div>
+      <div class="gi r">
+        <img src="/assets/paddler/paddler-outfitter.png" alt="Outfitter showcase panel listing Silver Hill Float Service, Buffalo Camping and Canoeing, and Crockett's Canoe Rental with logo avatars, district, NPS concessionaire tags, and tap-to-call buttons." loading="lazy" decoding="async">
+        <div class="gi-c">Outfitters serving the selected section, surfaced inline. NPS concessionaire badging, tap-to-call, tap-to-visit &mdash; no scrolling, no Googling.</div>
+      </div>
+      <div class="gi mobile r">
+        <img src="/assets/paddler/paddler-mobile.png" alt="Mobile view of the Paddler Map at 390 pixels wide showing Buffalo National River header, mode toggle for Paddler / Recreation / Angler, today's best sections panel highlighting Buffalo Point to White River, a safety note, and the district pill row above the map.">
+        <div class="gi-c">Phone-first. Built for the put-in parking lot, not the desktop. 390&times;844, touch-sized targets, the same live data.</div>
+      </div>
+      <div class="gi r">
+        <img src="/assets/paddler/paddler-map-desktop.png" alt="Desktop view of the Buffalo National River Paddler Map with section bands color-coded along the river, plan-your-run controls, popular run list, and the Riley's Outfitter co-brand badge top-right." loading="lazy" decoding="async">
+        <div class="gi-c">Desktop view &mdash; the operator showcase, the legend, and the plan-your-run picker, all without leaving the map.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-ga-section="buffalo_audiences">
+  <div class="wrap">
+    <div class="lb r">Who it's for</div>
+    <h2 class="st r">Locals, tourists, and the outfitters keeping the river running.</h2>
+    <div class="pe">
+      <div class="pc r">
+        <div class="pc-w">The local</div>
+        <div class="pc-t">&ldquo;Is Saturday on?&rdquo;</div>
+        <div class="pc-d">Weekend paddlers in Marshall, Jasper, Yellville, and Mountain Home need one glanceable answer before they commit a Saturday and a shuttle ride.</div>
+      </div>
+      <div class="pc r">
+        <div class="pc-w">The tourist</div>
+        <div class="pc-t">&ldquo;What's a safe first float?&rdquo;</div>
+        <div class="pc-d">Visitors from Little Rock, Memphis, Tulsa, and St. Louis arrive without local intuition. The map gives them district, mileage, difficulty, and an outfitter on the same screen.</div>
+      </div>
+      <div class="pc r">
+        <div class="pc-w">The outfitter</div>
+        <div class="pc-t">&ldquo;Send people, not phone calls.&rdquo;</div>
+        <div class="pc-d">Operators like Riley's get a co-branded conditions view they can link from their own site &mdash; one source of truth, fewer &ldquo;is the river running?&rdquo; calls, more booked floats.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-ga-section="buffalo_ai">
+  <div class="wrap">
+    <div class="lb r">How it was built</div>
+    <h2 class="st r">Native AI in co-design and development.</h2>
+    <p class="sd r">The Paddler Map is the first lab product we shipped end-to-end on our AI-native pipeline: agents handle scoping, UX critique, and the build itself; humans hold the approval gate and the relationship with the river community. The same SOP that ships PFG ships this.</p>
+    <p class="sd r">Riley's Outfitter sat in the room (virtually) as design partner &mdash; their put-ins, their runs, their phrasing of &ldquo;is the river up?&rdquo; calibrated the floatability model and the river reads. The scoping doc, the UX heuristic review, and the risk register are all AI-authored and human-approved artifacts in the repo.</p>
+    <table class="tbl r">
+      <thead><tr><th>Role</th><th>Owner</th><th>On this project</th></tr></thead>
+      <tbody>
+        <tr><td>Scoping &amp; UX design</td><td>Claude (Claude Code)</td><td>Feature scoping doc, persona model, floatability rubric, accessibility heuristic review</td></tr>
+        <tr><td>Code implementation</td><td>Codex</td><td>React app, USGS / NWS data wiring, section-sheet UI, mobile responsive build</td></tr>
+        <tr><td>Release polish &amp; review</td><td>Copilot</td><td>Changelog, PR-level review, copy nits, version pins</td></tr>
+        <tr><td>Approval &amp; field validation</td><td>@sirgaladad + Riley's Outfitter</td><td>Operator sign-off, feature priority, real-river truth-checking</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section data-ga-section="buffalo_cta">
+  <div class="wrap">
+    <div class="cl r">
+      <div>
+        <div class="cl-t">Open the live Paddler Map</div>
+        <div class="cl-d">Beta release &mdash; live USGS &amp; NWS data on every section of the Buffalo. Built with Riley's Outfitter.</div>
+      </div>
+      <a href="https://pocketfishinguide.com/paddler.html" target="_blank" rel="noopener" class="cl-a" data-ga="buffalo_footer_cta">Launch the Map →</a>
+    </div>
+  </div>
+</section>
+
+<footer data-ga-section="footer"><div class="ft-top"><span class="ft-br">Tale Waters &amp; Tides</span><div class="ft-social"><a href="https://www.facebook.com/talewatersandtides" target="_blank" rel="noopener" aria-label="Facebook" data-ga="social_facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://www.tiktok.com/@coreytheaideaguy" target="_blank" rel="noopener" aria-label="TikTok" data-ga="social_tiktok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z"/></svg></a><a href="https://www.linkedin.com/in/boelkens/" target="_blank" rel="noopener" aria-label="LinkedIn" data-ga="social_linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="https://pocketfishinguide.com" target="_blank" rel="noopener" aria-label="PFG" data-ga="social_pfg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></a></div></div><div class="ft-lk"><a href="/#now">Lab</a><a href="/projects/">Projects</a><a href="/#team">About</a><a href="/#collab">Collaborate</a><a href="https://pocketfishinguide.com">PFG</a><a href="/projects/buffalo-river/" data-ga="footer_buffalo">Buffalo</a><a href="/projects/quest/" data-ga="footer_quest">Quest</a></div><div class="ft-cp">&copy; 2026 Tale Waters and Tides, LLC &middot; Little Rock, Arkansas</div></footer>
+
+<script>
+const h=document.getElementById('hm'),m=document.getElementById('mn');h.addEventListener('click',()=>{h.classList.toggle('on');m.classList.toggle('on');document.body.style.overflow=m.classList.contains('on')?'hidden':''});function cm(){h.classList.remove('on');m.classList.remove('on');document.body.style.overflow=''}
+const els=document.querySelectorAll('.r');const io=new IntersectionObserver(e=>{e.forEach((n,i)=>{if(n.isIntersecting){setTimeout(()=>n.target.classList.add('v'),i*35);io.unobserve(n.target)}})},{threshold:.08,rootMargin:'0px 0px -16px 0px'});els.forEach(el=>io.observe(el));
+document.querySelectorAll('[data-ga]').forEach(el=>{el.addEventListener('click',function(e){e.stopPropagation();if(typeof gtag==='function'){gtag('event','click',{event_category:'engagement',event_label:this.getAttribute('data-ga'),link_url:this.href||''})}})});
+const sio=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){if(typeof gtag==='function'){gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')})}sio.unobserve(n.target)}})},{threshold:.3});document.querySelectorAll('[data-ga-section]').forEach(el=>sio.observe(el));
+</script>
+</body>
+</html>
