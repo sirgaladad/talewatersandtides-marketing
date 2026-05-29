@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Events — Tale Waters &amp; Tides Innovation Lab</title>
+<meta name="description" content="Events from Tale Waters &amp; Tides: hands-on creative-AI workshops, community build nights, and field experiments in Arkansas. Currently: Prompt Play, a 3-night creative AI workshop series in Benton, AR.">
+<meta name="theme-color" content="#0d1b2a">
+<meta property="og:title" content="Events — Tale Waters &amp; Tides Innovation Lab">
+<meta property="og:description" content="Hands-on creative-AI workshops and community build nights from the Tale Waters &amp; Tides lab. Now: Prompt Play in Benton, AR.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/events/">
+<link rel="canonical" href="https://talewatersandtides.com/events/">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<style>
+:root {
+  --tl: #2a6b8a;
+  --dk: #0d1b2a;
+  --d2: #101f30;
+  --d3: #162840;
+  --cr: #f5f0e8;
+  --gd: #f5a623;
+  --tx: #b0c4d6;
+  --dm: #5a7a94;
+  --bd: rgba(42,107,138,.14);
+  --b2: rgba(42,107,138,.26);
+  --c-green: #34d399;
+  --c-green-bg: rgba(52,211,153,.10);
+  --c-green-border: rgba(52,211,153,.28);
+  --c-purple: #c084fc;
+  --c-purple-bg: rgba(192,132,252,.10);
+  --c-purple-border: rgba(192,132,252,.28);
+  --c-blue: #7dd3fc;
+  --c-blue-bg: rgba(125,211,252,.08);
+  --c-blue-border: rgba(125,211,252,.22);
+  --fd: 'Cinzel', serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 64px; }
+body { background: var(--dk); color: var(--tx); font-family: var(--fb); font-size: 1.0625rem; line-height: 1.65; overflow-x: hidden; }
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 20px; }
+@media(min-width: 768px) { .wrap { padding: 0 40px; } }
+
+/* NAV */
+.nv { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,27,42,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--bd); }
+.nv-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+@media(min-width: 768px) { .nv-in { padding: 0 40px; height: 60px; } }
+.nv-brand { font-family: var(--fd); font-size: clamp(0.55rem, 2.2vw, 0.9375rem); letter-spacing: .12em; text-transform: uppercase; color: var(--cr); text-decoration: none; white-space: nowrap; flex-shrink: 1; min-width: 0; }
+.nv-r { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.nv-desk { display: none; gap: 28px; align-items: center; }
+.nv-desk a { font-size: 0.9375rem; color: var(--cr); opacity: 0.82; text-decoration: none; letter-spacing: .01em; transition: opacity .2s; }
+.nv-desk a:hover { opacity: 1; }
+.nv-desk a.cur { opacity: 1; color: var(--gd); }
+.nv-desk .nv-cta { color: var(--dk); background: var(--gd); padding: 8px 20px; border-radius: 5px; font-weight: 600; font-size: 0.9375rem; opacity: 1; transition: opacity .2s; }
+.nv-desk .nv-cta:hover { opacity: .88; }
+.hm { background: none; border: none; cursor: pointer; padding: 8px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; min-width: 44px; min-height: 44px; }
+.hm span { display: block; width: 20px; height: 1.5px; background: var(--cr); border-radius: 1px; transition: all .25s; }
+.hm.on span:nth-child(1) { transform: rotate(45deg) translate(4.5px,4.5px); }
+.hm.on span:nth-child(2) { opacity: 0; }
+.hm.on span:nth-child(3) { transform: rotate(-45deg) translate(4.5px,-4.5px); }
+@media(min-width: 768px) { .hm { display: none; } .nv-desk { display: flex; } }
+
+.mn { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: var(--dk); z-index: 99; padding: 32px 24px; display: none; flex-direction: column; }
+.mn.on { display: flex; }
+.mn a { font-size: 1.125rem; color: var(--tx); text-decoration: none; padding: 18px 0; border-bottom: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; }
+.mn a.cur { color: var(--gd); }
+.mn a:active { color: var(--cr); }
+.mn a .a { color: var(--dm); font-size: 0.75rem; }
+.mn-pfg { background: var(--d3); border: 1px solid var(--b2); border-radius: 8px; padding: 16px 18px; margin-top: 24px; text-decoration: none; display: block; }
+.mn-pfg-t { font-size: 1rem; font-weight: 500; color: var(--cr); }
+.mn-pfg-s { font-size: 0.75rem; color: var(--dm); margin-top: 3px; }
+
+/* PAGE HEADER */
+.ph { padding: 96px 0 24px; }
+@media(min-width: 768px) { .ph { padding: 120px 0 36px; } }
+.ph .lb { font-size: 0.6875rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gd); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.ph .lb::before { content: ''; width: 20px; height: 1px; background: var(--gd); }
+.ph h1 { font-family: var(--fd); font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 400; line-height: 1.15; color: var(--cr); margin-bottom: 16px; max-width: 760px; }
+.ph h1 em { font-style: italic; color: var(--gd); }
+.ph p { font-size: 1rem; color: var(--dm); line-height: 1.65; max-width: 620px; }
+
+.bc { font-size: 0.75rem; color: var(--dm); margin-bottom: 20px; letter-spacing: .04em; }
+.bc a { color: var(--dm); text-decoration: none; border-bottom: 1px solid var(--bd); transition: color .2s, border-color .2s; }
+.bc a:hover { color: var(--tx); border-color: var(--b2); }
+.bc .sep { margin: 0 8px; color: rgba(90,122,148,.5); }
+
+/* SECTIONS */
+section { padding: 24px 0; }
+@media(min-width: 768px) { section { padding: 36px 0; } }
+.lb { font-size: 0.6875rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gd); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.lb::before { content: ''; width: 16px; height: 1px; background: var(--gd); }
+.st { font-family: var(--fd); font-size: clamp(1.25rem, 3vw, 1.625rem); color: var(--cr); line-height: 1.2; margin-bottom: 22px; }
+
+/* EVENT GRID */
+.eg { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media(min-width: 760px) { .eg { grid-template-columns: 1fr 1fr; } }
+
+.ev { background: var(--d2); border: 1px solid var(--bd); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s, background .2s; min-height: 210px; }
+.ev.up { cursor: pointer; }
+.ev.up:hover { border-color: var(--b2); transform: translateY(-2px); background: var(--d3); }
+.ev.soon { cursor: default; opacity: .78; }
+.ev-hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.ev-t { font-family: var(--fd); font-size: 1.25rem; color: var(--cr); font-weight: 400; }
+.ev-sub { font-size: 0.9375rem; color: var(--tx); }
+.ev-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.8125rem; color: var(--dm); margin-top: 2px; }
+.ev-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.ev-meta svg { width: 14px; height: 14px; color: var(--tl); }
+.ev-d { font-size: 0.875rem; color: var(--dm); line-height: 1.6; flex: 1; }
+.ev-q { font-size: 0.8125rem; color: var(--gd); font-weight: 500; margin-top: auto; padding-top: 8px; }
+
+.bdg { font-size: 0.6875rem; font-weight: 600; letter-spacing: .05em; padding: 4px 9px; border-radius: 4px; white-space: nowrap; }
+.bdg-u { color: var(--c-green); background: var(--c-green-bg); border: 1px solid var(--c-green-border); }
+.bdg-c { color: var(--c-blue); background: var(--c-blue-bg); border: 1px solid var(--c-blue-border); }
+
+/* CALLOUT */
+.cl { background: var(--d2); border: 1px solid var(--bd); border-left: 3px solid var(--tl); border-radius: 8px; padding: 22px; margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+@media(min-width: 600px) { .cl { flex-direction: row; align-items: center; justify-content: space-between; padding: 22px 28px; } }
+.cl-t { font-family: var(--fd); font-size: 1rem; color: var(--cr); }
+.cl-d { font-size: 0.875rem; color: var(--dm); margin-top: 3px; }
+.cl-a { display: inline-flex; align-items: center; gap: 6px; padding: 11px 20px; min-height: 44px; background: var(--gd); color: var(--dk); font-size: 0.9375rem; font-weight: 600; border-radius: 6px; text-decoration: none; transition: opacity .2s; flex-shrink: 0; }
+.cl-a:hover { opacity: .88; }
+
+/* FOOTER */
+footer { padding: 28px 20px; border-top: 1px solid var(--bd); margin-top: 36px; }
+.ft-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; max-width: var(--mw); margin-left: auto; margin-right: auto; }
+.ft-br { font-family: var(--fd); font-size: 0.6875rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dm); }
+.ft-social { display: flex; gap: 14px; align-items: center; }
+.ft-social a { color: var(--dm); text-decoration: none; display: flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; transition: color .2s; }
+.ft-social a:hover { color: var(--tx); }
+.ft-social svg { width: 18px; height: 18px; }
+.ft-lk { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.ft-lk a { font-size: 0.8125rem; color: var(--dm); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--tx); }
+.ft-cp { font-size: 0.6875rem; color: rgba(90,122,148,.5); text-align: center; }
+
+.r { opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .5s; }
+.r.v { opacity: 1; transform: translateY(0); }
+*:focus-visible { outline: 3px solid var(--tl); outline-offset: 3px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<nav class="nv" id="nv" data-ga="nav"><div class="nv-in"><a href="/" class="nv-brand" data-ga="nav_brand">Tale Waters &amp; Tides</a><div class="nv-desk"><a href="/#now" data-ga="nav_lab">Lab</a><a href="/projects/" data-ga="nav_projects">Projects</a><a href="/events/" class="cur" data-ga="nav_events">Events</a><a href="/#team" data-ga="nav_about">About</a><a href="/#collab" class="nv-cta" data-ga="nav_collaborate">Collaborate</a></div><div class="nv-r"><button class="hm" id="hm" aria-label="Menu"><span></span><span></span><span></span></button></div></div></nav>
+<div class="mn" id="mn"><a href="/#now" onclick="cm()" data-ga="menu_lab">The Lab <span class="a">→</span></a><a href="/projects/" onclick="cm()" data-ga="menu_projects">Projects <span class="a">→</span></a><a href="/events/" class="cur" onclick="cm()" data-ga="menu_events">Events <span class="a">→</span></a><a href="/#team" onclick="cm()" data-ga="menu_about">About <span class="a">→</span></a><a href="/#collab" onclick="cm()" data-ga="menu_collaborate">Collaborate <span class="a">→</span></a><a href="https://pocketfishinguide.com" class="mn-pfg" onclick="cm()" target="_blank" rel="noopener" data-ga="menu_pfg"><div class="mn-pfg-t">Pocket Fishing Guide →</div><div class="mn-pfg-s">Live fishing intelligence for Arkansas anglers</div></a></div>
+
+<header class="ph" data-ga-section="events_header">
+  <div class="wrap">
+    <div class="bc"><a href="/" data-ga="bc_home">Tale Waters &amp; Tides</a><span class="sep">/</span><span>Events</span></div>
+    <div class="lb r">The Community</div>
+    <h1 class="r">Where the lab spills <em>into the room.</em></h1>
+    <p class="r">Hands-on workshops, community build nights, and field experiments — the moments where Tale Waters &amp; Tides stops being a website and becomes a room full of curious people making things together. Mostly in Arkansas. Always a little experimental.</p>
+  </div>
+</header>
+
+<section data-ga-section="events_grid">
+  <div class="wrap">
+    <div class="eg">
+
+      <a class="ev up r" href="/prompt-play/" data-ga="event_prompt_play">
+        <div class="ev-hd"><div class="ev-t">Prompt Play</div><span class="bdg bdg-u">UPCOMING</span></div>
+        <div class="ev-sub">A Creative AI Workshop Series</div>
+        <div class="ev-meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>June 2, 9 &amp; 16, 2026</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Benton, AR</span>
+        </div>
+        <div class="ev-d">Three nights, three themes. A grassroots playground where AI meets creativity, curiosity, and community — vibecoding, storytelling, and prompt-to-product, hosted at Let's Play Studio. Not a class. Not a webinar.</div>
+        <div class="ev-q">View the series &amp; reserve your seat →</div>
+      </a>
+
+      <div class="ev soon r" data-ga="event_more_soon">
+        <div class="ev-hd"><div class="ev-t">More gatherings soon</div><span class="bdg bdg-c">IN PLANNING</span></div>
+        <div class="ev-sub">Build nights · field demos · pop-ups</div>
+        <div class="ev-d">We run small, hands-on events around outdoor recreation, marine tech, and creative AI. Want to know when the next one drops — or host one with us? The door's open.</div>
+        <div class="ev-q">Tell us what you'd want to build →</div>
+      </div>
+
+    </div>
+
+    <div class="cl r">
+      <div>
+        <div class="cl-t">Want to host or co-create an event?</div>
+        <div class="cl-d">We partner with studios, brands, schools, and founders across Arkansas.</div>
+      </div>
+      <a href="/#collab" class="cl-a" data-ga="events_cta_collab">Collaborate With Us →</a>
+    </div>
+  </div>
+</section>
+
+<footer data-ga-section="footer"><div class="ft-top"><span class="ft-br">Tale Waters &amp; Tides</span><div class="ft-social"><a href="https://www.facebook.com/talewatersandtides" target="_blank" rel="noopener" aria-label="Facebook" data-ga="social_facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://www.tiktok.com/@coreytheaideaguy" target="_blank" rel="noopener" aria-label="TikTok" data-ga="social_tiktok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z"/></svg></a><a href="https://www.linkedin.com/in/boelkens/" target="_blank" rel="noopener" aria-label="LinkedIn" data-ga="social_linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="https://pocketfishinguide.com" target="_blank" rel="noopener" aria-label="PFG" data-ga="social_pfg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></a></div></div><div class="ft-lk"><a href="/#now">Lab</a><a href="/projects/">Projects</a><a href="/events/">Events</a><a href="/#team">About</a><a href="/#collab">Collaborate</a><a href="/prompt-play/" data-ga="footer_prompt_play">Prompt Play</a><a href="https://pocketfishinguide.com">PFG</a></div><div class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas</div></footer>
+
+<script>
+const h=document.getElementById('hm'),m=document.getElementById('mn');h.addEventListener('click',()=>{h.classList.toggle('on');m.classList.toggle('on');document.body.style.overflow=m.classList.contains('on')?'hidden':''});function cm(){h.classList.remove('on');m.classList.remove('on');document.body.style.overflow=''}
+const els=document.querySelectorAll('.r');if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{e.forEach((n,i)=>{if(n.isIntersecting){setTimeout(()=>n.target.classList.add('v'),i*35);io.unobserve(n.target)}})},{threshold:.08,rootMargin:'0px 0px -16px 0px'});els.forEach(el=>io.observe(el));}else{els.forEach(el=>el.classList.add('v'));}
+document.querySelectorAll('[data-ga]').forEach(el=>{el.addEventListener('click',function(){if(typeof gtag==='function'){gtag('event','click',{event_category:'engagement',event_label:this.getAttribute('data-ga'),link_url:this.href||''})}})});
+if('IntersectionObserver' in window){const sio=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){if(typeof gtag==='function'){gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')})}sio.unobserve(n.target)}})},{threshold:.3});document.querySelectorAll('[data-ga-section]').forEach(el=>sio.observe(el));}
+</script>
+</body>
+</html>
