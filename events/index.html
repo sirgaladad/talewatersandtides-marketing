@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Events — Tale Waters &amp; Tides Innovation Lab</title>
-<meta name="description" content="Events from Tale Waters & Tides: hands-on creative-AI workshops, community build nights, and field experiments in Arkansas. Currently: Prompt Play, a 3-night creative AI workshop series in Benton, AR.">
+<meta name="description" content="Events from Tale Waters &amp; Tides: hands-on creative-AI workshops, community build nights, and field experiments in Arkansas. Currently: Prompt Play, a 3-night creative AI workshop series in Benton, AR.">
 <meta name="theme-color" content="#0d1b2a">
-<meta property="og:title" content="Events — Tale Waters & Tides Innovation Lab">
-<meta property="og:description" content="Hands-on creative-AI workshops and community build nights from the Tale Waters & Tides lab. Now: Prompt Play in Benton, AR.">
+<meta property="og:title" content="Events — Tale Waters &amp; Tides Innovation Lab">
+<meta property="og:description" content="Hands-on creative-AI workshops and community build nights from the Tale Waters &amp; Tides lab. Now: Prompt Play in Benton, AR.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://talewatersandtides.com/events/">
 <link rel="canonical" href="https://talewatersandtides.com/events/">
@@ -141,6 +141,7 @@ footer { padding: 28px 20px; border-top: 1px solid var(--bd); margin-top: 36px; 
 
 .r { opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .5s; }
 .r.v { opacity: 1; transform: translateY(0); }
+*:focus-visible { outline: 3px solid var(--tl); outline-offset: 3px; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -194,9 +195,9 @@ footer { padding: 28px 20px; border-top: 1px solid var(--bd); margin-top: 36px; 
 
 <script>
 const h=document.getElementById('hm'),m=document.getElementById('mn');h.addEventListener('click',()=>{h.classList.toggle('on');m.classList.toggle('on');document.body.style.overflow=m.classList.contains('on')?'hidden':''});function cm(){h.classList.remove('on');m.classList.remove('on');document.body.style.overflow=''}
-const els=document.querySelectorAll('.r');const io=new IntersectionObserver(e=>{e.forEach((n,i)=>{if(n.isIntersecting){setTimeout(()=>n.target.classList.add('v'),i*35);io.unobserve(n.target)}})},{threshold:.08,rootMargin:'0px 0px -16px 0px'});els.forEach(el=>io.observe(el));
+const els=document.querySelectorAll('.r');if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{e.forEach((n,i)=>{if(n.isIntersecting){setTimeout(()=>n.target.classList.add('v'),i*35);io.unobserve(n.target)}})},{threshold:.08,rootMargin:'0px 0px -16px 0px'});els.forEach(el=>io.observe(el));}else{els.forEach(el=>el.classList.add('v'));}
 document.querySelectorAll('[data-ga]').forEach(el=>{el.addEventListener('click',function(){if(typeof gtag==='function'){gtag('event','click',{event_category:'engagement',event_label:this.getAttribute('data-ga'),link_url:this.href||''})}})});
-const sio=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){if(typeof gtag==='function'){gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')})}sio.unobserve(n.target)}})},{threshold:.3});document.querySelectorAll('[data-ga-section]').forEach(el=>sio.observe(el));
+if('IntersectionObserver' in window){const sio=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){if(typeof gtag==='function'){gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')})}sio.unobserve(n.target)}})},{threshold:.3});document.querySelectorAll('[data-ga-section]').forEach(el=>sio.observe(el));}
 </script>
 </body>
 </html>

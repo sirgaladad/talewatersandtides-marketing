@@ -100,7 +100,7 @@ section { padding: 52px 0; }
 .hero { padding: 110px 0 48px; text-align: center; position: relative; }
 @media(min-width: 768px) { .hero { padding: 140px 0 64px; } }
 .hero-tag { font-family: var(--fb); font-weight: 600; font-size: clamp(.72rem, 2.4vw, .95rem); letter-spacing: .26em; text-transform: uppercase; color: var(--navy); opacity: .85; }
-.wordmark { margin: 8px auto 6px; line-height: .86; }
+.wordmark { margin: 8px auto 6px; line-height: .86; font-size: inherit; font-weight: inherit; }
 .wm-prompt { display: block; font-family: var(--fd); font-weight: 700; color: var(--navy); font-size: clamp(3.6rem, 17vw, 9rem); letter-spacing: -.02em; }
 .wm-play { display: block; font-family: var(--fm); color: var(--gold); font-size: clamp(4.2rem, 21vw, 11rem); transform: rotate(-3deg); margin-top: -.06em; text-shadow: 3px 3px 0 rgba(217,138,31,.25); }
 .wm-underline { display: block; margin: -6px auto 0; width: clamp(180px, 46vw, 420px); height: 18px; color: var(--coral); }
@@ -240,11 +240,11 @@ section { padding: 52px 0; }
 <section class="hero" data-ga-section="pp_hero">
   <div class="wrap">
     <p class="hero-tag r">Create. Explore. Build. Together.</p>
-    <div class="wordmark r">
+    <h1 class="wordmark r">
       <span class="wm-prompt">PROMPT</span>
       <span class="wm-play">PLAY</span>
       <svg class="wm-underline" viewBox="0 0 420 18" fill="none" aria-hidden="true"><path d="M6 11 C90 3 150 3 210 8 C270 13 340 13 414 5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
-    </div>
+    </h1>
     <div class="r"><span class="series-pill">A Creative AI Workshop Series</span></div>
     <p class="hero-lead r">Three nights. Three themes. Limitless possibilities. Join us for a grassroots MVP experiment where <b>AI meets creativity, curiosity, and community.</b></p>
     <div class="hero-meta r">
@@ -492,7 +492,7 @@ section { padding: 52px 0; }
   var shareData = { title: 'Prompt Play — A Creative AI Workshop Series', text: "3 nights of creative AI at Let's Play Studio in Benton, AR. Come build something.", url: url };
   shareBtn.addEventListener('click', function(){
     if (navigator.share) { navigator.share(shareData).catch(function(){}); }
-    else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(function(){ shareLabel.textContent = 'Link copied!'; setTimeout(function(){ shareLabel.textContent = 'Share with a friend'; }, 2200); }); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(function(){ shareLabel.textContent = 'Link copied!'; setTimeout(function(){ shareLabel.textContent = 'Share with a friend'; }, 2200); }).catch(function(){ window.prompt('Copy this link:', url); }); }
     else { window.prompt('Copy this link:', url); }
   });
 
