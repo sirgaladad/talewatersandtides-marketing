@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt Play — A Creative AI Workshop Series | Tale Waters &amp; Tides</title>
+<meta name="description" content="Prompt Play is a 3-night creative AI workshop series at Let's Play Studio in Benton, AR — June 2, 9 &amp; 16, 2026, 7–9 PM CT. Not a class. Not a webinar. A creative playground for the curious. Limited to 25 seats per night.">
+<meta name="theme-color" content="#0d1b2a">
+<meta property="og:title" content="Prompt Play — A Creative AI Workshop Series">
+<meta property="og:description" content="Three nights. Three themes. Limitless possibilities. A grassroots creative-AI playground at Let's Play Studio, Benton AR — June 2, 9 &amp; 16, 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/prompt-play/">
+<link rel="canonical" href="https://talewatersandtides.com/prompt-play/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Permanent+Marker&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<style>
+:root {
+  --cream: #f7f1e3;
+  --cream-2: #fffdf7;
+  --navy: #14324a;
+  --navy-deep: #0d1b2a;
+  --gold: #f2a93b;
+  --gold-deep: #d98a1f;
+  --teal: #3ba9c4;
+  --coral: #e8654e;
+  --ink: #1d2b36;
+  --muted: #5d6b73;
+  --line: rgba(20,50,74,.14);
+  --line-2: rgba(20,50,74,.24);
+  --fd: 'Fredoka', system-ui, sans-serif;
+  --fm: 'Permanent Marker', var(--fd);
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(59,169,196,.10), transparent 38%),
+    radial-gradient(circle at 88% 6%, rgba(232,101,78,.10), transparent 36%),
+    radial-gradient(circle at 50% 120%, rgba(242,169,59,.10), transparent 45%);
+  background-attachment: fixed;
+}
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 20px; }
+@media(min-width: 768px) { .wrap { padding: 0 40px; } }
+
+h1, h2, h3 { font-family: var(--fd); color: var(--navy); line-height: 1.1; font-weight: 700; }
+a { color: var(--navy); }
+
+/* ============================================================ HEADER */
+.hd {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(247,241,227,.82);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+}
+.hd.solid { border-bottom-color: var(--line); background: rgba(247,241,227,.95); }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+@media(min-width: 768px) { .hd-in { padding: 0 40px; height: 68px; } }
+.hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
+.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* ============================================================ BUTTONS */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: 1rem; text-decoration: none; border-radius: 999px; padding: 13px 26px; min-height: 48px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s, color .2s, border-color .2s; }
+.btn svg { width: 18px; height: 18px; }
+.btn-gold { background: var(--gold); color: var(--navy-deep); box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-gold:hover, .btn-gold:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--gold-deep); outline: none; }
+.btn-gold:active { transform: translateY(0); box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-navy { background: var(--navy); color: var(--cream); box-shadow: 0 3px 0 var(--navy-deep); }
+.btn-navy:hover, .btn-navy:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--navy-deep); outline: none; }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--line-2); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--navy); background: rgba(20,50,74,.05); outline: none; }
+.btn-sm { padding: 9px 18px; min-height: 40px; font-size: .9rem; box-shadow: 0 2px 0 var(--gold-deep); }
+
+/* ============================================================ SHARED */
+.eyebrow { font-family: var(--fb); font-weight: 600; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--coral); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.eyebrow::before { content: ''; width: 22px; height: 2px; border-radius: 2px; background: currentColor; }
+section { padding: 52px 0; }
+@media(min-width: 768px) { section { padding: 72px 0; } }
+.sec-h2 { font-size: clamp(1.7rem, 5vw, 2.7rem); margin-bottom: 14px; }
+.sec-lead { font-size: 1.0625rem; color: var(--muted); max-width: 60ch; }
+
+/* reveal */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+.r.v { opacity: 1; transform: translateY(0); }
+
+/* ============================================================ HERO */
+.hero { padding: 110px 0 48px; text-align: center; position: relative; }
+@media(min-width: 768px) { .hero { padding: 140px 0 64px; } }
+.hero-tag { font-family: var(--fb); font-weight: 600; font-size: clamp(.72rem, 2.4vw, .95rem); letter-spacing: .26em; text-transform: uppercase; color: var(--navy); opacity: .85; }
+.wordmark { margin: 8px auto 6px; line-height: .86; }
+.wm-prompt { display: block; font-family: var(--fd); font-weight: 700; color: var(--navy); font-size: clamp(3.6rem, 17vw, 9rem); letter-spacing: -.02em; }
+.wm-play { display: block; font-family: var(--fm); color: var(--gold); font-size: clamp(4.2rem, 21vw, 11rem); transform: rotate(-3deg); margin-top: -.06em; text-shadow: 3px 3px 0 rgba(217,138,31,.25); }
+.wm-underline { display: block; margin: -6px auto 0; width: clamp(180px, 46vw, 420px); height: 18px; color: var(--coral); }
+.series-pill { display: inline-block; margin-top: 18px; background: var(--navy); color: var(--cream); font-family: var(--fd); font-weight: 600; font-size: clamp(.85rem, 3vw, 1.15rem); letter-spacing: .04em; padding: 9px 22px; border-radius: 999px; transform: rotate(-1deg); }
+.hero-lead { max-width: 56ch; margin: 24px auto 0; font-size: 1.125rem; color: var(--ink); }
+.hero-lead b { color: var(--navy); font-weight: 600; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: center; margin: 22px auto 0; font-family: var(--fb); font-weight: 500; font-size: .95rem; color: var(--navy); }
+.hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+.hero-meta svg { width: 17px; height: 17px; color: var(--teal); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 30px; }
+.hero-host { display: inline-flex; align-items: center; gap: 12px; margin-top: 34px; background: var(--cream-2); border: 1px solid var(--line); border-radius: 999px; padding: 8px 18px 8px 8px; box-shadow: 0 6px 22px rgba(20,50,74,.07); }
+.hero-host img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+.hero-host .hh-t { text-align: left; line-height: 1.25; }
+.hero-host .hh-name { font-family: var(--fd); font-weight: 600; color: var(--navy); font-size: .95rem; }
+.hero-host .hh-role { font-size: .78rem; color: var(--muted); }
+
+/* ============================================================ WHAT */
+.what { background: var(--cream-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.what-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+@media(min-width: 560px) { .what-grid { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 900px) { .what-grid { grid-template-columns: repeat(4, 1fr); } }
+.feat { background: var(--cream); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.feat-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 14px; background: rgba(242,169,59,.16); color: var(--gold-deep); }
+.feat:nth-child(2) .feat-ic { background: rgba(59,169,196,.16); color: var(--teal); }
+.feat:nth-child(3) .feat-ic { background: rgba(232,101,78,.16); color: var(--coral); }
+.feat:nth-child(4) .feat-ic { background: rgba(20,50,74,.10); color: var(--navy); }
+.feat-ic svg { width: 24px; height: 24px; }
+.feat h3 { font-size: 1.05rem; margin-bottom: 5px; font-weight: 600; }
+.feat p { font-size: .9rem; color: var(--muted); line-height: 1.55; }
+.takeaway { margin-top: 30px; background: var(--navy); color: var(--cream); border-radius: 16px; padding: 24px 26px; display: flex; gap: 16px; align-items: flex-start; }
+.takeaway svg { width: 26px; height: 26px; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+.takeaway b { color: #fff; font-weight: 600; }
+.takeaway p { color: rgba(247,241,227,.92); font-size: 1.02rem; }
+
+/* ============================================================ NIGHTS */
+.nights-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 32px; }
+@media(min-width: 760px) { .nights-grid { grid-template-columns: repeat(3, 1fr); } }
+.nite { --accent: var(--gold); background: var(--cream-2); border: 1px solid var(--line); border-top: 5px solid var(--accent); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 26px rgba(20,50,74,.06); }
+.nite--coral { --accent: var(--coral); }
+.nite--teal { --accent: var(--teal); }
+.nite--gold { --accent: var(--gold); }
+.nite-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.nite-num { font-family: var(--fd); font-weight: 700; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.nite-price { font-family: var(--fd); font-weight: 600; font-size: .95rem; color: var(--navy); background: color-mix(in srgb, var(--accent) 16%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); padding: 3px 12px; border-radius: 999px; }
+.nite-ic { width: 40px; height: 40px; color: var(--accent); }
+.nite h3 { font-size: 1.3rem; font-weight: 600; }
+.nite-when { font-family: var(--fb); font-weight: 600; font-size: .9rem; color: var(--navy); display: flex; align-items: center; gap: 7px; }
+.nite-when svg { width: 15px; height: 15px; color: var(--accent); }
+.nite p { font-size: .95rem; color: var(--muted); flex: 1; }
+.nite .btn { margin-top: 6px; }
+
+/* ============================================================ RESERVE */
+.reserve { background: var(--cream-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.reserve .sec-lead { margin: 0 auto; }
+.seats { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--fd); font-weight: 600; color: var(--coral); background: rgba(232,101,78,.12); border: 1px solid rgba(232,101,78,.3); padding: 8px 18px; border-radius: 999px; }
+.seats svg { width: 17px; height: 17px; }
+.luma-embed { max-width: 760px; margin: 28px auto 0; }
+.luma-embed iframe { width: 100%; min-height: 580px; border: 1px solid #bfcbda88; border-radius: 14px; background: var(--cream); box-shadow: 0 10px 30px rgba(20,50,74,.08); }
+.luma-note { margin-top: 14px; font-size: .85rem; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; }
+.luma-note svg { width: 15px; height: 15px; color: var(--teal); }
+.reserve-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+
+/* ============================================================ TWO-COL (who / bring) */
+.split { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 30px; }
+@media(min-width: 720px) { .split { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+.card h3 { font-size: 1.2rem; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.card h3 svg { width: 22px; height: 22px; color: var(--teal); }
+.tick { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.tick li { display: flex; gap: 11px; align-items: flex-start; font-size: .98rem; color: var(--ink); }
+.tick svg { width: 19px; height: 19px; color: var(--gold-deep); flex-shrink: 0; margin-top: 3px; }
+
+/* ============================================================ WHERE */
+.where-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 30px; align-items: start; }
+@media(min-width: 760px) { .where-grid { grid-template-columns: 1.1fr .9fr; } }
+.where-card { background: var(--navy); color: var(--cream); border-radius: 18px; padding: 30px; }
+.where-card .eyebrow { color: var(--gold); }
+.where-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 6px; }
+.where-card .addr { font-size: 1.05rem; color: rgba(247,241,227,.92); margin-bottom: 4px; }
+.where-card .addr a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.where-card p { color: rgba(247,241,227,.82); font-size: .95rem; margin-top: 14px; }
+.where-card .btn { margin-top: 20px; }
+.where-aside { display: flex; flex-direction: column; gap: 14px; }
+.where-aside .card { padding: 22px; }
+.where-aside .card p { font-size: .92rem; color: var(--muted); }
+.where-aside .card .lbl { font-family: var(--fd); font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.where-aside .card .lbl svg { width: 18px; height: 18px; color: var(--coral); }
+
+/* ============================================================ HOST */
+.host { text-align: center; }
+.host-photo { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; border: 4px solid var(--gold); margin: 0 auto 18px; display: block; box-shadow: 0 10px 30px rgba(20,50,74,.12); }
+.host h3 { font-size: 1.6rem; }
+.host .role { font-family: var(--fb); font-weight: 600; color: var(--coral); letter-spacing: .04em; text-transform: uppercase; font-size: .78rem; margin: 8px 0 14px; }
+.host p { max-width: 52ch; margin: 0 auto; color: var(--muted); }
+.host .desc { font-family: var(--fd); font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+
+/* ============================================================ FOOTER */
+.ft { background: var(--navy-deep); color: var(--cream); padding: 48px 20px 30px; }
+.ft-in { max-width: var(--mw); margin: 0 auto; text-align: center; }
+.ft-logo { height: 38px; width: auto; margin: 0 auto 18px; display: block; opacity: .96; }
+.ft-motto { font-family: var(--fd); font-weight: 500; font-size: 1.05rem; color: var(--cream); max-width: 40ch; margin: 0 auto; }
+.ft-motto .c { color: var(--gold); }
+.ft-cc { margin-top: 10px; font-family: var(--fm); color: var(--gold); font-size: 1.15rem; letter-spacing: .02em; }
+.ft-lk { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 24px 0 18px; }
+.ft-lk a { color: rgba(247,241,227,.8); text-decoration: none; font-size: .9rem; min-height: 40px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--gold); }
+.ft-social { display: flex; justify-content: center; gap: 16px; margin-bottom: 18px; }
+.ft-social a { color: rgba(247,241,227,.7); min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; transition: color .2s; }
+.ft-social a:hover { color: var(--gold); }
+.ft-social svg { width: 18px; height: 18px; }
+.ft-cp { font-size: .72rem; color: rgba(247,241,227,.5); }
+.ft-cp a { color: rgba(247,241,227,.6); }
+
+/* ============================================================ A11Y */
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .wm-play { transform: none; } .series-pill { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ HEADER -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a class="hd-brand" href="/" data-ga="pp_brand_home" aria-label="Tale Waters and Tides home">
+      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+      <span class="tt">Tale Waters &amp; Tides</span>
+    </a>
+    <a class="btn btn-gold btn-sm" href="#reserve" data-ga="pp_header_reserve">Reserve a seat</a>
+  </div>
+</header>
+
+<!-- ============================================================ HERO -->
+<section class="hero" data-ga-section="pp_hero">
+  <div class="wrap">
+    <p class="hero-tag r">Create. Explore. Build. Together.</p>
+    <div class="wordmark r">
+      <span class="wm-prompt">PROMPT</span>
+      <span class="wm-play">PLAY</span>
+      <svg class="wm-underline" viewBox="0 0 420 18" fill="none" aria-hidden="true"><path d="M6 11 C90 3 150 3 210 8 C270 13 340 13 414 5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+    </div>
+    <div class="r"><span class="series-pill">A Creative AI Workshop Series</span></div>
+    <p class="hero-lead r">Three nights. Three themes. Limitless possibilities. Join us for a grassroots MVP experiment where <b>AI meets creativity, curiosity, and community.</b></p>
+    <div class="hero-meta r">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Let's Play Studio · Benton, AR</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>June 2, 9 &amp; 16, 2026</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>7:00–9:00 PM CT</span>
+    </div>
+    <div class="hero-cta r">
+      <a class="btn btn-gold" href="#reserve" data-ga="pp_hero_reserve">Reserve your seat</a>
+      <a class="btn btn-ghost" href="#nights" data-ga="pp_hero_nights">See the 3 nights</a>
+    </div>
+    <div class="hero-host r">
+      <img src="/assets/CoreyBoelkens.jpeg" alt="Corey Boelkens" width="46" height="46" loading="eager" decoding="async">
+      <div class="hh-t">
+        <div class="hh-name">Hosted by Corey Boelkens</div>
+        <div class="hh-role">Founder · Tale Waters &amp; Tides</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ WHAT IT IS -->
+<section class="what" data-ga-section="pp_what">
+  <div class="wrap">
+    <p class="eyebrow r">What this is</p>
+    <h2 class="sec-h2 r">Not a class. Not a webinar.<br>A creative playground for the curious.</h2>
+    <p class="sec-lead r">Prompt Play is a hands-on, low-pressure space where curious minds, families, and builders explore what's possible when you treat AI like a creative partner. Bring an idea — or just bring yourself.</p>
+
+    <div class="what-grid">
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg></div>
+        <h3>Vibecoding &amp; Prototyping</h3>
+        <p>Build real, working things by describing what you want — no computer-science degree required.</p>
+      </div>
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-9 8.4 9 9 0 01-4-1L3 20l1.1-4A8.38 8.38 0 0121 11.5z"/></svg></div>
+        <h3>Good People &amp; Conversations</h3>
+        <p>Coffee, community, and the kind of side conversations that turn into real projects.</p>
+      </div>
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/></svg></div>
+        <h3>Big Ideas &amp; Real Projects</h3>
+        <p>Start something that matters — a tool, a story, a product — and leave with momentum.</p>
+      </div>
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5L3 21l4.5-1.5M14 4l6 6M5 14l5-9 9 5-9 5z"/><path d="M9 15a4 4 0 00-4 4"/></svg></div>
+        <h3>From Prompt to Possibility</h3>
+        <p>Turn a sentence into a prototype, a workflow, and — by night three — a real-world object.</p>
+      </div>
+    </div>
+
+    <div class="takeaway r">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      <p><b>You'll leave with</b> a working prototype, a prompt workflow you'll actually use, and a few new people in your corner. No experience necessary — just curiosity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ THE 3 NIGHTS -->
+<section id="nights" data-ga-section="pp_nights">
+  <div class="wrap">
+    <p class="eyebrow r">3 nights · 3 themes</p>
+    <h2 class="sec-h2 r">Pick a night. Or come to all three.</h2>
+    <p class="sec-lead r">Each Tuesday builds on the last — but every night stands on its own. Register for whichever themes pull at you.</p>
+
+    <div class="nights-grid">
+      <article class="nite nite--coral r">
+        <div class="nite-top">
+          <svg class="nite-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/></svg>
+          <span class="nite-price">$25</span>
+        </div>
+        <div class="nite-num">Night 1</div>
+        <h3>First Contact</h3>
+        <div class="nite-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tue, June 2, 2026 · 7–9 PM</div>
+        <p>An introduction to creative AI, vibecoding, and requirements-driven software design. Your first hands-on taste of building with prompts.</p>
+        <a class="btn btn-navy" href="#reserve" data-ga="pp_reserve_june2">Reserve this night</a>
+      </article>
+
+      <article class="nite nite--teal r">
+        <div class="nite-top">
+          <svg class="nite-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 11-7c4 0 7 3 9 5-1 1-3 3-5 4M6.5 11.5h.01"/><path d="M13 10c2 1 2 3 0 4l-3 5-1-5-5-1 5-3z"/></svg>
+          <span class="nite-price">$50</span>
+        </div>
+        <div class="nite-num">Night 2</div>
+        <h3>Fishing with AI</h3>
+        <div class="nite-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tue, June 9, 2026 · 7–9 PM</div>
+        <p>Exploring AI through storytelling, outdoor concepts, and real-world creative tools. Where curiosity meets the water.</p>
+        <a class="btn btn-navy" href="#reserve" data-ga="pp_reserve_june9">Reserve this night</a>
+      </article>
+
+      <article class="nite nite--gold r">
+        <div class="nite-top">
+          <svg class="nite-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 2.5M12 2L9.5 4.5M12 2v6M5 10h14l-1.5 11h-11L5 10zM9 14h6"/></svg>
+          <span class="nite-price">$50</span>
+        </div>
+        <div class="nite-num">Night 3</div>
+        <h3>Prompt to Manufacturing</h3>
+        <div class="nite-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tue, June 16, 2026 · 7–9 PM</div>
+        <p>Turning prompts into physical products, prototypes, workflows, and production-ready ideas. From a sentence to something you can hold.</p>
+        <a class="btn btn-navy" href="#reserve" data-ga="pp_reserve_june16">Reserve this night</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ RESERVE / LUMA -->
+<section id="reserve" class="reserve" data-ga-section="pp_reserve">
+  <div class="wrap">
+    <p class="eyebrow r" style="justify-content:center">Reserve your seat</p>
+    <h2 class="sec-h2 r">Limited spots. Big possibilities.</h2>
+    <p class="sec-lead r">Pick the night (or nights) that fit. Checkout, calendar invites, and reminders are handled securely through Luma.</p>
+    <div class="r"><span class="seats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Just 25 seats per night</span></div>
+
+    <div class="luma-embed r">
+      <iframe src="https://luma.com/embed/calendar/cal-IhEy5OHABrn4uQb/events"
+              width="600" height="450" frameborder="0"
+              allowfullscreen="" aria-hidden="false" tabindex="0"
+              title="Prompt Play — reserve your seat (registration by Luma)"></iframe>
+    </div>
+    <p class="luma-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secure registration &amp; calendar invites by Luma</p>
+
+    <div class="reserve-actions r">
+      <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="pp_directions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Get directions
+      </a>
+      <button class="btn btn-ghost" id="shareBtn" type="button" data-ga="pp_share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        <span id="shareLabel">Share with a friend</span>
+      </button>
+      <a class="btn btn-ghost" href="mailto:corey@talewatersandtides.com?subject=Prompt%20Play%20question" data-ga="pp_email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>Ask a question
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ WHO / BRING -->
+<section data-ga-section="pp_who">
+  <div class="wrap">
+    <p class="eyebrow r">Come as you are</p>
+    <h2 class="sec-h2 r">Who it's for &amp; what to bring</h2>
+    <div class="split">
+      <div class="card r">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>Who it's for</h3>
+        <ul class="tick">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Curious minds, families, and builders of every level</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Total beginners — no coding or AI experience required</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Makers, founders, and creatives who want to build, not just watch</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Anyone who's been meaning to "play with AI" and never had the room to</li>
+        </ul>
+      </div>
+      <div class="card r">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>What to bring</h3>
+        <ul class="tick">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>A laptop if you've got one (totally optional — we'll have ways to share)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>An idea you've been sitting on — or none at all</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Curiosity and a willingness to make something a little messy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Coffee's on us. Just bring yourself.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ WHERE -->
+<section class="what" data-ga-section="pp_where">
+  <div class="wrap">
+    <div class="where-grid">
+      <div class="where-card r">
+        <p class="eyebrow">Where</p>
+        <h3>Let's Play Studio</h3>
+        <p class="addr"><a href="https://www.google.com/maps/search/?api=1&query=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="pp_where_map">417 W South St, Benton, AR 72015</a></p>
+        <p>A creative community space for curious minds, families, and builders. Huge thanks to Let's Play for sponsoring this grassroots experiment — a place to create, a community to grow, a future to build.</p>
+        <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&destination=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="pp_where_directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Get directions
+        </a>
+      </div>
+      <div class="where-aside">
+        <div class="card r">
+          <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>When</div>
+          <p>Three Tuesday evenings — June 2, 9 &amp; 16, 2026, from 7:00 to 9:00 PM Central.</p>
+        </div>
+        <div class="card r">
+          <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>Good to know</div>
+          <p>Coffee provided · family-friendly · accessible space · drop into any night. Questions? <a href="mailto:corey@talewatersandtides.com" data-ga="pp_where_email" style="color:var(--navy);text-decoration:underline">Email Corey</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ HOST -->
+<section class="host" data-ga-section="pp_host">
+  <div class="wrap">
+    <img class="host-photo r" src="/assets/CoreyBoelkens.jpeg" alt="Corey Boelkens, founder of Tale Waters and Tides" width="132" height="132" loading="lazy" decoding="async">
+    <p class="eyebrow r" style="justify-content:center">Your host</p>
+    <h3 class="r">Corey Boelkens</h3>
+    <div class="role r">Founder of Tale Waters &amp; Tides</div>
+    <p class="desc r">Creative technologist. Builder. Storyteller. Explorer. Arkansan.</p>
+    <p class="r">Corey builds software, strategy, and field-tested execution for outdoor and marine environments. Prompt Play is his invitation to the community: come play, build something real, and see what AI can do when you treat it like a creative partner.</p>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer class="ft" data-ga-section="pp_footer">
+  <div class="ft-in">
+    <img class="ft-logo" src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides" loading="lazy" decoding="async">
+    <p class="ft-motto">Not a class. Not a webinar. A <span class="c">creative</span> playground for the curious.</p>
+    <p class="ft-cc">Coffee. Community. Code. Curiosity.</p>
+    <nav class="ft-lk" aria-label="Footer">
+      <a href="/" data-ga="pp_ft_home">Tale Waters &amp; Tides</a>
+      <a href="/events/" data-ga="pp_ft_events">Events</a>
+      <a href="/projects/" data-ga="pp_ft_projects">Projects</a>
+      <a href="https://pocketfishinguide.com" target="_blank" rel="noopener" data-ga="pp_ft_pfg">Pocket Fishing Guide</a>
+    </nav>
+    <div class="ft-social">
+      <a href="https://www.facebook.com/talewatersandtides" target="_blank" rel="noopener" aria-label="Facebook" data-ga="pp_social_facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      <a href="https://www.tiktok.com/@coreytheaideaguy" target="_blank" rel="noopener" aria-label="TikTok" data-ga="pp_social_tiktok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z"/></svg></a>
+      <a href="https://www.linkedin.com/in/boelkens/" target="_blank" rel="noopener" aria-label="LinkedIn" data-ga="pp_social_linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    </div>
+    <p class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas · <a href="/prompt-play/">talewatersandtides.com/prompt-play</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  // header solid on scroll
+  var hd = document.getElementById('hd');
+  window.addEventListener('scroll', function(){ hd.classList.toggle('solid', window.scrollY > 24); }, { passive: true });
+
+  // reveal on scroll
+  var els = document.querySelectorAll('.r');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(e){
+      e.forEach(function(n,i){ if(n.isIntersecting){ setTimeout(function(){ n.target.classList.add('v'); }, i*30); io.unobserve(n.target); } });
+    }, { threshold: .08, rootMargin: '0px 0px -16px 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add('v'); }); }
+
+  // share
+  var shareBtn = document.getElementById('shareBtn');
+  var shareLabel = document.getElementById('shareLabel');
+  var url = 'https://talewatersandtides.com/prompt-play/';
+  var shareData = { title: 'Prompt Play — A Creative AI Workshop Series', text: "3 nights of creative AI at Let's Play Studio in Benton, AR. Come build something.", url: url };
+  shareBtn.addEventListener('click', function(){
+    if (navigator.share) { navigator.share(shareData).catch(function(){}); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(function(){ shareLabel.textContent = 'Link copied!'; setTimeout(function(){ shareLabel.textContent = 'Share with a friend'; }, 2200); }); }
+    else { window.prompt('Copy this link:', url); }
+  });
+
+  // GA: click + section view
+  document.querySelectorAll('[data-ga]').forEach(function(el){
+    el.addEventListener('click', function(){ if(typeof gtag==='function'){ gtag('event','click',{event_category:'engagement',event_label:this.getAttribute('data-ga'),link_url:this.href||''}); } });
+  });
+  if ('IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function(e){
+      e.forEach(function(n){ if(n.isIntersecting){ if(typeof gtag==='function'){ gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')}); } sio.unobserve(n.target); } });
+    }, { threshold: .3 });
+    document.querySelectorAll('[data-ga-section]').forEach(function(el){ sio.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
