@@ -384,7 +384,6 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
 </section>
 
 <!-- ============================================================ TONIGHT'S FLOW -->
-<!-- ===== HOST CONTENT: agenda — confirm/replace the rows below before doors ===== -->
 <section id="flow" data-ga-section="fc_flow">
   <div class="wrap">
     <p class="eyebrow r">Step 2 · The plan</p>
@@ -392,47 +391,47 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     <p class="sec-lead r">Two hours, low pressure. Arrive when you can, leave with something you built.</p>
     <div class="card r" style="margin-top:24px">
       <ul class="tick">
-        <li><span class="t-time">7:30</span><span class="dot"></span><span>Arrive, grab coffee, and check in (you just did — nice).</span></li>
-        <li><span class="t-time">7:45</span><span class="dot"></span><span>Welcome + what "creative AI" and vibecoding actually mean. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">8:00</span><span class="dot"></span><span>Hands-on: your first prompt-to-thing. We build together. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">8:45</span><span class="dot"></span><span>Build, share what you made, and trade ideas. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">9:20</span><span class="dot"></span><span>Wrap, what's next for Nights 2 &amp; 3, and quick feedback.</span></li>
+        <li><span class="t-time">7:30</span><span class="dot"></span><span>Arrive, grab coffee, and check in — tell us what you'd love to make.</span></li>
+        <li><span class="t-time">7:45</span><span class="dot"></span><span>Welcome: what "creative AI" and vibecoding really mean, with a quick live build.</span></li>
+        <li><span class="t-time">8:00</span><span class="dot"></span><span>Problem wall: what's actually worth building? Add ideas, then dot-vote the best.</span></li>
+        <li><span class="t-time">8:20</span><span class="dot"></span><span>Prompt to spec: turn the top problem into a clear, buildable ask — requirements-driven design.</span></li>
+        <li><span class="t-time">8:35</span><span class="dot"></span><span>Build time: pitch your approach, then vibecode something real with AI.</span></li>
+        <li><span class="t-time">9:05</span><span class="dot"></span><span>Show &amp; tell: drop what you made in the gallery and trade ideas.</span></li>
+        <li><span class="t-time">9:20</span><span class="dot"></span><span>Reflect, a peek at Nights 2 &amp; 3, and quick feedback.</span></li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ TOOLS + STARTER PROMPTS -->
-<!-- ===== HOST CONTENT: replace tool tiles + starter prompts with tonight's actuals ===== -->
 <section id="tools" class="tinted" data-ga-section="fc_tools">
   <div class="wrap">
     <p class="eyebrow r">Step 3 · Play</p>
     <h2 class="sec-h2 r">Tools &amp; prompts to try</h2>
-    <p class="sec-lead r">Open these on your phone or laptop. No accounts required to follow along — jump in wherever looks fun.</p>
+    <p class="sec-lead r">Open these on your phone or laptop. Both are free — a quick sign-in unlocks the full experience. Jump in wherever looks fun.</p>
 
     <div class="grid">
       <div class="feat r">
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg></div>
-        <h3>Tool 1 <!-- HOST: name --></h3>
-        <p>What it's for tonight. <!-- HOST: one line --></p>
-        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_1">Open tool</a> -->
-        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_1">Link coming soon</button>
+        <h3>Claude</h3>
+        <p>Your AI build partner for tonight — describe what you want in plain English and it builds, explains, and revises right alongside you.</p>
+        <a class="btn btn-ghost btn-sm" href="https://claude.ai" target="_blank" rel="noopener" data-ga="fc_tool_1">Open Claude</a>
       </div>
       <div class="feat r">
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/><path d="M9 18h6M10 22h4"/></svg></div>
-        <h3>Tool 2 <!-- HOST: name --></h3>
-        <p>What it's for tonight. <!-- HOST: one line --></p>
-        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_2">Open tool</a> -->
-        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_2">Link coming soon</button>
+        <h3>ChatGPT</h3>
+        <p>A second opinion. Run the same prompt here and compare — watching two AIs tackle one idea is half the fun.</p>
+        <a class="btn btn-ghost btn-sm" href="https://chatgpt.com" target="_blank" rel="noopener" data-ga="fc_tool_2">Open ChatGPT</a>
       </div>
     </div>
 
     <details class="prompts r">
       <summary>Starter prompts to steal</summary>
       <ol>
-        <li>"Act as a friendly product coach. Ask me 5 questions to turn my rough idea into a one-paragraph spec, then write the spec." <!-- HOST: confirm --></li>
-        <li>"Build me a single-page web app that <code>&lt;does the thing&gt;</code>. Keep it to one HTML file. Explain each part in plain English." <!-- HOST: confirm --></li>
-        <li>"I'm a total beginner. Walk me through making <code>&lt;my idea&gt;</code> step by step, checking in after each step." <!-- HOST: confirm --></li>
+        <li>"Act as a friendly product coach. Ask me five questions to turn my rough idea into a one-paragraph spec — who it's for, the one job it does, and what 'done' looks like. Then write the spec."</li>
+        <li>"Build me a single-page web app that does <code>&lt;your idea&gt;</code>. Keep it to one self-contained HTML file with inline CSS and JS, and explain each part in plain English so I can tweak it."</li>
+        <li>"I'm a total beginner. Walk me through making <code>&lt;your idea&gt;</code> step by step, and check in with me after each step before moving on."</li>
+        <li>"Here's what I have so far: <code>&lt;paste&gt;</code>. Add <code>&lt;one feature&gt;</code> and tell me exactly what you changed and why."</li>
       </ol>
     </details>
   </div>
