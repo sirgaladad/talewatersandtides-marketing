@@ -257,7 +257,7 @@ section { padding: 22px 0; }
             <input class="input" id="r-name" name="name" type="text" autocomplete="given-name" placeholder="First name is fine">
           </div>
           <div class="field">
-            <label for="r-email">Email <span class="hint">— for your recap</span></label>
+            <label for="r-email">Email <span class="hint" id="rEmailHint">— for your recap</span></label>
             <input class="input" id="r-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
           </div>
           <div class="field">
@@ -280,6 +280,10 @@ section { padding: 22px 0; }
           <label class="check" style="margin-bottom:14px">
             <input type="checkbox" id="r-wantsmore" name="wants_more">
             <span>I'd be interested in a deeper / team session.</span>
+          </label>
+          <label class="check hidden" id="consentRow" style="margin-bottom:14px">
+            <input type="checkbox" id="r-consent" name="consent">
+            <span>I agree to Tale Waters &amp; Tides storing my check-in details to run the workshop and send my recap. <a href="mailto:corey@talewatersandtides.com">Questions?</a></span>
           </label>
           <button class="btn btn-navy btn-block" id="saveReg" type="submit">Save my changes</button>
           <p class="msg" id="regMsg" role="status" aria-live="polite" hidden></p>
@@ -368,6 +372,12 @@ function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(
 function msg(el, kind, text){ el.textContent = text; el.dataset.state = kind; el.hidden = false; }
 let _toastT;
 function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(_toastT); _toastT = setTimeout(() => el.classList.remove('show'), 2200); }
+// Clipboard with a window.prompt fallback (denied permission / non-HTTPS / no API).
+function copyText(text, okMsg){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(() => toast(okMsg), () => window.prompt('Copy this:', text));
+  } else { window.prompt('Copy this:', text); }
+}
 function uuidv4(){
   if (window.crypto && window.crypto.randomUUID){ return window.crypto.randomUUID(); }
   const b = new Uint8Array(16);
@@ -379,7 +389,8 @@ function uuidv4(){
 
 /* ---------- identity: localStorage check-in OR Supabase auth session ---------- */
 function getParticipant(){ return lsGet('fc_participant', null); }
-let _authEmail = null;
+let _authEmail = null;   // verified email from the magic-link session (lowercased)
+let _serverRow = null;   // the signed-in guest's own participants row, if one exists
 
 function renderIdentity(){
   const p = getParticipant();
@@ -387,10 +398,13 @@ function renderIdentity(){
   show($('signinCard'), !identified);
   show($('regCard'), identified);
   show($('signOut'), !!_authEmail);
+  // Consent is only collected when a brand-new registration would be created
+  // (signed in, no existing row). Edits to an existing row preserve prior consent.
+  show($('consentRow'), !!(_authEmail && !_serverRow));
   if (!identified) return;
 
   const name = (p && p.name) || '';
-  const email = (p && p.email) || _authEmail || '';
+  const email = _authEmail || (p && p.email) || '';
   $('idAvatar').textContent = (name || email || '?').trim().charAt(0).toUpperCase() || '?';
   $('idWho').textContent = name ? ('Welcome back, ' + name) : 'Welcome back';
   $('idSub').textContent = email || 'First Contact · June 2, 2026';
@@ -403,9 +417,41 @@ function renderIdentity(){
     $('r-role').value = p.role || '';
     $('r-goals').value = p.goals || '';
     $('r-wantsmore').checked = !!p.wants_more;
+    $('r-consent').checked = !!(p.consent || (_serverRow && _serverRow.consent));
   } else if (_authEmail && !$('r-email').value){
     $('r-email').value = _authEmail;
   }
+
+  // Signed in: the registration is keyed to the verified email — lock the field
+  // so it always satisfies the row-owner RLS check.
+  const emailField = $('r-email'), emailHint = $('rEmailHint');
+  if (_authEmail){
+    emailField.value = _authEmail; emailField.readOnly = true;
+    if (emailHint){ emailHint.textContent = '— signed in; saved across your devices'; }
+  } else {
+    emailField.readOnly = false;
+    if (emailHint){ emailHint.textContent = '— for your recap'; }
+  }
+}
+
+// Load the signed-in guest's own registration (RLS scopes SELECT to their email).
+async function loadServerRegistration(){
+  if (!_authEmail) return;
+  try {
+    const { data, error } = await sb.from('participants')
+      .select('id,name,email,experience,role,goals,wants_more,consent')
+      .eq('event_slug', SLUG).ilike('email', _authEmail)
+      .order('created_at', { ascending: false }).limit(1);
+    if (error){ throw error; }
+    const row = (data && data[0]) || null;
+    if (row){
+      _serverRow = row;
+      lsSet('fc_participant', { id: row.id, name: row.name || '', email: row.email || _authEmail,
+        experience: row.experience || '', role: row.role || '', goals: row.goals || '',
+        wants_more: !!row.wants_more, consent: !!row.consent });
+    }
+    renderIdentity();
+  } catch (e){ /* offline or no row yet — the new-registration path handles it */ }
 }
 
 /* ---------- magic link ---------- */
@@ -428,38 +474,65 @@ $('signOut').addEventListener('click', () => sb.auth.signOut());
 
 sb.auth.onAuthStateChange((_event, session) => {
   _authEmail = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  if (!_authEmail){ _serverRow = null; }
   renderIdentity();
+  if (_authEmail){ loadServerRegistration(); }
 });
 
 /* ---------- manage registration ---------- */
-$('regForm').addEventListener('submit', (e) => {
+$('regForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const m = $('regMsg');
   const name = $('r-name').value.trim();
-  const email = $('r-email').value.trim();
   if (!name){ return msg(m, 'error', 'Add your name so we can label your recap.'); }
-  if (email && !isEmail(email)){ return msg(m, 'error', 'That email looks off — mind checking it?'); }
-
-  const prev = getParticipant() || {};
-  const id = prev.id || uuidv4();
-  const next = {
-    id, name,
-    email: email || null,
+  const fields = {
+    name,
     experience: $('r-exp').value || null,
     role: $('r-role').value.trim() || null,
     goals: $('r-goals').value.trim() || null,
     wants_more: $('r-wantsmore').checked
   };
-  lsSet('fc_participant', next);
-  renderIdentity();
-  msg(m, 'ok', 'Saved. Your recap will use these details.');
-  toast('Registration updated');
 
-  // Mirror to Supabase (insert is allowed for anon). Best-effort; local copy is source of truth here.
-  const row = { id, event_slug: SLUG, name, email: email || null, experience: next.experience,
-                role: next.role, goals: next.goals, wants_more: next.wants_more,
-                onboarding: { role: next.role, wants_more: next.wants_more, via: 'dashboard' }, consent: true };
-  sb.from('participants').upsert(row, { onConflict: 'id' }).then(({ error }) => { if (error){ /* keep local copy; non-fatal */ } });
+  if (_authEmail){
+    // Signed in: persist to Supabase, keyed to the verified email (RLS owns the row).
+    const btn = $('saveReg'); btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      if (_serverRow && _serverRow.id){
+        // Update in place; leave consent (already given) untouched.
+        const { error } = await sb.from('participants').update(fields).eq('id', _serverRow.id);
+        if (error){ throw error; }
+        _serverRow = Object.assign({}, _serverRow, fields);
+      } else {
+        // First registration from this account — consent is required here.
+        if (!$('r-consent').checked){ msg(m, 'error', 'Please tick the consent box to save your registration.'); return; }
+        const id = uuidv4();
+        const row = Object.assign({ id, event_slug: SLUG, email: _authEmail, consent: true,
+          onboarding: { role: fields.role, wants_more: fields.wants_more, via: 'dashboard' } }, fields);
+        const { error } = await sb.from('participants').insert(row);
+        if (error){ throw error; }
+        _serverRow = Object.assign({ id, email: _authEmail, consent: true }, fields);
+      }
+      lsSet('fc_participant', Object.assign({ id: _serverRow.id, email: _authEmail, consent: !!_serverRow.consent }, fields));
+      msg(m, 'ok', 'Saved and synced to your registration.');
+      toast('Registration synced');
+    } catch (err){
+      lsSet('fc_participant', Object.assign(getParticipant() || {}, { email: _authEmail }, fields));
+      msg(m, 'error', 'Saved on this device, but syncing failed — please try again.');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Save my changes';
+      renderIdentity();
+    }
+    return;
+  }
+
+  // Not signed in: keep it local only — no server write that would silently fail.
+  const emailVal = $('r-email').value.trim();
+  if (emailVal && !isEmail(emailVal)){ return msg(m, 'error', 'That email looks off — mind checking it?'); }
+  const prev = getParticipant() || {};
+  lsSet('fc_participant', Object.assign({ id: prev.id || uuidv4() }, prev, fields, { email: emailVal || null }));
+  renderIdentity();
+  msg(m, 'info', 'Saved on this device. Sign in with a magic link above to sync it across your devices.');
+  toast('Saved on this device');
 });
 
 /* ---------- copy recap ---------- */
@@ -477,9 +550,7 @@ $('copyRecap').addEventListener('click', () => {
     lines.push('');
   }
   if (fb && (fb.rating || fb.comment)){ lines.push('My take: ' + (fb.rating ? fb.rating + '/5. ' : '') + (fb.comment || '')); }
-  const text = lines.join('\n');
-  if (navigator.clipboard){ navigator.clipboard.writeText(text).then(() => toast('Recap copied'), () => window.prompt('Copy your recap:', text)); }
-  else { window.prompt('Copy your recap:', text); }
+  copyText(lines.join('\n'), 'Recap copied');
 });
 
 /* ---------- starter prompts ---------- */
@@ -498,10 +569,7 @@ function renderStarters(){
     card.className = 'prompt-card';
     card.innerHTML = '<div class="pt">' + withCode + '</div>' +
       '<button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy prompt</button>';
-    card.querySelector('.copy-btn').addEventListener('click', () => {
-      if (navigator.clipboard){ navigator.clipboard.writeText(t).then(() => toast('Prompt copied'), () => {}); }
-      else { window.prompt('Copy:', t); }
-    });
+    card.querySelector('.copy-btn').addEventListener('click', () => copyText(t, 'Prompt copied'));
     wrap.appendChild(card);
   });
 }
@@ -510,7 +578,7 @@ function renderStarters(){
 async function loadLibrary(){
   const lib = $('library');
   try {
-    const { data, error } = await sb.from('solutions').select('id,text,tool,solution_votes(vote)').eq('event_slug', SLUG);
+    const { data, error } = await sb.from('solutions').select('id,text,tool,solution_votes(vote)').eq('event_slug', SLUG).limit(60);
     if (error){ throw error; }
     const rows = (data || []).map(s => ({ text: s.text, tool: s.tool, up: (s.solution_votes || []).filter(v => v.vote).length }));
     rows.sort((a, b) => b.up - a.up);
@@ -530,7 +598,7 @@ async function loadLibrary(){
 async function loadExamples(){
   const g = $('gallery');
   try {
-    const { data, error } = await sb.from('results').select('title,text,link,created_at').eq('event_slug', SLUG).order('created_at', { ascending: false });
+    const { data, error } = await sb.from('results').select('title,text,link,created_at').eq('event_slug', SLUG).order('created_at', { ascending: false }).limit(60);
     if (error){ throw error; }
     const rows = data || [];
     $('exCnt').textContent = rows.length || '';
@@ -552,7 +620,11 @@ function refreshLive(){ loadLibrary(); loadExamples(); }
 renderStarters();
 renderIdentity();
 refreshLive();
-setInterval(() => { if (!document.hidden){ refreshLive(); } }, 12000);
+// Gentle, jittered polling (~20–28s) only while the tab is visible, so a roomful
+// of guests doesn't hammer Supabase in lockstep; also refresh on tab wake.
+(function scheduleRefresh(){
+  setTimeout(() => { if (!document.hidden){ refreshLive(); } scheduleRefresh(); }, 20000 + Math.floor(Math.random() * 8000));
+})();
 document.addEventListener('visibilitychange', () => { if (!document.hidden){ refreshLive(); } });
 </script>
 </body>
