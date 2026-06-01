@@ -41,7 +41,8 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
+/* Bump the base ~6% so body copy reads a touch larger everywhere (rem-based, so it scales the whole page proportionally). */
+html { font-size: 106.25%; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
 body {
   background: var(--cream);
   color: var(--ink);
@@ -328,7 +329,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
   <div class="wrap">
     <p class="eyebrow r">Step 1 · Check in</p>
     <h2 class="sec-h2 r">Let's get you set up</h2>
-    <p class="sec-lead r">Two quick things so we can tailor tonight and send you a recap afterward. Takes about 20 seconds.</p>
+    <p class="sec-lead r">Two quick things so we can tailor tonight and send you a recap afterward. Takes about 20 seconds. Already registered or on another device? <a href="/first-contact/dashboard/" data-ga="fc_onboard_dashboard">Open your dashboard</a> to manage it.</p>
 
     <div class="card r" style="margin-top:24px">
       <!-- shown after onboarding -->
@@ -336,7 +337,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
         <div>
           <div class="ci-t" id="ciName">You're checked in — welcome!</div>
-          <div class="ci-s">Scroll down for tonight's flow, the prompts to try, and your prompt log.</div>
+          <div class="ci-s">Scroll down for tonight's flow, the prompts to try, and your prompt log — or <a href="/first-contact/dashboard/" data-ga="fc_checkedin_dashboard">open your dashboard</a> to manage your registration anytime.</div>
         </div>
       </div>
 
@@ -594,6 +595,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         </div>
         <div class="recap-actions">
           <button class="btn btn-gold" id="recapCopy" type="button" data-ga="fc_recap_copy">Copy my recap</button>
+          <a class="btn btn-ghost" href="/first-contact/dashboard/" data-ga="fc_recap_dashboard">Open my dashboard</a>
           <a class="btn btn-ghost" href="/prompt-play/" data-ga="fc_recap_series">See Nights 2 &amp; 3</a>
         </div>
         <p class="sync" id="syncPill" data-state="ok" hidden></p>
@@ -687,10 +689,12 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     <img class="ft-logo" src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides" loading="lazy" decoding="async">
     <p class="ft-motto">Not a class. Not a webinar. A <span class="c">creative</span> playground for the curious.</p>
     <nav class="ft-lk" aria-label="Footer">
+      <a href="/first-contact/dashboard/" data-ga="fc_ft_dashboard">My dashboard</a>
       <a href="/prompt-play/" data-ga="fc_ft_series">Prompt Play series</a>
       <a href="https://www.google.com/maps/dir/?api=1&destination=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="fc_ft_directions">Get directions</a>
       <a href="mailto:corey@talewatersandtides.com" data-ga="fc_ft_email">Email Corey</a>
       <a href="/events/" data-ga="fc_ft_events">All events</a>
+      <a href="/first-contact/facilitator/" data-ga="fc_ft_facilitator" style="opacity:.6">Facilitator</a>
     </nav>
     <p class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas · <a href="/first-contact/">talewatersandtides.com/first-contact</a></p>
   </div>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Dashboard — First Contact | Tale Waters &amp; Tides</title>
+<meta name="description" content="Your Prompt Play dashboard. Manage your registration, browse the prompts and examples from the room, and learn how prompting works — anytime, at your own pace.">
+<meta name="theme-color" content="#0d1b2a">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://talewatersandtides.com/first-contact/dashboard/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Permanent+Marker&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f7f1e3;
+  --cream-2: #fffdf7;
+  --navy: #14324a;
+  --navy-deep: #0d1b2a;
+  --gold: #f2a93b;
+  --gold-deep: #d98a1f;
+  --teal: #3ba9c4;
+  --teal-deep: #2b8aa3;
+  --coral: #e8654e;
+  --green: #2f9e6f;
+  --ink: #1d2b36;
+  --muted: #5d6b73;
+  --line: rgba(20,50,74,.14);
+  --line-2: rgba(20,50,74,.24);
+  --fd: 'Fredoka', system-ui, sans-serif;
+  --fm: 'Permanent Marker', var(--fd);
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* Bigger, more readable base — every rem scales from here. */
+html { font-size: 112.5%; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 72px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 10% 6%, rgba(59,169,196,.10), transparent 40%),
+    radial-gradient(circle at 90% 4%, rgba(232,101,78,.10), transparent 38%),
+    radial-gradient(circle at 50% 120%, rgba(242,169,59,.10), transparent 46%);
+  background-attachment: fixed;
+}
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 18px; }
+@media(min-width: 768px) { .wrap { padding: 0 32px; } }
+h1, h2, h3, h4 { font-family: var(--fd); color: var(--navy); line-height: 1.12; font-weight: 700; }
+a { color: var(--navy); }
+
+/* ===== HEADER ===== */
+.hd { position: sticky; top: 0; z-index: 60; background: rgba(247,241,227,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+@media(min-width: 768px) { .hd-in { padding: 0 32px; min-height: 66px; } }
+.hd-brand { font-family: var(--fb); font-weight: 600; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
+.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-r { display: flex; align-items: center; gap: 8px; }
+
+/* ===== BUTTONS ===== */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: 1.02rem; text-decoration: none; border-radius: 999px; padding: 13px 24px; min-height: 48px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s, color .2s, border-color .2s; }
+.btn svg { width: 18px; height: 18px; }
+.btn-gold { background: var(--gold); color: var(--navy-deep); box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-gold:hover, .btn-gold:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--gold-deep); outline: none; }
+.btn-gold:active { transform: translateY(0); box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-navy { background: var(--navy); color: var(--cream); box-shadow: 0 3px 0 var(--navy-deep); }
+.btn-navy:hover, .btn-navy:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--navy-deep); outline: none; }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--line-2); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--navy); background: rgba(20,50,74,.05); outline: none; }
+.btn-sm { padding: 9px 16px; min-height: 40px; font-size: .9rem; box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-navy.btn-sm { box-shadow: 0 2px 0 var(--navy-deep); }
+.btn-ghost.btn-sm { box-shadow: none; }
+.btn[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
+.btn-block { width: 100%; }
+
+/* ===== PAGE HEAD ===== */
+.page-head { padding: 34px 0 8px; }
+@media(min-width: 768px) { .page-head { padding: 44px 0 10px; } }
+.eyebrow { font-family: var(--fb); font-weight: 600; font-size: .76rem; letter-spacing: .2em; text-transform: uppercase; color: var(--coral); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.eyebrow::before { content: ''; width: 22px; height: 2px; border-radius: 2px; background: currentColor; }
+.page-head h1 { font-size: clamp(1.9rem, 6vw, 2.9rem); letter-spacing: -.01em; }
+.page-head h1 .mk { font-family: var(--fm); color: var(--gold); font-weight: 400; }
+.page-head .lead { font-size: 1.12rem; color: var(--muted); max-width: 60ch; margin-top: 12px; }
+.selfpaced { display: inline-flex; align-items: center; gap: 9px; margin-top: 16px; font-size: .96rem; font-weight: 500; color: var(--navy); background: rgba(59,169,196,.12); border: 1px solid rgba(59,169,196,.3); border-radius: 12px; padding: 10px 15px; }
+.selfpaced svg { width: 19px; height: 19px; color: var(--teal-deep); flex-shrink: 0; }
+
+/* ===== SECTIONS ===== */
+section { padding: 22px 0; }
+.sec-h2 { font-size: clamp(1.45rem, 4.4vw, 2rem); margin-bottom: 8px; display: flex; align-items: center; gap: 11px; flex-wrap: wrap; }
+.sec-h2 svg { width: 26px; height: 26px; color: var(--teal); flex-shrink: 0; }
+.sec-lead { font-size: 1.06rem; color: var(--muted); max-width: 64ch; margin-bottom: 18px; }
+.cnt { font-family: var(--fd); font-weight: 700; color: var(--teal-deep); font-size: .9rem; background: rgba(59,169,196,.12); border-radius: 999px; padding: 2px 11px; }
+
+/* ===== CARDS ===== */
+.card { background: var(--cream-2); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 8px 26px rgba(20,50,74,.06); }
+@media(min-width: 768px) { .card { padding: 26px; } }
+
+/* ===== FORMS ===== */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field label, .field-label { font-family: var(--fd); font-weight: 600; font-size: .98rem; color: var(--navy); }
+.field .hint { font-size: .84rem; color: var(--muted); font-weight: 400; }
+.input, .select, .textarea {
+  font-family: var(--fb); font-size: 16px; color: var(--ink);
+  background: var(--cream); border: 1.5px solid var(--line-2); border-radius: 12px;
+  padding: 12px 14px; width: 100%; transition: border-color .2s, box-shadow .2s;
+}
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(59,169,196,.18); }
+.textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314324a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: .96rem; color: var(--ink); line-height: 1.5; }
+.check input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--teal); }
+.msg { font-size: .96rem; font-weight: 500; padding: 11px 14px; border-radius: 11px; margin-top: 4px; }
+.msg[hidden] { display: none; }
+.msg[data-state="ok"], .msg.ok { color: #1c5e44; background: rgba(47,158,111,.12); border: 1px solid rgba(47,158,111,.3); }
+.msg[data-state="error"], .msg.error { color: var(--coral); background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); }
+.msg[data-state="info"], .msg.info { color: var(--navy); background: rgba(59,169,196,.1); border: 1px solid rgba(59,169,196,.28); }
+
+/* ===== SIGN-IN / IDENTITY ===== */
+.signin-grid { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: center; }
+@media(min-width: 620px) { .signin-grid { grid-template-columns: 1.2fr auto; } }
+.signin-copy h3 { font-size: 1.18rem; margin-bottom: 5px; }
+.signin-copy p { font-size: .98rem; color: var(--muted); }
+.id-bar { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+.id-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--navy); color: var(--gold); display: grid; place-items: center; font-family: var(--fd); font-weight: 700; font-size: 1.3rem; flex-shrink: 0; }
+.id-bar .who { font-family: var(--fd); font-weight: 600; color: var(--navy); font-size: 1.18rem; }
+.id-bar .sub { font-size: .9rem; color: var(--muted); }
+.status-pill { display: inline-flex; align-items: center; gap: 7px; font-size: .82rem; font-weight: 600; color: var(--green); background: rgba(47,158,111,.1); border: 1px solid rgba(47,158,111,.3); border-radius: 999px; padding: 4px 12px; }
+.status-pill svg { width: 14px; height: 14px; }
+
+/* ===== EDUCATION ===== */
+.edu-grid { display: grid; grid-template-columns: 1fr; gap: 13px; }
+@media(min-width: 640px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
+.edu { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+.edu .k { font-family: var(--fb); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .68rem; color: var(--teal-deep); }
+.edu h3 { font-size: 1.14rem; margin: 7px 0 6px; }
+.edu p { font-size: 1.0rem; color: var(--ink); line-height: 1.55; }
+.edu p b { color: var(--navy); }
+
+/* ===== PROMPTS ===== */
+.prompt-card { background: var(--navy); color: var(--cream); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.prompt-card .pt { font-size: 1.04rem; line-height: 1.55; color: rgba(247,241,227,.95); }
+.prompt-card .pt code { background: rgba(255,255,255,.12); padding: 2px 6px; border-radius: 6px; font-size: .92em; }
+.prompt-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.copy-btn { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; font-family: var(--fd); font-weight: 600; font-size: .88rem; color: var(--navy-deep); background: var(--gold); border: none; border-radius: 999px; padding: 8px 16px; min-height: 40px; cursor: pointer; box-shadow: 0 2px 0 var(--gold-deep); transition: transform .12s; }
+.copy-btn:hover, .copy-btn:focus-visible { transform: translateY(-1px); outline: none; }
+.copy-btn svg { width: 15px; height: 15px; }
+.lib { display: grid; grid-template-columns: 1fr; gap: 11px; }
+@media(min-width: 640px) { .lib { grid-template-columns: 1fr 1fr; } }
+.lib-card { background: var(--cream-2); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 14px; padding: 15px 17px; }
+.lib-card.fav { border-left-color: var(--gold); }
+.lib-card .nm { font-family: var(--fd); font-weight: 600; color: var(--navy); font-size: 1.06rem; }
+.lib-card .nm .star { color: var(--gold-deep); font-size: .82rem; margin-left: 6px; }
+.lib-card .meta { font-size: .86rem; color: var(--muted); margin-top: 3px; }
+.lib-card .meta .tool { color: var(--teal-deep); font-weight: 600; }
+.empty { color: var(--muted); font-size: 1rem; background: var(--cream-2); border: 1px dashed var(--line-2); border-radius: 14px; padding: 18px; text-align: center; }
+
+/* ===== EXAMPLES ===== */
+.gallery { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width: 560px) { .gallery { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 860px) { .gallery { grid-template-columns: 1fr 1fr 1fr; } }
+.gal { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 17px 18px; display: flex; flex-direction: column; gap: 7px; }
+.gal h4 { font-size: 1.08rem; }
+.gal p { font-size: .98rem; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
+.gal a { margin-top: auto; font-weight: 600; font-size: .9rem; color: var(--teal-deep); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+.gal a:hover { text-decoration: underline; }
+
+/* ===== MANAGE BOOKING ===== */
+.manage-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.note { display: flex; gap: 10px; align-items: flex-start; font-size: .96rem; color: var(--muted); background: rgba(242,169,59,.1); border: 1px solid rgba(242,169,59,.3); border-radius: 12px; padding: 12px 14px; margin-top: 14px; }
+.note svg { width: 18px; height: 18px; color: var(--gold-deep); flex-shrink: 0; margin-top: 2px; }
+
+/* ===== FOOTER ===== */
+.ft { background: var(--navy-deep); color: var(--cream); padding: 40px 18px 28px; margin-top: 36px; }
+.ft-in { max-width: var(--mw); margin: 0 auto; text-align: center; }
+.ft-motto { font-family: var(--fd); font-weight: 500; font-size: 1.04rem; color: var(--cream); max-width: 40ch; margin: 0 auto; }
+.ft-lk { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 20px 0 14px; }
+.ft-lk a { color: rgba(247,241,227,.8); text-decoration: none; font-size: .92rem; min-height: 40px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--gold); }
+.ft-lk a.fac { color: rgba(247,241,227,.55); }
+.ft-cp { font-size: .74rem; color: rgba(247,241,227,.5); }
+.ft-cp a { color: rgba(247,241,227,.6); }
+
+.hidden { display: none !important; }
+.toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(18px); background: var(--ink); color: var(--cream); padding: 12px 20px; border-radius: 12px; font-size: .96rem; font-weight: 600; box-shadow: 0 14px 30px -10px rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: .3s; z-index: 90; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <a class="hd-brand" href="/first-contact/" aria-label="Back to First Contact">
+      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+      <span>First Contact · Dashboard</span>
+    </a>
+    <div class="hd-r">
+      <button class="btn btn-ghost btn-sm hidden" id="signOut" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ===== PAGE HEAD ===== -->
+    <div class="page-head">
+      <p class="eyebrow">Yours to keep</p>
+      <h1>Your <span class="mk">Prompt Play</span> dashboard</h1>
+      <p class="lead">Manage your registration, browse the prompts and examples from the room, and learn how prompting works — all in one place.</p>
+      <div class="selfpaced">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>Self-paced and always open — this is separate from the live workshop wall, so explore it before, during, or after the night.</span>
+      </div>
+    </div>
+
+    <!-- ===== SIGN IN / IDENTITY ===== -->
+    <section id="identity">
+      <!-- signed out -->
+      <div class="card" id="signinCard">
+        <div class="signin-grid">
+          <div class="signin-copy">
+            <h3>Sign in to manage your registration</h3>
+            <p>Enter your email and we'll send a one-time magic link — no password. Tap it on this device to open your registration and recap. Just browsing? The prompts, examples, and prompting guide below are open to everyone.</p>
+          </div>
+          <div>
+            <div class="field" style="margin-bottom:8px">
+              <input class="input" id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email address">
+            </div>
+            <button class="btn btn-gold btn-block" id="sendLink" type="button">Send me a magic link</button>
+          </div>
+        </div>
+        <p class="msg" id="gateMsg" role="status" aria-live="polite" hidden></p>
+      </div>
+
+      <!-- signed in / checked in -->
+      <div class="card hidden" id="regCard">
+        <div class="id-bar" style="margin-bottom:6px">
+          <div class="id-avatar" id="idAvatar">?</div>
+          <div style="flex:1;min-width:160px">
+            <div class="who" id="idWho">Welcome back</div>
+            <div class="sub" id="idSub"></div>
+          </div>
+          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Registered</span>
+        </div>
+
+        <form id="regForm" novalidate style="margin-top:14px">
+          <div class="field">
+            <label for="r-name">Your name</label>
+            <input class="input" id="r-name" name="name" type="text" autocomplete="given-name" placeholder="First name is fine">
+          </div>
+          <div class="field">
+            <label for="r-email">Email <span class="hint" id="rEmailHint">— for your recap</span></label>
+            <input class="input" id="r-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="r-exp">How much have you played with AI?</label>
+            <select class="select" id="r-exp" name="experience">
+              <option value="">Pick one (optional)</option>
+              <option value="first-time">This is my first time</option>
+              <option value="dabbled">I've dabbled a bit</option>
+              <option value="builder">I build with it regularly</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="r-role">What's your role? <span class="hint">— one line, optional</span></label>
+            <input class="input" id="r-role" name="role" type="text" placeholder="e.g. teacher, founder, student, just curious">
+          </div>
+          <div class="field">
+            <label for="r-goals">What do you want to make? <span class="hint">— a sentence is plenty</span></label>
+            <textarea class="textarea" id="r-goals" name="goals" placeholder="An app idea, a story, a tool for work, or just here to explore…"></textarea>
+          </div>
+          <label class="check" style="margin-bottom:14px">
+            <input type="checkbox" id="r-wantsmore" name="wants_more">
+            <span>I'd be interested in a deeper / team session.</span>
+          </label>
+          <label class="check hidden" id="consentRow" style="margin-bottom:14px">
+            <input type="checkbox" id="r-consent" name="consent">
+            <span>I agree to Tale Waters &amp; Tides storing my check-in details to run the workshop and send my recap. <a href="mailto:corey@talewatersandtides.com">Questions?</a></span>
+          </label>
+          <button class="btn btn-navy btn-block" id="saveReg" type="submit">Save my changes</button>
+          <p class="msg" id="regMsg" role="status" aria-live="polite" hidden></p>
+        </form>
+
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span><b>Need to change your seat or can't make it?</b> Your booking and payment are handled by our partner, Hey, Let's Play. Manage the booking itself there, or email us and we'll sort it.</span>
+        </div>
+        <div class="manage-row">
+          <a class="btn btn-ghost btn-sm" href="https://ecom.roller.app/playdate/booknow/en-us/product/1965596?date=2026-06-02" target="_blank" rel="noopener">Manage booking ↗</a>
+          <a class="btn btn-ghost btn-sm" href="mailto:corey@talewatersandtides.com?subject=Prompt%20Play%20registration">Email us about my seat</a>
+          <button class="btn btn-ghost btn-sm" id="copyRecap" type="button">Copy my recap</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION ABOUT PROMPTING ===== -->
+    <section id="learn">
+      <h2 class="sec-h2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/><path d="M9 18h6M10 22h4"/></svg>Learn how prompting works</h2>
+      <p class="sec-lead">Six ideas that make every prompt better. Read them now, or come back whenever — they're yours.</p>
+      <div class="edu-grid">
+        <div class="edu"><span class="k">The tool</span><h3>A thinking partner, not a search box</h3><p>Describe what you want in plain words and it works <b>with</b> you — drafting, explaining, revising. Stop searching, start describing.</p></div>
+        <div class="edu"><span class="k">Context is the fuel</span><h3>Vague in, vague out</h3><p>It only knows what you give it — your words, files, photos, and the chat so far. The more relevant detail you add, the better the result.</p></div>
+        <div class="edu"><span class="k">Give it a role</span><h3>Tell it who to be</h3><p>"Act as a patient teacher," "be my product coach." A role sets the tone, the depth, and the kind of answer you get back.</p></div>
+        <div class="edu"><span class="k">Show, don't just tell</span><h3>Paste an example of "good"</h3><p>One example of the style, format, or outcome you want is worth a paragraph of description. It learns the target from what you show it.</p></div>
+        <div class="edu"><span class="k">Ask it to ask you</span><h3>"Ask me 3 questions first"</h3><p>Let it gather what it's missing before it answers. You'll get something tailored instead of generic — and you stay in the driver's seat.</p></div>
+        <div class="edu"><span class="k">How it thinks</span><h3>It predicts meaning — it doesn't look facts up</h3><p>That's why it can sound sure and still be wrong. Give it good context, then verify anything that really matters.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== PROMPTS ===== -->
+    <section id="prompts">
+      <h2 class="sec-h2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg>Prompts to steal</h2>
+      <p class="sec-lead">Copy one, paste it into <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a> or ChatGPT, and swap in your own idea. Start here, then make them yours.</p>
+      <div class="prompt-list" id="starterPrompts"></div>
+
+      <h3 style="font-size:1.2rem;margin:22px 0 4px">The room's prompt-style library <span class="cnt" id="libCnt"></span></h3>
+      <p class="sec-lead" style="margin-bottom:14px">Approaches people are sharing live tonight — <span style="color:var(--gold-deep);font-weight:600">★</span> marks a room favorite.</p>
+      <div class="lib" id="library"></div>
+    </section>
+
+    <!-- ===== EXAMPLES ===== -->
+    <section id="examples">
+      <h2 class="sec-h2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>Examples from the room <span class="cnt" id="exCnt"></span></h2>
+      <p class="sec-lead">Real things people made at First Contact. Proof that a sentence can become something — and a nudge for what to try yourself.</p>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <p class="ft-motto">Not a class. Not a webinar. A <span style="color:var(--gold)">creative</span> playground for the curious.</p>
+    <nav class="ft-lk" aria-label="Footer">
+      <a href="/first-contact/">Tonight's page</a>
+      <a href="/prompt-play/">Prompt Play series</a>
+      <a href="mailto:corey@talewatersandtides.com">Email Corey</a>
+      <a class="fac" href="/first-contact/facilitator/">Facilitator login</a>
+    </nav>
+    <p class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas · <a href="/first-contact/dashboard/">talewatersandtides.com/first-contact/dashboard</a></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+
+/* Public anon key — safe to ship: RLS is the control, not the key. */
+const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
+const SLUG = 'first-contact';
+const REDIRECT = 'https://talewatersandtides.com/first-contact/dashboard/';
+
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+
+/* ---------- helpers ---------- */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const show = (el, on) => el && el.classList.toggle('hidden', !on);
+const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+function lsGet(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+function msg(el, kind, text){ el.textContent = text; el.dataset.state = kind; el.hidden = false; }
+let _toastT;
+function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(_toastT); _toastT = setTimeout(() => el.classList.remove('show'), 2200); }
+// Clipboard with a window.prompt fallback (denied permission / non-HTTPS / no API).
+function copyText(text, okMsg){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(() => toast(okMsg), () => window.prompt('Copy this:', text));
+  } else { window.prompt('Copy this:', text); }
+}
+function uuidv4(){
+  if (window.crypto && window.crypto.randomUUID){ return window.crypto.randomUUID(); }
+  const b = new Uint8Array(16);
+  (window.crypto && window.crypto.getRandomValues) ? window.crypto.getRandomValues(b) : b.forEach((_, i) => b[i] = Math.floor(Math.random()*256));
+  b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+  let s = ''; for (let k = 0; k < 16; k++){ s += (b[k] + 0x100).toString(16).slice(1); if (k===3||k===5||k===7||k===9){ s += '-'; } }
+  return s;
+}
+
+/* ---------- identity: localStorage check-in OR Supabase auth session ---------- */
+function getParticipant(){ return lsGet('fc_participant', null); }
+let _authEmail = null;   // verified email from the magic-link session (lowercased)
+let _serverRow = null;   // the signed-in guest's own participants row, if one exists
+
+function renderIdentity(){
+  const p = getParticipant();
+  const identified = !!(p || _authEmail);
+  // Sign-in stays available whenever the user isn't authenticated — even with a
+  // local check-in — so local-only guests can actually sync across devices
+  // (the save path points them "above" to it).
+  show($('signinCard'), !_authEmail);
+  show($('regCard'), identified);
+  show($('signOut'), !!_authEmail);
+  // Consent is only collected when a brand-new registration would be created
+  // (signed in, no existing row). Edits to an existing row preserve prior consent.
+  show($('consentRow'), !!(_authEmail && !_serverRow));
+  if (!identified) return;
+
+  const name = (p && p.name) || '';
+  const email = _authEmail || (p && p.email) || '';
+  $('idAvatar').textContent = (name || email || '?').trim().charAt(0).toUpperCase() || '?';
+  $('idWho').textContent = name ? ('Welcome back, ' + name) : 'Welcome back';
+  $('idSub').textContent = email || 'First Contact · June 2, 2026';
+
+  // prefill the manage form
+  if (p){
+    $('r-name').value = p.name || '';
+    $('r-email').value = p.email || _authEmail || '';
+    $('r-exp').value = p.experience || '';
+    $('r-role').value = p.role || '';
+    $('r-goals').value = p.goals || '';
+    $('r-wantsmore').checked = !!p.wants_more;
+    $('r-consent').checked = !!(p.consent || (_serverRow && _serverRow.consent));
+  } else if (_authEmail && !$('r-email').value){
+    $('r-email').value = _authEmail;
+  }
+
+  // Signed in: the registration is keyed to the verified email — lock the field
+  // so it always satisfies the row-owner RLS check.
+  const emailField = $('r-email'), emailHint = $('rEmailHint');
+  if (_authEmail){
+    emailField.value = _authEmail; emailField.readOnly = true;
+    if (emailHint){ emailHint.textContent = '— signed in; saved across your devices'; }
+  } else {
+    emailField.readOnly = false;
+    if (emailHint){ emailHint.textContent = '— for your recap'; }
+  }
+}
+
+// Load the signed-in guest's own registration (RLS scopes SELECT to their email).
+async function loadServerRegistration(){
+  if (!_authEmail) return;
+  try {
+    const { data, error } = await sb.from('participants')
+      .select('id,name,email,experience,role,goals,wants_more,consent')
+      .eq('event_slug', SLUG).ilike('email', _authEmail)
+      .order('created_at', { ascending: false }).limit(1);
+    if (error){ throw error; }
+    const row = (data && data[0]) || null;
+    if (row){
+      _serverRow = row;
+      lsSet('fc_participant', { id: row.id, name: row.name || '', email: row.email || _authEmail,
+        experience: row.experience || '', role: row.role || '', goals: row.goals || '',
+        wants_more: !!row.wants_more, consent: !!row.consent });
+    }
+    renderIdentity();
+  } catch (e){ /* offline or no row yet — the new-registration path handles it */ }
+}
+
+/* ---------- magic link ---------- */
+$('sendLink').addEventListener('click', async () => {
+  const email = $('email').value.trim();
+  if (!isEmail(email)){ return msg($('gateMsg'), 'error', 'Enter a valid email.'); }
+  $('sendLink').disabled = true; $('sendLink').textContent = 'Sending…';
+  try {
+    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
+    if (error){ msg($('gateMsg'), 'error', error.message); }
+    else { msg($('gateMsg'), 'ok', 'Check your email and tap the link on this device to open your dashboard.'); }
+  } catch (e) {
+    msg($('gateMsg'), 'error', 'Network hiccup — check your connection and try again.');
+  } finally {
+    $('sendLink').disabled = false; $('sendLink').textContent = 'Send me a magic link';
+  }
+});
+$('email').addEventListener('keydown', (e) => { if (e.key === 'Enter'){ e.preventDefault(); $('sendLink').click(); } });
+$('signOut').addEventListener('click', () => sb.auth.signOut());
+
+sb.auth.onAuthStateChange((_event, session) => {
+  _authEmail = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  if (!_authEmail){ _serverRow = null; }
+  renderIdentity();
+  if (_authEmail){ loadServerRegistration(); }
+});
+
+/* ---------- manage registration ---------- */
+$('regForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const m = $('regMsg');
+  const name = $('r-name').value.trim();
+  if (!name){ return msg(m, 'error', 'Add your name so we can label your recap.'); }
+  const fields = {
+    name,
+    experience: $('r-exp').value || null,
+    role: $('r-role').value.trim() || null,
+    goals: $('r-goals').value.trim() || null,
+    wants_more: $('r-wantsmore').checked
+  };
+
+  if (_authEmail){
+    // Signed in: persist to Supabase, keyed to the verified email (RLS owns the row).
+    const btn = $('saveReg'); btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      if (_serverRow && _serverRow.id){
+        // Update in place; leave consent (already given) untouched.
+        const { error } = await sb.from('participants').update(fields).eq('id', _serverRow.id);
+        if (error){ throw error; }
+        _serverRow = Object.assign({}, _serverRow, fields);
+      } else {
+        // First registration from this account — consent is required here.
+        if (!$('r-consent').checked){ msg(m, 'error', 'Please tick the consent box to save your registration.'); return; }
+        const id = uuidv4();
+        const row = Object.assign({ id, event_slug: SLUG, email: _authEmail, consent: true,
+          onboarding: { role: fields.role, wants_more: fields.wants_more, via: 'dashboard' } }, fields);
+        const { error } = await sb.from('participants').insert(row);
+        if (error){ throw error; }
+        _serverRow = Object.assign({ id, email: _authEmail, consent: true }, fields);
+      }
+      lsSet('fc_participant', Object.assign({ id: _serverRow.id, email: _authEmail, consent: !!_serverRow.consent }, fields));
+      msg(m, 'ok', 'Saved and synced to your registration.');
+      toast('Registration synced');
+    } catch (err){
+      lsSet('fc_participant', Object.assign(getParticipant() || {}, { email: _authEmail }, fields));
+      msg(m, 'error', 'Saved on this device, but syncing failed — please try again.');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Save my changes';
+      renderIdentity();
+    }
+    return;
+  }
+
+  // Not signed in: keep it local only — no server write that would silently fail.
+  const emailVal = $('r-email').value.trim();
+  if (emailVal && !isEmail(emailVal)){ return msg(m, 'error', 'That email looks off — mind checking it?'); }
+  const prev = getParticipant() || {};
+  lsSet('fc_participant', Object.assign({ id: prev.id || uuidv4() }, prev, fields, { email: emailVal || null }));
+  renderIdentity();
+  msg(m, 'info', 'Saved on this device. Sign in with a magic link above to sync it across your devices.');
+  toast('Saved on this device');
+});
+
+/* ---------- copy recap ---------- */
+$('copyRecap').addEventListener('click', () => {
+  const p = getParticipant() || {};
+  const prompts = lsGet('fc_prompts', []);
+  const fb = lsGet('fc_feedback', null);
+  const lines = ['My First Contact recap — Prompt Play, June 2, 2026', ''];
+  if (p.name){ lines.push('Name: ' + p.name); }
+  if (p.goals){ lines.push('What I came to make: ' + p.goals); }
+  if (p.name || p.goals){ lines.push(''); }
+  if (prompts.length){
+    lines.push('Prompts I tried (' + prompts.length + '):');
+    prompts.forEach((pr, i) => lines.push((i+1) + '. ' + pr.prompt_text + (pr.tool ? ' [' + pr.tool + ']' : '')));
+    lines.push('');
+  }
+  if (fb && (fb.rating || fb.comment)){ lines.push('My take: ' + (fb.rating ? fb.rating + '/5. ' : '') + (fb.comment || '')); }
+  copyText(lines.join('\n'), 'Recap copied');
+});
+
+/* ---------- starter prompts ---------- */
+const STARTERS = [
+  'Act as a friendly product coach. Ask me five questions to turn my rough idea into a one-paragraph spec — who it’s for, the one job it does, and what “done” looks like. Then write the spec.',
+  'Build me a single-page web app that does <your idea>. Keep it to one self-contained HTML file with inline CSS and JS, and explain each part in plain English so I can tweak it.',
+  'I’m a total beginner. Walk me through making <your idea> step by step, and check in with me after each step before moving on.',
+  'Here’s what I have so far: <paste>. Add <one feature> and tell me exactly what you changed and why.'
+];
+function renderStarters(){
+  const wrap = $('starterPrompts');
+  wrap.innerHTML = '';
+  STARTERS.forEach((t) => {
+    const withCode = esc(t).replace(/&lt;([^&]+)&gt;/g, '<code>&lt;$1&gt;</code>');
+    const card = document.createElement('div');
+    card.className = 'prompt-card';
+    card.innerHTML = '<div class="pt">' + withCode + '</div>' +
+      '<button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy prompt</button>';
+    card.querySelector('.copy-btn').addEventListener('click', () => copyText(t, 'Prompt copied'));
+    wrap.appendChild(card);
+  });
+}
+
+/* ---------- live: prompt-style library (from solutions) ---------- */
+async function loadLibrary(){
+  const lib = $('library');
+  try {
+    const { data, error } = await sb.from('solutions').select('id,text,tool,solution_votes(vote)').eq('event_slug', SLUG).limit(60);
+    if (error){ throw error; }
+    const rows = (data || []).map(s => ({ text: s.text, tool: s.tool, up: (s.solution_votes || []).filter(v => v.vote).length }));
+    rows.sort((a, b) => b.up - a.up);
+    $('libCnt').textContent = rows.length || '';
+    if (!rows.length){ lib.innerHTML = '<div class="empty">Nothing here yet — approaches show up as people share them tonight.</div>'; return; }
+    lib.innerHTML = rows.map(r => {
+      const fav = r.up >= 4;
+      return '<div class="lib-card' + (fav ? ' fav' : '') + '"><div class="nm">' + esc(r.text) + (fav ? ' <span class="star">★ keeper</span>' : '') +
+        '</div><div class="meta">▲ ' + r.up + (r.tool ? ' · <span class="tool">' + esc(r.tool) + '</span>' : '') + '</div></div>';
+    }).join('');
+  } catch (e) {
+    lib.innerHTML = '<div class="empty">Couldn’t load the library right now — it fills up as the room shares approaches.</div>';
+  }
+}
+
+/* ---------- live: examples (from results) ---------- */
+async function loadExamples(){
+  const g = $('gallery');
+  try {
+    const { data, error } = await sb.from('results').select('title,text,link,created_at').eq('event_slug', SLUG).order('created_at', { ascending: false }).limit(60);
+    if (error){ throw error; }
+    const rows = data || [];
+    $('exCnt').textContent = rows.length || '';
+    if (!rows.length){ g.innerHTML = '<div class="empty">No examples yet — they appear here as people share what they built.</div>'; return; }
+    g.innerHTML = rows.map(r => {
+      const safe = r.link && /^https?:\/\//i.test(r.link) ? r.link : null;
+      return '<div class="gal"><h4>' + esc(r.title || 'Untitled') + '</h4>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') +
+        (safe ? '<a href="' + esc(safe) + '" target="_blank" rel="noopener nofollow">Open ↗</a>' : '') + '</div>';
+    }).join('');
+  } catch (e) {
+    g.innerHTML = '<div class="empty">Couldn’t load examples right now — check back once the room starts sharing.</div>';
+  }
+}
+
+/* ---------- live refresh (gentle: only when tab is visible) ---------- */
+function refreshLive(){ loadLibrary(); loadExamples(); }
+
+/* ---------- init ---------- */
+renderStarters();
+renderIdentity();
+refreshLive();
+// Gentle, jittered polling (~20–28s) only while the tab is visible, so a roomful
+// of guests doesn't hammer Supabase in lockstep; also refresh on tab wake.
+(function scheduleRefresh(){
+  setTimeout(() => { if (!document.hidden){ refreshLive(); } scheduleRefresh(); }, 20000 + Math.floor(Math.random() * 8000));
+})();
+document.addEventListener('visibilitychange', () => { if (!document.hidden){ refreshLive(); } });
+</script>
+</body>
+</html>
