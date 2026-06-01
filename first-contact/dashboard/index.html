@@ -467,7 +467,7 @@ function renderIdentity(){
   const stText = $('statusText'); if (stText){ stText.textContent = _authEmail ? 'Registered' : 'Saved on this device'; }
   const stPill = $('statusPill'); if (stPill){ stPill.classList.toggle('local', !_authEmail); }
   show($('unregister'), !!_authEmail);          // server delete only when signed in
-  show($('clearDevice'), !!getParticipant());   // local cache exists to clear
+  show($('clearDevice'), hasDeviceData());      // any local cache exists to clear
 }
 
 // Load the signed-in guest's own registration (RLS scopes SELECT to their email).
@@ -592,9 +592,10 @@ $('copyRecap').addEventListener('click', () => {
 /* ---------- device + registration removal ---------- */
 const FC_KEYS = ['fc_participant','fc_prompts','fc_feedback','fc_reflection','fc_votes','fc_sol_voted','fc_pending'];
 function clearDevice(){ FC_KEYS.forEach(k => { try { localStorage.removeItem(k); } catch(e){} }); }
+function hasDeviceData(){ return FC_KEYS.some(k => { try { return localStorage.getItem(k) !== null; } catch(e){ return false; } }); }
 
 $('clearDevice').addEventListener('click', () => {
-  if (!getParticipant() && !lsGet('fc_prompts', []).length){ return toast('Nothing saved on this device'); }
+  if (!hasDeviceData()){ return toast('Nothing saved on this device'); }
   if (!window.confirm('Clear your check-in and notes from THIS device?\n\nYour registration stays saved — sign in on any device to bring it back.')){ return; }
   clearDevice();
   renderIdentity();
