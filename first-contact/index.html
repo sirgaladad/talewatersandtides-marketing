@@ -154,7 +154,7 @@ details.prompts code { background: rgba(255,255,255,.1); padding: 2px 6px; borde
 /* ============================================================ FORMS */
 .form { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-family: var(--fd); font-weight: 600; font-size: .92rem; color: var(--navy); }
+.field label, .field-label { font-family: var(--fd); font-weight: 600; font-size: .92rem; color: var(--navy); }
 .field .req { color: var(--coral); }
 .field .hint { font-size: .8rem; color: var(--muted); font-weight: 400; }
 .input, .select, .textarea {
@@ -372,13 +372,15 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg></div>
         <h3>Tool 1 <!-- HOST: name --></h3>
         <p>What it's for tonight. <!-- HOST: one line --></p>
-        <a class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" data-ga="fc_tool_1">Open tool</a>
+        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_1">Open tool</a> -->
+        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_1">Link coming soon</button>
       </div>
       <div class="feat r">
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/><path d="M9 18h6M10 22h4"/></svg></div>
         <h3>Tool 2 <!-- HOST: name --></h3>
         <p>What it's for tonight. <!-- HOST: one line --></p>
-        <a class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" data-ga="fc_tool_2">Open tool</a>
+        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_2">Open tool</a> -->
+        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_2">Link coming soon</button>
       </div>
     </div>
 
@@ -467,8 +469,8 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     <div class="card r" style="margin-top:24px">
       <form class="form" id="feedbackForm" novalidate>
         <div class="field">
-          <label>Rate tonight (1–5)</label>
-          <div class="rating" role="radiogroup" aria-label="Rating from 1 to 5">
+          <span class="field-label" id="ratingLabel">Rate tonight (1–5)</span>
+          <div class="rating" role="radiogroup" aria-labelledby="ratingLabel">
             <input type="radio" id="rt1" name="rating" value="1"><label for="rt1">1</label>
             <input type="radio" id="rt2" name="rating" value="2"><label for="rt2">2</label>
             <input type="radio" id="rt3" name="rating" value="3"><label for="rt3">3</label>
@@ -544,6 +546,23 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
   function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function track(name, params){ if (typeof gtag === 'function'){ gtag('event', name, Object.assign({event_category:'event', event_label:EVENT_SLUG}, params||{})); } }
 
+  // RFC 4122 v4 — native when available, else a getRandomValues/Math.random
+  // fallback so participants.id is ALWAYS a valid uuid. Without this, browsers
+  // lacking crypto.randomUUID (older Safari, insecure http contexts) would send
+  // a non-uuid string and the uuid-typed insert (and every linked prompt/
+  // feedback row) would fail with a 400.
+  function uuidv4(){
+    if (window.crypto && window.crypto.randomUUID){ return window.crypto.randomUUID(); }
+    var b = new Uint8Array(16);
+    if (window.crypto && window.crypto.getRandomValues){ window.crypto.getRandomValues(b); }
+    else { for (var i = 0; i < 16; i++){ b[i] = Math.floor(Math.random() * 256); } }
+    b[6] = (b[6] & 0x0f) | 0x40; // version 4
+    b[8] = (b[8] & 0x3f) | 0x80; // variant 10
+    var s = '';
+    for (var k = 0; k < 16; k++){ s += (b[k] + 0x100).toString(16).slice(1); if (k===3||k===5||k===7||k===9){ s += '-'; } }
+    return s;
+  }
+
   function showMsg(el, kind, text){ el.textContent = text; el.dataset.state = kind; el.hidden = false; }
   function hideMsg(el){ el.hidden = true; }
 
@@ -559,9 +578,13 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
       },
       body: JSON.stringify(row)
     }).then(function(res){
-      // 201 created; 409 duplicate -> treat as success
-      if (!res.ok && res.status !== 409){ return Promise.reject(new Error('HTTP ' + res.status)); }
-      return true;
+      if (res.ok){ return true; }
+      // Attach the status so callers can tell a transient failure (network /
+      // 5xx) from a permanent client error (4xx). A bare network error that
+      // rejects fetch() has no .status, so it's treated as transient.
+      var err = new Error('HTTP ' + res.status);
+      err.status = res.status;
+      return Promise.reject(err);
     });
   }
 
@@ -575,7 +598,18 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     sbInsert(item.table, item.row).then(function(){
       var cur = lsGet('fc_pending', []); cur.shift(); lsSet('fc_pending', cur);
       flushQueue();
-    }).catch(function(){ /* still offline; try again later */ updateSync(); });
+    }).catch(function(err){
+      var s = err && err.status;
+      // Discard a permanently-failing item (4xx client error) so one poison row
+      // can't block the whole queue. Keep transient failures (offline / 5xx /
+      // 408 / 429) and 409 (FK parent not synced yet) to retry on reconnect.
+      if (s && s >= 400 && s < 500 && s !== 408 && s !== 429 && s !== 409){
+        var cur = lsGet('fc_pending', []); cur.shift(); lsSet('fc_pending', cur);
+        flushQueue();
+      } else {
+        updateSync();
+      }
+    });
   }
   function updateSync(){
     var pill = $('syncPill'); if (!pill) return;
@@ -609,8 +643,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     if (email && !isEmail(email)){ showMsg(msg,'error','That email looks off — mind checking it?'); return; }
     if (!consent){ showMsg(msg,'error','Please tick the box so we can save your recap.'); return; }
 
-    var pid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
-              : 'fc-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+    var pid = uuidv4();
     var row = { id: pid, event_slug: EVENT_SLUG, name: name, email: email || null,
                 experience: experience || null, goals: goals || null, consent: true };
 
@@ -622,12 +655,14 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
 
     btn.disabled = true; btn.textContent = 'Checking in…';
     sbInsert('participants', row).then(function(){
-      updateSync();
+      updateSync(); return true;                    // synced to Supabase
     }).catch(function(){
-      enqueue('participants', row);
-    }).then(function(){
+      enqueue('participants', row); return false;   // saved locally, will sync later
+    }).then(function(synced){
       btn.disabled = false; btn.textContent = 'Check in for tonight';
-      showMsg(msg,'ok',"You're in! Scroll down — tonight's flow and your prompt log are unlocked.");
+      showMsg(msg,'ok', synced
+        ? "You're in! Scroll down — tonight's flow and your prompt log are unlocked."
+        : "You're in! Saved on this device — we'll sync when you're back online. Scroll down to get started.");
       setTimeout(function(){ var f=$('flow'); if(f){ f.scrollIntoView({behavior:'smooth'}); } }, 700);
     });
   });
