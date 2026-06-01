@@ -152,6 +152,35 @@ details.prompts ol { margin: 0 0 18px 0; padding-left: 22px; display: flex; flex
 details.prompts li { color: rgba(247,241,227,.92); font-size: .96rem; }
 details.prompts code { background: rgba(255,255,255,.1); padding: 2px 6px; border-radius: 6px; font-size: .9em; }
 
+/* ===== SPEC CARDS (visual requirements: visual + prompt + data) ===== */
+.spec-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media(min-width: 760px){ .spec-grid { grid-template-columns: 1fr 1fr; } }
+.spec { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 26px rgba(20,50,74,.05); }
+.spec-vis { background: linear-gradient(160deg, #eaf4f7, #f7f1e3); border-bottom: 1px solid var(--line); padding: 14px; display: grid; place-items: center; }
+.spec-vis svg { width: 100%; max-width: 230px; height: auto; }
+.spec-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
+.spec-body h4 { font-family: var(--fd); color: var(--navy); font-size: 1.08rem; }
+.spec-k { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .66rem; color: var(--teal); margin-bottom: 4px; }
+.spec-prompt { font-size: .94rem; color: var(--ink); line-height: 1.5; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; }
+.spec-data { display: flex; flex-wrap: wrap; gap: 6px; }
+.spec-chip { font-family: var(--fb); font-size: .78rem; color: var(--navy); background: rgba(59,169,196,.12); border: 1px solid rgba(59,169,196,.28); border-radius: 999px; padding: 3px 10px; }
+.spec-copy { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; font-family: var(--fd); font-weight: 600; font-size: .85rem; color: var(--navy-deep); background: var(--gold); border: none; border-radius: 999px; padding: 8px 15px; min-height: 38px; cursor: pointer; box-shadow: 0 2px 0 var(--gold-deep); }
+.spec-copy svg { width: 14px; height: 14px; }
+.yourspec { background: rgba(242,169,59,.1); border: 1px solid rgba(242,169,59,.34); border-radius: 14px; padding: 15px 17px; margin-top: 22px; }
+.yourspec .ys-goal { font-family: var(--fd); font-weight: 600; color: var(--navy); font-size: 1.05rem; margin: 2px 0 6px; }
+.yourspec .ys-hint { font-size: .9rem; color: var(--muted); }
+
+/* example chips: click to fill a textarea */
+.egs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+.egs-lbl { font-size: .82rem; color: var(--muted); font-weight: 600; }
+.eg { font-family: var(--fb); font-size: .82rem; color: var(--navy); background: var(--cream-2); border: 1px dashed var(--line-2); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: border-color .2s, background .2s; text-align: left; }
+.eg:hover, .eg:focus-visible { border-color: var(--teal); background: rgba(59,169,196,.08); outline: none; }
+
+/* checked-in: clear this device */
+.ci-clear { background: none; border: none; color: var(--muted); font-family: var(--fb); font-size: .82rem; text-decoration: underline; cursor: pointer; padding: 6px 0 0; }
+.ci-clear:hover { color: var(--coral); }
+.btn-ghost.btn-sm { box-shadow: none; }
+
 /* ============================================================ FORMS */
 .form { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
@@ -338,6 +367,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <div>
           <div class="ci-t" id="ciName">You're checked in — welcome!</div>
           <div class="ci-s">Scroll down for tonight's flow, the prompts to try, and your prompt log — or <a href="/first-contact/dashboard/" data-ga="fc_checkedin_dashboard">open your dashboard</a> to manage your registration anytime.</div>
+          <button class="ci-clear" id="ciClear" type="button">Not you? Clear this device</button>
         </div>
       </div>
 
@@ -438,6 +468,23 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
   </div>
 </section>
 
+<!-- ============================================================ PROMPT TO SPEC (visual requirements) -->
+<section id="spec" data-ga-section="fc_spec">
+  <div class="wrap">
+    <p class="eyebrow r">Requirements-driven design</p>
+    <h2 class="sec-h2 r">Prompt → spec → screen</h2>
+    <p class="sec-lead r">The clearest asks describe three things at once: what it looks like, the prompt you give, and the data behind it. Steal a pattern below, then turn tonight's top problem — or your own idea — into a buildable spec.</p>
+
+    <div class="yourspec r" id="yourSpec" hidden>
+      <div class="spec-k">Your goal tonight</div>
+      <p class="ys-goal" id="ysGoal"></p>
+      <p class="ys-hint">Paste it into Claude with: <i>"Turn this into a one-paragraph spec — the screen, the prompt, and the data it needs — then build it as one HTML file."</i></p>
+    </div>
+
+    <div class="spec-grid r" id="specCards" style="margin-top:20px"></div>
+  </div>
+</section>
+
 <!-- ============================================================ DECISION JAM: HOW MIGHT WE (facilitator-set) -->
 <section id="jam-hmw" data-ga-section="fc_jam_hmw" hidden>
   <div class="wrap">
@@ -461,6 +508,12 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <span>Check in above first, then the wall unlocks here.</span>
       </div>
       <form class="form" id="problemForm" novalidate>
+        <div class="egs" data-fill-target="pb-text">
+          <span class="egs-lbl">Stuck? Try one:</span>
+          <button type="button" class="eg">Beginners can't tell which AI tool to even start with.</button>
+          <button type="button" class="eg">Small shops lose hours to repetitive copy-paste work.</button>
+          <button type="button" class="eg">It's hard to turn a rough idea into a clear, buildable spec.</button>
+        </div>
         <div class="field">
           <label for="pb-text">Add a problem</label>
           <textarea class="textarea" id="pb-text" name="text" maxlength="280" placeholder="e.g. It's hard for a beginner to know which AI tool to even start with."></textarea>
@@ -488,6 +541,12 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <span>Check in above first to add and rate ideas.</span>
       </div>
       <form class="form" id="solutionForm" novalidate>
+        <div class="egs" data-fill-target="sol-text">
+          <span class="egs-lbl">Need a spark:</span>
+          <button type="button" class="eg">A "beginner mode" prompt that asks one question at a time.</button>
+          <button type="button" class="eg">A template that turns a problem into a one-page spec.</button>
+          <button type="button" class="eg">A checklist the AI fills in before it writes any code.</button>
+        </div>
         <div class="field">
           <label for="sol-text">Your idea or prompt approach</label>
           <textarea class="textarea" id="sol-text" name="text" maxlength="600" placeholder="e.g. A 'beginner mode' prompt that asks one question at a time and explains each step…"></textarea>
@@ -552,6 +611,11 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         <span>Check in above first, then your prompt log unlocks here.</span>
       </div>
       <form class="form" id="logForm" novalidate>
+        <div class="egs" data-fill-target="lg-text">
+          <span class="egs-lbl">Examples:</span>
+          <button type="button" class="eg">Act as a product coach and ask me 5 questions to spec my idea.</button>
+          <button type="button" class="eg">Build this as one self-contained HTML file and explain each part.</button>
+        </div>
         <div class="field">
           <label for="lg-text">A prompt you tried</label>
           <textarea class="textarea" id="lg-text" name="prompt_text" placeholder="Paste your prompt here…"></textarea>
@@ -826,6 +890,8 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     lsSet('fc_participant', { id: pid, name: name, email: email || null, experience: experience, role: role, goals: goals, wants_more: wantsMore });
     setOnboardedUI();
     renderRecap();
+    populateYourSpec();
+    prefillSubscribe();
     track('onboard', { experience: experience || 'unknown' });
 
     btn.disabled = true; btn.textContent = 'Checking in…';
@@ -1180,11 +1246,95 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     document.addEventListener('visibilitychange', function(){ if(!document.hidden){ pollAll(); } });
   })();
 
+  /* ---------- clear this device (local unregister) ---------- */
+  function clearDevice(){
+    ['fc_participant','fc_prompts','fc_feedback','fc_reflection','fc_votes','fc_sol_voted','fc_pending'].forEach(function(k){ try { localStorage.removeItem(k); } catch(e){} });
+  }
+  var ciClear = $('ciClear');
+  if (ciClear){ ciClear.addEventListener('click', function(){
+    if (!window.confirm('Clear your check-in and notes from this device?\n\nIf you added an email, open your dashboard and sign in anytime to bring it back.')){ return; }
+    clearDevice(); track('clear_device', {}); location.reload();
+  }); }
+
+  /* ---------- visual requirements: spec cards (visual + prompt + data) ---------- */
+  var SPEC_CARDS = [
+    {
+      title: 'Fishing trip planner',
+      svg: '<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="8" y="10" width="150" height="130" rx="10" fill="#fffdf7"/><path d="M8 72 Q60 52 110 72 T232 62" stroke="#3ba9c4" stroke-width="3"/><path d="M40 58l8 14 8-14a8 8 0 10-16 0z" fill="#e8654e" stroke="none"/><circle cx="48" cy="58" r="3" fill="#fffdf7"/><path d="M96 86l7 12 7-12a7 7 0 10-14 0z" fill="#f2a93b" stroke="none"/><circle cx="103" cy="86" r="2.5" fill="#fffdf7"/><rect x="170" y="18" width="62" height="114" rx="8" fill="#fffdf7"/><circle cx="182" cy="38" r="4" fill="#3ba9c4" stroke="none"/><line x1="194" y1="38" x2="224" y2="38"/><circle cx="182" cy="62" r="4" fill="#f2a93b" stroke="none"/><line x1="194" y1="62" x2="224" y2="62"/><circle cx="182" cy="86" r="4" fill="#e8654e" stroke="none"/><line x1="194" y1="86" x2="224" y2="86"/><circle cx="182" cy="110" r="4" fill="#2f9e6f" stroke="none"/><line x1="194" y1="110" x2="224" y2="110"/></svg>',
+      prompt: 'Act as an Arkansas fishing guide. Plan a half-day bass trip on the Arkansas River near Little Rock this Saturday morning for 2 people — pick a launch, 3 spots with a reason for each, a gear list, and a windy-day backup. Keep it to one page.',
+      data: ['date', 'river', 'party_size', 'target', 'launch', 'gear[]', 'backup_plan']
+    },
+    {
+      title: 'Event check-in screen',
+      svg: '<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="88" y="8" width="64" height="134" rx="12" fill="#fffdf7"/><line x1="108" y1="18" x2="132" y2="18" stroke-width="3"/><rect x="98" y="32" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="50" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="68" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="90" width="13" height="11" rx="3"/><path d="M100 96l3 3 5-6" stroke="#2f9e6f"/><rect x="98" y="112" width="44" height="18" rx="9" fill="#f2a93b" stroke="none"/></svg>',
+      prompt: 'Build a one-page check-in screen for a 25-person workshop as one self-contained HTML file. Fields: name, email, experience level, and one goal. One tap to check in, store consent, then show a friendly “you’re in” confirmation.',
+      data: ['name', 'email', 'experience', 'goal', 'consent', 'checked_in_at']
+    },
+    {
+      title: 'Recipe → grocery list',
+      svg: '<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="14" y="20" width="84" height="110" rx="10" fill="#fffdf7"/><line x1="26" y1="38" x2="86" y2="38" stroke-width="3"/><line x1="26" y1="54" x2="86" y2="54"/><line x1="26" y1="68" x2="86" y2="68"/><line x1="26" y1="82" x2="78" y2="82"/><line x1="26" y1="96" x2="86" y2="96"/><line x1="26" y1="110" x2="70" y2="110"/><path d="M108 75h22" stroke="#3ba9c4" stroke-width="3"/><path d="M124 69l8 6-8 6" stroke="#3ba9c4" stroke-width="3"/><rect x="142" y="20" width="84" height="110" rx="10" fill="#fffdf7"/><rect x="152" y="34" width="12" height="12" rx="3"/><path d="M154 40l2 3 4-5" stroke="#2f9e6f"/><line x1="170" y1="40" x2="214" y2="40"/><rect x="152" y="56" width="12" height="12" rx="3"/><path d="M154 62l2 3 4-5" stroke="#2f9e6f"/><line x1="170" y1="62" x2="214" y2="62"/><rect x="152" y="78" width="12" height="12" rx="3"/><line x1="170" y1="84" x2="206" y2="84"/><rect x="152" y="100" width="12" height="12" rx="3"/><line x1="170" y1="106" x2="214" y2="106"/></svg>',
+      prompt: 'Turn this recipe into a grocery list for 4 people, grouped by store aisle with quantities, and flag anything I probably already have. Recipe: <paste>.',
+      data: ['recipe', 'servings', 'ingredient', 'qty', 'aisle']
+    },
+    {
+      title: 'Float-trip recap page',
+      svg: '<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="14" y="14" width="212" height="122" rx="12" fill="#fffdf7"/><line x1="28" y1="32" x2="150" y2="32" stroke-width="4"/><rect x="28" y="44" width="96" height="60" rx="8" fill="#eaf4f7"/><circle cx="52" cy="66" r="8" fill="#f2a93b" stroke="none"/><path d="M28 104l28-26 22 18 16-12 30 20" stroke="#3ba9c4" stroke-width="3"/><line x1="140" y1="50" x2="212" y2="50"/><line x1="140" y1="64" x2="212" y2="64"/><line x1="140" y1="78" x2="200" y2="78"/><line x1="140" y1="92" x2="212" y2="92"/><line x1="28" y1="118" x2="120" y2="118"/></svg>',
+      prompt: 'Make a one-page recap of our weekend float trip from these notes — a short story up top, a “what worked / what we’d change” gear list, and 3 photo captions. Notes: <paste>.',
+      data: ['trip', 'highlights[]', 'gear_review[]', 'photo', 'caption']
+    }
+  ];
+  function copyPrompt(text, btn){
+    var lbl = btn.querySelector('.cl');
+    var done = function(){ if (lbl){ var t = lbl.textContent; lbl.textContent = 'Copied!'; setTimeout(function(){ lbl.textContent = t; }, 1600); } };
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(function(){ window.prompt('Copy this prompt:', text); }); }
+    else { window.prompt('Copy this prompt:', text); }
+  }
+  function renderSpecCards(){
+    var wrap = $('specCards'); if (!wrap){ return; }
+    wrap.innerHTML = '';
+    SPEC_CARDS.forEach(function(c){
+      var chips = c.data.map(function(d){ return '<span class="spec-chip">' + esc(d) + '</span>'; }).join('');
+      var el = document.createElement('div'); el.className = 'spec';
+      el.innerHTML = '<div class="spec-vis">' + c.svg + '</div>' +
+        '<div class="spec-body"><h4>' + esc(c.title) + '</h4>' +
+        '<div><div class="spec-k">Prompt</div><div class="spec-prompt">' + esc(c.prompt) + '</div></div>' +
+        '<div><div class="spec-k">Data shape</div><div class="spec-data">' + chips + '</div></div>' +
+        '<button class="spec-copy" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cl">Copy prompt</span></button>' +
+        '</div>';
+      el.querySelector('.spec-copy').addEventListener('click', function(){ copyPrompt(c.prompt, this); track('spec_copy', { title: c.title }); });
+      wrap.appendChild(el);
+    });
+  }
+
+  /* ---------- reuse the onboarding goal in the spec step (no retyping) ---------- */
+  function populateYourSpec(){
+    var p = getParticipant(), box = $('yourSpec'); if (!box){ return; }
+    if (p && p.goals){ $('ysGoal').textContent = '“' + p.goals + '”'; box.hidden = false; }
+    else { box.hidden = true; }
+  }
+
+  /* ---------- example chips: click to fill a textarea ---------- */
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.eg') : null;
+    if (!b){ return; }
+    var grp = b.parentNode, id = grp && grp.getAttribute('data-fill-target'), ta = id && $(id);
+    if (ta){ ta.value = b.textContent.trim(); ta.focus(); ta.dispatchEvent(new Event('input')); }
+  });
+
+  /* ---------- subscribe: prefill from check-in email (no double entry) ---------- */
+  function prefillSubscribe(){
+    var p = getParticipant(), em = $('sub-email');
+    if (p && p.email && em && !em.value){ em.value = p.email; }
+  }
+
   /* ---------- restore prior session on load ---------- */
   (function init(){
     setOnboardedUI();
     lsGet('fc_prompts', []).forEach(addLogItem);
     renderRecap();
+    renderSpecCards();
+    populateYourSpec();
+    prefillSubscribe();
     flushQueue();
   })();
 
