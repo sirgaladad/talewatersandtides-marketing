@@ -413,10 +413,15 @@ $('sendLink').addEventListener('click', async () => {
   const email = $('email').value.trim();
   if (!isEmail(email)){ return msg($('gateMsg'), 'error', 'Enter a valid email.'); }
   $('sendLink').disabled = true; $('sendLink').textContent = 'Sending…';
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
-  $('sendLink').disabled = false; $('sendLink').textContent = 'Send me a magic link';
-  if (error){ msg($('gateMsg'), 'error', error.message); }
-  else { msg($('gateMsg'), 'ok', 'Check your email and tap the link on this device to open your dashboard.'); }
+  try {
+    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
+    if (error){ msg($('gateMsg'), 'error', error.message); }
+    else { msg($('gateMsg'), 'ok', 'Check your email and tap the link on this device to open your dashboard.'); }
+  } catch (e) {
+    msg($('gateMsg'), 'error', 'Network hiccup — check your connection and try again.');
+  } finally {
+    $('sendLink').disabled = false; $('sendLink').textContent = 'Send me a magic link';
+  }
 });
 $('email').addEventListener('keydown', (e) => { if (e.key === 'Enter'){ e.preventDefault(); $('sendLink').click(); } });
 $('signOut').addEventListener('click', () => sb.auth.signOut());
@@ -504,32 +509,40 @@ function renderStarters(){
 /* ---------- live: prompt-style library (from solutions) ---------- */
 async function loadLibrary(){
   const lib = $('library');
-  const { data, error } = await sb.from('solutions').select('id,text,tool,solution_votes(vote)').eq('event_slug', SLUG);
-  if (error){ lib.innerHTML = '<div class="empty">Couldn’t load the library right now — it fills up as the room shares approaches.</div>'; return; }
-  const rows = (data || []).map(s => ({ text: s.text, tool: s.tool, up: (s.solution_votes || []).filter(v => v.vote).length }));
-  rows.sort((a, b) => b.up - a.up);
-  $('libCnt').textContent = rows.length || '';
-  if (!rows.length){ lib.innerHTML = '<div class="empty">Nothing here yet — approaches show up as people share them tonight.</div>'; return; }
-  lib.innerHTML = rows.map(r => {
-    const fav = r.up >= 4;
-    return '<div class="lib-card' + (fav ? ' fav' : '') + '"><div class="nm">' + esc(r.text) + (fav ? ' <span class="star">★ keeper</span>' : '') +
-      '</div><div class="meta">▲ ' + r.up + (r.tool ? ' · <span class="tool">' + esc(r.tool) + '</span>' : '') + '</div></div>';
-  }).join('');
+  try {
+    const { data, error } = await sb.from('solutions').select('id,text,tool,solution_votes(vote)').eq('event_slug', SLUG);
+    if (error){ throw error; }
+    const rows = (data || []).map(s => ({ text: s.text, tool: s.tool, up: (s.solution_votes || []).filter(v => v.vote).length }));
+    rows.sort((a, b) => b.up - a.up);
+    $('libCnt').textContent = rows.length || '';
+    if (!rows.length){ lib.innerHTML = '<div class="empty">Nothing here yet — approaches show up as people share them tonight.</div>'; return; }
+    lib.innerHTML = rows.map(r => {
+      const fav = r.up >= 4;
+      return '<div class="lib-card' + (fav ? ' fav' : '') + '"><div class="nm">' + esc(r.text) + (fav ? ' <span class="star">★ keeper</span>' : '') +
+        '</div><div class="meta">▲ ' + r.up + (r.tool ? ' · <span class="tool">' + esc(r.tool) + '</span>' : '') + '</div></div>';
+    }).join('');
+  } catch (e) {
+    lib.innerHTML = '<div class="empty">Couldn’t load the library right now — it fills up as the room shares approaches.</div>';
+  }
 }
 
 /* ---------- live: examples (from results) ---------- */
 async function loadExamples(){
   const g = $('gallery');
-  const { data, error } = await sb.from('results').select('title,text,link,created_at').eq('event_slug', SLUG).order('created_at', { ascending: false });
-  if (error){ g.innerHTML = '<div class="empty">Couldn’t load examples right now — check back once the room starts sharing.</div>'; return; }
-  const rows = data || [];
-  $('exCnt').textContent = rows.length || '';
-  if (!rows.length){ g.innerHTML = '<div class="empty">No examples yet — they appear here as people share what they built.</div>'; return; }
-  g.innerHTML = rows.map(r => {
-    const safe = r.link && /^https?:\/\//i.test(r.link) ? r.link : null;
-    return '<div class="gal"><h4>' + esc(r.title || 'Untitled') + '</h4>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') +
-      (safe ? '<a href="' + esc(safe) + '" target="_blank" rel="noopener nofollow">Open ↗</a>' : '') + '</div>';
-  }).join('');
+  try {
+    const { data, error } = await sb.from('results').select('title,text,link,created_at').eq('event_slug', SLUG).order('created_at', { ascending: false });
+    if (error){ throw error; }
+    const rows = data || [];
+    $('exCnt').textContent = rows.length || '';
+    if (!rows.length){ g.innerHTML = '<div class="empty">No examples yet — they appear here as people share what they built.</div>'; return; }
+    g.innerHTML = rows.map(r => {
+      const safe = r.link && /^https?:\/\//i.test(r.link) ? r.link : null;
+      return '<div class="gal"><h4>' + esc(r.title || 'Untitled') + '</h4>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') +
+        (safe ? '<a href="' + esc(safe) + '" target="_blank" rel="noopener nofollow">Open ↗</a>' : '') + '</div>';
+    }).join('');
+  } catch (e) {
+    g.innerHTML = '<div class="empty">Couldn’t load examples right now — check back once the room starts sharing.</div>';
+  }
 }
 
 /* ---------- live refresh (gentle: only when tab is visible) ---------- */
