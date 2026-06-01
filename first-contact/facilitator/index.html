@@ -224,7 +224,7 @@ const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, per
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const show = (el, on) => el.classList.toggle('hidden', !on);
-const when = (iso) => { try { return new Date(iso).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); } catch(e){ return ''; } };
+const when = (iso) => { if (!iso) return ''; const d = new Date(iso); return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); };
 function msg(el, kind, text){ el.textContent = text; el.className = 'msg ' + kind; el.hidden = false; }
 
 /* ---------- views ---------- */
@@ -270,22 +270,21 @@ $('refresh').addEventListener('click', refreshAll);
 async function refreshAll(){
   try {
     const q = (t, cols, order) => { let b = sb.from(t).select(cols).eq('event_slug', SLUG); return order ? b.order('created_at', {ascending:false}) : b; };
-    const [parts, prompts, fb, subs, problems, votes, sols, solVotes, results, refls, sess] = await Promise.all([
+    // votes / solution_votes are embedded on their parent rows (fewer round-trips).
+    const [parts, prompts, fb, subs, problems, sols, results, refls, sess] = await Promise.all([
       q('participants','name,email,experience,role,goals,wants_more,created_at', true),
       q('prompts','prompt_text,tool,created_at', true),
       q('feedback','rating,comment,created_at', false),
       q('subscribers','email,name,created_at', false),
-      q('problems','id,text', false),
-      q('votes','problem_id', false),
-      q('solutions','id,text,tool', false),
-      q('solution_votes','solution_id,vote,effort,impact', false),
+      q('problems','id,text,votes(problem_id)', false),
+      q('solutions','id,text,tool,solution_votes(vote,effort,impact)', false),
       q('results','title,text,link,created_at', true),
       q('reflections','text,created_at', true),
       sb.from('session_state').select('phase,hmw_text').eq('event_slug', SLUG).maybeSingle()
     ]);
     render({
       parts: parts.data || [], prompts: prompts.data || [], fb: fb.data || [], subs: subs.data || [],
-      problems: problems.data || [], votes: votes.data || [], sols: sols.data || [], solVotes: solVotes.data || [],
+      problems: problems.data || [], sols: sols.data || [],
       results: results.data || [], refls: refls.data || [], sess: sess.data || null
     });
     $('dashErr').hidden = true;
@@ -349,13 +348,13 @@ function render(d){
     '<tr><td>'+esc(l.email)+'</td><td>'+esc(l.name)+'</td><td>'+esc(l.source)+'</td><td>'+(l.wants_more?'<span class="wm">yes</span>':'')+'</td><td>'+when(l.when)+'</td></tr>'
   ).join('') || '<tr><td colspan="5" class="muted" style="padding:12px">No leads yet.</td></tr>';
 
-  /* jam visibility */
-  const tally = {}; d.votes.forEach(v => tally[v.problem_id] = (tally[v.problem_id]||0)+1);
+  /* jam visibility (votes / solution_votes are embedded on the parent rows) */
+  const tally = {}; d.problems.forEach(p => tally[p.id] = (p.votes||[]).length);
   const probs = d.problems.slice().sort((a,b)=>(tally[b.id]||0)-(tally[a.id]||0));
   $('problemsCnt').textContent = probs.length || '';
   $('problemsView').innerHTML = probs.map(p => '<li><span class="tally-pill">'+(tally[p.id]||0)+'</span>'+esc(p.text)+'</li>').join('');
 
-  const agg = {}; d.solVotes.forEach(r => { const a = agg[r.solution_id] || (agg[r.solution_id] = {up:0,eff:[],imp:[]}); if(r.vote)a.up++; if(r.effort)a.eff.push(r.effort); if(r.impact)a.imp.push(r.impact); });
+  const agg = {}; d.sols.forEach(s => { const a = agg[s.id] = {up:0,eff:[],imp:[]}; (s.solution_votes||[]).forEach(r => { if(r.vote)a.up++; if(r.effort)a.eff.push(r.effort); if(r.impact)a.imp.push(r.impact); }); });
   const ei = (arr) => arr.length ? ({1:'Low',2:'Med',3:'High'}[Math.round(arr.reduce((s,x)=>s+x,0)/arr.length)]||'—') : '—';
   const sols = d.sols.slice().sort((a,b)=>((agg[b.id]||{}).up||0)-((agg[a.id]||{}).up||0));
   $('solsCnt').textContent = sols.length || '';

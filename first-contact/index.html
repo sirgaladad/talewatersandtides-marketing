@@ -1024,10 +1024,10 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     track('jam_vote', {});
   }
   function refreshProblems(){
-    sbSelect('problems?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text&order=created_at.asc').then(function(rows){
-      _problems = rows; return sbSelect('votes?event_slug=eq.' + EVENT_SLUG + '&select=problem_id');
-    }).then(function(votes){
-      _tally = {}; votes.forEach(function(vrow){ _tally[vrow.problem_id] = (_tally[vrow.problem_id]||0) + 1; });
+    // One request: embed each problem's votes (count them client-side) instead of a second /votes fetch.
+    sbSelect('problems?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text,votes(problem_id)&order=created_at.asc').then(function(rows){
+      _problems = rows; _tally = {};
+      rows.forEach(function(row){ _tally[row.id] = (row.votes || []).length; });
       renderProblemWall();
     }).catch(function(){});
   }
@@ -1062,10 +1062,10 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     jamInsert('solutions', row).then(refreshSolutions).catch(function(){});
   }); }
   function refreshSolutions(){
-    sbSelect('solutions?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text,tool&order=created_at.asc').then(function(rows){
-      _solutions=rows; return sbSelect('solution_votes?event_slug=eq.' + EVENT_SLUG + '&select=solution_id,vote,effort,impact');
-    }).then(function(sv){
-      _solAgg={}; sv.forEach(function(r){ var a=_solAgg[r.solution_id]; if(!a){ a=_solAgg[r.solution_id]={up:0,eff:[],imp:[]}; } if(r.vote){ a.up++; } if(r.effort){ a.eff.push(r.effort); } if(r.impact){ a.imp.push(r.impact); } });
+    // One request: embed each solution's votes and aggregate client-side.
+    sbSelect('solutions?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text,tool,solution_votes(vote,effort,impact)&order=created_at.asc').then(function(rows){
+      _solutions=rows; _solAgg={};
+      rows.forEach(function(row){ var a=_solAgg[row.id]={up:0,eff:[],imp:[]}; (row.solution_votes||[]).forEach(function(r){ if(r.vote){ a.up++; } if(r.effort){ a.eff.push(r.effort); } if(r.impact){ a.imp.push(r.impact); } }); });
       renderSolutions();
     }).catch(function(){});
   }
@@ -1172,7 +1172,8 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
   (function jamInit(){
     renderDotBank();
     pollAll();
-    setInterval(function(){ if(!document.hidden){ pollAll(); } }, 5000);
+    // Self-scheduling with jitter (5–7s) so up to 25 clients don't all hit Supabase on the same tick.
+    (function schedule(){ setTimeout(function(){ if(!document.hidden){ pollAll(); } schedule(); }, 5000 + Math.floor(Math.random()*2000)); })();
     document.addEventListener('visibilitychange', function(){ if(!document.hidden){ pollAll(); } });
   })();
 
