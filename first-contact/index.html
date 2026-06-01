@@ -1286,7 +1286,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
   function copyPrompt(text, btn){
     var lbl = btn.querySelector('.cl');
     var done = function(){ if (lbl){ var t = lbl.textContent; lbl.textContent = 'Copied!'; setTimeout(function(){ lbl.textContent = t; }, 1600); } };
-    if (navigator.clipboard){ navigator.clipboard.writeText(text).then(done).catch(function(){ window.prompt('Copy this prompt:', text); }); }
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(function(){ window.prompt('Copy this prompt:', text); }); }
     else { window.prompt('Copy this prompt:', text); }
   }
   function renderSpecCards(){
@@ -1318,7 +1318,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     var b = e.target && e.target.closest ? e.target.closest('.eg') : null;
     if (!b){ return; }
     var grp = b.parentNode, id = grp && grp.getAttribute('data-fill-target'), ta = id && $(id);
-    if (ta){ ta.value = b.textContent; ta.focus(); ta.dispatchEvent(new Event('input')); }
+    if (ta){ ta.value = b.textContent.trim(); ta.focus(); ta.dispatchEvent(new Event('input')); }
   });
 
   /* ---------- subscribe: prefill from check-in email (no double entry) ---------- */

@@ -618,8 +618,11 @@ $('unregister').addEventListener('click', async () => {
     }
     return;
   }
-  // Not signed in (or nothing on the server we own): clear this device only.
-  if (!window.confirm('Remove your check-in from this device?\n\nYou’re not signed in, so this only clears this device. Sign in with the same email first to delete a synced copy.')){ return; }
+  // Signed in but no synced row we own (or not signed in): clear this device only.
+  const confirmMsg = _authEmail
+    ? 'Remove your check-in from this device?\n\nYou’re signed in but have no synced registration, so this only clears this device.'
+    : 'Remove your check-in from this device?\n\nYou’re not signed in, so this only clears this device. Sign in with the same email first to delete a synced copy.';
+  if (!window.confirm(confirmMsg)){ return; }
   clearDevice();
   renderIdentity();
   toast('Removed from this device');
