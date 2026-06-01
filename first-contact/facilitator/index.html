@@ -212,7 +212,7 @@ table.leads .wm { color: var(--coral); font-weight: 700; }
 </main>
 
 <script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
 
 const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
 const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
@@ -387,11 +387,13 @@ $('exportCsv').addEventListener('click', () => {
   const cell = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
   const csv = [head.join(',')].concat(_leads.map(l => head.map(h => cell(l[h])).join(','))).join('\r\n');
   const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  a.href = url;
   a.download = 'first-contact-leads-' + new Date().toISOString().slice(0,10) + '.csv';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
+  // Revoke after a beat so the download has fully started (immediate revoke can cancel it in some browsers).
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 });
 </script>
 </body>
