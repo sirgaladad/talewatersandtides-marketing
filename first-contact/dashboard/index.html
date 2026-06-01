@@ -169,6 +169,24 @@ section { padding: 22px 0; }
 .gal a { margin-top: auto; font-weight: 600; font-size: .9rem; color: var(--teal-deep); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
 .gal a:hover { text-decoration: underline; }
 
+/* ===== SPEC CARDS (visual requirements) ===== */
+.spec-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media(min-width: 760px){ .spec-grid { grid-template-columns: 1fr 1fr; } }
+.spec { background: var(--cream-2); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 26px rgba(20,50,74,.06); }
+.spec-vis { background: linear-gradient(160deg, #eaf4f7, #f7f1e3); border-bottom: 1px solid var(--line); padding: 14px; display: grid; place-items: center; }
+.spec-vis svg { width: 100%; max-width: 230px; height: auto; }
+.spec-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
+.spec-body h4 { font-size: 1.1rem; }
+.spec-k { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .66rem; color: var(--teal-deep); margin-bottom: 4px; }
+.spec-prompt { font-size: .96rem; color: var(--ink); line-height: 1.5; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; }
+.spec-data { display: flex; flex-wrap: wrap; gap: 6px; }
+.spec-chip { font-family: var(--fb); font-size: .8rem; color: var(--navy); background: rgba(59,169,196,.12); border: 1px solid rgba(59,169,196,.28); border-radius: 999px; padding: 3px 10px; }
+
+/* destructive + honest-state tweaks */
+.btn-ghost.danger { color: var(--coral); border-color: rgba(232,101,78,.4); }
+.btn-ghost.danger:hover, .btn-ghost.danger:focus-visible { border-color: var(--coral); background: rgba(232,101,78,.08); }
+.status-pill.local { color: var(--teal-deep); background: rgba(59,169,196,.1); border-color: rgba(59,169,196,.3); }
+
 /* ===== MANAGE BOOKING ===== */
 .manage-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
 .note { display: flex; gap: 10px; align-items: flex-start; font-size: .96rem; color: var(--muted); background: rgba(242,169,59,.1); border: 1px solid rgba(242,169,59,.3); border-radius: 12px; padding: 12px 14px; margin-top: 14px; }
@@ -248,7 +266,7 @@ section { padding: 22px 0; }
             <div class="who" id="idWho">Welcome back</div>
             <div class="sub" id="idSub"></div>
           </div>
-          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Registered</span>
+          <span class="status-pill" id="statusPill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span id="statusText">Registered</span></span>
         </div>
 
         <form id="regForm" novalidate style="margin-top:14px">
@@ -297,6 +315,8 @@ section { padding: 22px 0; }
           <a class="btn btn-ghost btn-sm" href="https://ecom.roller.app/playdate/booknow/en-us/product/1965596?date=2026-06-02" target="_blank" rel="noopener">Manage booking ↗</a>
           <a class="btn btn-ghost btn-sm" href="mailto:corey@talewatersandtides.com?subject=Prompt%20Play%20registration">Email us about my seat</a>
           <button class="btn btn-ghost btn-sm" id="copyRecap" type="button">Copy my recap</button>
+          <button class="btn btn-ghost btn-sm" id="clearDevice" type="button">Clear this device</button>
+          <button class="btn btn-ghost btn-sm danger" id="unregister" type="button">Remove my registration</button>
         </div>
       </div>
     </section>
@@ -319,6 +339,13 @@ section { padding: 22px 0; }
     <section id="prompts">
       <h2 class="sec-h2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg>Prompts to steal</h2>
       <p class="sec-lead">Copy one, paste it into <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a> or ChatGPT, and swap in your own idea. Start here, then make them yours.</p>
+
+      <h3 style="font-size:1.18rem;margin:6px 0 2px">Prompt → spec → screen</h3>
+      <p class="sec-lead" style="margin-bottom:14px">The clearest prompts describe three things at once: what it looks like, what you ask for, and the data behind it. Steal a pattern, then swap in your idea.</p>
+      <div class="spec-grid" id="specCards"></div>
+
+      <h3 style="font-size:1.18rem;margin:24px 0 2px">Quick starters</h3>
+      <p class="sec-lead" style="margin-bottom:14px">Shorter asks you can copy as-is.</p>
       <div class="prompt-list" id="starterPrompts"></div>
 
       <h3 style="font-size:1.2rem;margin:22px 0 4px">The room's prompt-style library <span class="cnt" id="libCnt"></span></h3>
@@ -435,6 +462,12 @@ function renderIdentity(){
     emailField.readOnly = false;
     if (emailHint){ emailHint.textContent = '— for your recap'; }
   }
+
+  // Honest device-vs-synced state, and which removal controls apply.
+  const stText = $('statusText'); if (stText){ stText.textContent = _authEmail ? 'Registered' : 'Saved on this device'; }
+  const stPill = $('statusPill'); if (stPill){ stPill.classList.toggle('local', !_authEmail); }
+  show($('unregister'), !!_authEmail);          // server delete only when signed in
+  show($('clearDevice'), !!getParticipant());   // local cache exists to clear
 }
 
 // Load the signed-in guest's own registration (RLS scopes SELECT to their email).
@@ -556,6 +589,42 @@ $('copyRecap').addEventListener('click', () => {
   copyText(lines.join('\n'), 'Recap copied');
 });
 
+/* ---------- device + registration removal ---------- */
+const FC_KEYS = ['fc_participant','fc_prompts','fc_feedback','fc_reflection','fc_votes','fc_sol_voted','fc_pending'];
+function clearDevice(){ FC_KEYS.forEach(k => { try { localStorage.removeItem(k); } catch(e){} }); }
+
+$('clearDevice').addEventListener('click', () => {
+  if (!getParticipant() && !lsGet('fc_prompts', []).length){ return toast('Nothing saved on this device'); }
+  if (!window.confirm('Clear your check-in and notes from THIS device?\n\nYour registration stays saved — sign in on any device to bring it back.')){ return; }
+  clearDevice();
+  renderIdentity();
+  toast('Cleared from this device');
+});
+
+$('unregister').addEventListener('click', async () => {
+  if (_authEmail && _serverRow && _serverRow.id){
+    if (!window.confirm('Remove your registration completely?\n\nThis deletes your saved details from Tale Waters & Tides and signs you out. This can’t be undone.')){ return; }
+    const btn = $('unregister'); btn.disabled = true; btn.textContent = 'Removing…';
+    try {
+      const { error } = await sb.from('participants').delete().eq('id', _serverRow.id);
+      if (error){ throw error; }
+      _serverRow = null;
+      clearDevice();
+      toast('Registration removed');
+      await sb.auth.signOut();   // onAuthStateChange re-renders to the signed-out view
+    } catch (err){
+      btn.disabled = false; btn.textContent = 'Remove my registration';
+      msg($('regMsg'), 'error', 'Could not remove your registration — please try again, or email us.');
+    }
+    return;
+  }
+  // Not signed in (or nothing on the server we own): clear this device only.
+  if (!window.confirm('Remove your check-in from this device?\n\nYou’re not signed in, so this only clears this device. Sign in with the same email first to delete a synced copy.')){ return; }
+  clearDevice();
+  renderIdentity();
+  toast('Removed from this device');
+});
+
 /* ---------- starter prompts ---------- */
 const STARTERS = [
   'Act as a friendly product coach. Ask me five questions to turn my rough idea into a one-paragraph spec — who it’s for, the one job it does, and what “done” looks like. Then write the spec.',
@@ -574,6 +643,54 @@ function renderStarters(){
       '<button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy prompt</button>';
     card.querySelector('.copy-btn').addEventListener('click', () => copyText(t, 'Prompt copied'));
     wrap.appendChild(card);
+  });
+}
+
+/* ---------- visual requirements: spec cards (visual + prompt + data) ---------- */
+const SPEC_CARDS = [
+  {
+    title: 'Fishing trip planner',
+    svg: `<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="8" y="10" width="150" height="130" rx="10" fill="#fffdf7"/><path d="M8 72 Q60 52 110 72 T232 62" stroke="#3ba9c4" stroke-width="3"/><path d="M40 58l8 14 8-14a8 8 0 10-16 0z" fill="#e8654e" stroke="none"/><circle cx="48" cy="58" r="3" fill="#fffdf7"/><path d="M96 86l7 12 7-12a7 7 0 10-14 0z" fill="#f2a93b" stroke="none"/><circle cx="103" cy="86" r="2.5" fill="#fffdf7"/><rect x="170" y="18" width="62" height="114" rx="8" fill="#fffdf7"/><circle cx="182" cy="38" r="4" fill="#3ba9c4" stroke="none"/><line x1="194" y1="38" x2="224" y2="38"/><circle cx="182" cy="62" r="4" fill="#f2a93b" stroke="none"/><line x1="194" y1="62" x2="224" y2="62"/><circle cx="182" cy="86" r="4" fill="#e8654e" stroke="none"/><line x1="194" y1="86" x2="224" y2="86"/><circle cx="182" cy="110" r="4" fill="#2f9e6f" stroke="none"/><line x1="194" y1="110" x2="224" y2="110"/></svg>`,
+    prompt: 'Act as an Arkansas fishing guide. Plan a half-day bass trip on the Arkansas River near Little Rock this Saturday morning for 2 people — pick a launch, 3 spots with a reason for each, a gear list, and a windy-day backup. Keep it to one page.',
+    data: ['date', 'river', 'party_size', 'target', 'launch', 'gear[]', 'backup_plan']
+  },
+  {
+    title: 'Event check-in screen',
+    svg: `<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="88" y="8" width="64" height="134" rx="12" fill="#fffdf7"/><line x1="108" y1="18" x2="132" y2="18" stroke-width="3"/><rect x="98" y="32" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="50" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="68" width="44" height="12" rx="4" fill="#f7f1e3"/><rect x="98" y="90" width="13" height="11" rx="3"/><path d="M100 96l3 3 5-6" stroke="#2f9e6f"/><rect x="98" y="112" width="44" height="18" rx="9" fill="#f2a93b" stroke="none"/></svg>`,
+    prompt: 'Build a one-page check-in screen for a 25-person workshop as one self-contained HTML file. Fields: name, email, experience level, and one goal. One tap to check in, store consent, then show a friendly “you’re in” confirmation.',
+    data: ['name', 'email', 'experience', 'goal', 'consent', 'checked_in_at']
+  },
+  {
+    title: 'Recipe → grocery list',
+    svg: `<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="14" y="20" width="84" height="110" rx="10" fill="#fffdf7"/><line x1="26" y1="38" x2="86" y2="38" stroke-width="3"/><line x1="26" y1="54" x2="86" y2="54"/><line x1="26" y1="68" x2="86" y2="68"/><line x1="26" y1="82" x2="78" y2="82"/><line x1="26" y1="96" x2="86" y2="96"/><line x1="26" y1="110" x2="70" y2="110"/><path d="M108 75h22" stroke="#3ba9c4" stroke-width="3"/><path d="M124 69l8 6-8 6" stroke="#3ba9c4" stroke-width="3"/><rect x="142" y="20" width="84" height="110" rx="10" fill="#fffdf7"/><rect x="152" y="34" width="12" height="12" rx="3"/><path d="M154 40l2 3 4-5" stroke="#2f9e6f"/><line x1="170" y1="40" x2="214" y2="40"/><rect x="152" y="56" width="12" height="12" rx="3"/><path d="M154 62l2 3 4-5" stroke="#2f9e6f"/><line x1="170" y1="62" x2="214" y2="62"/><rect x="152" y="78" width="12" height="12" rx="3"/><line x1="170" y1="84" x2="206" y2="84"/><rect x="152" y="100" width="12" height="12" rx="3"/><line x1="170" y1="106" x2="214" y2="106"/></svg>`,
+    prompt: 'Turn this recipe into a grocery list for 4 people, grouped by store aisle with quantities, and flag anything I probably already have. Recipe: <paste>.',
+    data: ['recipe', 'servings', 'ingredient', 'qty', 'aisle']
+  },
+  {
+    title: 'Float-trip recap page',
+    svg: `<svg viewBox="0 0 240 150" fill="none" stroke="#14324a" stroke-width="2" aria-hidden="true"><rect x="14" y="14" width="212" height="122" rx="12" fill="#fffdf7"/><line x1="28" y1="32" x2="150" y2="32" stroke-width="4"/><rect x="28" y="44" width="96" height="60" rx="8" fill="#eaf4f7"/><circle cx="52" cy="66" r="8" fill="#f2a93b" stroke="none"/><path d="M28 104l28-26 22 18 16-12 30 20" stroke="#3ba9c4" stroke-width="3"/><line x1="140" y1="50" x2="212" y2="50"/><line x1="140" y1="64" x2="212" y2="64"/><line x1="140" y1="78" x2="200" y2="78"/><line x1="140" y1="92" x2="212" y2="92"/><line x1="28" y1="118" x2="120" y2="118"/></svg>`,
+    prompt: 'Make a one-page recap of our weekend float trip from these notes — a short story up top, a “what worked / what we’d change” gear list, and 3 photo captions. Notes: <paste>.',
+    data: ['trip', 'highlights[]', 'gear_review[]', 'photo', 'caption']
+  }
+];
+function renderSpecCards(){
+  const wrap = $('specCards');
+  if (!wrap){ return; }
+  wrap.innerHTML = '';
+  SPEC_CARDS.forEach((c) => {
+    const chips = c.data.map(d => '<span class="spec-chip">' + esc(d) + '</span>').join('');
+    const el = document.createElement('div');
+    el.className = 'spec';
+    el.innerHTML =
+      '<div class="spec-vis">' + c.svg + '</div>' +
+      '<div class="spec-body">' +
+        '<h4>' + esc(c.title) + '</h4>' +
+        '<div><div class="spec-k">Prompt</div><div class="spec-prompt">' + esc(c.prompt) + '</div></div>' +
+        '<div><div class="spec-k">Data shape</div><div class="spec-data">' + chips + '</div></div>' +
+        '<button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy prompt</button>' +
+      '</div>';
+    el.querySelector('.copy-btn').addEventListener('click', () => copyText(c.prompt, 'Prompt copied'));
+    wrap.appendChild(el);
   });
 }
 
@@ -621,6 +738,7 @@ function refreshLive(){ loadLibrary(); loadExamples(); }
 
 /* ---------- init ---------- */
 renderStarters();
+renderSpecCards();
 renderIdentity();
 refreshLive();
 // Gentle, jittered polling (~20–28s) only while the tab is visible, so a roomful
