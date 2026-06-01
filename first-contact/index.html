@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First Contact — Tonight's Prompt Play | Tale Waters &amp; Tides</title>
+<meta name="description" content="You're in the right place. Check in, see tonight's flow, try the prompts, and log what you build at First Contact — Night 1 of Prompt Play at Hey, Let's Play in Benton, AR.">
+<meta name="theme-color" content="#0d1b2a">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="First Contact — Tonight's Prompt Play">
+<meta property="og:description" content="Check in, try the prompts, log what you build. Night 1 of Prompt Play at Hey, Let's Play, Benton AR.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/first-contact/">
+<meta property="og:site_name" content="Tale Waters &amp; Tides">
+<meta property="og:image" content="https://talewatersandtides.com/assets/PromptPlayFB_Image.png">
+<link rel="canonical" href="https://talewatersandtides.com/first-contact/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Permanent+Marker&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<style>
+:root {
+  --cream: #f7f1e3;
+  --cream-2: #fffdf7;
+  --navy: #14324a;
+  --navy-deep: #0d1b2a;
+  --gold: #f2a93b;
+  --gold-deep: #d98a1f;
+  --teal: #3ba9c4;
+  --coral: #e8654e;
+  --green: #2f9e6f;
+  --ink: #1d2b36;
+  --muted: #5d6b73;
+  --line: rgba(20,50,74,.14);
+  --line-2: rgba(20,50,74,.24);
+  --fd: 'Fredoka', system-ui, sans-serif;
+  --fm: 'Permanent Marker', var(--fd);
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(59,169,196,.10), transparent 38%),
+    radial-gradient(circle at 88% 6%, rgba(232,101,78,.10), transparent 36%),
+    radial-gradient(circle at 50% 120%, rgba(242,169,59,.10), transparent 45%);
+  background-attachment: fixed;
+}
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 20px; }
+@media(min-width: 768px) { .wrap { padding: 0 40px; } }
+
+h1, h2, h3 { font-family: var(--fd); color: var(--navy); line-height: 1.1; font-weight: 700; }
+a { color: var(--navy); }
+
+/* ============================================================ HEADER */
+.hd {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(247,241,227,.82);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+}
+.hd.solid { border-bottom-color: var(--line); background: rgba(247,241,227,.95); }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+@media(min-width: 768px) { .hd-in { padding: 0 40px; height: 68px; } }
+.hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
+.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* ============================================================ BUTTONS */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: 1rem; text-decoration: none; border-radius: 999px; padding: 13px 26px; min-height: 48px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s, color .2s, border-color .2s; }
+.btn svg { width: 18px; height: 18px; }
+.btn-gold { background: var(--gold); color: var(--navy-deep); box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-gold:hover, .btn-gold:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--gold-deep); outline: none; }
+.btn-gold:active { transform: translateY(0); box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-navy { background: var(--navy); color: var(--cream); box-shadow: 0 3px 0 var(--navy-deep); }
+.btn-navy:hover, .btn-navy:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--navy-deep); outline: none; }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--line-2); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--navy); background: rgba(20,50,74,.05); outline: none; }
+.btn-sm { padding: 9px 18px; min-height: 40px; font-size: .9rem; box-shadow: 0 2px 0 var(--gold-deep); }
+.btn[disabled] { opacity: .55; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-block { width: 100%; }
+
+/* ============================================================ SHARED */
+.eyebrow { font-family: var(--fb); font-weight: 600; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--coral); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.eyebrow::before { content: ''; width: 22px; height: 2px; border-radius: 2px; background: currentColor; }
+section { padding: 46px 0; }
+@media(min-width: 768px) { section { padding: 64px 0; } }
+.sec-h2 { font-size: clamp(1.6rem, 5vw, 2.5rem); margin-bottom: 12px; }
+.sec-lead { font-size: 1.0625rem; color: var(--muted); max-width: 60ch; }
+
+/* reveal */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+.r.v { opacity: 1; transform: translateY(0); }
+
+/* ============================================================ HERO */
+.hero { padding: 104px 0 36px; text-align: center; position: relative; }
+@media(min-width: 768px) { .hero { padding: 132px 0 52px; } }
+.hero-tag { font-family: var(--fb); font-weight: 600; font-size: clamp(.72rem, 2.4vw, .95rem); letter-spacing: .26em; text-transform: uppercase; color: var(--navy); opacity: .85; }
+.wordmark { margin: 8px auto 6px; line-height: .86; font-size: inherit; font-weight: inherit; }
+.wm-1 { display: block; font-family: var(--fd); font-weight: 700; color: var(--navy); font-size: clamp(3rem, 15vw, 7.5rem); letter-spacing: -.02em; }
+.wm-2 { display: block; font-family: var(--fm); color: var(--gold); font-size: clamp(2.6rem, 13.5vw, 7rem); transform: rotate(-3deg); margin-top: -.04em; text-shadow: 3px 3px 0 rgba(217,138,31,.25); }
+.wm-underline { display: block; margin: 2px auto 0; width: clamp(180px, 46vw, 420px); height: 18px; color: var(--coral); }
+.series-pill { display: inline-block; margin-top: 16px; background: var(--navy); color: var(--cream); font-family: var(--fd); font-weight: 600; font-size: clamp(.85rem, 3vw, 1.1rem); letter-spacing: .03em; padding: 8px 20px; border-radius: 999px; transform: rotate(-1deg); }
+.hero-lead { max-width: 52ch; margin: 22px auto 0; font-size: 1.1rem; color: var(--ink); }
+.hero-lead b { color: var(--navy); font-weight: 600; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: center; margin: 20px auto 0; font-family: var(--fb); font-weight: 500; font-size: .95rem; color: var(--navy); }
+.hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+.hero-meta svg { width: 17px; height: 17px; color: var(--teal); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; }
+
+/* ============================================================ CARDS / SECTIONS */
+.tinted { background: var(--cream-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.card { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: 0 8px 26px rgba(20,50,74,.05); }
+@media(min-width: 768px) { .card { padding: 28px; } }
+.card.on-tint { background: var(--cream); }
+.card h3 { font-size: 1.2rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.card h3 svg { width: 22px; height: 22px; color: var(--teal); flex-shrink: 0; }
+
+/* checkmark list (flow + who) */
+.tick { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.tick li { display: flex; gap: 12px; align-items: flex-start; font-size: .98rem; color: var(--ink); }
+.tick .t-time { font-family: var(--fd); font-weight: 600; color: var(--navy); min-width: 62px; flex-shrink: 0; }
+.tick .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--gold); border: 2px solid var(--gold-deep); flex-shrink: 0; margin-top: 6px; }
+
+/* feature grid (tools) */
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
+@media(min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
+.feat { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.feat-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: rgba(59,169,196,.16); color: var(--teal); }
+.feat-ic svg { width: 22px; height: 22px; }
+.feat h3 { font-size: 1.02rem; margin: 0; font-weight: 600; }
+.feat p { font-size: .9rem; color: var(--muted); line-height: 1.5; flex: 1; }
+.feat .btn { margin-top: 6px; }
+
+details.prompts { margin-top: 22px; background: var(--navy); color: var(--cream); border-radius: 16px; padding: 6px 22px; }
+details.prompts summary { font-family: var(--fd); font-weight: 600; font-size: 1.05rem; color: #fff; cursor: pointer; padding: 16px 0; list-style: none; display: flex; align-items: center; gap: 10px; }
+details.prompts summary::-webkit-details-marker { display: none; }
+details.prompts summary::before { content: '+'; font-size: 1.4rem; color: var(--gold); width: 20px; }
+details.prompts[open] summary::before { content: '\2212'; }
+details.prompts ol { margin: 0 0 18px 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
+details.prompts li { color: rgba(247,241,227,.92); font-size: .96rem; }
+details.prompts code { background: rgba(255,255,255,.1); padding: 2px 6px; border-radius: 6px; font-size: .9em; }
+
+/* ============================================================ FORMS */
+.form { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--fd); font-weight: 600; font-size: .92rem; color: var(--navy); }
+.field .req { color: var(--coral); }
+.field .hint { font-size: .8rem; color: var(--muted); font-weight: 400; }
+.input, .select, .textarea {
+  font-family: var(--fb); font-size: 16px; color: var(--ink);
+  background: var(--cream); border: 1.5px solid var(--line-2); border-radius: 12px;
+  padding: 12px 14px; width: 100%; transition: border-color .2s, box-shadow .2s;
+}
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(59,169,196,.18); }
+.textarea { resize: vertical; min-height: 92px; line-height: 1.5; }
+.select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314324a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px; }
+/* honeypot */
+.hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+/* consent */
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: .86rem; color: var(--muted); line-height: 1.5; }
+.consent input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--teal); }
+.consent a { color: var(--navy); }
+
+/* status message */
+.msg { font-size: .92rem; font-weight: 500; padding: 10px 14px; border-radius: 10px; }
+.msg[hidden] { display: none; }
+.msg[data-state="ok"] { color: #1c5e44; background: rgba(47,158,111,.12); border: 1px solid rgba(47,158,111,.3); }
+.msg[data-state="error"] { color: var(--coral); background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); }
+.msg[data-state="info"] { color: var(--navy); background: rgba(59,169,196,.1); border: 1px solid rgba(59,169,196,.28); }
+
+/* checked-in banner inside onboard */
+.checkedin { display: none; align-items: center; gap: 12px; background: rgba(47,158,111,.1); border: 1px solid rgba(47,158,111,.3); border-radius: 14px; padding: 16px 18px; }
+.checkedin svg { width: 26px; height: 26px; color: var(--green); flex-shrink: 0; }
+.checkedin .ci-t { font-family: var(--fd); font-weight: 600; color: var(--navy); }
+.checkedin .ci-s { font-size: .88rem; color: var(--muted); }
+body.is-onboarded .checkedin { display: flex; }
+body.is-onboarded .onboard-form { display: none; }
+.locked-note { display: flex; gap: 10px; align-items: center; font-size: .9rem; color: var(--muted); background: rgba(242,169,59,.12); border: 1px solid rgba(242,169,59,.3); border-radius: 12px; padding: 12px 14px; }
+.locked-note svg { width: 18px; height: 18px; color: var(--gold-deep); flex-shrink: 0; }
+body.is-onboarded .locked-note { display: none; }
+body:not(.is-onboarded) .needs-onboard { opacity: .55; }
+
+/* rating */
+.rating { display: flex; gap: 8px; flex-wrap: wrap; }
+.rating input { position: absolute; opacity: 0; width: 0; height: 0; }
+.rating label { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; border: 1.5px solid var(--line-2); background: var(--cream); font-family: var(--fd); font-weight: 600; font-size: 1.1rem; color: var(--navy); cursor: pointer; transition: all .15s; }
+.rating input:checked + label { background: var(--gold); border-color: var(--gold-deep); color: var(--navy-deep); transform: translateY(-2px); }
+.rating input:focus-visible + label { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+/* prompt log */
+.log-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.log-list:empty { display: none; }
+.log-item { background: var(--cream); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 12px; padding: 12px 14px; }
+.log-item .lp { font-size: .96rem; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
+.log-item .lm { font-size: .78rem; color: var(--muted); margin-top: 5px; display: flex; gap: 10px; flex-wrap: wrap; }
+.log-item .lm .tool { font-weight: 600; color: var(--teal); }
+.log-count { font-family: var(--fd); font-weight: 600; color: var(--navy); }
+
+/* recap */
+.recap-card { background: var(--navy); color: var(--cream); border-radius: 18px; padding: 28px; }
+.recap-card .eyebrow { color: var(--gold); }
+.recap-card h2 { color: #fff; }
+.recap-empty { color: rgba(247,241,227,.8); font-size: 1rem; }
+.recap-grid { display: grid; gap: 16px; margin-top: 20px; }
+.recap-stat { display: flex; align-items: baseline; gap: 10px; }
+.recap-stat .n { font-family: var(--fm); color: var(--gold); font-size: 2.2rem; line-height: 1; }
+.recap-stat .l { color: rgba(247,241,227,.9); font-size: .95rem; }
+.recap-block { border-top: 1px solid rgba(247,241,227,.16); padding-top: 16px; }
+.recap-block h3 { color: #fff; font-size: 1.05rem; margin-bottom: 8px; }
+.recap-block .rp { color: rgba(247,241,227,.88); font-size: .92rem; }
+.recap-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.recap-list li { color: rgba(247,241,227,.88); font-size: .92rem; padding-left: 16px; position: relative; }
+.recap-list li::before { content: '\203A'; position: absolute; left: 0; color: var(--gold); }
+.recap-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+/* sync pill */
+.sync { display: inline-flex; align-items: center; gap: 7px; font-size: .8rem; color: var(--muted); margin-top: 12px; }
+.sync svg { width: 14px; height: 14px; }
+.sync[data-state="pending"] { color: var(--gold-deep); }
+.sync[data-state="ok"] { color: var(--green); }
+
+/* ============================================================ FOOTER */
+.ft { background: var(--navy-deep); color: var(--cream); padding: 44px 20px 30px; }
+.ft-in { max-width: var(--mw); margin: 0 auto; text-align: center; }
+.ft-logo { height: 36px; width: auto; margin: 0 auto 16px; display: block; opacity: .96; }
+.ft-motto { font-family: var(--fd); font-weight: 500; font-size: 1.02rem; color: var(--cream); max-width: 40ch; margin: 0 auto; }
+.ft-motto .c { color: var(--gold); }
+.ft-lk { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 16px; }
+.ft-lk a { color: rgba(247,241,227,.8); text-decoration: none; font-size: .9rem; min-height: 40px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--gold); }
+.ft-cp { font-size: .72rem; color: rgba(247,241,227,.5); }
+.ft-cp a { color: rgba(247,241,227,.6); }
+
+/* ============================================================ A11Y */
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .wm-2 { transform: none; } .series-pill { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ HEADER -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a class="hd-brand" href="/" data-ga="fc_brand_home" aria-label="Tale Waters and Tides home">
+      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+      <span class="tt">Tale Waters &amp; Tides</span>
+    </a>
+    <a class="btn btn-gold btn-sm" href="#onboard" data-ga="fc_header_checkin">Check in</a>
+  </div>
+</header>
+
+<!-- ============================================================ HERO -->
+<section class="hero" data-ga-section="fc_hero">
+  <div class="wrap">
+    <p class="hero-tag r">Prompt Play · Night 1</p>
+    <h1 class="wordmark r">
+      <span class="wm-1">FIRST</span>
+      <span class="wm-2">Contact</span>
+      <svg class="wm-underline" viewBox="0 0 420 18" fill="none" aria-hidden="true"><path d="M6 11 C90 3 150 3 210 8 C270 13 340 13 414 5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+    </h1>
+    <div class="r"><span class="series-pill">You're in the right place — welcome.</span></div>
+    <p class="hero-lead r">Your first hands-on taste of building with prompts. <b>Check in below</b>, try tonight's prompts, and log what you make — we'll turn it into a recap you can take home.</p>
+    <div class="hero-meta r">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Hey, Let's Play · Benton, AR</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tue, June 2, 2026</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>7:30–9:30 PM CT</span>
+    </div>
+    <div class="hero-cta r">
+      <a class="btn btn-gold" href="#onboard" data-ga="fc_hero_checkin">Start check-in</a>
+      <a class="btn btn-ghost" href="#flow" data-ga="fc_hero_flow">See tonight's flow</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ ONBOARD / CHECK-IN -->
+<section id="onboard" class="tinted" data-ga-section="fc_onboard">
+  <div class="wrap">
+    <p class="eyebrow r">Step 1 · Check in</p>
+    <h2 class="sec-h2 r">Let's get you set up</h2>
+    <p class="sec-lead r">Two quick things so we can tailor tonight and send you a recap afterward. Takes about 20 seconds.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <!-- shown after onboarding -->
+      <div class="checkedin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="ci-t" id="ciName">You're checked in — welcome!</div>
+          <div class="ci-s">Scroll down for tonight's flow, the prompts to try, and your prompt log.</div>
+        </div>
+      </div>
+
+      <form class="form onboard-form" id="onboardForm" novalidate>
+        <div class="field">
+          <label for="ob-name">Your name <span class="req">*</span></label>
+          <input class="input" id="ob-name" name="name" type="text" autocomplete="given-name" required placeholder="First name is fine">
+        </div>
+        <div class="field">
+          <label for="ob-email">Email <span class="hint">— optional, for your recap</span></label>
+          <input class="input" id="ob-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="ob-exp">How much have you played with AI?</label>
+          <select class="select" id="ob-exp" name="experience">
+            <option value="">Pick one (optional)</option>
+            <option value="first-time">This is my first time</option>
+            <option value="dabbled">I've dabbled a bit</option>
+            <option value="builder">I build with it regularly</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ob-goals">What do you want to make tonight? <span class="hint">— a sentence is plenty</span></label>
+          <textarea class="textarea" id="ob-goals" name="goals" placeholder="An app idea, a story, a tool for work, or just here to explore…"></textarea>
+        </div>
+        <label class="consent">
+          <input type="checkbox" id="ob-consent" name="consent" required>
+          <span>We store your name, email, the prompts you log, and your feedback so we can send you a recap and improve the series. No spam, unsubscribe anytime — <a href="mailto:corey@talewatersandtides.com">corey@talewatersandtides.com</a>.</span>
+        </label>
+        <!-- honeypot -->
+        <div class="hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-gold btn-block" id="onboardBtn" type="submit">Check in for tonight</button>
+        <p class="msg" id="onboardMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ TONIGHT'S FLOW -->
+<!-- ===== HOST CONTENT: agenda — confirm/replace the rows below before doors ===== -->
+<section id="flow" data-ga-section="fc_flow">
+  <div class="wrap">
+    <p class="eyebrow r">Step 2 · The plan</p>
+    <h2 class="sec-h2 r">How tonight flows</h2>
+    <p class="sec-lead r">Two hours, low pressure. Arrive when you can, leave with something you built.</p>
+    <div class="card r" style="margin-top:24px">
+      <ul class="tick">
+        <li><span class="t-time">7:30</span><span class="dot"></span><span>Arrive, grab coffee, and check in (you just did — nice).</span></li>
+        <li><span class="t-time">7:45</span><span class="dot"></span><span>Welcome + what "creative AI" and vibecoding actually mean. <!-- HOST: confirm --></span></li>
+        <li><span class="t-time">8:00</span><span class="dot"></span><span>Hands-on: your first prompt-to-thing. We build together. <!-- HOST: confirm --></span></li>
+        <li><span class="t-time">8:45</span><span class="dot"></span><span>Build, share what you made, and trade ideas. <!-- HOST: confirm --></span></li>
+        <li><span class="t-time">9:20</span><span class="dot"></span><span>Wrap, what's next for Nights 2 &amp; 3, and quick feedback.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ TOOLS + STARTER PROMPTS -->
+<!-- ===== HOST CONTENT: replace tool tiles + starter prompts with tonight's actuals ===== -->
+<section id="tools" class="tinted" data-ga-section="fc_tools">
+  <div class="wrap">
+    <p class="eyebrow r">Step 3 · Play</p>
+    <h2 class="sec-h2 r">Tools &amp; prompts to try</h2>
+    <p class="sec-lead r">Open these on your phone or laptop. No accounts required to follow along — jump in wherever looks fun.</p>
+
+    <div class="grid">
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg></div>
+        <h3>Tool 1 <!-- HOST: name --></h3>
+        <p>What it's for tonight. <!-- HOST: one line --></p>
+        <a class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" data-ga="fc_tool_1">Open tool</a>
+      </div>
+      <div class="feat r">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/><path d="M9 18h6M10 22h4"/></svg></div>
+        <h3>Tool 2 <!-- HOST: name --></h3>
+        <p>What it's for tonight. <!-- HOST: one line --></p>
+        <a class="btn btn-ghost btn-sm" href="#" target="_blank" rel="noopener" data-ga="fc_tool_2">Open tool</a>
+      </div>
+    </div>
+
+    <details class="prompts r">
+      <summary>Starter prompts to steal</summary>
+      <ol>
+        <li>"Act as a friendly product coach. Ask me 5 questions to turn my rough idea into a one-paragraph spec, then write the spec." <!-- HOST: confirm --></li>
+        <li>"Build me a single-page web app that <code>&lt;does the thing&gt;</code>. Keep it to one HTML file. Explain each part in plain English." <!-- HOST: confirm --></li>
+        <li>"I'm a total beginner. Walk me through making <code>&lt;my idea&gt;</code> step by step, checking in after each step." <!-- HOST: confirm --></li>
+      </ol>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================ LOG YOUR PROMPTS -->
+<section id="log" class="needs-onboard" data-ga-section="fc_log">
+  <div class="wrap">
+    <p class="eyebrow r">Step 4 · Capture it</p>
+    <h2 class="sec-h2 r">Log the prompts you try</h2>
+    <p class="sec-lead r">Paste the prompts that worked (or didn't). They get saved to <span class="log-count" id="logCount">your recap</span> so you can pick up where you left off — at home, or on Night 2.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <div class="locked-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Check in above first, then your prompt log unlocks here.</span>
+      </div>
+      <form class="form" id="logForm" novalidate>
+        <div class="field">
+          <label for="lg-text">A prompt you tried</label>
+          <textarea class="textarea" id="lg-text" name="prompt_text" placeholder="Paste your prompt here…"></textarea>
+        </div>
+        <div class="field">
+          <label for="lg-tool">Which tool? <span class="hint">— optional</span></label>
+          <input class="input" id="lg-tool" name="tool" type="text" placeholder="e.g. ChatGPT, Claude, v0…">
+        </div>
+        <!-- honeypot -->
+        <div class="hp" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-navy btn-block" id="logBtn" type="submit">Add to my log</button>
+        <p class="msg" id="logMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+      <ul class="log-list" id="logList" aria-live="polite"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ YOUR RECAP -->
+<section id="recap" class="tinted" data-ga-section="fc_recap">
+  <div class="wrap">
+    <div class="recap-card r">
+      <p class="eyebrow">Yours to keep</p>
+      <h2 class="sec-h2">Your First Contact recap</h2>
+      <p class="recap-empty" id="recapEmpty">Once you check in and start logging prompts, your personal recap builds here automatically — saved on this device.</p>
+      <div id="recapBody" hidden>
+        <div class="recap-grid">
+          <div class="recap-stat"><span class="n" id="rcPrompts">0</span><span class="l">prompts logged tonight</span></div>
+        </div>
+        <div class="recap-block" id="rcGoalBlock" hidden>
+          <h3>What you came to make</h3>
+          <p class="rp" id="rcGoal"></p>
+        </div>
+        <div class="recap-block" id="rcPromptBlock" hidden>
+          <h3>Your prompts</h3>
+          <ul class="recap-list" id="rcPromptList"></ul>
+        </div>
+        <div class="recap-block" id="rcFeedbackBlock" hidden>
+          <h3>Your feedback</h3>
+          <p class="rp" id="rcFeedback"></p>
+        </div>
+        <div class="recap-actions">
+          <button class="btn btn-gold" id="recapCopy" type="button" data-ga="fc_recap_copy">Copy my recap</button>
+          <a class="btn btn-ghost" href="/prompt-play/" data-ga="fc_recap_series">See Nights 2 &amp; 3</a>
+        </div>
+        <p class="sync" id="syncPill" data-state="ok" hidden></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FEEDBACK -->
+<section id="feedback" class="needs-onboard" data-ga-section="fc_feedback">
+  <div class="wrap">
+    <p class="eyebrow r">Before you go</p>
+    <h2 class="sec-h2 r">How was tonight?</h2>
+    <p class="sec-lead r">Thirty seconds of honesty makes Nights 2 &amp; 3 better. We open this near the end of the night.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <form class="form" id="feedbackForm" novalidate>
+        <div class="field">
+          <label>Rate tonight (1–5)</label>
+          <div class="rating" role="radiogroup" aria-label="Rating from 1 to 5">
+            <input type="radio" id="rt1" name="rating" value="1"><label for="rt1">1</label>
+            <input type="radio" id="rt2" name="rating" value="2"><label for="rt2">2</label>
+            <input type="radio" id="rt3" name="rating" value="3"><label for="rt3">3</label>
+            <input type="radio" id="rt4" name="rating" value="4"><label for="rt4">4</label>
+            <input type="radio" id="rt5" name="rating" value="5"><label for="rt5">5</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fb-comment">What stuck with you? What would you change?</label>
+          <textarea class="textarea" id="fb-comment" name="comment" placeholder="Anything at all…"></textarea>
+        </div>
+        <!-- honeypot -->
+        <div class="hp" aria-hidden="true"><label>Fax <input name="fax" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-gold btn-block" id="feedbackBtn" type="submit">Send feedback</button>
+        <p class="msg" id="feedbackMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SUBSCRIBE -->
+<section id="subscribe" data-ga-section="fc_subscribe">
+  <div class="wrap">
+    <div class="card r" style="text-align:center">
+      <p class="eyebrow" style="justify-content:center">Stay in the loop</p>
+      <h2 class="sec-h2">Not checking in, just curious?</h2>
+      <p class="sec-lead" style="margin:0 auto">Drop your email and we'll tell you about Nights 2 &amp; 3 and the next Prompt Play.</p>
+      <form class="form" id="subscribeForm" novalidate style="max-width:440px;margin:18px auto 0">
+        <div class="field">
+          <input class="input" id="sub-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-label="Email address">
+        </div>
+        <label class="consent" style="justify-content:center">
+          <input type="checkbox" id="sub-consent" name="consent" required>
+          <span>Email me about future Prompt Play sessions. No spam, unsubscribe anytime.</span>
+        </label>
+        <div class="hp" aria-hidden="true"><label>Address <input name="address" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-navy btn-block" id="subscribeBtn" type="submit">Keep me posted</button>
+        <p class="msg" id="subscribeMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer class="ft" data-ga-section="fc_footer">
+  <div class="ft-in">
+    <img class="ft-logo" src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides" loading="lazy" decoding="async">
+    <p class="ft-motto">Not a class. Not a webinar. A <span class="c">creative</span> playground for the curious.</p>
+    <nav class="ft-lk" aria-label="Footer">
+      <a href="/prompt-play/" data-ga="fc_ft_series">Prompt Play series</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="fc_ft_directions">Get directions</a>
+      <a href="mailto:corey@talewatersandtides.com" data-ga="fc_ft_email">Email Corey</a>
+      <a href="/events/" data-ga="fc_ft_events">All events</a>
+    </nav>
+    <p class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas · <a href="/first-contact/">talewatersandtides.com/first-contact</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Supabase (public anon key — safe: RLS is insert-only) ---------- */
+  var SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
+  var EVENT_SLUG = 'first-contact';
+
+  /* ---------- tiny helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function lsGet(k, d){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+  function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function track(name, params){ if (typeof gtag === 'function'){ gtag('event', name, Object.assign({event_category:'event', event_label:EVENT_SLUG}, params||{})); } }
+
+  function showMsg(el, kind, text){ el.textContent = text; el.dataset.state = kind; el.hidden = false; }
+  function hideMsg(el){ el.hidden = true; }
+
+  /* ---------- network: insert into Supabase via PostgREST ---------- */
+  function sbInsert(table, row){
+    return fetch(SB_URL + '/rest/v1/' + table, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(row)
+    }).then(function(res){
+      // 201 created; 409 duplicate -> treat as success
+      if (!res.ok && res.status !== 409){ return Promise.reject(new Error('HTTP ' + res.status)); }
+      return true;
+    });
+  }
+
+  /* ---------- offline queue (flaky venue wifi) ---------- */
+  function enqueue(table, row){ var q = lsGet('fc_pending', []); q.push({ table: table, row: row }); lsSet('fc_pending', q); updateSync(); }
+  function flushQueue(){
+    var q = lsGet('fc_pending', []);
+    if (!q.length){ updateSync(); return; }
+    // FIFO so a participant row is retried before its prompts (FK order)
+    var item = q[0];
+    sbInsert(item.table, item.row).then(function(){
+      var cur = lsGet('fc_pending', []); cur.shift(); lsSet('fc_pending', cur);
+      flushQueue();
+    }).catch(function(){ /* still offline; try again later */ updateSync(); });
+  }
+  function updateSync(){
+    var pill = $('syncPill'); if (!pill) return;
+    var n = lsGet('fc_pending', []).length;
+    if (n > 0){ pill.hidden = false; pill.dataset.state = 'pending'; pill.textContent = '↻ ' + n + ' item' + (n>1?'s':'') + ' will sync when you\'re back online'; }
+    else { pill.dataset.state = 'ok'; pill.textContent = '✓ Saved & synced'; pill.hidden = false; }
+  }
+  window.addEventListener('online', flushQueue);
+
+  /* ---------- participant state ---------- */
+  function getParticipant(){ return lsGet('fc_participant', null); }
+  function setOnboardedUI(){
+    var p = getParticipant();
+    if (!p) return;
+    document.body.classList.add('is-onboarded');
+    var ci = $('ciName'); if (ci && p.name){ ci.textContent = "You're checked in, " + p.name + " — welcome!"; }
+  }
+
+  /* ---------- ONBOARD ---------- */
+  var onboardForm = $('onboardForm');
+  onboardForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = $('onboardMsg'), btn = $('onboardBtn');
+    if (onboardForm.elements['company'].value){ return; } // honeypot
+    var name = onboardForm.elements['name'].value.trim();
+    var email = onboardForm.elements['email'].value.trim();
+    var experience = onboardForm.elements['experience'].value;
+    var goals = onboardForm.elements['goals'].value.trim();
+    var consent = onboardForm.elements['consent'].checked;
+    if (!name){ showMsg(msg,'error','Please add your name.'); return; }
+    if (email && !isEmail(email)){ showMsg(msg,'error','That email looks off — mind checking it?'); return; }
+    if (!consent){ showMsg(msg,'error','Please tick the box so we can save your recap.'); return; }
+
+    var pid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+              : 'fc-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+    var row = { id: pid, event_slug: EVENT_SLUG, name: name, email: email || null,
+                experience: experience || null, goals: goals || null, consent: true };
+
+    // Save locally first so the page unlocks even if the network is flaky.
+    lsSet('fc_participant', { id: pid, name: name, email: email || null, experience: experience, goals: goals });
+    setOnboardedUI();
+    renderRecap();
+    track('onboard', { experience: experience || 'unknown' });
+
+    btn.disabled = true; btn.textContent = 'Checking in…';
+    sbInsert('participants', row).then(function(){
+      updateSync();
+    }).catch(function(){
+      enqueue('participants', row);
+    }).then(function(){
+      btn.disabled = false; btn.textContent = 'Check in for tonight';
+      showMsg(msg,'ok',"You're in! Scroll down — tonight's flow and your prompt log are unlocked.");
+      setTimeout(function(){ var f=$('flow'); if(f){ f.scrollIntoView({behavior:'smooth'}); } }, 700);
+    });
+  });
+
+  /* ---------- LOG PROMPTS ---------- */
+  var logForm = $('logForm');
+  logForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = $('logMsg'), btn = $('logBtn');
+    if (logForm.elements['website'].value){ return; } // honeypot
+    var p = getParticipant();
+    if (!p){ showMsg(msg,'info','Check in at the top first, then your prompts will save to your recap.'); var o=$('onboard'); if(o){ o.scrollIntoView({behavior:'smooth'}); } return; }
+    var text = logForm.elements['prompt_text'].value.trim();
+    var tool = logForm.elements['tool'].value.trim();
+    if (!text){ showMsg(msg,'error','Paste a prompt to save it.'); return; }
+
+    var when = new Date().toISOString();
+    var local = lsGet('fc_prompts', []);
+    local.push({ prompt_text: text, tool: tool || null, created_at: when });
+    lsSet('fc_prompts', local);
+    addLogItem({ prompt_text: text, tool: tool, created_at: when });
+    renderRecap();
+    logForm.reset();
+    showMsg(msg,'ok','Saved to your recap.');
+    track('prompt_logged', { tool: tool || 'unspecified' });
+
+    var row = { participant_id: p.id, event_slug: EVENT_SLUG, prompt_text: text, tool: tool || null };
+    sbInsert('prompts', row).then(updateSync).catch(function(){ enqueue('prompts', row); });
+  });
+
+  function addLogItem(item){
+    var list = $('logList');
+    var li = document.createElement('li');
+    li.className = 'log-item';
+    var meta = [];
+    if (item.tool){ meta.push('<span class="tool">' + esc(item.tool) + '</span>'); }
+    meta.push(new Date(item.created_at).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}));
+    li.innerHTML = '<div class="lp">' + esc(item.prompt_text) + '</div><div class="lm">' + meta.join('') + '</div>';
+    list.insertBefore(li, list.firstChild);
+  }
+
+  /* ---------- FEEDBACK ---------- */
+  var feedbackForm = $('feedbackForm');
+  feedbackForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = $('feedbackMsg'), btn = $('feedbackBtn');
+    if (feedbackForm.elements['fax'].value){ return; } // honeypot
+    var ratingEl = feedbackForm.querySelector('input[name="rating"]:checked');
+    var rating = ratingEl ? parseInt(ratingEl.value, 10) : null;
+    var comment = feedbackForm.elements['comment'].value.trim();
+    if (!rating && !comment){ showMsg(msg,'error','Add a rating or a note (or both).'); return; }
+
+    var p = getParticipant();
+    lsSet('fc_feedback', { rating: rating, comment: comment, created_at: new Date().toISOString() });
+    renderRecap();
+    showMsg(msg,'ok','Thank you — that genuinely helps. See you for Night 2?');
+    feedbackForm.reset();
+    track('feedback_submit', rating ? { value: rating } : {});
+
+    var row = { participant_id: p ? p.id : null, event_slug: EVENT_SLUG, rating: rating, comment: comment || null };
+    sbInsert('feedback', row).then(updateSync).catch(function(){ enqueue('feedback', row); });
+  });
+
+  /* ---------- SUBSCRIBE ---------- */
+  var subscribeForm = $('subscribeForm');
+  subscribeForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = $('subscribeMsg'), btn = $('subscribeBtn');
+    if (subscribeForm.elements['address'].value){ return; } // honeypot
+    var email = subscribeForm.elements['email'].value.trim();
+    var consent = subscribeForm.elements['consent'].checked;
+    if (!isEmail(email)){ showMsg(msg,'error','Please enter a valid email.'); return; }
+    if (!consent){ showMsg(msg,'error','Please tick the box to opt in.'); return; }
+
+    btn.disabled = true; btn.textContent = 'Adding you…';
+    var row = { event_slug: EVENT_SLUG, email: email, consent: true, source: 'first-contact-page' };
+    sbInsert('subscribers', row).then(function(){
+      showMsg(msg,'ok',"You're on the list — talk soon!"); subscribeForm.reset(); track('subscribe', {});
+    }).catch(function(){
+      enqueue('subscribers', row);
+      showMsg(msg,'ok',"Saved — we'll add you as soon as you're back online.");
+    }).then(function(){ btn.disabled = false; btn.textContent = 'Keep me posted'; });
+  });
+
+  /* ---------- RECAP (renders from localStorage; no DB read) ---------- */
+  function renderRecap(){
+    var p = getParticipant();
+    var prompts = lsGet('fc_prompts', []);
+    var fb = lsGet('fc_feedback', null);
+    var hasAny = p || prompts.length || fb;
+    $('recapEmpty').hidden = !!hasAny;
+    $('recapBody').hidden = !hasAny;
+    if (!hasAny) return;
+
+    $('rcPrompts').textContent = prompts.length;
+
+    var goalBlock = $('rcGoalBlock');
+    if (p && p.goals){ $('rcGoal').textContent = p.goals; goalBlock.hidden = false; } else { goalBlock.hidden = true; }
+
+    var promptBlock = $('rcPromptBlock'), list = $('rcPromptList');
+    if (prompts.length){
+      list.innerHTML = '';
+      prompts.slice().reverse().forEach(function(pr){
+        var li = document.createElement('li');
+        li.textContent = pr.prompt_text + (pr.tool ? '  (' + pr.tool + ')' : '');
+        list.appendChild(li);
+      });
+      promptBlock.hidden = false;
+    } else { promptBlock.hidden = true; }
+
+    var fbBlock = $('rcFeedbackBlock');
+    if (fb && (fb.rating || fb.comment)){
+      $('rcFeedback').textContent = (fb.rating ? ('Rated ' + fb.rating + '/5. ') : '') + (fb.comment || '');
+      fbBlock.hidden = false;
+    } else { fbBlock.hidden = true; }
+  }
+
+  /* ---------- recap copy-to-clipboard ---------- */
+  var recapCopy = $('recapCopy');
+  if (recapCopy){
+    recapCopy.addEventListener('click', function(){
+      var p = getParticipant() || {};
+      var prompts = lsGet('fc_prompts', []);
+      var fb = lsGet('fc_feedback', null);
+      var lines = ['My First Contact recap — Prompt Play, June 2, 2026', ''];
+      if (p.goals){ lines.push('What I came to make: ' + p.goals, ''); }
+      if (prompts.length){
+        lines.push('Prompts I tried (' + prompts.length + '):');
+        prompts.forEach(function(pr, i){ lines.push((i+1) + '. ' + pr.prompt_text + (pr.tool ? ' [' + pr.tool + ']' : '')); });
+        lines.push('');
+      }
+      if (fb && (fb.rating || fb.comment)){ lines.push('My take: ' + (fb.rating ? fb.rating + '/5. ' : '') + (fb.comment || '')); }
+      var text = lines.join('\n');
+      if (navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ recapCopy.textContent = 'Copied!'; setTimeout(function(){ recapCopy.textContent = 'Copy my recap'; }, 2000); }).catch(function(){ window.prompt('Copy your recap:', text); }); }
+      else { window.prompt('Copy your recap:', text); }
+    });
+  }
+
+  /* ---------- restore prior session on load ---------- */
+  (function init(){
+    setOnboardedUI();
+    lsGet('fc_prompts', []).forEach(addLogItem);
+    renderRecap();
+    flushQueue();
+  })();
+
+  /* ---------- header solid on scroll ---------- */
+  var hd = $('hd');
+  window.addEventListener('scroll', function(){ hd.classList.toggle('solid', window.scrollY > 24); }, { passive: true });
+
+  /* ---------- reveal on scroll ---------- */
+  var els = document.querySelectorAll('.r');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(e){
+      e.forEach(function(n,i){ if(n.isIntersecting){ setTimeout(function(){ n.target.classList.add('v'); }, i*30); io.unobserve(n.target); } });
+    }, { threshold: .08, rootMargin: '0px 0px -16px 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add('v'); }); }
+
+  /* ---------- GA: click + section view ---------- */
+  document.querySelectorAll('[data-ga]').forEach(function(el){
+    el.addEventListener('click', function(){ if(typeof gtag==='function'){ gtag('event','click',{event_category:'engagement',event_label:this.getAttribute('data-ga'),link_url:this.href||''}); } });
+  });
+  if ('IntersectionObserver' in window){
+    var sio = new IntersectionObserver(function(e){
+      e.forEach(function(n){ if(n.isIntersecting){ if(typeof gtag==='function'){ gtag('event','section_view',{event_category:'scroll',event_label:n.target.getAttribute('data-ga-section')}); } sio.unobserve(n.target); } });
+    }, { threshold: .3 });
+    document.querySelectorAll('[data-ga-section]').forEach(function(el){ sio.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
