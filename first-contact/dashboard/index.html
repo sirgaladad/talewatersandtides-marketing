@@ -607,7 +607,11 @@ $('unregister').addEventListener('click', async () => {
     if (!window.confirm('Remove your registration completely?\n\nThis deletes your saved details from Tale Waters & Tides and signs you out. This can’t be undone.')){ return; }
     const btn = $('unregister'); btn.disabled = true; btn.textContent = 'Removing…';
     try {
-      const { error } = await sb.from('participants').delete().eq('id', _serverRow.id);
+      // Remove every row this account owns for the event, not just the latest
+      // one loaded — duplicates (multi-device check-ins, offline retries) would
+      // otherwise keep the guest registered. RLS still scopes the delete to the
+      // owner's verified email.
+      const { error } = await sb.from('participants').delete().eq('event_slug', SLUG).ilike('email', _authEmail);
       if (error){ throw error; }
       _serverRow = null;
       clearDevice();
