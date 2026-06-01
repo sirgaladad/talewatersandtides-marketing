@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Facilitator · First Contact | Tale Waters &amp; Tides</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f7f1e3; --cream-2: #fffdf7; --navy: #14324a; --navy-deep: #0d1b2a;
+  --gold: #f2a93b; --gold-deep: #d98a1f; --teal: #3ba9c4; --coral: #e8654e; --green: #2f9e6f;
+  --ink: #1d2b36; --muted: #5d6b73; --line: rgba(20,50,74,.14); --line-2: rgba(20,50,74,.24);
+  --fd: 'Fredoka', system-ui, sans-serif; --fb: 'DM Sans', system-ui, sans-serif; --mw: 1080px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--cream); color: var(--ink); font-family: var(--fb); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 18px; }
+h1, h2, h3, h4 { font-family: var(--fd); color: var(--navy); line-height: 1.15; }
+a { color: var(--teal); }
+
+.hd { background: var(--navy-deep); color: var(--cream); position: sticky; top: 0; z-index: 50; }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hd-brand { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: var(--cream); text-decoration: none; }
+.hd-brand b { color: var(--gold); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: .95rem; text-decoration: none; border-radius: 999px; padding: 10px 20px; min-height: 44px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s; }
+.btn-gold { background: var(--gold); color: var(--navy-deep); box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--gold-deep); }
+.btn-ghost { background: transparent; color: var(--cream); border-color: rgba(247,241,227,.4); }
+.btn-ghost:hover { border-color: var(--cream); }
+.btn-navy { background: var(--navy); color: var(--cream); box-shadow: 0 3px 0 var(--navy-deep); }
+.btn-sm { padding: 7px 14px; min-height: 38px; font-size: .85rem; }
+.btn[disabled] { opacity: .55; cursor: not-allowed; }
+
+main { padding: 24px 0 60px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.field label { font-family: var(--fd); font-weight: 600; font-size: .9rem; color: var(--navy); }
+.input, .select, .textarea { font-family: var(--fb); font-size: 16px; color: var(--ink); background: var(--cream-2); border: 1.5px solid var(--line-2); border-radius: 12px; padding: 11px 13px; width: 100%; }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(59,169,196,.18); }
+.textarea { resize: vertical; min-height: 70px; }
+.msg { font-size: .9rem; font-weight: 500; padding: 9px 13px; border-radius: 10px; margin-top: 8px; }
+.msg[hidden] { display: none; }
+.msg.ok { color: #1c5e44; background: rgba(47,158,111,.12); border: 1px solid rgba(47,158,111,.3); }
+.msg.error { color: var(--coral); background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); }
+
+.gate { max-width: 440px; margin: 8vh auto 0; }
+.card { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px; box-shadow: 0 8px 26px rgba(20,50,74,.05); }
+.card > h3 { font-size: 1.05rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card .cnt { font-family: var(--fd); font-weight: 700; color: var(--teal); font-size: .9rem; }
+
+.eyebrow { font-family: var(--fb); font-weight: 600; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--coral); margin-bottom: 8px; }
+.dash-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.dash-head h1 { font-size: 1.5rem; }
+.muted { color: var(--muted); font-size: .85rem; }
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media(min-width: 680px) { .grid { grid-template-columns: 1fr 1fr; } .grid .span2 { grid-column: 1 / -1; } }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.stat { background: var(--cream-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
+.stat .n { font-family: var(--fd); font-weight: 700; color: var(--navy); font-size: 1.8rem; line-height: 1; }
+.stat .l { font-size: .76rem; color: var(--muted); margin-top: 4px; }
+.bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; margin-top: 10px; }
+.bar > span { display: block; height: 100%; background: var(--gold); }
+.bar.full > span { background: var(--coral); }
+
+.mix-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: .88rem; }
+.mix-row .lab { width: 84px; color: var(--navy); font-weight: 600; }
+.mix-row .track { flex: 1; height: 14px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.mix-row .track > span { display: block; height: 100%; background: var(--teal); }
+.mix-row .v { width: 28px; text-align: right; color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--cream); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: .82rem; color: var(--navy); }
+
+.list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; }
+.list:empty::after { content: 'Nothing yet.'; color: var(--muted); font-size: .85rem; }
+.list li { background: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font-size: .9rem; white-space: pre-wrap; word-break: break-word; }
+.list li .meta { font-size: .74rem; color: var(--muted); margin-top: 3px; }
+.list li .tool { color: var(--teal); font-weight: 600; }
+.star { color: var(--gold-deep); font-weight: 700; }
+
+table.leads { width: 100%; border-collapse: collapse; font-size: .85rem; }
+table.leads th, table.leads td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+table.leads th { font-family: var(--fd); color: var(--navy); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+table.leads .wm { color: var(--coral); font-weight: 700; }
+.tbl-wrap { max-height: 320px; overflow: auto; }
+
+.tally-pill { display: inline-block; min-width: 26px; text-align: center; background: var(--coral); color: #fff; font-family: var(--fd); font-weight: 700; font-size: .8rem; border-radius: 999px; padding: 1px 8px; margin-right: 8px; }
+.up-pill { color: var(--gold-deep); font-weight: 700; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <a class="hd-brand" href="/first-contact/">Tale Waters &amp; Tides · <b>Facilitator</b></a>
+    <button class="btn btn-ghost btn-sm hidden" id="signOut" type="button">Sign out</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- GATE: signed out -->
+    <section class="gate" id="gate">
+      <div class="card">
+        <p class="eyebrow">First Contact · host access</p>
+        <h2 style="font-size:1.3rem;margin-bottom:6px">Facilitator sign-in</h2>
+        <p class="muted" style="margin-bottom:16px">Enter your facilitator email. We'll send a one-time magic link — tap it on this device to open the live dashboard.</p>
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn-gold" id="sendLink" type="button" style="width:100%">Send me a magic link</button>
+        <p class="msg" id="gateMsg" hidden></p>
+      </div>
+    </section>
+
+    <!-- DENIED: signed in, wrong email -->
+    <section class="gate hidden" id="denied">
+      <div class="card">
+        <h2 style="font-size:1.2rem;margin-bottom:6px">Not a facilitator account</h2>
+        <p class="muted" id="deniedWho" style="margin-bottom:16px"></p>
+        <button class="btn btn-navy btn-sm" id="signOut2" type="button">Sign out &amp; try another email</button>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="hidden" id="dash">
+      <div class="dash-head">
+        <div>
+          <p class="eyebrow">Live · First Contact · June 2, 2026</p>
+          <h1>Tonight's room</h1>
+        </div>
+        <div style="text-align:right">
+          <button class="btn btn-navy btn-sm" id="refresh" type="button">↻ Refresh</button>
+          <div class="muted" id="lastUpdated" style="margin-top:4px"></div>
+        </div>
+      </div>
+      <p class="msg error" id="dashErr" hidden></p>
+
+      <!-- topline -->
+      <div class="card span2" style="margin-bottom:16px">
+        <div class="stats">
+          <div class="stat"><div class="n" id="stCheckin">0</div><div class="l">checked in / 25</div></div>
+          <div class="stat"><div class="n" id="stWant">0</div><div class="l">want a deeper session</div></div>
+          <div class="stat"><div class="n" id="stRating">—</div><div class="l">avg rating</div></div>
+        </div>
+        <div class="bar" id="capBar"><span style="width:0%"></span></div>
+      </div>
+
+      <div class="grid">
+        <div class="card"><h3>Experience mix</h3><div id="mix"></div></div>
+        <div class="card"><h3>Roles <span class="cnt" id="rolesCnt"></span></h3><div class="chips" id="roles"></div></div>
+
+        <div class="card span2"><h3>What they came to make <span class="cnt" id="goalsCnt"></span></h3><ul class="list" id="goals"></ul></div>
+
+        <div class="card"><h3>Prompt log <span class="cnt" id="promptsCnt"></span></h3><ul class="list" id="prompts"></ul></div>
+        <div class="card"><h3>Ratings &amp; comments <span class="cnt" id="fbCnt"></span></h3><ul class="list" id="comments"></ul></div>
+
+        <!-- leads -->
+        <div class="card span2">
+          <h3>Leads <button class="btn btn-gold btn-sm" id="exportCsv" type="button">Export CSV</button></h3>
+          <div class="tbl-wrap">
+            <table class="leads"><thead><tr><th>Email</th><th>Name</th><th>Source</th><th>Wants more</th><th>When</th></tr></thead><tbody id="leadsBody"></tbody></table>
+          </div>
+        </div>
+
+        <!-- jam control -->
+        <div class="card span2" style="border-color:var(--gold);">
+          <h3>Run the jam</h3>
+          <p class="muted" style="margin-bottom:12px">Set the live step and the How-Might-We the room sees. Participants pick it up within ~5 seconds.</p>
+          <div class="grid">
+            <div class="field">
+              <label for="phase">Live step</label>
+              <select class="select" id="phase">
+                <option value="welcome">Welcome</option>
+                <option value="problems">Problems — add to the wall</option>
+                <option value="vote">Vote — dot voting</option>
+                <option value="hmw">How Might We</option>
+                <option value="solutions">Solutions — pitch ideas</option>
+                <option value="prioritize">Prioritize — effort/impact</option>
+                <option value="gallery">Gallery — show &amp; tell</option>
+                <option value="reflect">Reflect</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="hmw">How-Might-We (shown to the room)</label>
+              <input class="input" id="hmw" type="text" maxlength="200" placeholder="How might we…">
+            </div>
+          </div>
+          <button class="btn btn-navy btn-sm" id="saveJam" type="button">Save &amp; broadcast</button>
+          <p class="msg" id="jamMsg" hidden></p>
+        </div>
+
+        <!-- jam visibility -->
+        <div class="card"><h3>Problems <span class="cnt" id="problemsCnt"></span></h3><ul class="list" id="problemsView"></ul></div>
+        <div class="card"><h3>Top ideas <span class="cnt" id="solsCnt"></span></h3><ul class="list" id="solsView"></ul></div>
+        <div class="card"><h3>Gallery <span class="cnt" id="resultsCnt"></span></h3><ul class="list" id="resultsView"></ul></div>
+        <div class="card"><h3>Reflections <span class="cnt" id="reflCnt"></span></h3><ul class="list" id="reflView"></ul></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+
+const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
+const SLUG = 'first-contact';
+const ALLOW = ['cboelkens@gmail.com', 'corey@talewatersandtides.com'];
+
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const show = (el, on) => el.classList.toggle('hidden', !on);
+const when = (iso) => { if (!iso) return ''; const d = new Date(iso); return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); };
+function msg(el, kind, text){ el.textContent = text; el.className = 'msg ' + kind; el.hidden = false; }
+
+/* ---------- views ---------- */
+function showView(name){
+  show($('gate'), name === 'gate');
+  show($('denied'), name === 'denied');
+  show($('dash'), name === 'dash');
+  show($('signOut'), name === 'dash');
+}
+
+/* ---------- auth ---------- */
+$('sendLink').addEventListener('click', async () => {
+  const email = $('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { return msg($('gateMsg'), 'error', 'Enter a valid email.'); }
+  $('sendLink').disabled = true;
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: 'https://talewatersandtides.com/first-contact/facilitator/' } });
+  $('sendLink').disabled = false;
+  msg($('gateMsg'), error ? 'error' : 'ok', error ? error.message : 'Check your email and tap the link on this device.');
+});
+$('signOut').addEventListener('click', () => sb.auth.signOut());
+$('signOut2').addEventListener('click', () => sb.auth.signOut());
+
+let pollTimer = null;
+sb.auth.onAuthStateChange((_event, session) => {
+  const email = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  if (!email) { stopPolling(); showView('gate'); return; }
+  if (ALLOW.indexOf(email) === -1) {
+    stopPolling();
+    $('deniedWho').textContent = 'Signed in as ' + email + ' — that account doesn’t have facilitator access.';
+    showView('denied');
+    return;
+  }
+  showView('dash');
+  startPolling();
+});
+
+function startPolling(){ refreshAll(); if (pollTimer) clearInterval(pollTimer); pollTimer = setInterval(() => { if (!document.hidden) refreshAll(); }, 5000); }
+function stopPolling(){ if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && pollTimer) refreshAll(); });
+$('refresh').addEventListener('click', refreshAll);
+
+/* ---------- data ---------- */
+async function refreshAll(){
+  try {
+    const q = (t, cols, order) => { let b = sb.from(t).select(cols).eq('event_slug', SLUG); return order ? b.order('created_at', {ascending:false}) : b; };
+    // votes / solution_votes are embedded on their parent rows (fewer round-trips).
+    const [parts, prompts, fb, subs, problems, sols, results, refls, sess] = await Promise.all([
+      q('participants','name,email,experience,role,goals,wants_more,created_at', true),
+      q('prompts','prompt_text,tool,created_at', true),
+      q('feedback','rating,comment,created_at', false),
+      q('subscribers','email,name,created_at', false),
+      q('problems','id,text,votes(problem_id)', false),
+      q('solutions','id,text,tool,solution_votes(vote,effort,impact)', false),
+      q('results','title,text,link,created_at', true),
+      q('reflections','text,created_at', true),
+      sb.from('session_state').select('phase,hmw_text').eq('event_slug', SLUG).maybeSingle()
+    ]);
+    render({
+      parts: parts.data || [], prompts: prompts.data || [], fb: fb.data || [], subs: subs.data || [],
+      problems: problems.data || [], sols: sols.data || [],
+      results: results.data || [], refls: refls.data || [], sess: sess.data || null
+    });
+    $('dashErr').hidden = true;
+    $('lastUpdated').textContent = 'updated ' + new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit', second:'2-digit'});
+  } catch (e) {
+    msg($('dashErr'), 'error', 'Could not refresh — will retry.'); $('dashErr').className = 'msg error';
+  }
+}
+
+let _leads = [];
+function render(d){
+  /* topline */
+  $('stCheckin').textContent = d.parts.length;
+  const want = d.parts.filter(p => p.wants_more).length;
+  $('stWant').textContent = want;
+  const rated = d.fb.filter(f => f.rating);
+  $('stRating').textContent = rated.length ? (rated.reduce((s,f)=>s+f.rating,0)/rated.length).toFixed(1) : '—';
+  const pct = Math.min(100, Math.round(d.parts.length / 25 * 100));
+  const capBar = $('capBar'); capBar.classList.toggle('full', d.parts.length >= 25);
+  capBar.firstElementChild.style.width = pct + '%';
+
+  /* experience mix */
+  const buckets = { 'first-time':0, 'dabbled':0, 'builder':0 };
+  d.parts.forEach(p => { if (p.experience && buckets[p.experience] != null) buckets[p.experience]++; });
+  const maxB = Math.max(1, buckets['first-time'], buckets['dabbled'], buckets['builder']);
+  const labels = { 'first-time':'First time', 'dabbled':'Dabbled', 'builder':'Builder' };
+  $('mix').innerHTML = Object.keys(labels).map(k =>
+    '<div class="mix-row"><span class="lab">'+labels[k]+'</span><span class="track"><span style="width:'+(buckets[k]/maxB*100)+'%"></span></span><span class="v">'+buckets[k]+'</span></div>'
+  ).join('');
+
+  /* roles */
+  const roles = d.parts.map(p => (p.role||'').trim()).filter(Boolean);
+  $('rolesCnt').textContent = roles.length || '';
+  $('roles').innerHTML = roles.length ? roles.map(r => '<span class="chip">'+esc(r)+'</span>').join('') : '<span class="muted">No roles yet.</span>';
+
+  /* goals */
+  const goals = d.parts.filter(p => (p.goals||'').trim());
+  $('goalsCnt').textContent = goals.length || '';
+  $('goals').innerHTML = goals.map(p => '<li>'+esc(p.goals)+'<div class="meta">'+esc(p.name||'someone')+(p.role?' · '+esc(p.role):'')+'</div></li>').join('');
+
+  /* prompts */
+  $('promptsCnt').textContent = d.prompts.length || '';
+  $('prompts').innerHTML = d.prompts.map(p => '<li>'+esc(p.prompt_text)+'<div class="meta">'+(p.tool?'<span class="tool">'+esc(p.tool)+'</span> · ':'')+when(p.created_at)+'</div></li>').join('');
+
+  /* ratings + comments */
+  $('fbCnt').textContent = d.fb.length || '';
+  $('comments').innerHTML = d.fb.map(f => '<li>'+(f.rating?'<span class="star">'+'★'.repeat(f.rating)+'</span> ':'')+esc(f.comment||'')+'<div class="meta">'+when(f.created_at)+'</div></li>').join('');
+
+  /* leads (participants with email + subscribers, de-duped) */
+  const map = new Map();
+  d.parts.filter(p => p.email).forEach(p => {
+    const k = p.email.toLowerCase();
+    map.set(k, { email: p.email, name: p.name||'', source: 'participant', wants_more: !!p.wants_more, when: p.created_at });
+  });
+  d.subs.forEach(s => {
+    const k = (s.email||'').toLowerCase(); if (!k) return;
+    if (!map.has(k)) map.set(k, { email: s.email, name: s.name||'', source: 'subscriber', wants_more: false, when: s.created_at });
+  });
+  _leads = [...map.values()];
+  $('leadsBody').innerHTML = _leads.map(l =>
+    '<tr><td>'+esc(l.email)+'</td><td>'+esc(l.name)+'</td><td>'+esc(l.source)+'</td><td>'+(l.wants_more?'<span class="wm">yes</span>':'')+'</td><td>'+when(l.when)+'</td></tr>'
+  ).join('') || '<tr><td colspan="5" class="muted" style="padding:12px">No leads yet.</td></tr>';
+
+  /* jam visibility (votes / solution_votes are embedded on the parent rows) */
+  const tally = {}; d.problems.forEach(p => tally[p.id] = (p.votes||[]).length);
+  const probs = d.problems.slice().sort((a,b)=>(tally[b.id]||0)-(tally[a.id]||0));
+  $('problemsCnt').textContent = probs.length || '';
+  $('problemsView').innerHTML = probs.map(p => '<li><span class="tally-pill">'+(tally[p.id]||0)+'</span>'+esc(p.text)+'</li>').join('');
+
+  const agg = {}; d.sols.forEach(s => { const a = agg[s.id] = {up:0,eff:[],imp:[]}; (s.solution_votes||[]).forEach(r => { if(r.vote)a.up++; if(r.effort)a.eff.push(r.effort); if(r.impact)a.imp.push(r.impact); }); });
+  const ei = (arr) => arr.length ? ({1:'Low',2:'Med',3:'High'}[Math.round(arr.reduce((s,x)=>s+x,0)/arr.length)]||'—') : '—';
+  const sols = d.sols.slice().sort((a,b)=>((agg[b.id]||{}).up||0)-((agg[a.id]||{}).up||0));
+  $('solsCnt').textContent = sols.length || '';
+  $('solsView').innerHTML = sols.map(s => { const a = agg[s.id]||{up:0,eff:[],imp:[]}; return '<li><span class="up-pill">▲ '+a.up+'</span> '+esc(s.text)+'<div class="meta">'+(s.tool?'<span class="tool">'+esc(s.tool)+'</span> · ':'')+'effort '+ei(a.eff)+' · impact '+ei(a.imp)+'</div></li>'; }).join('');
+
+  $('resultsCnt').textContent = d.results.length || '';
+  $('resultsView').innerHTML = d.results.map(r => { const safe = r.link && /^https?:\/\//i.test(r.link) ? r.link : null; return '<li><b>'+esc(r.title||'Untitled')+'</b>'+(r.text?' — '+esc(r.text):'')+(safe?' <a href="'+esc(safe)+'" target="_blank" rel="noopener nofollow">link</a>':'')+'</li>'; }).join('');
+
+  $('reflCnt').textContent = d.refls.length || '';
+  $('reflView').innerHTML = d.refls.map(r => '<li>'+esc(r.text)+'<div class="meta">'+when(r.created_at)+'</div></li>').join('');
+
+  /* jam control reflects current state (only if user hasn't focused the fields) */
+  if (d.sess && document.activeElement !== $('phase') && document.activeElement !== $('hmw')) {
+    if (d.sess.phase) $('phase').value = d.sess.phase;
+    if (d.sess.hmw_text != null && $('hmw').value === '') $('hmw').value = d.sess.hmw_text;
+  }
+}
+
+/* ---------- jam control ---------- */
+$('saveJam').addEventListener('click', async () => {
+  $('saveJam').disabled = true;
+  const { error } = await sb.from('session_state').upsert({ event_slug: SLUG, phase: $('phase').value, hmw_text: $('hmw').value.trim() || null, updated_at: new Date().toISOString() });
+  $('saveJam').disabled = false;
+  msg($('jamMsg'), error ? 'error' : 'ok', error ? error.message : 'Saved — the room will see it within ~5s.');
+});
+
+/* ---------- CSV export ---------- */
+$('exportCsv').addEventListener('click', () => {
+  const head = ['email','name','source','wants_more','when'];
+  const cell = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const csv = [head.join(',')].concat(_leads.map(l => head.map(h => cell(l[h])).join(','))).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'first-contact-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  // Revoke after a beat so the download has fully started (immediate revoke can cancel it in some browsers).
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+});
+</script>
+</body>
+</html>

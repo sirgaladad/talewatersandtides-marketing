@@ -231,6 +231,41 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
 .sync[data-state="pending"] { color: var(--gold-deep); }
 .sync[data-state="ok"] { color: var(--green); }
 
+/* ============================================================ DECISION JAM */
+.live-pill { display: none; align-items: center; gap: 6px; font-family: var(--fb); font-weight: 700; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: #fff; background: var(--coral); padding: 3px 9px; border-radius: 999px; vertical-align: middle; margin-left: 8px; }
+.is-live .live-pill { display: inline-flex; }
+.is-live .card { box-shadow: 0 0 0 3px rgba(232,101,78,.35), 0 8px 26px rgba(20,50,74,.06); }
+.hmw { background: var(--navy); color: var(--cream); border-radius: 16px; padding: 20px 22px; border-left: 5px solid var(--gold); }
+.hmw .lbl { font-family: var(--fb); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; font-size: .68rem; color: var(--gold); margin-bottom: 6px; }
+.hmw .txt { font-family: var(--fd); font-weight: 600; font-size: 1.15rem; color: #fff; }
+.dotbank { display: inline-flex; align-items: center; gap: 7px; font-family: var(--fd); font-weight: 600; color: var(--coral); background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); padding: 6px 14px; border-radius: 999px; font-size: .88rem; }
+.wall { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.wall:empty::after { content: 'Nothing here yet — add the first one.'; color: var(--muted); font-size: .92rem; }
+.wall-item { display: flex; gap: 12px; align-items: flex-start; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.wall-item.mine { border-left: 4px solid var(--teal); }
+.wall-vote { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.wall-vote button { width: 40px; height: 40px; border-radius: 11px; border: 1.5px solid var(--line-2); background: var(--cream-2); color: var(--coral); font-size: 1rem; cursor: pointer; display: grid; place-items: center; transition: transform .12s, border-color .2s; }
+.wall-vote button:hover:not(:disabled), .wall-vote button:focus-visible { border-color: var(--coral); transform: translateY(-1px); outline: none; }
+.wall-vote button:disabled { opacity: .4; cursor: not-allowed; }
+.wall-vote .tally { font-family: var(--fd); font-weight: 700; color: var(--navy); font-size: .9rem; }
+.wall-item .wt { font-size: .98rem; color: var(--ink); white-space: pre-wrap; word-break: break-word; flex: 1; }
+.me-tag { font-size: .66rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .06em; }
+.sol-item { background: var(--cream); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+.sol-item.mine { border-left-color: var(--teal); }
+.sol-item .st { font-size: .98rem; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
+.sol-ctl { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.sol-ctl .up { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--line-2); background: var(--cream-2); border-radius: 999px; padding: 6px 14px; min-height: 38px; font-family: var(--fd); font-weight: 600; font-size: .85rem; color: var(--navy); cursor: pointer; }
+.sol-ctl .up:hover, .sol-ctl .up:focus-visible { border-color: var(--gold-deep); outline: none; }
+.ei { display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; color: var(--muted); }
+.ei select { font-size: 16px; padding: 5px 6px; border-radius: 8px; border: 1.5px solid var(--line-2); background: var(--cream-2); font-family: var(--fb); color: var(--ink); }
+.gallery { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+@media(min-width: 560px) { .gallery { grid-template-columns: 1fr 1fr; } }
+.gal-item { background: var(--cream); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.gal-item h4 { font-family: var(--fd); font-weight: 600; color: var(--navy); font-size: 1.02rem; margin-bottom: 5px; }
+.gal-item p { font-size: .9rem; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
+.gal-item a { display: inline-block; margin-top: 8px; font-weight: 600; font-size: .85rem; color: var(--teal); text-decoration: none; }
+.gal-item a:hover { text-decoration: underline; }
+
 /* ============================================================ FOOTER */
 .ft { background: var(--navy-deep); color: var(--cream); padding: 44px 20px 30px; }
 .ft-in { max-width: var(--mw); margin: 0 auto; text-align: center; }
@@ -324,12 +359,20 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
           </select>
         </div>
         <div class="field">
+          <label for="ob-role">What's your role? <span class="hint">— one line, optional</span></label>
+          <input class="input" id="ob-role" name="role" type="text" placeholder="e.g. teacher, founder, student, just curious">
+        </div>
+        <div class="field">
           <label for="ob-goals">What do you want to make tonight? <span class="hint">— a sentence is plenty</span></label>
           <textarea class="textarea" id="ob-goals" name="goals" placeholder="An app idea, a story, a tool for work, or just here to explore…"></textarea>
         </div>
+        <label class="consent" style="align-items:center">
+          <input type="checkbox" id="ob-wantsmore" name="wants_more">
+          <span>I'd be interested in a deeper / team session.</span>
+        </label>
         <label class="consent">
           <input type="checkbox" id="ob-consent" name="consent" required>
-          <span>We store your name, email, the prompts you log, and your feedback so we can send you a recap and improve the series. No spam, unsubscribe anytime — <a href="mailto:corey@talewatersandtides.com">corey@talewatersandtides.com</a>.</span>
+          <span>We store your check-in details, the prompts and ideas you add tonight, and your feedback so we can run the workshop, send your recap, and improve the series. Anything you post to the shared wall is visible to the room (no names shown). No spam — <a href="mailto:corey@talewatersandtides.com">corey@talewatersandtides.com</a>.</span>
         </label>
         <!-- honeypot -->
         <div class="hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
@@ -341,7 +384,6 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
 </section>
 
 <!-- ============================================================ TONIGHT'S FLOW -->
-<!-- ===== HOST CONTENT: agenda — confirm/replace the rows below before doors ===== -->
 <section id="flow" data-ga-section="fc_flow">
   <div class="wrap">
     <p class="eyebrow r">Step 2 · The plan</p>
@@ -349,49 +391,150 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     <p class="sec-lead r">Two hours, low pressure. Arrive when you can, leave with something you built.</p>
     <div class="card r" style="margin-top:24px">
       <ul class="tick">
-        <li><span class="t-time">7:30</span><span class="dot"></span><span>Arrive, grab coffee, and check in (you just did — nice).</span></li>
-        <li><span class="t-time">7:45</span><span class="dot"></span><span>Welcome + what "creative AI" and vibecoding actually mean. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">8:00</span><span class="dot"></span><span>Hands-on: your first prompt-to-thing. We build together. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">8:45</span><span class="dot"></span><span>Build, share what you made, and trade ideas. <!-- HOST: confirm --></span></li>
-        <li><span class="t-time">9:20</span><span class="dot"></span><span>Wrap, what's next for Nights 2 &amp; 3, and quick feedback.</span></li>
+        <li><span class="t-time">7:30</span><span class="dot"></span><span>Arrive, grab coffee, and check in — tell us what you'd love to make.</span></li>
+        <li><span class="t-time">7:45</span><span class="dot"></span><span>Welcome: what "creative AI" and vibecoding really mean, with a quick live build.</span></li>
+        <li><span class="t-time">8:00</span><span class="dot"></span><span>Problem wall: what's actually worth building? Add ideas, then dot-vote the best.</span></li>
+        <li><span class="t-time">8:20</span><span class="dot"></span><span>Prompt to spec: turn the top problem into a clear, buildable ask — requirements-driven design.</span></li>
+        <li><span class="t-time">8:35</span><span class="dot"></span><span>Build time: pitch your approach, then vibecode something real with AI.</span></li>
+        <li><span class="t-time">9:05</span><span class="dot"></span><span>Show &amp; tell: drop what you made in the gallery and trade ideas.</span></li>
+        <li><span class="t-time">9:20</span><span class="dot"></span><span>Reflect, a peek at Nights 2 &amp; 3, and quick feedback.</span></li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ TOOLS + STARTER PROMPTS -->
-<!-- ===== HOST CONTENT: replace tool tiles + starter prompts with tonight's actuals ===== -->
 <section id="tools" class="tinted" data-ga-section="fc_tools">
   <div class="wrap">
     <p class="eyebrow r">Step 3 · Play</p>
     <h2 class="sec-h2 r">Tools &amp; prompts to try</h2>
-    <p class="sec-lead r">Open these on your phone or laptop. No accounts required to follow along — jump in wherever looks fun.</p>
+    <p class="sec-lead r">Open these on your phone or laptop. Both are free — a quick sign-in unlocks the full experience. Jump in wherever looks fun.</p>
 
     <div class="grid">
       <div class="feat r">
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18l-6-6 6-6M16 6l6 6-6 6"/></svg></div>
-        <h3>Tool 1 <!-- HOST: name --></h3>
-        <p>What it's for tonight. <!-- HOST: one line --></p>
-        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_1">Open tool</a> -->
-        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_1">Link coming soon</button>
+        <h3>Claude</h3>
+        <p>Your AI build partner for tonight — describe what you want in plain English and it builds, explains, and revises right alongside you.</p>
+        <a class="btn btn-ghost btn-sm" href="https://claude.ai" target="_blank" rel="noopener" data-ga="fc_tool_1">Open Claude</a>
       </div>
       <div class="feat r">
         <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/><path d="M9 18h6M10 22h4"/></svg></div>
-        <h3>Tool 2 <!-- HOST: name --></h3>
-        <p>What it's for tonight. <!-- HOST: one line --></p>
-        <!-- HOST: swap for a real link -> <a class="btn btn-ghost btn-sm" href="REAL_URL" target="_blank" rel="noopener" data-ga="fc_tool_2">Open tool</a> -->
-        <button class="btn btn-ghost btn-sm" type="button" disabled data-ga="fc_tool_2">Link coming soon</button>
+        <h3>ChatGPT</h3>
+        <p>A second opinion. Run the same prompt here and compare — watching two AIs tackle one idea is half the fun.</p>
+        <a class="btn btn-ghost btn-sm" href="https://chatgpt.com" target="_blank" rel="noopener" data-ga="fc_tool_2">Open ChatGPT</a>
       </div>
     </div>
 
     <details class="prompts r">
       <summary>Starter prompts to steal</summary>
       <ol>
-        <li>"Act as a friendly product coach. Ask me 5 questions to turn my rough idea into a one-paragraph spec, then write the spec." <!-- HOST: confirm --></li>
-        <li>"Build me a single-page web app that <code>&lt;does the thing&gt;</code>. Keep it to one HTML file. Explain each part in plain English." <!-- HOST: confirm --></li>
-        <li>"I'm a total beginner. Walk me through making <code>&lt;my idea&gt;</code> step by step, checking in after each step." <!-- HOST: confirm --></li>
+        <li>"Act as a friendly product coach. Ask me five questions to turn my rough idea into a one-paragraph spec — who it's for, the one job it does, and what 'done' looks like. Then write the spec."</li>
+        <li>"Build me a single-page web app that does <code>&lt;your idea&gt;</code>. Keep it to one self-contained HTML file with inline CSS and JS, and explain each part in plain English so I can tweak it."</li>
+        <li>"I'm a total beginner. Walk me through making <code>&lt;your idea&gt;</code> step by step, and check in with me after each step before moving on."</li>
+        <li>"Here's what I have so far: <code>&lt;paste&gt;</code>. Add <code>&lt;one feature&gt;</code> and tell me exactly what you changed and why."</li>
       </ol>
     </details>
+  </div>
+</section>
+
+<!-- ============================================================ DECISION JAM: HOW MIGHT WE (facilitator-set) -->
+<section id="jam-hmw" data-ga-section="fc_jam_hmw" hidden>
+  <div class="wrap">
+    <div class="hmw r">
+      <div class="lbl">Tonight's challenge</div>
+      <div class="txt" id="hmwText"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DECISION JAM: PROBLEM WALL + DOT VOTING -->
+<section id="jam-problems" class="tinted needs-onboard" data-ga-section="fc_jam_problems">
+  <div class="wrap">
+    <p class="eyebrow r">Step 4 · Together<span class="live-pill">● Live</span></p>
+    <h2 class="sec-h2 r">What should we tackle?</h2>
+    <p class="sec-lead r">Drop a problem worth solving — yours or one you notice in the room. Then spend your <b>4 dots</b> on the ones that matter most. The wall updates live for everyone.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <div class="locked-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Check in above first, then the wall unlocks here.</span>
+      </div>
+      <form class="form" id="problemForm" novalidate>
+        <div class="field">
+          <label for="pb-text">Add a problem</label>
+          <textarea class="textarea" id="pb-text" name="text" maxlength="280" placeholder="e.g. It's hard for a beginner to know which AI tool to even start with."></textarea>
+        </div>
+        <div class="hp" aria-hidden="true"><label>Nickname <input name="nickname" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-navy btn-block" id="problemBtn" type="submit">Add to the wall</button>
+        <p class="msg" id="problemMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+      <div class="dotbank" id="dotBank" style="margin-top:16px">● 4 dots left</div>
+      <ul class="wall" id="problemWall" aria-live="polite"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DECISION JAM: SOLUTIONS + PRIORITIZE -->
+<section id="jam-solutions" class="needs-onboard" data-ga-section="fc_jam_solutions">
+  <div class="wrap">
+    <p class="eyebrow r">Step 5 · Ideas<span class="live-pill">● Live</span></p>
+    <h2 class="sec-h2 r">How might we solve it?</h2>
+    <p class="sec-lead r">Pitch an approach — a prompt, a tool, a trick. Up-vote the ones you'd actually try, and rate them by effort and impact.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <div class="locked-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Check in above first to add and rate ideas.</span>
+      </div>
+      <form class="form" id="solutionForm" novalidate>
+        <div class="field">
+          <label for="sol-text">Your idea or prompt approach</label>
+          <textarea class="textarea" id="sol-text" name="text" maxlength="600" placeholder="e.g. A 'beginner mode' prompt that asks one question at a time and explains each step…"></textarea>
+        </div>
+        <div class="field">
+          <label for="sol-tool">Tool it uses <span class="hint">— optional</span></label>
+          <input class="input" id="sol-tool" name="tool" type="text" placeholder="e.g. Claude, ChatGPT, v0…">
+        </div>
+        <div class="hp" aria-hidden="true"><label>Phone <input name="phone" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-navy btn-block" id="solutionBtn" type="submit">Share the idea</button>
+        <p class="msg" id="solutionMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+      <ul class="wall" id="solutionWall" aria-live="polite" style="margin-top:16px"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DECISION JAM: RESULTS GALLERY -->
+<section id="jam-gallery" class="tinted needs-onboard" data-ga-section="fc_jam_gallery">
+  <div class="wrap">
+    <p class="eyebrow r">Step 6 · Show &amp; tell<span class="live-pill">● Live</span></p>
+    <h2 class="sec-h2 r">What did you make?</h2>
+    <p class="sec-lead r">Drop what you built tonight — a link, a description, a takeaway. The whole room can see it.</p>
+
+    <div class="card r" style="margin-top:24px">
+      <div class="locked-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Check in above first to add to the gallery.</span>
+      </div>
+      <form class="form" id="resultForm" novalidate>
+        <div class="field">
+          <label for="rs-title">Title</label>
+          <input class="input" id="rs-title" name="title" type="text" maxlength="120" placeholder="What you made">
+        </div>
+        <div class="field">
+          <label for="rs-text">A line about it <span class="hint">— optional</span></label>
+          <textarea class="textarea" id="rs-text" name="text" maxlength="600" placeholder="What it does, what surprised you…"></textarea>
+        </div>
+        <div class="field">
+          <label for="rs-link">Link <span class="hint">— optional</span></label>
+          <input class="input" id="rs-link" name="link" type="url" inputmode="url" placeholder="https://…">
+        </div>
+        <div class="hp" aria-hidden="true"><label>Fax2 <input name="fax2" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-gold btn-block" id="resultBtn" type="submit">Add to the gallery</button>
+        <p class="msg" id="resultMsg" role="status" aria-live="polite" hidden></p>
+      </form>
+      <div class="gallery" id="resultGallery" aria-live="polite"></div>
+    </div>
   </div>
 </section>
 
@@ -432,7 +575,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     <div class="recap-card r">
       <p class="eyebrow">Yours to keep</p>
       <h2 class="sec-h2">Your First Contact recap</h2>
-      <p class="recap-empty" id="recapEmpty">Once you check in and start logging prompts, your personal recap builds here automatically — saved on this device.</p>
+      <p class="recap-empty" id="recapEmpty">Once you check in and start logging prompts, your personal recap builds here automatically — saved and synced, so we can send it to you.</p>
       <div id="recapBody" hidden>
         <div class="recap-grid">
           <div class="recap-stat"><span class="n" id="rcPrompts">0</span><span class="l">prompts logged tonight</span></div>
@@ -455,6 +598,30 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
         </div>
         <p class="sync" id="syncPill" data-state="ok" hidden></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ REFLECT (host-only) -->
+<section id="reflect" class="needs-onboard" data-ga-section="fc_reflect">
+  <div class="wrap">
+    <p class="eyebrow r">Before you go<span class="live-pill">● Live</span></p>
+    <h2 class="sec-h2 r">One honest reflection</h2>
+    <p class="sec-lead r">What clicked, what stuck, what you'll try next. Just for the host — this one isn't on the wall.</p>
+    <div class="card r" style="margin-top:24px">
+      <div class="locked-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Check in above first.</span>
+      </div>
+      <form class="form" id="reflectForm" novalidate>
+        <div class="field">
+          <label for="rf-text">Your reflection</label>
+          <textarea class="textarea" id="rf-text" name="text" placeholder="Tonight I…"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true"><label>Url <input name="url2" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-navy btn-block" id="reflectBtn" type="submit">Save my reflection</button>
+        <p class="msg" id="reflectMsg" role="status" aria-live="polite" hidden></p>
+      </form>
     </div>
   </div>
 </section>
@@ -637,7 +804,9 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
     var name = onboardForm.elements['name'].value.trim();
     var email = onboardForm.elements['email'].value.trim();
     var experience = onboardForm.elements['experience'].value;
+    var role = onboardForm.elements['role'].value.trim();
     var goals = onboardForm.elements['goals'].value.trim();
+    var wantsMore = onboardForm.elements['wants_more'].checked;
     var consent = onboardForm.elements['consent'].checked;
     if (!name){ showMsg(msg,'error','Please add your name.'); return; }
     if (email && !isEmail(email)){ showMsg(msg,'error','That email looks off — mind checking it?'); return; }
@@ -645,10 +814,12 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
 
     var pid = uuidv4();
     var row = { id: pid, event_slug: EVENT_SLUG, name: name, email: email || null,
-                experience: experience || null, goals: goals || null, consent: true };
+                experience: experience || null, role: role || null, goals: goals || null,
+                wants_more: wantsMore, onboarding: { role: role || null, wants_more: wantsMore },
+                consent: true };
 
     // Save locally first so the page unlocks even if the network is flaky.
-    lsSet('fc_participant', { id: pid, name: name, email: email || null, experience: experience, goals: goals });
+    lsSet('fc_participant', { id: pid, name: name, email: email || null, experience: experience, role: role, goals: goals, wants_more: wantsMore });
     setOnboardedUI();
     renderRecap();
     track('onboard', { experience: experience || 'unknown' });
@@ -662,7 +833,7 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
       btn.disabled = false; btn.textContent = 'Check in for tonight';
       showMsg(msg,'ok', synced
         ? "You're in! Scroll down — tonight's flow and your prompt log are unlocked."
-        : "You're in! Saved on this device — we'll sync when you're back online. Scroll down to get started.");
+        : "You're in! Saved — we'll sync the moment you're back online and email your recap. Scroll down to get started.");
       setTimeout(function(){ var f=$('flow'); if(f){ f.scrollIntoView({behavior:'smooth'}); } }, 700);
     });
   });
@@ -800,6 +971,210 @@ body:not(.is-onboarded) .needs-onboard { opacity: .55; }
       else { window.prompt('Copy your recap:', text); }
     });
   }
+
+  /* ============================================================ DECISION JAM (shared, live) */
+  /* anon SELECT is allowed on the shared workshop tables (no PII). */
+  function sbSelect(path){
+    return fetch(SB_URL + '/rest/v1/' + path, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    }).then(function(res){ if(!res.ok){ throw new Error('HTTP ' + res.status); } return res.json(); });
+  }
+  function myId(){ var p = getParticipant(); return p ? p.id : null; }
+  function needCheckin(msg){ showMsg(msg,'info','Check in at the top first to join in.'); var o=$('onboard'); if(o){ o.scrollIntoView({behavior:'smooth'}); } }
+  /* optimistic shared insert: queue on transient failure, surface permanent 4xx */
+  function jamInsert(table, row){
+    return sbInsert(table, row).then(updateSync).catch(function(err){
+      var s = err && err.status;
+      if (s && s >= 400 && s < 500 && s !== 408 && s !== 429 && s !== 409){ throw err; }
+      enqueue(table, row);
+    });
+  }
+
+  /* ----- problem wall + dot voting ----- */
+  var DOT_BUDGET = 4;
+  function dotsUsed(){ return lsGet('fc_votes', []).length; }
+  function renderDotBank(){ var el=$('dotBank'); if(!el){ return; } var left=Math.max(0, DOT_BUDGET - dotsUsed()); el.textContent = '● ' + left + ' dot' + (left===1?'':'s') + ' left'; }
+  var _problems = [], _tally = {};
+  var problemForm = $('problemForm');
+  if (problemForm){ problemForm.addEventListener('submit', function(e){
+    e.preventDefault(); var msg=$('problemMsg');
+    if (problemForm.elements['nickname'].value){ return; }
+    if (!getParticipant()){ needCheckin(msg); return; }
+    var text = problemForm.elements['text'].value.trim();
+    if (!text){ showMsg(msg,'error','Type a problem to add it.'); return; }
+    var row = { id: uuidv4(), event_slug: EVENT_SLUG, participant_id: myId(), text: text };
+    _problems.push({ id: row.id, participant_id: row.participant_id, text: text });
+    renderProblemWall();
+    problemForm.reset(); showMsg(msg,'ok','Added to the wall — thanks!'); track('jam_problem_add', {});
+    jamInsert('problems', row).then(refreshProblems).catch(function(){});
+  }); }
+  function castDot(problemId){
+    if (!getParticipant()){ return; }
+    if (dotsUsed() >= DOT_BUDGET){ return; }
+    var v = lsGet('fc_votes', []); v.push(problemId); lsSet('fc_votes', v);
+    _tally[problemId] = (_tally[problemId]||0) + 1; renderProblemWall();
+    var row = { event_slug: EVENT_SLUG, participant_id: myId(), problem_id: problemId };
+    sbInsert('votes', row).then(updateSync).catch(function(err){
+      if (err && err.status === 400){
+        var cur = lsGet('fc_votes', []); var i = cur.lastIndexOf(problemId); if (i>=0){ cur.splice(i,1); lsSet('fc_votes', cur); }
+        _tally[problemId] = Math.max(0, (_tally[problemId]||1) - 1); renderProblemWall();
+      } else { enqueue('votes', row); }
+    });
+    track('jam_vote', {});
+  }
+  function refreshProblems(){
+    // One request: embed each problem's votes (count them client-side) instead of a second /votes fetch.
+    sbSelect('problems?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text,votes(problem_id)&order=created_at.asc').then(function(rows){
+      _problems = rows; _tally = {};
+      rows.forEach(function(row){ _tally[row.id] = (row.votes || []).length; });
+      renderProblemWall();
+    }).catch(function(){});
+  }
+  function renderProblemWall(){
+    var wall=$('problemWall'); if(!wall){ return; } var mid=myId(); var out=dotsUsed()>=DOT_BUDGET;
+    var sorted=_problems.slice().sort(function(a,b){ return (_tally[b.id]||0)-(_tally[a.id]||0); });
+    wall.innerHTML='';
+    sorted.forEach(function(pr){
+      var mine = pr.participant_id && pr.participant_id===mid;
+      var li=document.createElement('li'); li.className='wall-item'+(mine?' mine':'');
+      li.innerHTML='<div class="wall-vote"><button type="button" aria-label="Give a dot"'+(out?' disabled':'')+'>▲</button><span class="tally">'+(_tally[pr.id]||0)+'</span></div><div class="wt">'+esc(pr.text)+(mine?' <span class="me-tag">you</span>':'')+'</div>';
+      var b=li.querySelector('button'); if(b){ b.addEventListener('click', function(){ castDot(pr.id); }); }
+      wall.appendChild(li);
+    });
+    renderDotBank();
+  }
+
+  /* ----- solutions + one-shot rate (vote + effort/impact in a single row) ----- */
+  var _solutions=[], _solAgg={};
+  function avgInt(arr){ return arr.length ? Math.round(arr.reduce(function(s,x){ return s+x; },0)/arr.length) : 0; }
+  function eiLabel(n){ return n===1?'Low':n===2?'Med':n===3?'High':'—'; }
+  var solutionForm=$('solutionForm');
+  if (solutionForm){ solutionForm.addEventListener('submit', function(e){
+    e.preventDefault(); var msg=$('solutionMsg');
+    if (solutionForm.elements['phone'].value){ return; }
+    if (!getParticipant()){ needCheckin(msg); return; }
+    var text=solutionForm.elements['text'].value.trim(); var tool=solutionForm.elements['tool'].value.trim();
+    if (!text){ showMsg(msg,'error','Type an idea to share it.'); return; }
+    var row={ id:uuidv4(), event_slug:EVENT_SLUG, participant_id:myId(), text:text, tool:tool||null };
+    _solutions.push({ id:row.id, participant_id:row.participant_id, text:text, tool:tool||null }); renderSolutions();
+    solutionForm.reset(); showMsg(msg,'ok','Shared — nice one!'); track('jam_solution', {});
+    jamInsert('solutions', row).then(refreshSolutions).catch(function(){});
+  }); }
+  function refreshSolutions(){
+    // One request: embed each solution's votes and aggregate client-side.
+    sbSelect('solutions?event_slug=eq.' + EVENT_SLUG + '&select=id,participant_id,text,tool,solution_votes(vote,effort,impact)&order=created_at.asc').then(function(rows){
+      _solutions=rows; _solAgg={};
+      rows.forEach(function(row){ var a=_solAgg[row.id]={up:0,eff:[],imp:[]}; (row.solution_votes||[]).forEach(function(r){ if(r.vote){ a.up++; } if(r.effort){ a.eff.push(r.effort); } if(r.impact){ a.imp.push(r.impact); } }); });
+      renderSolutions();
+    }).catch(function(){});
+  }
+  function renderSolutions(){
+    var wall=$('solutionWall'); if(!wall){ return; } var mid=myId(); var voted=lsGet('fc_sol_voted',[]);
+    var sorted=_solutions.slice().sort(function(a,b){ return ((_solAgg[b.id]||{}).up||0)-((_solAgg[a.id]||{}).up||0); });
+    wall.innerHTML='';
+    sorted.forEach(function(s){
+      var agg=_solAgg[s.id]||{up:0,eff:[],imp:[]};
+      var did=voted.indexOf(s.id)>=0;
+      var li=document.createElement('li'); li.className='sol-item'+(s.participant_id===mid?' mine':'');
+      var aggLine='▲ '+agg.up+(agg.eff.length?' · effort '+eiLabel(avgInt(agg.eff)):'')+(agg.imp.length?' · impact '+eiLabel(avgInt(agg.imp)):'');
+      var ctl;
+      if (did){ ctl='<span class="ei">✓ You rated this</span>'; }
+      else {
+        ctl='<span class="ei">Effort <select id="ef-'+s.id+'"><option value="">—</option><option value="1">Low</option><option value="2">Med</option><option value="3">High</option></select></span>'+
+            '<span class="ei">Impact <select id="im-'+s.id+'"><option value="">—</option><option value="1">Low</option><option value="2">Med</option><option value="3">High</option></select></span>'+
+            '<button type="button" class="up" data-id="'+s.id+'">▲ I\'d try this</button>';
+      }
+      li.innerHTML='<div class="st">'+esc(s.text)+(s.tool?' <span class="me-tag">'+esc(s.tool)+'</span>':'')+'</div><div class="sol-ctl"><span class="ei" style="font-weight:600;color:var(--navy)">'+aggLine+'</span>'+ctl+'</div>';
+      var btn=li.querySelector('.up');
+      if (btn){ btn.addEventListener('click', function(){ var ef=document.getElementById('ef-'+s.id), im=document.getElementById('im-'+s.id); rateSolution(s.id, ef?ef.value:'', im?im.value:''); }); }
+      wall.appendChild(li);
+    });
+  }
+  function rateSolution(id, ef, im){
+    if (!getParticipant()){ return; }
+    var voted=lsGet('fc_sol_voted',[]); if(voted.indexOf(id)>=0){ return; }
+    voted.push(id); lsSet('fc_sol_voted', voted);
+    var a=_solAgg[id]||(_solAgg[id]={up:0,eff:[],imp:[]}); a.up++; if(ef){ a.eff.push(parseInt(ef,10)); } if(im){ a.imp.push(parseInt(im,10)); }
+    renderSolutions();
+    var row={ event_slug:EVENT_SLUG, participant_id:myId(), solution_id:id, vote:true, effort:ef?parseInt(ef,10):null, impact:im?parseInt(im,10):null };
+    sbInsert('solution_votes', row).then(updateSync).catch(function(err){
+      var s=err && err.status;
+      if (s===409){ /* already rated server-side — fine */ }
+      else if (s && s>=400 && s<500 && s!==408 && s!==429){ /* drop */ }
+      else { enqueue('solution_votes', row); }
+    });
+    track('jam_solution_vote', {});
+  }
+
+  /* ----- results gallery ----- */
+  var _results=[];
+  var resultForm=$('resultForm');
+  if (resultForm){ resultForm.addEventListener('submit', function(e){
+    e.preventDefault(); var msg=$('resultMsg');
+    if (resultForm.elements['fax2'].value){ return; }
+    if (!getParticipant()){ needCheckin(msg); return; }
+    var title=resultForm.elements['title'].value.trim();
+    var text=resultForm.elements['text'].value.trim();
+    var link=resultForm.elements['link'].value.trim();
+    if (!title && !text && !link){ showMsg(msg,'error','Add a title, a line, or a link.'); return; }
+    if (link && !/^https?:\/\//i.test(link)){ showMsg(msg,'error','Links should start with http:// or https://'); return; }
+    var row={ event_slug:EVENT_SLUG, participant_id:myId(), title:title||null, text:text||null, link:link||null };
+    _results.unshift({ participant_id:row.participant_id, title:title||null, text:text||null, link:link||null }); renderResults();
+    resultForm.reset(); showMsg(msg,'ok','Added to the gallery!'); track('jam_result', {});
+    jamInsert('results', row).then(refreshResults).catch(function(){});
+  }); }
+  function refreshResults(){
+    sbSelect('results?event_slug=eq.' + EVENT_SLUG + '&select=participant_id,title,text,link&order=created_at.desc').then(function(rows){ _results=rows; renderResults(); }).catch(function(){});
+  }
+  function renderResults(){
+    var g=$('resultGallery'); if(!g){ return; } var mid=myId(); g.innerHTML='';
+    _results.forEach(function(r){
+      var safe = r.link && /^https?:\/\//i.test(r.link) ? r.link : null;
+      var d=document.createElement('div'); d.className='gal-item';
+      d.innerHTML='<h4>'+esc(r.title||'Untitled')+(r.participant_id===mid?' <span class="me-tag">you</span>':'')+'</h4>'+(r.text?'<p>'+esc(r.text)+'</p>':'')+(safe?'<a href="'+esc(safe)+'" target="_blank" rel="noopener nofollow">Open ↗</a>':'');
+      g.appendChild(d);
+    });
+  }
+
+  /* ----- reflection (PII-protected; host only) ----- */
+  var reflectForm=$('reflectForm');
+  if (reflectForm){ reflectForm.addEventListener('submit', function(e){
+    e.preventDefault(); var msg=$('reflectMsg');
+    if (reflectForm.elements['url2'].value){ return; }
+    if (!getParticipant()){ needCheckin(msg); return; }
+    var text=reflectForm.elements['text'].value.trim();
+    if (!text){ showMsg(msg,'error','Write a line to save it.'); return; }
+    lsSet('fc_reflection', { text:text, created_at:new Date().toISOString() });
+    reflectForm.reset(); showMsg(msg,'ok','Saved — thank you.'); track('jam_reflection', {});
+    var row={ event_slug:EVENT_SLUG, participant_id:myId(), text:text };
+    sbInsert('reflections', row).then(updateSync).catch(function(){ enqueue('reflections', row); });
+  }); }
+
+  /* ----- session phase + How-Might-We (facilitator-driven) ----- */
+  var PHASE_SECTION={ problems:'jam-problems', vote:'jam-problems', hmw:'jam-hmw', solutions:'jam-solutions', prioritize:'jam-solutions', gallery:'jam-gallery', reflect:'reflect' };
+  function highlightPhase(phase){
+    var prev=document.querySelectorAll('.is-live'); for(var i=0;i<prev.length;i++){ prev[i].classList.remove('is-live'); }
+    var id=PHASE_SECTION[phase]; if(id){ var el=$(id); if(el){ el.classList.add('is-live'); } }
+  }
+  function refreshSession(){
+    sbSelect('session_state?event_slug=eq.' + EVENT_SLUG + '&select=phase,hmw_text').then(function(rows){
+      var s=rows && rows[0]; if(!s){ return; }
+      var sec=$('jam-hmw'), txt=$('hmwText');
+      if (s.hmw_text){ if(txt){ txt.textContent=s.hmw_text; } if(sec){ sec.hidden=false; } }
+      else if (sec){ sec.hidden=true; }
+      highlightPhase(s.phase);
+    }).catch(function(){});
+  }
+
+  /* ----- live polling (5s; pauses when tab hidden; refreshes on wake) ----- */
+  function pollAll(){ refreshSession(); refreshProblems(); refreshSolutions(); refreshResults(); }
+  (function jamInit(){
+    renderDotBank();
+    pollAll();
+    // Self-scheduling with jitter (5–7s) so up to 25 clients don't all hit Supabase on the same tick.
+    (function schedule(){ setTimeout(function(){ if(!document.hidden){ pollAll(); } schedule(); }, 5000 + Math.floor(Math.random()*2000)); })();
+    document.addEventListener('visibilitychange', function(){ if(!document.hidden){ pollAll(); } });
+  })();
 
   /* ---------- restore prior session on load ---------- */
   (function init(){
