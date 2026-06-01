@@ -395,7 +395,10 @@ let _serverRow = null;   // the signed-in guest's own participants row, if one e
 function renderIdentity(){
   const p = getParticipant();
   const identified = !!(p || _authEmail);
-  show($('signinCard'), !identified);
+  // Sign-in stays available whenever the user isn't authenticated — even with a
+  // local check-in — so local-only guests can actually sync across devices
+  // (the save path points them "above" to it).
+  show($('signinCard'), !_authEmail);
   show($('regCard'), identified);
   show($('signOut'), !!_authEmail);
   // Consent is only collected when a brand-new registration would be created
