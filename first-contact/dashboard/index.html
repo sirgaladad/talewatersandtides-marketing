@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Your Dashboard — First Contact | Tale Waters &amp; Tides</title>
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="apple-touch-icon" href="/assets/twt_favicon.png">
 <meta name="description" content="Your Prompt Play dashboard. Manage your registration, browse the prompts and examples from the room, and learn how prompting works — anytime, at your own pace.">
 <meta name="theme-color" content="#0d1b2a">
 <meta name="robots" content="noindex">
@@ -59,7 +61,8 @@ a { color: var(--navy); }
 .hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 @media(min-width: 768px) { .hd-in { padding: 0 32px; min-height: 66px; } }
 .hd-brand { font-family: var(--fb); font-weight: 600; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
-.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-brand img { height: 24px; width: auto; display: block; flex-shrink: 0; }
+@media(min-width: 768px) { .hd-brand img { height: 28px; } }
 .hd-r { display: flex; align-items: center; gap: 8px; }
 
 /* ===== BUTTONS ===== */
@@ -215,8 +218,8 @@ section { padding: 22px 0; }
 
 <header class="hd">
   <div class="hd-in">
-    <a class="hd-brand" href="/first-contact/" aria-label="Back to First Contact">
-      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+    <a class="hd-brand" href="/first-contact/">
+      <img src="/assets/TWT_Logo_horizontal_blue.png" alt="Tale Waters and Tides" loading="eager" decoding="async">
       <span>First Contact · Dashboard</span>
     </a>
     <div class="hd-r">

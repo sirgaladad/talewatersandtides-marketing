@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Prompt Play — Your Take-Home AI Kit | Tale Waters &amp; Tides</title>
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="apple-touch-icon" href="/assets/twt_favicon.png">
 <meta name="description" content="Your take-home AI kit from Prompt Play: a filterable library of copy-and-paste prompts by skill level and category, an honest best-tool-for-the-job guide, and a one-tap 'copy for your AI' block. A gift from Corey Boelkens and Tale Waters &amp; Tides.">
 <meta name="theme-color" content="#0d1b2a">
 <meta property="og:title" content="Prompt Play — Your Take-Home AI Kit">
@@ -78,7 +80,8 @@ a { color: var(--navy); }
 .hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 @media(min-width: 768px) { .hd-in { padding: 0 40px; height: 68px; } }
 .hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
-.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-brand img { height: 24px; width: auto; display: block; flex-shrink: 0; }
+@media(min-width: 768px) { .hd-brand img { height: 28px; } }
 .hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .hd-brand .tt b { font-weight: 600; }
 
@@ -330,8 +333,8 @@ section { padding: 52px 0; }
 <!-- ============================================================ HEADER -->
 <header class="hd" id="hd">
   <div class="hd-in">
-    <a class="hd-brand" href="/" data-ga="ppk_brand_home" aria-label="Tale Waters and Tides home">
-      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+    <a class="hd-brand" href="/" data-ga="ppk_brand_home">
+      <img src="/assets/TWT_Logo_horizontal_blue.png" alt="Tale Waters and Tides" loading="eager" decoding="async">
       <span class="tt">Prompt Play&nbsp;<b>· Kit</b></span>
     </a>
     <a class="btn btn-gold btn-sm" href="#for-your-ai" data-ga="ppk_header_copy">Copy for your AI</a>

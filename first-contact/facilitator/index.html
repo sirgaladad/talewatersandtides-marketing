@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Facilitator · First Contact | Tale Waters &amp; Tides</title>
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="apple-touch-icon" href="/assets/twt_favicon.png">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0d1b2a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +27,9 @@ a { color: var(--teal); }
 
 .hd { background: var(--navy-deep); color: var(--cream); position: sticky; top: 0; z-index: 50; }
 .hd-in { max-width: var(--mw); margin: 0 auto; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.hd-brand { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: var(--cream); text-decoration: none; }
+.hd-brand { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: var(--cream); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
+.hd-brand img { height: 24px; width: auto; display: block; flex-shrink: 0; }
+@media(min-width: 768px) { .hd-brand img { height: 28px; } }
 .hd-brand b { color: var(--gold); }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: .95rem; text-decoration: none; border-radius: 999px; padding: 10px 20px; min-height: 44px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s; }
@@ -102,7 +106,7 @@ table.leads .wm { color: var(--coral); font-weight: 700; }
 
 <header class="hd">
   <div class="hd-in">
-    <a class="hd-brand" href="/first-contact/">Tale Waters &amp; Tides · <b>Facilitator</b></a>
+    <a class="hd-brand" href="/first-contact/"><img src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides" loading="eager" decoding="async"><span>· <b>Facilitator</b></span></a>
     <button class="btn btn-ghost btn-sm hidden" id="signOut" type="button">Sign out</button>
   </div>
 </header>
