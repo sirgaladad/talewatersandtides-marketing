@@ -45,6 +45,10 @@ begin
     raise exception 'not authorized' using errcode = '42501';
   end if;
 
+  if p_id is null then
+    raise exception 'invalid participant id' using errcode = '22000';
+  end if;
+
   -- NO ACTION FKs first: feedback & prompts reference participants.id
   delete from public.feedback        where participant_id = p_id;
   delete from public.prompts         where participant_id = p_id;
@@ -83,6 +87,10 @@ as $$
 begin
   if not public.is_facilitator() then
     raise exception 'not authorized' using errcode = '42501';
+  end if;
+
+  if p_slug is null or trim(p_slug) = '' then
+    raise exception 'invalid event slug' using errcode = '22000';
   end if;
 
   -- Order respects every FK; children before parents.

@@ -286,10 +286,15 @@ $('rosterBody').addEventListener('click', async (e) => {
   if (!id) return;
   if (!confirm('Delete ' + name + ' and ALL of their data — prompts, feedback, votes, problems, solutions, results, reflections?\n\nThis cannot be undone.')) return;
   btn.disabled = true;
-  const { error } = await sb.rpc('delete_participant', { p_id: id });
-  if (error) { btn.disabled = false; msg($('dashErr'), 'error', 'Delete failed: ' + error.message); return; }
-  $('dashErr').hidden = true;
-  await refreshAll();
+  try {
+    const { error } = await sb.rpc('delete_participant', { p_id: id });
+    if (error) { btn.disabled = false; msg($('dashErr'), 'error', 'Delete failed: ' + error.message); return; }
+    $('dashErr').hidden = true;
+    await refreshAll();
+  } catch (err) {
+    btn.disabled = false;
+    msg($('dashErr'), 'error', 'Delete failed: ' + (err && err.message ? err.message : err));
+  }
 });
 
 /* ---------- clear all test data (two-step confirm) ---------- */
@@ -297,12 +302,17 @@ $('clearAll').addEventListener('click', async () => {
   if (!confirm('Wipe ALL data for "' + SLUG + '"? This deletes every check-in, lead, prompt, feedback, problem, vote, solution, result and reflection, and resets the live step to Welcome.\n\nThis cannot be undone.')) return;
   if (prompt('Type RESET to confirm.') !== 'RESET') { msg($('dashErr'), 'error', 'Cancelled — nothing was deleted.'); return; }
   $('clearAll').disabled = true;
-  const { error } = await sb.rpc('reset_event_data', { p_slug: SLUG });
-  $('clearAll').disabled = false;
-  if (error) { msg($('dashErr'), 'error', 'Reset failed: ' + error.message); return; }
-  $('dashErr').hidden = true;
-  msg($('jamMsg'), 'ok', 'All test data cleared.');
-  await refreshAll();
+  try {
+    const { error } = await sb.rpc('reset_event_data', { p_slug: SLUG });
+    $('clearAll').disabled = false;
+    if (error) { msg($('dashErr'), 'error', 'Reset failed: ' + error.message); return; }
+    $('dashErr').hidden = true;
+    msg($('jamMsg'), 'ok', 'All test data cleared.');
+    await refreshAll();
+  } catch (err) {
+    $('clearAll').disabled = false;
+    msg($('dashErr'), 'error', 'Reset failed: ' + (err && err.message ? err.message : err));
+  }
 });
 
 /* ---------- data ---------- */
