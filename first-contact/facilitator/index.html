@@ -28,8 +28,10 @@ a { color: var(--teal); }
 .hd { background: var(--navy-deep); color: var(--cream); position: sticky; top: 0; z-index: 50; }
 .hd-in { max-width: var(--mw); margin: 0 auto; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .hd-brand { font-family: var(--fb); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: var(--cream); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
-.hd-brand img { height: 30px; width: auto; display: block; flex-shrink: 0; }
-@media(min-width: 768px) { .hd-brand img { height: 34px; } }
+.hd-brand img { height: 72px; width: auto; display: block; flex-shrink: 0; }
+@media(min-width: 768px) { .hd-brand img { height: 72px; } }
+.hd-brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media(min-width: 768px) { .hd-brand span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: inherit; } }
 .hd-brand b { color: var(--gold); }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: .95rem; text-decoration: none; border-radius: 999px; padding: 10px 20px; min-height: 44px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s; }
