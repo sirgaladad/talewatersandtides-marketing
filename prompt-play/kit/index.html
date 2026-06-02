@@ -201,17 +201,50 @@ section { padding: 52px 0; }
 /* ============================================================ TOOL TABLE */
 .tool-caveat { margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; color: #b8442f; background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); padding: 7px 14px; border-radius: 999px; }
 .tool-caveat svg { width: 16px; height: 16px; flex-shrink: 0; }
-.tool-wrap { margin-top: 24px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
-.tool-table { width: 100%; border-collapse: collapse; min-width: 560px; background: var(--cream-2); }
-.tool-table caption { text-align: left; padding: 12px 16px; font-size: .8rem; color: var(--muted); }
-.tool-table th, .tool-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: .92rem; vertical-align: top; }
-.tool-table thead th { font-family: var(--fd); font-weight: 600; color: var(--navy); background: rgba(20,50,74,.05); font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; position: sticky; top: 0; }
-.tool-table tbody th[scope="row"] { font-weight: 600; }
-.tool-table .grp th { background: var(--navy); color: var(--cream); font-family: var(--fd); font-weight: 600; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
-.tool-table a { color: #1f7d93; font-weight: 600; text-decoration: none; }
-.tool-table a:hover { text-decoration: underline; }
-.tool-table .vendor { color: var(--muted); font-weight: 400; font-size: .82rem; }
-.tool-table .note { color: var(--muted); font-size: .82rem; display: block; margin-top: 3px; }
+
+/* rubric legend */
+.tool-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; font-size: .85rem; color: var(--muted); }
+.tool-legend b { color: var(--navy); font-weight: 600; }
+.tool-legend-note { flex-basis: 100%; font-size: .8rem; }
+
+/* bento bands */
+.tool-bands { margin-top: 22px; display: flex; flex-direction: column; gap: 30px; }
+.tool-band { --tb: var(--navy); }
+.tool-band.tb-gold { --tb: var(--gold-deep); }
+.tool-band.tb-teal { --tb: var(--teal); }
+.tool-band.tb-coral { --tb: var(--coral); }
+.tool-band.tb-green { --tb: var(--green); }
+.tool-band-h { font-family: var(--fd); font-weight: 600; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--tb); padding-bottom: 8px; border-bottom: 2px solid var(--tb); margin-bottom: 16px; }
+
+.tool-bento { list-style: none; display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media(min-width: 560px) { .tool-bento { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 900px) { .tool-bento { grid-template-columns: repeat(3, 1fr); } }
+
+.tool-card { position: relative; height: 100%; background: var(--cream-2); border: 1px solid var(--line); border-top: 5px solid var(--tb); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 9px; box-shadow: 0 6px 20px rgba(20,50,74,.05); }
+.tool-card--feat { background: linear-gradient(180deg, color-mix(in srgb, var(--tb) 8%, var(--cream-2)), var(--cream-2)); }
+@media(min-width: 560px) { .tool-card--feat { grid-column: span 2; } }
+.tool-flag { align-self: flex-start; font-family: var(--fb); font-weight: 700; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--tb); padding: 3px 9px; border-radius: 999px; }
+.tool-card-top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+.tool-card-name { font-family: var(--fd); font-size: 1.08rem; font-weight: 600; margin: 0; }
+.tool-card--feat .tool-card-name { font-size: 1.25rem; }
+.tool-card-name a { color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+.tool-card-name a svg { width: 14px; height: 14px; color: var(--tb); opacity: .85; }
+.tool-card-name a:hover { text-decoration: underline; }
+.tool-vendor { font-family: var(--fb); font-size: .8rem; color: var(--muted); }
+.tool-best { font-size: .9rem; color: var(--ink); flex: 1; }
+
+.tool-rubric { display: flex; flex-direction: column; gap: 5px; }
+.tool-card--feat .tool-rubric { flex-direction: row; flex-wrap: wrap; gap: 6px 22px; }
+.rb-row { display: flex; align-items: center; gap: 8px; }
+.rb-lbl { font-family: var(--fb); font-weight: 600; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); width: 52px; }
+.rb-dots { display: inline-flex; gap: 4px; }
+.rb-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); }
+.rb-dots .dot.on { background: var(--tb); }
+
+.tool-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.pr-badge { background: rgba(20,50,74,.06); }
+.tool-note { font-size: .8rem; color: var(--muted); }
+
 .badge-sm { font-family: var(--fb); font-weight: 700; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
 .sk-all { background: rgba(47,158,111,.16); color: #1f7d56; }
 .sk-int { background: rgba(59,169,196,.16); color: #1f7d93; }
@@ -416,20 +449,13 @@ section { padding: 52px 0; }
     <p class="sec-lead r">The honest answer is "right tool for the job." Here's where each one shines — grouped by what you're trying to do.</p>
     <p class="tool-caveat r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span id="toolCaveat"></span></p>
 
-    <div class="tool-wrap r">
-      <table class="tool-table">
-        <caption>AI tools compared by strength, skill level, and pricing. Tap a tool name to open it.</caption>
-        <thead>
-          <tr>
-            <th scope="col">Tool</th>
-            <th scope="col">Best at</th>
-            <th scope="col">Skill</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody id="toolBody"></tbody>
-      </table>
-    </div>
+    <ul class="tool-legend r" aria-label="How to read the tool scores">
+      <li><b>Ease</b> how fast you can start</li>
+      <li><b>Power</b> capability at its best</li>
+      <li><b>Value</b> bang for your buck</li>
+      <li class="tool-legend-note">Scored 1–5 — an opinionated starting point, last verified <span id="toolLegendDate"></span>. Try free tiers and judge for your own tasks.</li>
+    </ul>
+    <div id="toolBody" class="tool-bands"></div>
   </div>
 </section>
 
@@ -759,28 +785,28 @@ Include the role, the steps, and the output format. Then show it filled in with 
       why: 'Templating a recurring task once saves you from rewriting the same prompt forever.' }
   ],
   tools: [
-    { id: 'claude', name: 'Claude', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Writing, nuanced reasoning, coding, long-document work', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'No native image/video generation.' },
-    { id: 'claude-code', name: 'Claude Code', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Agentic coding in your terminal/IDE — reads a codebase, edits, runs tests', skillLevel: 'advanced', pricing: 'freemium', url: 'https://claude.com/claude-code', note: 'Included with Claude Pro/Max.' },
-    { id: 'claude-cowork', name: 'Claude Cowork', vendor: 'Anthropic', group: 'General assistants', bestAt: 'An autonomous desktop agent that works across your files to return finished deliverables', skillLevel: 'all', pricing: 'paid', url: 'https://claude.com', note: 'Aimed at non-technical knowledge workers.' },
-    { id: 'claude-artifacts', name: 'Claude Artifacts', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Live, shareable mini-apps and docs rendered beside the chat', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'Great for building little tools — like this page.' },
-    { id: 'chatgpt', name: 'ChatGPT', vendor: 'OpenAI', group: 'General assistants', bestAt: 'The most versatile all-rounder — image generation, data analysis, the best voice mode', skillLevel: 'all', pricing: 'freemium', url: 'https://chatgpt.com', note: '' },
-    { id: 'gemini', name: 'Gemini', vendor: 'Google', group: 'General assistants', bestAt: 'Multimodal (video/audio), huge context, Deep Research, Google Workspace', skillLevel: 'all', pricing: 'freemium', url: 'https://gemini.google.com', note: '' },
+    { id: 'claude', name: 'Claude', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Writing, nuanced reasoning, coding, long-document work', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'No native image/video generation.', featured: true, rubric: { ease: 5, power: 5, value: 4 } },
+    { id: 'claude-code', name: 'Claude Code', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Agentic coding in your terminal/IDE — reads a codebase, edits, runs tests', skillLevel: 'advanced', pricing: 'freemium', url: 'https://claude.com/claude-code', note: 'Included with Claude Pro/Max.', rubric: { ease: 2, power: 5, value: 4 } },
+    { id: 'claude-cowork', name: 'Claude Cowork', vendor: 'Anthropic', group: 'General assistants', bestAt: 'An autonomous desktop agent that works across your files to return finished deliverables', skillLevel: 'all', pricing: 'paid', url: 'https://claude.com', note: 'Aimed at non-technical knowledge workers.', rubric: { ease: 4, power: 4, value: 2 } },
+    { id: 'claude-artifacts', name: 'Claude Artifacts', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Live, shareable mini-apps and docs rendered beside the chat', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'Great for building little tools — like this page.', rubric: { ease: 5, power: 4, value: 4 } },
+    { id: 'chatgpt', name: 'ChatGPT', vendor: 'OpenAI', group: 'General assistants', bestAt: 'The most versatile all-rounder — image generation, data analysis, the best voice mode', skillLevel: 'all', pricing: 'freemium', url: 'https://chatgpt.com', note: '', rubric: { ease: 5, power: 5, value: 4 } },
+    { id: 'gemini', name: 'Gemini', vendor: 'Google', group: 'General assistants', bestAt: 'Multimodal (video/audio), huge context, Deep Research, Google Workspace', skillLevel: 'all', pricing: 'freemium', url: 'https://gemini.google.com', note: '', rubric: { ease: 5, power: 5, value: 5 } },
 
-    { id: 'perplexity', name: 'Perplexity', vendor: '', group: 'Research & knowledge', bestAt: 'Cited, real-time answers; Pro lets you pick the underlying model', skillLevel: 'all', pricing: 'freemium', url: 'https://www.perplexity.ai', note: '' },
-    { id: 'notebooklm', name: 'NotebookLM', vendor: 'Google', group: 'Research & knowledge', bestAt: 'Answers grounded strictly in YOUR sources; audio & video overviews', skillLevel: 'all', pricing: 'freemium', url: 'https://notebooklm.google.com', note: 'Low hallucination — ideal for studying.' },
+    { id: 'perplexity', name: 'Perplexity', vendor: '', group: 'Research & knowledge', bestAt: 'Cited, real-time answers; Pro lets you pick the underlying model', skillLevel: 'all', pricing: 'freemium', url: 'https://www.perplexity.ai', note: '', featured: true, rubric: { ease: 5, power: 4, value: 4 } },
+    { id: 'notebooklm', name: 'NotebookLM', vendor: 'Google', group: 'Research & knowledge', bestAt: 'Answers grounded strictly in YOUR sources; audio & video overviews', skillLevel: 'all', pricing: 'freemium', url: 'https://notebooklm.google.com', note: 'Low hallucination — ideal for studying.', rubric: { ease: 5, power: 4, value: 5 } },
 
-    { id: 'cursor', name: 'Cursor', vendor: '', group: 'Builders & coding', bestAt: 'An AI code editor for developers working in real codebases', skillLevel: 'advanced', pricing: 'freemium', url: 'https://cursor.com', note: '' },
-    { id: 'v0', name: 'v0', vendor: 'Vercel', group: 'Builders & coding', bestAt: 'High-quality React/Next.js + Tailwind UI from a prompt', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://v0.app', note: '' },
-    { id: 'lovable', name: 'Lovable', vendor: '', group: 'Builders & coding', bestAt: 'Full-stack apps by conversation — frontend + database + auth + deploy', skillLevel: 'beginner', pricing: 'paid', url: 'https://lovable.dev', note: 'The most beginner-friendly prompt-to-app.' },
-    { id: 'bolt', name: 'Bolt.new', vendor: 'StackBlitz', group: 'Builders & coding', bestAt: 'Fast in-browser full-stack prototyping across many frameworks', skillLevel: 'intermediate', pricing: 'paid', url: 'https://bolt.new', note: '' },
-    { id: 'figma-make', name: 'Figma Make', vendor: '', group: 'Builders & coding', bestAt: 'Design-to-code and AI prototyping inside Figma', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.figma.com/make/', note: 'Review the output before production.' },
+    { id: 'cursor', name: 'Cursor', vendor: '', group: 'Builders & coding', bestAt: 'An AI code editor for developers working in real codebases', skillLevel: 'advanced', pricing: 'freemium', url: 'https://cursor.com', note: '', rubric: { ease: 2, power: 5, value: 3 } },
+    { id: 'v0', name: 'v0', vendor: 'Vercel', group: 'Builders & coding', bestAt: 'High-quality React/Next.js + Tailwind UI from a prompt', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://v0.app', note: '', rubric: { ease: 3, power: 4, value: 3 } },
+    { id: 'lovable', name: 'Lovable', vendor: '', group: 'Builders & coding', bestAt: 'Full-stack apps by conversation — frontend + database + auth + deploy', skillLevel: 'beginner', pricing: 'paid', url: 'https://lovable.dev', note: 'The most beginner-friendly prompt-to-app.', featured: true, rubric: { ease: 5, power: 4, value: 2 } },
+    { id: 'bolt', name: 'Bolt.new', vendor: 'StackBlitz', group: 'Builders & coding', bestAt: 'Fast in-browser full-stack prototyping across many frameworks', skillLevel: 'intermediate', pricing: 'paid', url: 'https://bolt.new', note: '', rubric: { ease: 3, power: 4, value: 3 } },
+    { id: 'figma-make', name: 'Figma Make', vendor: '', group: 'Builders & coding', bestAt: 'Design-to-code and AI prototyping inside Figma', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.figma.com/make/', note: 'Review the output before production.', rubric: { ease: 3, power: 3, value: 3 } },
 
-    { id: 'midjourney', name: 'Midjourney', vendor: '', group: 'Image, video & audio', bestAt: 'The highest aesthetic image quality', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.midjourney.com', note: '' },
-    { id: 'veo', name: 'Google Veo', vendor: 'Google', group: 'Image, video & audio', bestAt: 'Text-to-video with audio — a leading video model', skillLevel: 'intermediate', pricing: 'paid', url: 'https://deepmind.google/models/veo/', note: '' },
-    { id: 'sora', name: 'Sora', vendor: 'OpenAI', group: 'Image, video & audio', bestAt: 'Text-to-video generation', skillLevel: 'intermediate', pricing: 'paid', url: 'https://openai.com/sora/', note: '' },
-    { id: 'runway', name: 'Runway', vendor: '', group: 'Image, video & audio', bestAt: 'Video generation and editing built for creators', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://runwayml.com', note: '' },
-    { id: 'suno', name: 'Suno', vendor: '', group: 'Image, video & audio', bestAt: 'Full songs from a text prompt', skillLevel: 'all', pricing: 'freemium', url: 'https://suno.com', note: 'Paid tier for commercial use.' },
-    { id: 'elevenlabs', name: 'ElevenLabs', vendor: '', group: 'Image, video & audio', bestAt: 'The most realistic AI voice / text-to-speech and voice cloning', skillLevel: 'all', pricing: 'freemium', url: 'https://elevenlabs.io', note: '' }
+    { id: 'midjourney', name: 'Midjourney', vendor: '', group: 'Image, video & audio', bestAt: 'The highest aesthetic image quality', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.midjourney.com', note: '', rubric: { ease: 3, power: 5, value: 3 } },
+    { id: 'veo', name: 'Google Veo', vendor: 'Google', group: 'Image, video & audio', bestAt: 'Text-to-video with audio — a leading video model', skillLevel: 'intermediate', pricing: 'paid', url: 'https://deepmind.google/models/veo/', note: '', rubric: { ease: 3, power: 5, value: 2 } },
+    { id: 'sora', name: 'Sora', vendor: 'OpenAI', group: 'Image, video & audio', bestAt: 'Text-to-video generation', skillLevel: 'intermediate', pricing: 'paid', url: 'https://openai.com/sora/', note: '', rubric: { ease: 3, power: 4, value: 2 } },
+    { id: 'runway', name: 'Runway', vendor: '', group: 'Image, video & audio', bestAt: 'Video generation and editing built for creators', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://runwayml.com', note: '', rubric: { ease: 3, power: 4, value: 3 } },
+    { id: 'suno', name: 'Suno', vendor: '', group: 'Image, video & audio', bestAt: 'Full songs from a text prompt', skillLevel: 'all', pricing: 'freemium', url: 'https://suno.com', note: 'Paid tier for commercial use.', featured: true, rubric: { ease: 4, power: 4, value: 4 } },
+    { id: 'elevenlabs', name: 'ElevenLabs', vendor: '', group: 'Image, video & audio', bestAt: 'The most realistic AI voice / text-to-speech and voice cloning', skillLevel: 'all', pricing: 'freemium', url: 'https://elevenlabs.io', note: '', rubric: { ease: 4, power: 5, value: 4 } }
   ],
   resources: [
     { name: 'Anthropic — Prompt engineering docs', why: 'The clearest official guide: be clear, give examples and a role, structure with XML, let it think.', url: 'https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview' },
@@ -985,25 +1011,64 @@ Include the role, the steps, and the output format. Then show it filled in with 
     } else { window.prompt('Copy this:', text); }
   }
 
-  // ---- tools table ----
+  // ---- tools: bento bands + rubric cards ----
+  var GROUP_ACCENT = {
+    'General assistants': 'tb-gold',
+    'Research & knowledge': 'tb-teal',
+    'Builders & coding': 'tb-coral',
+    'Image, video & audio': 'tb-green'
+  };
+
+  function rubricDots(n) {
+    var s = '';
+    for (var i = 1; i <= 5; i++) { s += '<span class="dot' + (i <= n ? ' on' : '') + '"></span>'; }
+    return s;
+  }
+  function rubricRow(label, n) {
+    return '<div class="rb-row">' +
+      '<span class="rb-lbl">' + label + '</span>' +
+      '<span class="rb-dots" role="img" aria-label="' + label + ': ' + n + ' out of 5">' + rubricDots(n) + '</span>' +
+    '</div>';
+  }
+  function toolCardHTML(t) {
+    var r = t.rubric || { ease: 0, power: 0, value: 0 };
+    return '<li><article class="tool-card' + (t.featured ? ' tool-card--feat' : '') + '">' +
+      (t.featured ? '<span class="tool-flag">Start here</span>' : '') +
+      '<div class="tool-card-top">' +
+        '<h4 class="tool-card-name"><a href="' + esc(t.url) + '" target="_blank" rel="noopener" data-ga="ppk_tool_link">' +
+          esc(t.name) +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>' +
+        '</a></h4>' +
+        (t.vendor ? '<span class="tool-vendor">' + esc(t.vendor) + '</span>' : '') +
+      '</div>' +
+      '<p class="tool-best">' + esc(t.bestAt) + '</p>' +
+      '<div class="tool-rubric">' + rubricRow('Ease', r.ease) + rubricRow('Power', r.power) + rubricRow('Value', r.value) + '</div>' +
+      '<div class="tool-foot">' +
+        '<span class="badge-sm pr-badge pr-' + t.pricing + '">' + esc(priceLabel(t.pricing)) + '</span>' +
+        (t.note ? '<span class="tool-note">' + esc(t.note) + '</span>' : '') +
+      '</div>' +
+    '</article></li>';
+  }
+
   function buildTools() {
     var body = document.getElementById('toolBody');
     var groups = [];
     KIT.tools.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
     var html = '';
     groups.forEach(function (g) {
-      html += '<tr class="grp"><th scope="rowgroup" colspan="4">' + esc(g) + '</th></tr>';
-      KIT.tools.filter(function (t) { return t.group === g; }).forEach(function (t) {
-        html += '<tr>' +
-          '<th scope="row"><a href="' + esc(t.url) + '" target="_blank" rel="noopener" data-ga="ppk_tool_link">' + esc(t.name) + '</a>' +
-            (t.vendor ? ' <span class="vendor">' + esc(t.vendor) + '</span>' : '') + '</th>' +
-          '<td>' + esc(t.bestAt) + (t.note ? '<span class="note">' + esc(t.note) + '</span>' : '') + '</td>' +
-          '<td><span class="badge-sm ' + skillClass(t.skillLevel) + '">' + esc(skillLabel(t.skillLevel)) + '</span></td>' +
-          '<td><span class="pr-' + t.pricing + '">' + esc(priceLabel(t.pricing)) + '</span></td>' +
-        '</tr>';
-      });
+      var accent = GROUP_ACCENT[g] || 'tb-navy';
+      var inGroup = KIT.tools.filter(function (t) { return t.group === g; });
+      // featured tiles first, then the rest in data order
+      var ordered = inGroup.filter(function (t) { return t.featured; })
+        .concat(inGroup.filter(function (t) { return !t.featured; }));
+      html += '<section class="tool-band ' + accent + '">' +
+        '<h3 class="tool-band-h">' + esc(g) + '</h3>' +
+        '<ul class="tool-bento">' + ordered.map(toolCardHTML).join('') + '</ul>' +
+      '</section>';
     });
     body.innerHTML = html;
+
+    document.getElementById('toolLegendDate').textContent = KIT.meta.lastVerified;
     document.getElementById('toolCaveat').textContent =
       'Capabilities and prices change fast — last verified ' + KIT.meta.lastVerified + '. Try free tiers and judge for your own tasks.';
   }
@@ -1053,10 +1118,13 @@ Include the role, the steps, and the output format. Then show it filled in with 
     L.push('');
     L.push('_Capabilities and prices change fast — last verified ' + KIT.meta.lastVerified + '. Re-verify before relying on any detail._');
     L.push('');
-    L.push('| Tool | Best at | Skill | Price | Link |');
-    L.push('| --- | --- | --- | --- | --- |');
+    L.push('_Ease / Power / Value are scored 1–5 — an opinionated starting point, not gospel._');
+    L.push('');
+    L.push('| Tool | Best at | Ease | Power | Value | Skill | Price | Link |');
+    L.push('| --- | --- | :--: | :--: | :--: | --- | --- | --- |');
     KIT.tools.forEach(function (t) {
       L.push('| ' + t.name + (t.vendor ? ' (' + t.vendor + ')' : '') + ' | ' + t.bestAt + (t.note ? ' — ' + t.note : '') +
+        ' | ' + t.rubric.ease + '/5 | ' + t.rubric.power + '/5 | ' + t.rubric.value + '/5' +
         ' | ' + skillLabel(t.skillLevel) + ' | ' + priceLabel(t.pricing) + ' | ' + t.url + ' |');
     });
     L.push('');

@@ -77,8 +77,10 @@ function buildMarkdown() {
       '. Re-verify before relying on any detail._'
   );
   L.push('');
-  L.push('| Tool | Best at | Skill | Price | Link |');
-  L.push('| --- | --- | --- | --- | --- |');
+  L.push('_Ease / Power / Value are scored 1–5 — an opinionated starting point, not gospel._');
+  L.push('');
+  L.push('| Tool | Best at | Ease | Power | Value | Skill | Price | Link |');
+  L.push('| --- | --- | :--: | :--: | :--: | --- | --- | --- |');
   KIT.tools.forEach((t) => {
     L.push(
       '| ' +
@@ -87,6 +89,12 @@ function buildMarkdown() {
         ' | ' +
         t.bestAt +
         (t.note ? ' — ' + t.note : '') +
+        ' | ' +
+        t.rubric.ease + '/5' +
+        ' | ' +
+        t.rubric.power + '/5' +
+        ' | ' +
+        t.rubric.value + '/5' +
         ' | ' +
         skillLabel(t.skillLevel) +
         ' | ' +
