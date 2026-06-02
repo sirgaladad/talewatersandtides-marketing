@@ -48,7 +48,7 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 100px; }
 body {
   background: var(--cream);
   color: var(--ink);
@@ -77,12 +77,13 @@ a { color: var(--navy); }
   border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
 }
 .hd.solid { border-bottom-color: var(--line); background: rgba(247,241,227,.95); }
-.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-@media(min-width: 768px) { .hd-in { padding: 0 40px; height: 68px; } }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; min-height: 96px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+@media(min-width: 768px) { .hd-in { padding: 0 40px; min-height: 96px; } }
 .hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
-.hd-brand img { height: 34px; width: auto; display: block; flex-shrink: 0; }
-@media(min-width: 768px) { .hd-brand img { height: 40px; } }
-.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.hd-brand img { height: 72px; width: auto; display: block; flex-shrink: 0; }
+@media(min-width: 768px) { .hd-brand img { height: 72px; } }
+.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; display: none; }
+@media(min-width: 768px) { .hd-brand .tt { display: inline; } }
 .hd-brand .tt b { font-weight: 600; }
 
 /* ============================================================ BUTTONS */
@@ -110,8 +111,8 @@ section { padding: 52px 0; }
 .r.v { opacity: 1; transform: translateY(0); }
 
 /* ============================================================ HERO */
-.hero { padding: 104px 0 44px; text-align: center; position: relative; }
-@media(min-width: 768px) { .hero { padding: 136px 0 60px; } }
+.hero { padding: 136px 0 44px; text-align: center; position: relative; }
+@media(min-width: 768px) { .hero { padding: 156px 0 60px; } }
 .hero-tag { font-family: var(--fb); font-weight: 600; font-size: clamp(.72rem, 2.4vw, .92rem); letter-spacing: .26em; text-transform: uppercase; color: var(--navy); opacity: .85; }
 .hero h1 { margin: 12px auto 6px; max-width: 16ch; font-size: clamp(2.5rem, 9vw, 4.6rem); letter-spacing: -.01em; }
 .hero h1 .surf { display: inline-block; font-family: var(--fm); color: var(--gold); font-weight: 400; transform: rotate(-2deg); text-shadow: 2px 2px 0 rgba(217,138,31,.22); }

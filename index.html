@@ -45,7 +45,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
-  scroll-padding-top: 64px;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -83,13 +83,13 @@ body {
   max-width: var(--mw);
   margin: 0 auto;
   padding: 0 16px;
-  height: 56px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-@media(min-width: 768px) { .nv-in { padding: 0 40px; height: 60px; } }
+@media(min-width: 768px) { .nv-in { padding: 0 40px; height: 96px; } }
 
 .nv-brand {
   font-family: var(--fd);
@@ -104,8 +104,8 @@ body {
   display: inline-flex;
   align-items: center;
 }
-.nv-brand img { height: 40px; width: auto; display: block; }
-@media(min-width: 768px) { .nv-brand img { height: 44px; } }
+.nv-brand img { height: 72px; width: auto; display: block; }
+@media(min-width: 768px) { .nv-brand img { height: 72px; } }
 
 .nv-r {
   display: flex;
@@ -175,7 +175,7 @@ body {
 }
 
 .mn {
-  position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+  position: fixed; top: 96px; left: 0; right: 0; bottom: 0;
   background: var(--dk); z-index: 99;
   padding: 32px 24px;
   display: none; flex-direction: column;
@@ -203,10 +203,10 @@ body {
    ============================================================ */
 .hero { position: relative; background: var(--dk); padding-top: 0; }
 @media(min-width: 480px) {
-  .hero { padding-top: 57px; }
+  .hero { padding-top: 96px; }
 }
 @media(min-width: 768px) {
-  .hero { padding-top: 61px; }
+  .hero { padding-top: 96px; }
 }
 
 .hero-img {
@@ -215,7 +215,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 15%;
-  margin-top: 56px;
+  margin-top: 96px;
   position: relative;
 }
 @media(min-width: 480px) {
@@ -606,7 +606,7 @@ footer { padding: 28px 20px; border-top: 1px solid var(--bd); }
   letter-spacing: .14em; text-transform: uppercase; color: var(--dm);
   display: inline-flex; align-items: center;
 }
-.ft-br img { height: 32px; width: auto; display: block; opacity: .85; }
+.ft-br img { height: 48px; width: auto; display: block; opacity: .85; }
 .ft-social { display: flex; gap: 14px; align-items: center; }
 .ft-social a {
   color: var(--dm); text-decoration: none;
