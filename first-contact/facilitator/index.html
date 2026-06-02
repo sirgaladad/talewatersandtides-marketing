@@ -162,6 +162,17 @@ table.leads .wm { color: var(--coral); font-weight: 700; }
 
         <div class="card span2"><h3>What they came to make <span class="cnt" id="goalsCnt"></span></h3><ul class="list" id="goals"></ul></div>
 
+        <!-- roster: delete test users -->
+        <div class="card span2" style="border-color:var(--coral);">
+          <h3>Roster <span class="cnt" id="rosterCnt"></span>
+            <button class="btn btn-navy btn-sm" id="clearAll" type="button" style="margin-left:auto">Clear all test data</button>
+          </h3>
+          <p class="muted" style="margin-bottom:10px">Remove a test check-in and everything tied to them — prompts, feedback, votes, problems, solutions, results, reflections. Permanent.</p>
+          <div class="tbl-wrap">
+            <table class="leads"><thead><tr><th>Name</th><th>Email</th><th>Experience</th><th>When</th><th></th></tr></thead><tbody id="rosterBody"></tbody></table>
+          </div>
+        </div>
+
         <div class="card"><h3>Prompt log <span class="cnt" id="promptsCnt"></span></h3><ul class="list" id="prompts"></ul></div>
         <div class="card"><h3>Ratings &amp; comments <span class="cnt" id="fbCnt"></span></h3><ul class="list" id="comments"></ul></div>
 
@@ -266,13 +277,51 @@ function stopPolling(){ if (pollTimer) { clearInterval(pollTimer); pollTimer = n
 document.addEventListener('visibilitychange', () => { if (!document.hidden && pollTimer) refreshAll(); });
 $('refresh').addEventListener('click', refreshAll);
 
+/* ---------- delete a participant (delegated; #rosterBody is re-rendered each poll) ---------- */
+$('rosterBody').addEventListener('click', async (e) => {
+  const btn = e.target.closest('.js-del');
+  if (!btn) return;
+  const id = btn.getAttribute('data-id');
+  const name = btn.getAttribute('data-name') || 'this check-in';
+  if (!id) return;
+  if (!confirm('Delete ' + name + ' and ALL of their data — prompts, feedback, votes, problems, solutions, results, reflections?\n\nThis cannot be undone.')) return;
+  btn.disabled = true;
+  try {
+    const { error } = await sb.rpc('delete_participant', { p_id: id });
+    if (error) { btn.disabled = false; msg($('dashErr'), 'error', 'Delete failed: ' + error.message); return; }
+    $('dashErr').hidden = true;
+    await refreshAll();
+  } catch (err) {
+    btn.disabled = false;
+    msg($('dashErr'), 'error', 'Delete failed: ' + (err && err.message ? err.message : err));
+  }
+});
+
+/* ---------- clear all test data (two-step confirm) ---------- */
+$('clearAll').addEventListener('click', async () => {
+  if (!confirm('Wipe ALL data for "' + SLUG + '"? This deletes every check-in, lead, prompt, feedback, problem, vote, solution, result and reflection, and resets the live step to Welcome.\n\nThis cannot be undone.')) return;
+  if (prompt('Type RESET to confirm.') !== 'RESET') { msg($('dashErr'), 'error', 'Cancelled — nothing was deleted.'); return; }
+  $('clearAll').disabled = true;
+  try {
+    const { error } = await sb.rpc('reset_event_data', { p_slug: SLUG });
+    $('clearAll').disabled = false;
+    if (error) { msg($('dashErr'), 'error', 'Reset failed: ' + error.message); return; }
+    $('dashErr').hidden = true;
+    msg($('jamMsg'), 'ok', 'All test data cleared.');
+    await refreshAll();
+  } catch (err) {
+    $('clearAll').disabled = false;
+    msg($('dashErr'), 'error', 'Reset failed: ' + (err && err.message ? err.message : err));
+  }
+});
+
 /* ---------- data ---------- */
 async function refreshAll(){
   try {
     const q = (t, cols, order) => { let b = sb.from(t).select(cols).eq('event_slug', SLUG); return order ? b.order('created_at', {ascending:false}) : b; };
     // votes / solution_votes are embedded on their parent rows (fewer round-trips).
     const [parts, prompts, fb, subs, problems, sols, results, refls, sess] = await Promise.all([
-      q('participants','name,email,experience,role,goals,wants_more,created_at', true),
+      q('participants','id,name,email,experience,role,goals,wants_more,created_at', true),
       q('prompts','prompt_text,tool,created_at', true),
       q('feedback','rating,comment,created_at', false),
       q('subscribers','email,name,created_at', false),
@@ -324,6 +373,13 @@ function render(d){
   const goals = d.parts.filter(p => (p.goals||'').trim());
   $('goalsCnt').textContent = goals.length || '';
   $('goals').innerHTML = goals.map(p => '<li>'+esc(p.goals)+'<div class="meta">'+esc(p.name||'someone')+(p.role?' · '+esc(p.role):'')+'</div></li>').join('');
+
+  /* roster — every participant, each deletable (button carries data-id; body is re-rendered each poll) */
+  $('rosterCnt').textContent = d.parts.length || '';
+  $('rosterBody').innerHTML = d.parts.map(p =>
+    '<tr><td>'+esc(p.name||'—')+'</td><td>'+esc(p.email||'')+'</td><td>'+esc(p.experience||'')+'</td><td>'+when(p.created_at)+'</td>'+
+    '<td style="text-align:right"><button class="btn btn-navy btn-sm js-del" data-id="'+esc(p.id)+'" data-name="'+esc(p.name||p.email||'this check-in')+'" type="button">Delete</button></td></tr>'
+  ).join('') || '<tr><td colspan="5" class="muted" style="padding:12px">No one yet.</td></tr>';
 
   /* prompts */
   $('promptsCnt').textContent = d.prompts.length || '';
