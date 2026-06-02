@@ -343,27 +343,29 @@ Why it works: Templating a recurring task once saves you from rewriting the same
 
 _Capabilities and prices change fast — last verified June 2, 2026. Re-verify before relying on any detail._
 
-| Tool | Best at | Skill | Price | Link |
-| --- | --- | --- | --- | --- |
-| Claude (Anthropic) | Writing, nuanced reasoning, coding, long-document work — No native image/video generation. | All levels | Free tier + paid | https://claude.ai |
-| Claude Code (Anthropic) | Agentic coding in your terminal/IDE — reads a codebase, edits, runs tests — Included with Claude Pro/Max. | Advanced | Free tier + paid | https://claude.com/claude-code |
-| Claude Cowork (Anthropic) | An autonomous desktop agent that works across your files to return finished deliverables — Aimed at non-technical knowledge workers. | All levels | Paid | https://claude.com |
-| Claude Artifacts (Anthropic) | Live, shareable mini-apps and docs rendered beside the chat — Great for building little tools — like this page. | All levels | Free tier + paid | https://claude.ai |
-| ChatGPT (OpenAI) | The most versatile all-rounder — image generation, data analysis, the best voice mode | All levels | Free tier + paid | https://chatgpt.com |
-| Gemini (Google) | Multimodal (video/audio), huge context, Deep Research, Google Workspace | All levels | Free tier + paid | https://gemini.google.com |
-| Perplexity | Cited, real-time answers; Pro lets you pick the underlying model | All levels | Free tier + paid | https://www.perplexity.ai |
-| NotebookLM (Google) | Answers grounded strictly in YOUR sources; audio & video overviews — Low hallucination — ideal for studying. | All levels | Free tier + paid | https://notebooklm.google.com |
-| Cursor | An AI code editor for developers working in real codebases | Advanced | Free tier + paid | https://cursor.com |
-| v0 (Vercel) | High-quality React/Next.js + Tailwind UI from a prompt | Intermediate | Free tier + paid | https://v0.app |
-| Lovable | Full-stack apps by conversation — frontend + database + auth + deploy — The most beginner-friendly prompt-to-app. | Beginner | Paid | https://lovable.dev |
-| Bolt.new (StackBlitz) | Fast in-browser full-stack prototyping across many frameworks | Intermediate | Paid | https://bolt.new |
-| Figma Make | Design-to-code and AI prototyping inside Figma — Review the output before production. | Intermediate | Paid | https://www.figma.com/make/ |
-| Midjourney | The highest aesthetic image quality | Intermediate | Paid | https://www.midjourney.com |
-| Google Veo (Google) | Text-to-video with audio — a leading video model | Intermediate | Paid | https://deepmind.google/models/veo/ |
-| Sora (OpenAI) | Text-to-video generation | Intermediate | Paid | https://openai.com/sora/ |
-| Runway | Video generation and editing built for creators | Intermediate | Free tier + paid | https://runwayml.com |
-| Suno | Full songs from a text prompt — Paid tier for commercial use. | All levels | Free tier + paid | https://suno.com |
-| ElevenLabs | The most realistic AI voice / text-to-speech and voice cloning | All levels | Free tier + paid | https://elevenlabs.io |
+_Ease / Power / Value are scored 1–5 — an opinionated starting point, not gospel._
+
+| Tool | Best at | Ease | Power | Value | Skill | Price | Link |
+| --- | --- | :--: | :--: | :--: | --- | --- | --- |
+| Claude (Anthropic) | Writing, nuanced reasoning, coding, long-document work — No native image/video generation. | 5/5 | 5/5 | 4/5 | All levels | Free tier + paid | https://claude.ai |
+| Claude Code (Anthropic) | Agentic coding in your terminal/IDE — reads a codebase, edits, runs tests — Included with Claude Pro/Max. | 2/5 | 5/5 | 4/5 | Advanced | Free tier + paid | https://claude.com/claude-code |
+| Claude Cowork (Anthropic) | An autonomous desktop agent that works across your files to return finished deliverables — Aimed at non-technical knowledge workers. | 4/5 | 4/5 | 2/5 | All levels | Paid | https://claude.com |
+| Claude Artifacts (Anthropic) | Live, shareable mini-apps and docs rendered beside the chat — Great for building little tools — like this page. | 5/5 | 4/5 | 4/5 | All levels | Free tier + paid | https://claude.ai |
+| ChatGPT (OpenAI) | The most versatile all-rounder — image generation, data analysis, the best voice mode | 5/5 | 5/5 | 4/5 | All levels | Free tier + paid | https://chatgpt.com |
+| Gemini (Google) | Multimodal (video/audio), huge context, Deep Research, Google Workspace | 5/5 | 5/5 | 5/5 | All levels | Free tier + paid | https://gemini.google.com |
+| Perplexity | Cited, real-time answers; Pro lets you pick the underlying model | 5/5 | 4/5 | 4/5 | All levels | Free tier + paid | https://www.perplexity.ai |
+| NotebookLM (Google) | Answers grounded strictly in YOUR sources; audio & video overviews — Low hallucination — ideal for studying. | 5/5 | 4/5 | 5/5 | All levels | Free tier + paid | https://notebooklm.google.com |
+| Cursor | An AI code editor for developers working in real codebases | 2/5 | 5/5 | 3/5 | Advanced | Free tier + paid | https://cursor.com |
+| v0 (Vercel) | High-quality React/Next.js + Tailwind UI from a prompt | 3/5 | 4/5 | 3/5 | Intermediate | Free tier + paid | https://v0.app |
+| Lovable | Full-stack apps by conversation — frontend + database + auth + deploy — The most beginner-friendly prompt-to-app. | 5/5 | 4/5 | 2/5 | Beginner | Paid | https://lovable.dev |
+| Bolt.new (StackBlitz) | Fast in-browser full-stack prototyping across many frameworks | 3/5 | 4/5 | 3/5 | Intermediate | Paid | https://bolt.new |
+| Figma Make | Design-to-code and AI prototyping inside Figma — Review the output before production. | 3/5 | 3/5 | 3/5 | Intermediate | Paid | https://www.figma.com/make/ |
+| Midjourney | The highest aesthetic image quality | 3/5 | 5/5 | 3/5 | Intermediate | Paid | https://www.midjourney.com |
+| Google Veo (Google) | Text-to-video with audio — a leading video model | 3/5 | 5/5 | 2/5 | Intermediate | Paid | https://deepmind.google/models/veo/ |
+| Sora (OpenAI) | Text-to-video generation | 3/5 | 4/5 | 2/5 | Intermediate | Paid | https://openai.com/sora/ |
+| Runway | Video generation and editing built for creators | 3/5 | 4/5 | 3/5 | Intermediate | Free tier + paid | https://runwayml.com |
+| Suno | Full songs from a text prompt — Paid tier for commercial use. | 4/5 | 4/5 | 4/5 | All levels | Free tier + paid | https://suno.com |
+| ElevenLabs | The most realistic AI voice / text-to-speech and voice cloning | 4/5 | 5/5 | 4/5 | All levels | Free tier + paid | https://elevenlabs.io |
 
 ## Learn from the best (free)
 
