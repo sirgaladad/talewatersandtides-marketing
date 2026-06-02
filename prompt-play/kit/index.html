@@ -523,6 +523,7 @@ section { padding: 52px 0; }
 const KIT = {
   meta: {
     lastVerified: 'June 2, 2026',
+    lastVerifiedISO: '2026-06-02',
     pageUrl: 'https://talewatersandtides.com/prompt-play/kit/'
   },
   tiers: [
@@ -924,14 +925,14 @@ Include the role, the steps, and the output format. Then show it filled in with 
     var b = e.target.closest('[data-tier]'); if (!b) return;
     var id = b.dataset.tier;
     if (state.tiers.has(id)) { state.tiers.delete(id); syncChip(b, false); }
-    else { state.tiers.add(id); syncChip(b, true); ga('ppk_filter_tier', { event_label: id }); }
+    else { state.tiers.add(id); syncChip(b, true); ga('ppk_filter_tier', { item_id: id }); }
     render();
   });
   document.getElementById('catChips').addEventListener('click', function (e) {
     var b = e.target.closest('[data-cat]'); if (!b) return;
     var id = b.dataset.cat;
     if (state.cats.has(id)) { state.cats.delete(id); syncChip(b, false); }
-    else { state.cats.add(id); syncChip(b, true); ga('ppk_filter_category', { event_label: id }); }
+    else { state.cats.add(id); syncChip(b, true); ga('ppk_filter_category', { item_id: id }); }
     render();
   });
 
@@ -960,7 +961,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
     if (copyBtn) {
       var p = KIT.prompts.filter(function (x) { return x.id === copyBtn.dataset.copy; })[0];
       if (p) copyText(p.text, copyBtn.querySelector('span'), 'Copied ✓', 'Copy');
-      ga('ppk_copy_prompt', { event_label: copyBtn.dataset.copy });
+      ga('ppk_copy_prompt', { item_id: copyBtn.dataset.copy });
       return;
     }
     var star = e.target.closest('[data-star]');
@@ -971,7 +972,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
       var on = favs.indexOf(id) >= 0;
       star.setAttribute('aria-pressed', on ? 'true' : 'false');
       star.setAttribute('aria-label', (on ? 'Unfavorite' : 'Favorite') + ': ' + (KIT.prompts.filter(function (x) { return x.id === id; })[0] || {}).title);
-      ga('ppk_fav_toggle', { event_label: id });
+      ga('ppk_fav_toggle', { item_id: id });
       if (state.favOnly && !on) render();
     }
   });
@@ -991,7 +992,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
     KIT.tools.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
     var html = '';
     groups.forEach(function (g) {
-      html += '<tr class="grp"><th scope="colgroup" colspan="4">' + esc(g) + '</th></tr>';
+      html += '<tr class="grp"><th scope="rowgroup" colspan="4">' + esc(g) + '</th></tr>';
       KIT.tools.filter(function (t) { return t.group === g; }).forEach(function (t) {
         html += '<tr>' +
           '<th scope="row"><a href="' + esc(t.url) + '" target="_blank" rel="noopener" data-ga="ppk_tool_link">' + esc(t.name) + '</a>' +
@@ -1080,7 +1081,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
       name: 'Prompt Play — Take-Home AI Kit',
       description: 'A take-home library of AI prompts by skill level and category, plus a best-tool-for-the-job guide.',
       provider: org, url: KIT.meta.pageUrl, inLanguage: 'en', isAccessibleForFree: true,
-      dateModified: '2026-06-02'
+      dateModified: KIT.meta.lastVerifiedISO
     };
     var list = {
       '@context': 'https://schema.org', '@type': 'ItemList',

@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { runInNewContext } from 'node:vm';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const htmlPath = resolve(root, 'prompt-play/kit/index.html');
@@ -21,8 +22,10 @@ if (start < 0) throw new Error('Could not find `const KIT =` in index.html');
 const scriptEnd = html.indexOf('</script>', start);
 let block = html.slice(start + 'const KIT = '.length, scriptEnd).trim();
 block = block.replace(/;$/, '');
-// eslint-disable-next-line no-eval
-const KIT = eval('(' + block + ')');
+// KIT is a pure object literal. Evaluate it in a sandboxed VM context with no globals
+// and a timeout instead of eval(), so running this dev script never executes arbitrary
+// page JavaScript (footgun protection if checked out/run on an untrusted branch).
+const KIT = runInNewContext('(' + block + ')', Object.create(null), { timeout: 1000 });
 
 const catLabels = {};
 KIT.categories.forEach((c) => (catLabels[c.id] = c.label));
