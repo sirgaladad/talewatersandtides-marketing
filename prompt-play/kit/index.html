@@ -82,8 +82,8 @@ a { color: var(--navy); }
 .hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
 .hd-brand img { height: 72px; width: auto; display: block; flex-shrink: 0; }
 @media(min-width: 768px) { .hd-brand img { height: 72px; } }
-.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; display: none; }
-@media(min-width: 768px) { .hd-brand .tt { display: inline-block; } }
+.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; position: absolute; width: 1px; height: 1px; clip: rect(0 0 0 0); white-space: nowrap; }
+@media(min-width: 768px) { .hd-brand .tt { position: static; width: auto; height: auto; clip: auto; display: inline-block; } }
 .hd-brand .tt b { font-weight: 600; }
 
 /* ============================================================ BUTTONS */

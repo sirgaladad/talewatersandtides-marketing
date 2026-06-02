@@ -63,8 +63,8 @@ a { color: var(--navy); }
 .hd-brand { font-family: var(--fb); font-weight: 600; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
 .hd-brand img { height: 72px; width: auto; display: block; flex-shrink: 0; }
 @media(min-width: 768px) { .hd-brand img { height: 72px; } }
-.hd-brand span { display: none; }
-@media(min-width: 768px) { .hd-brand span { display: inline; } }
+.hd-brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media(min-width: 768px) { .hd-brand span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: inherit; } }
 .hd-r { display: flex; align-items: center; gap: 8px; }
 
 /* ===== BUTTONS ===== */
