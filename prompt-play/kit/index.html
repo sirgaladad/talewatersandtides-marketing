@@ -1124,7 +1124,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
     L.push('| --- | --- | :--: | :--: | :--: | --- | --- | --- |');
     KIT.tools.forEach(function (t) {
       L.push('| ' + t.name + (t.vendor ? ' (' + t.vendor + ')' : '') + ' | ' + t.bestAt + (t.note ? ' — ' + t.note : '') +
-        ' | ' + t.rubric.ease + '/5 | ' + t.rubric.power + '/5 | ' + t.rubric.value + '/5' +
+        ' | ' + (t.rubric ? t.rubric.ease : 0) + '/5 | ' + (t.rubric ? t.rubric.power : 0) + '/5 | ' + (t.rubric ? t.rubric.value : 0) + '/5' +
         ' | ' + skillLabel(t.skillLevel) + ' | ' + priceLabel(t.pricing) + ' | ' + t.url + ' |');
     });
     L.push('');

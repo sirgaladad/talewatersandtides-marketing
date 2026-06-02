@@ -90,11 +90,11 @@ function buildMarkdown() {
         t.bestAt +
         (t.note ? ' — ' + t.note : '') +
         ' | ' +
-        t.rubric.ease + '/5' +
+        (t.rubric?.ease ?? 0) + '/5' +
         ' | ' +
-        t.rubric.power + '/5' +
+        (t.rubric?.power ?? 0) + '/5' +
         ' | ' +
-        t.rubric.value + '/5' +
+        (t.rubric?.value ?? 0) + '/5' +
         ' | ' +
         skillLabel(t.skillLevel) +
         ' | ' +
