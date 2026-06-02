@@ -838,7 +838,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
   function ga(label, extra) { if (typeof gtag === 'function') { gtag('event', 'click', Object.assign({ event_category: 'kit', event_label: label }, extra || {})); } }
   function lsGet(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function esc(s) { if (s == null) return ''; return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var catLabels = {}, tierLabels = {};
   KIT.categories.forEach(function (c) { catLabels[c.id] = c.label; });
@@ -849,6 +849,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
 
   var FAVKEY = 'pp_kit_favs';
   var favs = lsGet(FAVKEY, []);
+  if (!Array.isArray(favs)) favs = [];
   var state = { cats: new Set(), tiers: new Set(), q: '', favOnly: false };
 
   var grid = document.getElementById('kitGrid');
@@ -1097,7 +1098,7 @@ Include the role, the steps, and the output format. Then show it filled in with 
     [course, list, faq].forEach(function (obj) {
       var s = document.createElement('script');
       s.type = 'application/ld+json';
-      s.textContent = JSON.stringify(obj);
+      s.textContent = JSON.stringify(obj).replace(/</g, '\\u003c');
       document.head.appendChild(s);
     });
   }
