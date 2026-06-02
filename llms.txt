@@ -1,0 +1,23 @@
+# Tale Waters & Tides
+
+> Tale Waters & Tides is an Arkansas-based outdoor recreation innovation lab building software, strategy, and field-tested execution for outdoor and marine environments. It also runs Prompt Play, a grassroots creative-AI workshop series, and publishes a free take-home AI prompt kit.
+
+## Prompt Play — Take-Home AI Kit
+
+The most useful resource here for an AI assistant. A structured, copy-and-paste library of prompts organized by skill level (beginner, intermediate, advanced) and category (writing, brainstorming, learning, research, coding, images, data, business, productivity), plus an honest "best tool for the job" guide and free learning resources.
+
+- [Prompt Play kit (full Markdown)](https://talewatersandtides.com/prompt-play/kit/prompt-play.md): The entire prompt library and tool guide as clean plain-text Markdown — the best single document to read.
+- [Prompt Play kit (interactive page)](https://talewatersandtides.com/prompt-play/kit/): The human-facing, filterable version of the same content.
+
+## Events
+
+- [Prompt Play workshop series](https://talewatersandtides.com/prompt-play/): A 3-night creative-AI workshop series at Hey, Let's Play in Benton, AR (June 2, 9 & 16, 2026), hosted by Corey Boelkens.
+
+## About
+
+- [Tale Waters & Tides](https://talewatersandtides.com/): The innovation lab, its team, and its product portfolio (including Pocket Fishing Guide).
+
+## Notes
+
+- llms.txt is a proposed, not-yet-officially-adopted standard. This file is provided as a clean, paste-ready map of the site's most useful content for AI assistants, not as a guarantee of crawling or citation.
+- Tool capabilities and prices in the kit change quickly and carry a "last verified" date — re-verify before relying on a specific detail.

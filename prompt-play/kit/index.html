@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt Play — Your Take-Home AI Kit | Tale Waters &amp; Tides</title>
+<meta name="description" content="Your take-home AI kit from Prompt Play: a filterable library of copy-and-paste prompts by skill level and category, an honest best-tool-for-the-job guide, and a one-tap 'copy for your AI' block. A gift from Corey Boelkens and Tale Waters &amp; Tides.">
+<meta name="theme-color" content="#0d1b2a">
+<meta property="og:title" content="Prompt Play — Your Take-Home AI Kit">
+<meta property="og:description" content="The prompts, tools, and places to learn from Prompt Play — saved so you keep building after you leave. The tide is rising. Let's surf it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/prompt-play/kit/">
+<meta property="og:site_name" content="Tale Waters &amp; Tides">
+<meta property="og:image" content="https://talewatersandtides.com/assets/PromptPlayFB_Image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1122">
+<meta property="og:image:height" content="1402">
+<meta property="og:image:alt" content="Prompt Play — a creative AI workshop series at Hey, Let's Play in Benton, AR, hosted by Corey Boelkens of Tale Waters &amp; Tides.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://talewatersandtides.com/assets/PromptPlayFB_Image.png">
+<link rel="canonical" href="https://talewatersandtides.com/prompt-play/kit/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Permanent+Marker&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<style>
+:root {
+  --cream: #f7f1e3;
+  --cream-2: #fffdf7;
+  --navy: #14324a;
+  --navy-deep: #0d1b2a;
+  --gold: #f2a93b;
+  --gold-deep: #d98a1f;
+  --teal: #3ba9c4;
+  --coral: #e8654e;
+  --green: #2f9e6f;
+  --ink: #1d2b36;
+  --muted: #5d6b73;
+  --line: rgba(20,50,74,.14);
+  --line-2: rgba(20,50,74,.24);
+  --fd: 'Fredoka', system-ui, sans-serif;
+  --fm: 'Permanent Marker', var(--fd);
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --mw: 1080px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 76px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(59,169,196,.10), transparent 38%),
+    radial-gradient(circle at 88% 6%, rgba(232,101,78,.10), transparent 36%),
+    radial-gradient(circle at 50% 120%, rgba(242,169,59,.10), transparent 45%);
+  background-attachment: fixed;
+}
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 20px; }
+@media(min-width: 768px) { .wrap { padding: 0 40px; } }
+
+h1, h2, h3 { font-family: var(--fd); color: var(--navy); line-height: 1.1; font-weight: 700; }
+a { color: var(--navy); }
+
+/* ============================================================ HEADER */
+.hd {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(247,241,227,.82);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+}
+.hd.solid { border-bottom-color: var(--line); background: rgba(247,241,227,.95); }
+.hd-in { max-width: var(--mw); margin: 0 auto; padding: 0 16px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+@media(min-width: 768px) { .hd-in { padding: 0 40px; height: 68px; } }
+.hd-brand { font-family: var(--fb); font-weight: 600; font-size: clamp(.7rem, 2.4vw, .9rem); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
+.hd-brand svg { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
+.hd-brand .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.hd-brand .tt b { font-weight: 600; }
+
+/* ============================================================ BUTTONS */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fd); font-weight: 600; font-size: 1rem; text-decoration: none; border-radius: 999px; padding: 13px 26px; min-height: 48px; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s, color .2s, border-color .2s; }
+.btn svg { width: 18px; height: 18px; }
+.btn-gold { background: var(--gold); color: var(--navy-deep); box-shadow: 0 3px 0 var(--gold-deep); }
+.btn-gold:hover, .btn-gold:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--gold-deep); outline: none; }
+.btn-gold:active { transform: translateY(0); box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-navy { background: var(--navy); color: var(--cream); box-shadow: 0 3px 0 var(--navy-deep); }
+.btn-navy:hover, .btn-navy:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--navy-deep); outline: none; }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--line-2); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--navy); background: rgba(20,50,74,.05); outline: none; }
+.btn-sm { padding: 9px 18px; min-height: 40px; font-size: .9rem; box-shadow: 0 2px 0 var(--gold-deep); }
+
+/* ============================================================ SHARED */
+.eyebrow { font-family: var(--fb); font-weight: 600; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--coral); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.eyebrow::before { content: ''; width: 22px; height: 2px; border-radius: 2px; background: currentColor; }
+section { padding: 52px 0; }
+@media(min-width: 768px) { section { padding: 72px 0; } }
+.sec-h2 { font-size: clamp(1.7rem, 5vw, 2.7rem); margin-bottom: 14px; }
+.sec-lead { font-size: 1.0625rem; color: var(--muted); max-width: 62ch; }
+
+/* reveal */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+.r.v { opacity: 1; transform: translateY(0); }
+
+/* ============================================================ HERO */
+.hero { padding: 104px 0 44px; text-align: center; position: relative; }
+@media(min-width: 768px) { .hero { padding: 136px 0 60px; } }
+.hero-tag { font-family: var(--fb); font-weight: 600; font-size: clamp(.72rem, 2.4vw, .92rem); letter-spacing: .26em; text-transform: uppercase; color: var(--navy); opacity: .85; }
+.hero h1 { margin: 12px auto 6px; max-width: 16ch; font-size: clamp(2.5rem, 9vw, 4.6rem); letter-spacing: -.01em; }
+.hero h1 .surf { display: inline-block; font-family: var(--fm); color: var(--gold); font-weight: 400; transform: rotate(-2deg); text-shadow: 2px 2px 0 rgba(217,138,31,.22); }
+.wave { width: clamp(54px, 12vw, 84px); height: auto; color: var(--teal); margin: 6px auto 0; display: block; }
+.hero-lead { max-width: 54ch; margin: 18px auto 0; font-size: 1.125rem; color: var(--ink); }
+.hero-lead b { color: var(--navy); font-weight: 600; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; }
+.hero-mission { max-width: 50ch; margin: 30px auto 0; font-size: .98rem; color: var(--muted); }
+.hero-mission b { color: var(--navy); font-weight: 600; }
+
+/* ============================================================ NOTE FROM COREY */
+.note { background: var(--navy); color: var(--cream); border-radius: 20px; padding: 28px 24px; display: grid; gap: 18px; align-items: start; }
+@media(min-width: 640px) { .note { grid-template-columns: auto 1fr; padding: 34px 36px; gap: 26px; } }
+.note-photo { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); flex-shrink: 0; }
+.note .eyebrow { color: var(--gold); }
+.note p { color: rgba(247,241,227,.92); font-size: 1.04rem; }
+.note p + p { margin-top: 12px; }
+.note .sig { font-family: var(--fm); color: var(--gold); font-size: 1.2rem; margin-top: 16px; }
+.note .sig small { display: block; font-family: var(--fb); color: rgba(247,241,227,.78); font-size: .82rem; letter-spacing: .02em; }
+
+/* ============================================================ BANDS */
+.band { background: var(--cream-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+/* ============================================================ PROMPT BASICS */
+.parts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 26px; }
+@media(min-width: 720px) { .parts { grid-template-columns: repeat(4, 1fr); } }
+.part { background: var(--cream); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+.part .n { font-family: var(--fm); color: var(--gold-deep); font-size: 1.3rem; line-height: 1; }
+.part h3 { font-size: 1.1rem; margin: 8px 0 3px; font-weight: 600; }
+.part p { font-size: .86rem; color: var(--muted); }
+.tiers-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 26px; }
+@media(min-width: 720px) { .tiers-grid { grid-template-columns: repeat(3, 1fr); } }
+.feat { --accent: var(--gold); background: var(--cream); border: 1px solid var(--line); border-top: 5px solid var(--accent); border-radius: 16px; padding: 22px; }
+.feat--teal { --accent: var(--teal); } .feat--coral { --accent: var(--coral); }
+.feat .lbl { font-family: var(--fd); font-weight: 700; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.feat h3 { font-size: 1.15rem; margin: 4px 0 6px; font-weight: 600; }
+.feat p { font-size: .92rem; color: var(--muted); }
+.takeaway { margin-top: 28px; background: var(--navy); color: var(--cream); border-radius: 16px; padding: 22px 24px; }
+.takeaway .lbl { display: flex; align-items: center; gap: 10px; font-family: var(--fd); font-weight: 600; color: #fff; margin-bottom: 12px; }
+.takeaway .lbl svg { width: 22px; height: 22px; color: var(--gold); }
+.frameworks { display: grid; grid-template-columns: 1fr; gap: 8px; }
+@media(min-width: 560px) { .frameworks { grid-template-columns: 1fr 1fr; } }
+.frameworks li { list-style: none; color: rgba(247,241,227,.9); font-size: .92rem; }
+.frameworks b { color: var(--gold); font-weight: 600; }
+.ai-note { margin-top: 20px; font-size: .9rem; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 14px; }
+.ai-note b { color: var(--navy); }
+
+/* ============================================================ LIBRARY TOOLBAR */
+.kit-toolbar { margin-top: 26px; display: flex; flex-direction: column; gap: 14px; }
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip-group .gl { font-family: var(--fb); font-weight: 600; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; width: 100%; }
+@media(min-width: 560px) { .chip-group .gl { width: auto; } }
+.chip { font-family: var(--fb); font-weight: 600; font-size: .88rem; color: var(--navy); background: var(--cream-2); border: 1.5px solid var(--line-2); border-radius: 999px; padding: 8px 15px; min-height: 40px; cursor: pointer; transition: background .18s, border-color .18s, color .18s, transform .12s; }
+.chip:hover { border-color: var(--navy); }
+.chip:active { transform: translateY(1px); }
+.chip[aria-pressed="true"] { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+.chip-tier[aria-pressed="true"] { background: var(--gold); color: var(--navy-deep); border-color: var(--gold-deep); }
+.chip-fav[aria-pressed="true"] { background: var(--coral); color: #fff; border-color: var(--coral); }
+.chip-clear { background: transparent; border-style: dashed; color: var(--muted); }
+.kit-search { position: relative; }
+.kit-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+.kit-search input { width: 100%; font-family: var(--fb); font-size: 1rem; color: var(--ink); background: var(--cream-2); border: 1.5px solid var(--line-2); border-radius: 999px; padding: 12px 16px 12px 42px; min-height: 48px; }
+.kit-search input:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; border-color: var(--navy); }
+.kit-count { margin-top: 4px; font-size: .85rem; color: var(--muted); font-weight: 500; }
+
+/* ============================================================ PROMPT CARDS */
+.kit-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 22px; }
+@media(min-width: 600px) { .kit-grid { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 940px) { .kit-grid { grid-template-columns: repeat(3, 1fr); } }
+.pcard { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 20px rgba(20,50,74,.05); }
+.pcard-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tier-badge { font-family: var(--fb); font-weight: 700; font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; }
+.tier-beginner { background: rgba(242,169,59,.18); color: var(--gold-deep); border: 1px solid rgba(242,169,59,.45); }
+.tier-intermediate { background: rgba(59,169,196,.16); color: #1f7d93; border: 1px solid rgba(59,169,196,.45); }
+.tier-advanced { background: rgba(232,101,78,.15); color: #b8442f; border: 1px solid rgba(232,101,78,.45); }
+.cat-tag { font-family: var(--fb); font-weight: 600; font-size: .7rem; color: var(--muted); }
+.star-btn { margin-left: auto; background: none; border: none; cursor: pointer; padding: 4px; color: var(--line-2); display: inline-flex; border-radius: 8px; transition: color .15s, transform .12s; }
+.star-btn svg { width: 22px; height: 22px; }
+.star-btn:hover { color: var(--gold-deep); }
+.star-btn:active { transform: scale(.9); }
+.star-btn[aria-pressed="true"] { color: var(--gold); }
+.star-btn[aria-pressed="true"] svg { fill: var(--gold); }
+.pcard h3 { font-size: 1.08rem; font-weight: 600; }
+.pcode { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.55; color: var(--ink); background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; white-space: pre-wrap; word-break: break-word; max-height: 168px; overflow: auto; flex: 1; }
+.pcard-why { font-size: .86rem; color: var(--muted); }
+.pcard-why b { color: var(--navy); font-weight: 600; }
+.copy-btn { align-self: flex-start; }
+.kit-empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 30px 0; }
+
+/* ============================================================ TOOL TABLE */
+.tool-caveat { margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; color: #b8442f; background: rgba(232,101,78,.1); border: 1px solid rgba(232,101,78,.3); padding: 7px 14px; border-radius: 999px; }
+.tool-caveat svg { width: 16px; height: 16px; flex-shrink: 0; }
+.tool-wrap { margin-top: 24px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
+.tool-table { width: 100%; border-collapse: collapse; min-width: 560px; background: var(--cream-2); }
+.tool-table caption { text-align: left; padding: 12px 16px; font-size: .8rem; color: var(--muted); }
+.tool-table th, .tool-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: .92rem; vertical-align: top; }
+.tool-table thead th { font-family: var(--fd); font-weight: 600; color: var(--navy); background: rgba(20,50,74,.05); font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; position: sticky; top: 0; }
+.tool-table tbody th[scope="row"] { font-weight: 600; }
+.tool-table .grp th { background: var(--navy); color: var(--cream); font-family: var(--fd); font-weight: 600; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+.tool-table a { color: #1f7d93; font-weight: 600; text-decoration: none; }
+.tool-table a:hover { text-decoration: underline; }
+.tool-table .vendor { color: var(--muted); font-weight: 400; font-size: .82rem; }
+.tool-table .note { color: var(--muted); font-size: .82rem; display: block; margin-top: 3px; }
+.badge-sm { font-family: var(--fb); font-weight: 700; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.sk-all { background: rgba(47,158,111,.16); color: #1f7d56; }
+.sk-int { background: rgba(59,169,196,.16); color: #1f7d93; }
+.sk-adv { background: rgba(232,101,78,.15); color: #b8442f; }
+.pr-free { color: #1f7d56; font-weight: 600; }
+.pr-freemium { color: var(--gold-deep); font-weight: 600; }
+.pr-paid { color: var(--muted); font-weight: 600; }
+
+/* ============================================================ CARDS / LISTS */
+.split { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 26px; }
+@media(min-width: 760px) { .split { grid-template-columns: 1fr 1fr; } }
+.res-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 26px; }
+@media(min-width: 560px) { .res-grid { grid-template-columns: 1fr 1fr; } }
+@media(min-width: 900px) { .res-grid { grid-template-columns: repeat(3, 1fr); } }
+.card { background: var(--cream-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.card h3 { font-size: 1.12rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.card h3 svg { width: 20px; height: 20px; color: var(--teal); flex-shrink: 0; }
+.res-card { display: flex; flex-direction: column; }
+.res-card h3 { font-size: 1.02rem; margin-bottom: 6px; }
+.res-card p { font-size: .88rem; color: var(--muted); flex: 1; }
+.res-card a { margin-top: 12px; font-family: var(--fd); font-weight: 600; color: #1f7d93; text-decoration: none; font-size: .9rem; display: inline-flex; align-items: center; gap: 6px; }
+.res-card a:hover { text-decoration: underline; }
+.res-card a svg { width: 15px; height: 15px; }
+.tick { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.tick li { display: flex; gap: 11px; align-items: flex-start; font-size: .96rem; color: var(--ink); }
+.tick svg { width: 18px; height: 18px; color: var(--gold-deep); flex-shrink: 0; margin-top: 3px; }
+.tick b { color: var(--navy); font-weight: 600; }
+.fac-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+/* ============================================================ FOR YOUR AI */
+.ai { background: var(--navy); color: var(--cream); border-radius: 20px; padding: 30px 24px; text-align: center; }
+@media(min-width: 768px) { .ai { padding: 40px; } }
+.ai .eyebrow { color: var(--gold); justify-content: center; }
+.ai h2 { color: #fff; }
+.ai p { color: rgba(247,241,227,.88); max-width: 56ch; margin: 12px auto 0; }
+.ai p code { background: rgba(247,241,227,.12); padding: 2px 7px; border-radius: 6px; font-size: .92em; }
+.ai-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 24px 0 18px; }
+.ai textarea { width: 100%; max-width: 760px; margin: 0 auto; display: block; height: 220px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .8rem; line-height: 1.5; color: var(--ink); background: var(--cream-2); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px; resize: vertical; }
+.ai textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.ai .hint { font-size: .82rem; color: rgba(247,241,227,.65); margin-top: 12px; }
+
+/* ============================================================ FOOTER */
+.ft { background: var(--navy-deep); color: var(--cream); padding: 48px 20px 30px; }
+.ft-in { max-width: var(--mw); margin: 0 auto; text-align: center; }
+.ft-logo { height: 38px; width: auto; margin: 0 auto 18px; display: block; opacity: .96; }
+.ft-cc { font-family: var(--fm); color: var(--gold); font-size: 1.15rem; letter-spacing: .02em; }
+.ft-motto { font-family: var(--fd); font-weight: 500; font-size: 1.02rem; color: var(--cream); max-width: 46ch; margin: 10px auto 0; }
+.ft-lk { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 24px 0 18px; }
+.ft-lk a { color: rgba(247,241,227,.8); text-decoration: none; font-size: .9rem; min-height: 40px; display: inline-flex; align-items: center; transition: color .2s; }
+.ft-lk a:hover { color: var(--gold); }
+.ft-cp { font-size: .72rem; color: rgba(247,241,227,.5); max-width: 70ch; margin: 0 auto; line-height: 1.6; }
+.ft-cp a { color: rgba(247,241,227,.6); }
+
+/* ============================================================ A11Y */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .hero h1 .surf { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== DAY-OF BRIDGE: First Contact (June 2, 2026). Funnels event-night QR scans to the live check-in page. Auto-shows on the event window only. ===== -->
+<a id="tonightBanner" href="/first-contact/" data-ga="ppk_tonight_banner"
+   style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:200;align-items:center;justify-content:center;gap:9px;min-height:54px;padding:10px 18px;background:var(--gold);color:var(--navy-deep);font-family:var(--fd);font-weight:600;text-decoration:none;text-align:center;line-height:1.25;box-shadow:0 -4px 20px rgba(20,50,74,.18)">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="flex-shrink:0"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  <span>Here for tonight? Tap for <b>First Contact</b> check-in &amp; materials</span>
+</a>
+<script>
+(function(){
+  var b = document.getElementById('tonightBanner');
+  if (!b) return;
+  var now = new Date();
+  var start = new Date('2026-06-01T00:00:00-05:00');
+  var end   = new Date('2026-06-03T03:00:00-05:00');
+  if (now >= start && now <= end){ b.style.display = 'flex'; document.body.style.paddingBottom = '66px'; }
+})();
+</script>
+
+<!-- ============================================================ HEADER -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a class="hd-brand" href="/" data-ga="ppk_brand_home" aria-label="Tale Waters and Tides home">
+      <svg viewBox="0 0 120 110" fill="currentColor" aria-hidden="true"><path d="M60 105 C57 75 55 55 53 44 C38 30 18 33 4 48 C16 36 38 34 52 36 C54 24 56 12 60 2 C64 12 66 24 68 36 C82 34 104 36 116 48 C102 33 82 30 67 44 C65 55 63 75 60 105 Z"/></svg>
+      <span class="tt">Prompt Play&nbsp;<b>· Kit</b></span>
+    </a>
+    <a class="btn btn-gold btn-sm" href="#for-your-ai" data-ga="ppk_header_copy">Copy for your AI</a>
+  </div>
+</header>
+
+<!-- ============================================================ HERO -->
+<section class="hero" data-ga-section="ppk_hero">
+  <div class="wrap">
+    <p class="hero-tag r">Your take-home AI kit</p>
+    <h1 class="r">The tide is rising. <span class="surf">Let's surf it.</span></h1>
+    <svg class="wave r" viewBox="0 0 96 40" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M4 30 C16 14 28 14 40 24 C50 32 60 32 70 22 C78 14 86 14 92 20"/></svg>
+    <p class="hero-lead r">The prompts, tools, and places to learn from Prompt Play — <b>saved so you keep building after you leave.</b></p>
+    <div class="hero-cta r">
+      <a class="btn btn-gold" href="#library" data-ga="ppk_hero_prompts">Browse the prompts</a>
+      <a class="btn btn-ghost" href="#tools" data-ga="ppk_hero_tools">Which tool for what?</a>
+    </div>
+    <p class="hero-mission r">Tale Waters &amp; Tides — helping you <b>survive &amp; thrive</b> in the rising tide of the <b>TsunamAi</b>.</p>
+  </div>
+</section>
+
+<!-- ============================================================ A NOTE FROM COREY -->
+<section data-ga-section="ppk_note">
+  <div class="wrap">
+    <div class="note r">
+      <img class="note-photo" src="/assets/CoreyBoelkens.jpeg" alt="Corey Boelkens" width="84" height="84" loading="lazy" decoding="async">
+      <div>
+        <p class="eyebrow">A note from your host</p>
+        <p>Thank you for playing. Seriously — <b style="color:#fff">thank you.</b> Prompt Play started as a small experiment: what happens when you give curious people a little room, some coffee, and permission to build?</p>
+        <p>You showed up and made it real. This kit is yours to keep — come back to it, break things, build something that matters. And if it sparks something, pass it on. The tide's rising either way; it's a lot more fun to surf it together.</p>
+        <p class="sig">Corey Boelkens<small>Founder · Tale Waters &amp; Tides</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ PROMPT BASICS -->
+<section class="band" id="basics" data-ga-section="ppk_basics">
+  <div class="wrap">
+    <p class="eyebrow r">Prompt basics</p>
+    <h2 class="sec-h2 r">A good prompt has four parts.</h2>
+    <p class="sec-lead r">Say who the AI should be, what you want, what it needs to know, and the shape of the answer. Everything else is leveling up.</p>
+
+    <div class="parts">
+      <div class="part r"><div class="n">1</div><h3>Role</h3><p>Who it should be — "an experienced editor."</p></div>
+      <div class="part r"><div class="n">2</div><h3>Task</h3><p>What to do — one clear ask.</p></div>
+      <div class="part r"><div class="n">3</div><h3>Context</h3><p>What it needs to know to get it right.</p></div>
+      <div class="part r"><div class="n">4</div><h3>Format</h3><p>How the answer should look.</p></div>
+    </div>
+
+    <div class="tiers-grid">
+      <div class="feat r">
+        <div class="lbl">Beginner</div>
+        <h3>Get the structure right</h3>
+        <p>Name a role, one clear task, a little context, and a specific format. Clear beats clever.</p>
+      </div>
+      <div class="feat feat--teal r">
+        <div class="lbl">Intermediate</div>
+        <h3>Show examples &amp; reasoning</h3>
+        <p>Give it 1–3 examples, ask it to think step by step, and pin down the output format.</p>
+      </div>
+      <div class="feat feat--coral r">
+        <div class="lbl">Advanced</div>
+        <h3>Direct the outcome</h3>
+        <p>Describe the goal and what success looks like, chain prompts, and let it improve its own prompt.</p>
+      </div>
+    </div>
+
+    <div class="takeaway r">
+      <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.4-6.3-4.6L5.7 21l2.3-7.4-6-4.4h7.6z"/></svg>Frameworks you'll hear about</div>
+      <ul class="frameworks">
+        <li><b>RTF</b> — Role · Task · Format</li>
+        <li><b>RACE</b> — Role · Action · Context · Expectation</li>
+        <li><b>CRISPE</b> — Capacity · Insight · Statement · Personality · Experiment</li>
+        <li><b>CRAFT</b> — Context · Role · Action · Format · Tone</li>
+      </ul>
+      <p style="color:rgba(247,241,227,.82);font-size:.9rem;margin-top:14px">They're all scaffolding for the same idea. Pick one and start — clarity and iteration matter more than the acronym.</p>
+    </div>
+
+    <p class="ai-note r"><b>If you're an AI assistant reading this:</b> below is a structured library of prompts and a tool guide your human can use. Help them pick a prompt, adapt it to their situation, and choose the right tool for their project.</p>
+  </div>
+</section>
+
+<!-- ============================================================ THE PROMPT LIBRARY -->
+<section id="library" data-ga-section="ppk_library">
+  <div class="wrap">
+    <p class="eyebrow r">The prompt library</p>
+    <h2 class="sec-h2 r">Pick your level. Open what pulls at you.</h2>
+    <p class="sec-lead r">Filter by skill level and category, or search. Tap <b>Copy</b> on any prompt, paste it into your AI, and swap in your own details. Star the ones you love — they're saved on this device.</p>
+
+    <div class="kit-toolbar">
+      <div class="kit-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <label for="kitSearch" class="sr-only">Search prompts</label>
+        <input id="kitSearch" type="search" placeholder="Search prompts (e.g. email, debug, study plan)…" autocomplete="off" aria-controls="kitGrid">
+      </div>
+      <div class="chip-group" id="tierChips" role="group" aria-label="Filter by skill level"></div>
+      <div class="chip-group" id="catChips" role="group" aria-label="Filter by category"></div>
+      <div class="chip-group">
+        <button type="button" class="chip chip-fav" id="favChip" aria-pressed="false" data-ga="ppk_filter_fav">★ Favorites only</button>
+        <button type="button" class="chip chip-clear" id="clearChip" data-ga="ppk_filter_clear">Clear filters</button>
+      </div>
+    </div>
+    <p class="kit-count" id="kitCount" role="status" aria-live="polite"></p>
+
+    <div class="kit-grid" id="kitGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================ BEST TOOL FOR THE JOB -->
+<section class="band" id="tools" data-ga-section="ppk_tools">
+  <div class="wrap">
+    <p class="eyebrow r">Best tool for the job</p>
+    <h2 class="sec-h2 r">No single tool wins everything.</h2>
+    <p class="sec-lead r">The honest answer is "right tool for the job." Here's where each one shines — grouped by what you're trying to do.</p>
+    <p class="tool-caveat r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span id="toolCaveat"></span></p>
+
+    <div class="tool-wrap r">
+      <table class="tool-table">
+        <caption>AI tools compared by strength, skill level, and pricing. Tap a tool name to open it.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Tool</th>
+            <th scope="col">Best at</th>
+            <th scope="col">Skill</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody id="toolBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ LEARN FROM THE BEST -->
+<section id="learn" data-ga-section="ppk_learn">
+  <div class="wrap">
+    <p class="eyebrow r">Learn from the best</p>
+    <h2 class="sec-h2 r">Go deeper, for free.</h2>
+    <p class="sec-lead r">The resources we trust — straight from the people who build and teach this. All free to start.</p>
+    <div class="res-grid" id="resGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================ FOR FACILITATORS -->
+<section class="band" id="facilitators" data-ga-section="ppk_facilitators">
+  <div class="wrap">
+    <p class="eyebrow r">For facilitators</p>
+    <h2 class="sec-h2 r">Loved this? Run your own Prompt Play.</h2>
+    <p class="sec-lead r">Prompt Play is a grassroots experiment, and it's meant to spread. Here's the short version of how a night runs — take it, adapt it, host one in your town.</p>
+
+    <div class="split">
+      <div class="card r">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>A simple run-of-show (~2 hrs)</h3>
+        <ul class="tick">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Welcome &amp; coffee (10m).</b> Check people in, names, why they came.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Prompt basics (15m).</b> Teach Role · Task · Context · Format. Demo one prompt live.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Play (45m).</b> Everyone picks a category and tries 2–3 prompts. Pair people up.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Build something (30m).</b> Take one idea from prompt → tool (Claude/ChatGPT → v0 / Lovable / Artifacts).</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span><b>Share &amp; reflect (15m).</b> A few people show what they made. Celebrate the messy ones.</span></li>
+        </ul>
+      </div>
+      <div class="card r">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/></svg>Guiding total beginners</h3>
+        <ul class="tick">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Start with <b>one</b> prompt, not ten. Confidence first.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>There are no wrong answers — only next prompts.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Great first demos: <b>Make an email warmer</b>, <b>Twenty ideas fast</b>, <b>Explain it simply</b>.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Keep it playful. The goal is momentum, not mastery.</span></li>
+        </ul>
+        <div class="fac-links">
+          <a class="btn btn-ghost btn-sm" href="/prompt-play/" data-ga="ppk_fac_event">The event page</a>
+          <a class="btn btn-ghost btn-sm" href="/first-contact/" data-ga="ppk_fac_checkin">Check-in page</a>
+          <a class="btn btn-ghost btn-sm" href="mailto:corey@talewatersandtides.com?subject=Running%20my%20own%20Prompt%20Play" data-ga="ppk_fac_email">Ask Corey for help</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ A LEAVE-BEHIND FOR YOUR AI -->
+<section id="for-your-ai" data-ga-section="ppk_forai">
+  <div class="wrap">
+    <div class="ai r">
+      <p class="eyebrow">A leave-behind for your AI</p>
+      <h2 class="sec-h2">Hand this whole kit to your assistant.</h2>
+      <p>This page is built for two audiences — you, and the AI you paste it into. Copy the entire kit as clean text, then drop it into Claude, ChatGPT, or Gemini with something like: <code>Help me use these prompts and pick the right tool for my project.</code></p>
+      <div class="ai-actions">
+        <button class="btn btn-gold" id="copyAiBtn" type="button" data-ga="ppk_copy_for_ai">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copyAiLabel">Copy the kit as clean text</span>
+        </button>
+      </div>
+      <label for="aiBlock" class="sr-only">The full kit as plain-text Markdown</label>
+      <textarea id="aiBlock" readonly spellcheck="false"></textarea>
+      <p class="hint">Prefer a file? Your AI can also read <a href="/prompt-play/kit/prompt-play.md" style="color:var(--gold)">prompt-play.md</a> or the site's <a href="/llms.txt" style="color:var(--gold)">llms.txt</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer class="ft" data-ga-section="ppk_footer">
+  <div class="ft-in">
+    <img class="ft-logo" src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides" loading="lazy" decoding="async">
+    <p class="ft-cc">Coffee. Community. Code. Curiosity.</p>
+    <p class="ft-motto">Prompt Play is a Tale Waters &amp; Tides experiment — a place to learn to surf the rising tide of the TsunamAi instead of being swept under by it.</p>
+    <nav class="ft-lk" aria-label="Footer">
+      <a href="/prompt-play/" data-ga="ppk_ft_event">← Back to Prompt Play</a>
+      <a href="/" data-ga="ppk_ft_home">Tale Waters &amp; Tides</a>
+      <a href="mailto:corey@talewatersandtides.com" data-ga="ppk_ft_email">Ask Corey</a>
+      <a href="/llms.txt" data-ga="ppk_ft_llms">/llms.txt</a>
+    </nav>
+    <p class="ft-cp">© 2026 Tale Waters and Tides, LLC · Little Rock, Arkansas · <a href="/prompt-play/kit/">talewatersandtides.com/prompt-play/kit</a><br>
+    Static page — your favorites and filters live in this browser only (localStorage). Tool capabilities and prices change fast; this guide was last verified <span id="ftVerified"></span> — re-verify before you rely on a detail.</p>
+  </div>
+</footer>
+
+<!-- ============================================================ KIT DATA (single source of truth) -->
+<!-- NOTE: prompt-play.md and the "Copy for your AI" text are generated from KIT by buildMarkdown(). -->
+<!-- When you edit KIT, regenerate prompt-play.md (scripts/gen-md.mjs) so the mirror stays in parity. -->
+<script>
+const KIT = {
+  meta: {
+    lastVerified: 'June 2, 2026',
+    lastVerifiedISO: '2026-06-02',
+    pageUrl: 'https://talewatersandtides.com/prompt-play/kit/'
+  },
+  tiers: [
+    { id: 'beginner',     label: 'Beginner',     blurb: 'Role · Task · Context · Format' },
+    { id: 'intermediate', label: 'Intermediate', blurb: 'Examples · step-by-step · output format' },
+    { id: 'advanced',     label: 'Advanced',     blurb: 'System prompts · chaining · meta-prompting · outcome-first' }
+  ],
+  categories: [
+    { id: 'writing',       label: 'Writing' },
+    { id: 'brainstorming', label: 'Brainstorming' },
+    { id: 'learning',      label: 'Learning' },
+    { id: 'research',      label: 'Research' },
+    { id: 'coding',        label: 'Coding' },
+    { id: 'images',        label: 'Images' },
+    { id: 'data',          label: 'Data' },
+    { id: 'business',      label: 'Business' },
+    { id: 'productivity',  label: 'Productivity' }
+  ],
+  prompts: [
+    { id: 'email-warmer', title: 'Make an email warmer', tier: 'beginner', category: 'writing', tags: ['email','tone','rewrite'],
+      text: `You are a friendly communication coach.
+Rewrite the email below to be warmer and more concise (under 120 words).
+Keep the meeting time and the apology intact.
+Return only the rewritten email.
+
+[paste your email here]`,
+      why: 'Names a role, one task, the must-keep context, and the exact output shape — the four basics in action.' },
+
+    { id: 'match-my-voice', title: 'Write in my voice', tier: 'intermediate', category: 'writing', tags: ['voice','few-shot','style'],
+      text: `Here are two things I've written:
+EXAMPLE 1: [paste ~150 words]
+EXAMPLE 2: [paste ~150 words]
+
+Study my tone, sentence length, and word choices.
+Now write a [LinkedIn post / newsletter intro] about [topic] in that same voice.
+Keep it under 200 words.`,
+      why: 'A couple of real examples (few-shot) teach your style far better than the word "casual" ever could.' },
+
+    { id: 'editor-persona', title: 'A reusable editor persona', tier: 'advanced', category: 'writing', tags: ['system prompt','xml','editing'],
+      text: `<role>You are my line editor. You cut fluff, fix flow, and keep my meaning. You never add new claims.</role>
+<rules>
+- Preserve my voice; don't make it generic.
+- Flag anything unclear with [?] instead of guessing.
+- Return the edit, then 3 bullets on what you changed and why.
+</rules>
+Edit the draft inside the draft tags.
+<draft>
+[paste draft]
+</draft>`,
+      why: 'XML-style tags and a fixed rule-set make a persona you can paste at the top of any editing chat.' },
+
+    { id: 'twenty-ideas', title: 'Twenty ideas, fast', tier: 'beginner', category: 'brainstorming', tags: ['ideation','divergent'],
+      text: `You are a creative partner.
+Give me 20 different ideas for [your challenge — e.g. "a name for a fishing-trip planning app"].
+Make them varied: some safe, some weird. One line each, numbered. No explanations yet.`,
+      why: 'Asking for volume and variety up front gets you past the obvious first three ideas.' },
+
+    { id: 'idea-scoring', title: 'Sharpen ideas with constraints', tier: 'intermediate', category: 'brainstorming', tags: ['constraints','prioritization','table'],
+      text: `I'm brainstorming [goal]. My constraints: [budget / time / audience].
+1. Generate 10 ideas that fit the constraints.
+2. Score each 1–5 on impact and effort.
+3. Recommend the top 3 and say why.
+Return a table: Idea | Impact | Effort | Note.`,
+      why: 'Constraints plus a scoring step turn a brain-dump into a short, defensible shortlist.' },
+
+    { id: 'meta-improve', title: 'Improve my prompt', tier: 'advanced', category: 'brainstorming', tags: ['meta-prompting','advanced'],
+      text: `You are a prompt engineer.
+Here's a rough request I want to send an AI: [paste your rough prompt].
+Ask me up to 3 clarifying questions. Then rewrite it as a strong prompt with a clear role,
+the context it needs, explicit success criteria, and an output format.`,
+      why: 'Meta-prompting — having the AI improve your prompt — is one of the fastest ways to level up.' },
+
+    { id: 'explain-simply', title: 'Explain it simply', tier: 'beginner', category: 'learning', tags: ['explain','analogy'],
+      text: `Explain [topic] to me like I'm smart but completely new to it.
+Use one everyday analogy, avoid jargon (or define it the first time), and keep it under 200 words.
+End with one question to check I understood.`,
+      why: 'Telling it your level and asking for an analogy gets an explanation you can actually use.' },
+
+    { id: 'socratic-tutor', title: 'Socratic tutor', tier: 'intermediate', category: 'learning', tags: ['tutor','socratic','chain-of-thought'],
+      text: `Be my Socratic tutor for [subject].
+Ask me one question at a time to find what I do and don't understand.
+Think about my answer before responding, then adjust the difficulty.
+Don't hand me the full answer — guide me to it. Start now.`,
+      why: 'One question at a time plus "think before responding" turns the AI from answer-machine into a real tutor.' },
+
+    { id: 'feynman-plan', title: 'Feynman + a study plan', tier: 'advanced', category: 'learning', tags: ['feynman','chaining','study plan'],
+      text: `Goal: I want to truly understand [topic] in 2 weeks.
+Step 1: Explain it in plain language (Feynman style).
+Step 2: Quiz me with 5 questions, hardest last.
+Step 3: From my answers, find my weak spots.
+Step 4: Build a 5-session study plan targeting those gaps, with a tiny exercise each.
+Do the steps in order, pausing after the quiz for my answers.`,
+      why: 'Chaining teach → test → diagnose → plan in one prompt produces a personalized curriculum, not a lecture.' },
+
+    { id: 'tldr', title: 'TL;DR a long thing', tier: 'beginner', category: 'research', tags: ['summary','tldr'],
+      text: `Summarize the text below for someone with 60 seconds.
+Give me a one-sentence takeaway, then 3–5 bullet points of the key facts.
+Don't add anything that isn't in the text.
+
+[paste text or notes]`,
+      why: 'Setting a time budget and a "don\'t add anything" rule keeps summaries short and honest.' },
+
+    { id: 'meeting-brief', title: 'Brief me before a meeting', tier: 'intermediate', category: 'research', tags: ['prep','summary'],
+      text: `I have a meeting about [topic] with [who].
+From the notes below, give me: a 5-bullet briefing, 3 smart questions to ask, and one thing I might be missing.
+Keep it to what's supported by the notes.
+
+[paste notes / context]`,
+      why: 'A defined output (brief + questions + blind spot) makes prep fast and meeting-ready.' },
+
+    { id: 'compare-sources', title: 'Compare sources, flag disagreement', tier: 'advanced', category: 'research', tags: ['synthesis','outcome-first'],
+      text: `I'll paste 3 sources on [topic]. Produce a balanced brief a decision-maker could act on.
+- Note where the sources agree.
+- Flag where they disagree, and who says what.
+- Mark anything that looks like opinion vs. evidence.
+- End with the 2 open questions that matter most.
+You choose the best format. Don't pad it.
+
+SOURCE 1: ...
+SOURCE 2: ...
+SOURCE 3: ...`,
+      why: 'Outcome-first: state the goal and let a strong model choose the path — great for messy, conflicting inputs.' },
+
+    { id: 'explain-code', title: 'Explain this code', tier: 'beginner', category: 'coding', tags: ['explain'],
+      text: `Explain what the code below does, line by line, for someone learning to program.
+Then tell me one thing that could go wrong with it.
+Keep it friendly and concrete.
+
+[paste code]`,
+      why: 'A clear role ("for someone learning") keeps the explanation at exactly the right depth.' },
+
+    { id: 'debug-reasoning', title: 'Debug with reasoning', tier: 'intermediate', category: 'coding', tags: ['debug','chain-of-thought'],
+      text: `Here's my code and the error I'm getting.
+First, think through the likely causes step by step.
+Then give me the smallest fix, and explain why it works.
+If you need more info, ask before guessing.
+
+CODE: [paste]
+ERROR: [paste]`,
+      why: '"Think step by step" and "ask before guessing" cut down on confident-but-wrong fixes.' },
+
+    { id: 'spec-first', title: 'Spec-first build', tier: 'advanced', category: 'coding', tags: ['planning','prompt chaining'],
+      text: `We're building [feature] in [stack]. Before writing any code:
+1. Restate the requirements and list your assumptions.
+2. Propose a short technical plan (files, data flow, edge cases).
+3. Wait for my "go."
+Then implement it in small, reviewable steps, showing your reasoning for each.`,
+      why: 'Forcing a plan-and-confirm step before code is the single biggest quality win on real projects.' },
+
+    { id: 'image-clear', title: 'Describe an image clearly', tier: 'beginner', category: 'images', tags: ['image','prompt'],
+      text: `Write me an image-generation prompt for: [subject].
+Include subject, setting, mood, lighting, art style, and color palette.
+Make it one rich paragraph I can paste into an image tool.`,
+      why: 'Image tools reward specifics — naming lighting, style, and palette beats "a cool picture."' },
+
+    { id: 'image-iterate', title: 'Iterate an image', tier: 'intermediate', category: 'images', tags: ['image','iteration','variables'],
+      text: `Here's the image prompt I used: [paste].
+The result was close but [what's wrong — e.g. "too dark, wrong era"].
+Give me 3 revised prompts, each changing ONE variable (lighting, style, or composition)
+so I can compare what each change does.`,
+      why: 'Changing one variable at a time turns image generation into something you can actually steer.' },
+
+    { id: 'make-sense-table', title: 'Make sense of some data', tier: 'beginner', category: 'data', tags: ['summary'],
+      text: `Here's some data (pasted below).
+Tell me the 3 most interesting things in plain English, and one thing I should double-check.
+No code — just what it seems to say.
+
+[paste table or numbers]`,
+      why: 'Asking for "interesting things + one caveat" gets insight without pretending the data is perfect.' },
+
+    { id: 'classify-fewshot', title: 'Classify with examples', tier: 'intermediate', category: 'data', tags: ['classification','few-shot','table'],
+      text: `Classify each review as Positive, Negative, or Mixed.
+Examples:
+"Shipped fast, works great" -> Positive
+"Late and arrived scratched" -> Negative
+"Love it but it's pricey" -> Mixed
+Now classify the reviews below and return a table: Review | Label | One-line reason.
+
+[paste reviews]`,
+      why: 'A few labeled examples (few-shot) make classification far more consistent than a definition alone.' },
+
+    { id: 'analysis-pipeline', title: 'Analysis pipeline', tier: 'advanced', category: 'data', tags: ['rigor','chaining'],
+      text: `I'll give you a dataset description and a question.
+Run this pipeline, showing your work at each stage:
+1. Clarify what the question really asks.
+2. List the columns/metrics you'd need.
+3. Describe the analysis steps.
+4. State what the answer would look like and what could bias it.
+Then ask me for the one piece of data you most need to actually run it.`,
+      why: 'Breaking analysis into named stages exposes assumptions before any number gets trusted.' },
+
+    { id: 'value-prop', title: 'One-paragraph value prop', tier: 'beginner', category: 'business', tags: ['marketing','positioning'],
+      text: `You are a plain-spoken marketing coach.
+Write a one-paragraph value proposition for [product] aimed at [who it's for].
+Say what it is, who it's for, and the one problem it solves. No buzzwords.`,
+      why: 'Constraining the audience and banning buzzwords forces clarity over hype.' },
+
+    { id: 'message-matrix', title: 'Messaging by segment', tier: 'intermediate', category: 'business', tags: ['marketing','segments','table'],
+      text: `Product: [describe]. Audiences: [A], [B], [C].
+For each audience, give: their main worry, the one benefit that lands, and a one-line hook.
+Return a table: Audience | Worry | Benefit | Hook.`,
+      why: 'A structured table forces you to actually differentiate the message per segment.' },
+
+    { id: 'strategy-memo', title: 'Outcome-first strategy memo', tier: 'advanced', category: 'business', tags: ['strategy','memo','outcome-first'],
+      text: `Goal: a one-page memo that helps me decide whether to [decision].
+Using the context below, write it so a busy partner could decide in 5 minutes.
+Lead with the recommendation, then 2–3 reasons, the main risk, and what we'd watch.
+Choose whatever structure serves the decision best.
+
+CONTEXT: [paste]`,
+      why: 'Stating the outcome and the reader, then letting the model structure it, suits today\'s frontier models.' },
+
+    { id: 'notes-actions', title: 'Notes into action items', tier: 'beginner', category: 'productivity', tags: ['notes','tasks'],
+      text: `Turn the messy notes below into a clean list of action items.
+For each: what it is, who owns it (if mentioned), and a suggested due date.
+Flag anything that's unclear.
+
+[paste notes]`,
+      why: 'A fixed output shape (what / who / when) makes raw notes instantly usable.' },
+
+    { id: 'plan-my-week', title: 'Plan my week', tier: 'intermediate', category: 'productivity', tags: ['planning','prioritization'],
+      text: `Here's everything on my plate this week: [brain-dump].
+1. Group it into themes.
+2. Flag the 3 things that matter most.
+3. Lay out a realistic Mon–Fri plan, leaving slack for the unexpected.
+Ask me 2 questions first if anything's ambiguous.`,
+      why: 'Group → prioritize → schedule (with a clarifying step) turns a dump into a plan you\'ll actually follow.' },
+
+    { id: 'reusable-workflow', title: 'Build a reusable workflow prompt', tier: 'advanced', category: 'productivity', tags: ['workflow','templates','meta'],
+      text: `I do this task repeatedly: [describe the task and paste a good example of the output].
+Write me a reusable prompt I can paste each time, with [BRACKETED] slots for the parts that change.
+Include the role, the steps, and the output format. Then show it filled in with my example.`,
+      why: 'Templating a recurring task once saves you from rewriting the same prompt forever.' }
+  ],
+  tools: [
+    { id: 'claude', name: 'Claude', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Writing, nuanced reasoning, coding, long-document work', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'No native image/video generation.' },
+    { id: 'claude-code', name: 'Claude Code', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Agentic coding in your terminal/IDE — reads a codebase, edits, runs tests', skillLevel: 'advanced', pricing: 'freemium', url: 'https://claude.com/claude-code', note: 'Included with Claude Pro/Max.' },
+    { id: 'claude-cowork', name: 'Claude Cowork', vendor: 'Anthropic', group: 'General assistants', bestAt: 'An autonomous desktop agent that works across your files to return finished deliverables', skillLevel: 'all', pricing: 'paid', url: 'https://claude.com', note: 'Aimed at non-technical knowledge workers.' },
+    { id: 'claude-artifacts', name: 'Claude Artifacts', vendor: 'Anthropic', group: 'General assistants', bestAt: 'Live, shareable mini-apps and docs rendered beside the chat', skillLevel: 'all', pricing: 'freemium', url: 'https://claude.ai', note: 'Great for building little tools — like this page.' },
+    { id: 'chatgpt', name: 'ChatGPT', vendor: 'OpenAI', group: 'General assistants', bestAt: 'The most versatile all-rounder — image generation, data analysis, the best voice mode', skillLevel: 'all', pricing: 'freemium', url: 'https://chatgpt.com', note: '' },
+    { id: 'gemini', name: 'Gemini', vendor: 'Google', group: 'General assistants', bestAt: 'Multimodal (video/audio), huge context, Deep Research, Google Workspace', skillLevel: 'all', pricing: 'freemium', url: 'https://gemini.google.com', note: '' },
+
+    { id: 'perplexity', name: 'Perplexity', vendor: '', group: 'Research & knowledge', bestAt: 'Cited, real-time answers; Pro lets you pick the underlying model', skillLevel: 'all', pricing: 'freemium', url: 'https://www.perplexity.ai', note: '' },
+    { id: 'notebooklm', name: 'NotebookLM', vendor: 'Google', group: 'Research & knowledge', bestAt: 'Answers grounded strictly in YOUR sources; audio & video overviews', skillLevel: 'all', pricing: 'freemium', url: 'https://notebooklm.google.com', note: 'Low hallucination — ideal for studying.' },
+
+    { id: 'cursor', name: 'Cursor', vendor: '', group: 'Builders & coding', bestAt: 'An AI code editor for developers working in real codebases', skillLevel: 'advanced', pricing: 'freemium', url: 'https://cursor.com', note: '' },
+    { id: 'v0', name: 'v0', vendor: 'Vercel', group: 'Builders & coding', bestAt: 'High-quality React/Next.js + Tailwind UI from a prompt', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://v0.app', note: '' },
+    { id: 'lovable', name: 'Lovable', vendor: '', group: 'Builders & coding', bestAt: 'Full-stack apps by conversation — frontend + database + auth + deploy', skillLevel: 'beginner', pricing: 'paid', url: 'https://lovable.dev', note: 'The most beginner-friendly prompt-to-app.' },
+    { id: 'bolt', name: 'Bolt.new', vendor: 'StackBlitz', group: 'Builders & coding', bestAt: 'Fast in-browser full-stack prototyping across many frameworks', skillLevel: 'intermediate', pricing: 'paid', url: 'https://bolt.new', note: '' },
+    { id: 'figma-make', name: 'Figma Make', vendor: '', group: 'Builders & coding', bestAt: 'Design-to-code and AI prototyping inside Figma', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.figma.com/make/', note: 'Review the output before production.' },
+
+    { id: 'midjourney', name: 'Midjourney', vendor: '', group: 'Image, video & audio', bestAt: 'The highest aesthetic image quality', skillLevel: 'intermediate', pricing: 'paid', url: 'https://www.midjourney.com', note: '' },
+    { id: 'veo', name: 'Google Veo', vendor: 'Google', group: 'Image, video & audio', bestAt: 'Text-to-video with audio — a leading video model', skillLevel: 'intermediate', pricing: 'paid', url: 'https://deepmind.google/models/veo/', note: '' },
+    { id: 'sora', name: 'Sora', vendor: 'OpenAI', group: 'Image, video & audio', bestAt: 'Text-to-video generation', skillLevel: 'intermediate', pricing: 'paid', url: 'https://openai.com/sora/', note: '' },
+    { id: 'runway', name: 'Runway', vendor: '', group: 'Image, video & audio', bestAt: 'Video generation and editing built for creators', skillLevel: 'intermediate', pricing: 'freemium', url: 'https://runwayml.com', note: '' },
+    { id: 'suno', name: 'Suno', vendor: '', group: 'Image, video & audio', bestAt: 'Full songs from a text prompt', skillLevel: 'all', pricing: 'freemium', url: 'https://suno.com', note: 'Paid tier for commercial use.' },
+    { id: 'elevenlabs', name: 'ElevenLabs', vendor: '', group: 'Image, video & audio', bestAt: 'The most realistic AI voice / text-to-speech and voice cloning', skillLevel: 'all', pricing: 'freemium', url: 'https://elevenlabs.io', note: '' }
+  ],
+  resources: [
+    { name: 'Anthropic — Prompt engineering docs', why: 'The clearest official guide: be clear, give examples and a role, structure with XML, let it think.', url: 'https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview' },
+    { name: 'Anthropic — Prompt Library', why: 'Dozens of ready-to-use prompts across categories you can copy and adapt.', url: 'https://docs.claude.com/en/resources/prompt-library/library' },
+    { name: 'Anthropic — Interactive tutorial', why: 'A free, hands-on course that teaches prompting lesson by lesson.', url: 'https://github.com/anthropics/prompt-eng-interactive-tutorial' },
+    { name: 'OpenAI — Prompting guide', why: "OpenAI's own guidance, including outcome-first prompting for newer models.", url: 'https://platform.openai.com/docs/guides/prompt-engineering' },
+    { name: 'Google — Gemini prompting', why: "How to get the most from Gemini's multimodal and long-context strengths.", url: 'https://ai.google.dev/gemini-api/docs/prompting-strategies' },
+    { name: 'The Prompt Engineering Guide', why: 'A deep, free reference for few-shot, chain-of-thought, and advanced techniques.', url: 'https://www.promptingguide.ai/' }
+  ],
+  faqs: [
+    { q: 'What is Role-Task-Context-Format?', a: 'A simple recipe for a good prompt: say who the AI should be (Role), what you want it to do (Task), what it needs to know (Context), and the shape of the answer (Format).' },
+    { q: "What's the difference between the three skill levels?", a: 'Beginner is about getting the structure right. Intermediate adds examples, step-by-step reasoning, and a defined output format. Advanced uses system prompts, prompt chaining, meta-prompting, and outcome-first prompts that state the goal and let the model choose the path.' },
+    { q: 'What do RTF, RACE, CRISPE, and CRAFT mean?', a: "They're popular prompt frameworks — different acronyms for the same idea of structuring role, context, action, and format. They're scaffolding; clarity, context, and iteration matter more than which one you pick." },
+    { q: 'What are few-shot and chain-of-thought prompting?', a: 'Few-shot means giving the AI a few worked examples of the input and the output you want. Chain-of-thought means asking it to think step by step or show its reasoning before answering — both improve accuracy on harder tasks.' },
+    { q: 'What is outcome-first prompting?', a: 'Instead of scripting every step, you describe the result you want and what success looks like, then let a capable model decide how to get there. Newer frontier models often respond best to this.' },
+    { q: 'Does an llms.txt file actually help?', a: "It's a low-effort, on-theme way to hand AI tools a clean, paste-ready map of a site's key content. It's a proposed standard that major AI providers haven't formally adopted, so treat it as a useful context document rather than a guaranteed visibility boost." }
+  ]
+};
+</script>
+
+<!-- ============================================================ SITE BEHAVIOUR (shared with /prompt-play/) -->
+<script>
+(function () {
+  'use strict';
+  // header solid on scroll
+  var hd = document.getElementById('hd');
+  window.addEventListener('scroll', function () { hd.classList.toggle('solid', window.scrollY > 24); }, { passive: true });
+
+  // reveal on scroll (static sections only; dynamic cards are not tagged .r)
+  var els = document.querySelectorAll('.r');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (e) {
+      e.forEach(function (n, i) { if (n.isIntersecting) { setTimeout(function () { n.target.classList.add('v'); }, i * 24); io.unobserve(n.target); } });
+    }, { threshold: .08, rootMargin: '0px 0px -16px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  } else { els.forEach(function (el) { el.classList.add('v'); }); }
+
+  // GA: click + section view
+  document.querySelectorAll('[data-ga]').forEach(function (el) {
+    el.addEventListener('click', function () { if (typeof gtag === 'function') { gtag('event', 'click', { event_category: 'engagement', event_label: this.getAttribute('data-ga'), link_url: this.href || '' }); } });
+  });
+  if ('IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function (e) {
+      e.forEach(function (n) { if (n.isIntersecting) { if (typeof gtag === 'function') { gtag('event', 'section_view', { event_category: 'scroll', event_label: n.target.getAttribute('data-ga-section') }); } sio.unobserve(n.target); } });
+    }, { threshold: .3 });
+    document.querySelectorAll('[data-ga-section]').forEach(function (el) { sio.observe(el); });
+  }
+})();
+</script>
+
+<!-- ============================================================ THE KIT (render + filter + favorites + copy-for-AI) -->
+<script>
+(function () {
+  'use strict';
+
+  function ga(label, extra) { if (typeof gtag === 'function') { gtag('event', 'click', Object.assign({ event_category: 'kit', event_label: label }, extra || {})); } }
+  function lsGet(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function esc(s) { if (s == null) return ''; return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  var catLabels = {}, tierLabels = {};
+  KIT.categories.forEach(function (c) { catLabels[c.id] = c.label; });
+  KIT.tiers.forEach(function (t) { tierLabels[t.id] = t.label; });
+  function skillLabel(s) { return s === 'all' ? 'All levels' : s === 'intermediate' ? 'Intermediate' : s === 'advanced' ? 'Advanced' : 'Beginner'; }
+  function skillClass(s) { return s === 'advanced' ? 'sk-adv' : s === 'intermediate' ? 'sk-int' : 'sk-all'; }
+  function priceLabel(p) { return p === 'free' ? 'Free' : p === 'paid' ? 'Paid' : 'Free tier + paid'; }
+
+  var FAVKEY = 'pp_kit_favs';
+  var favs = lsGet(FAVKEY, []);
+  if (!Array.isArray(favs)) favs = [];
+  var state = { cats: new Set(), tiers: new Set(), q: '', favOnly: false };
+
+  var grid = document.getElementById('kitGrid');
+  var countEl = document.getElementById('kitCount');
+
+  // ---- chips ----
+  function buildChips() {
+    var tc = document.getElementById('tierChips');
+    tc.innerHTML = '<span class="gl">Level</span>';
+    KIT.tiers.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip chip-tier'; b.setAttribute('aria-pressed', 'false');
+      b.dataset.tier = t.id; b.textContent = t.label;
+      tc.appendChild(b);
+    });
+    var cc = document.getElementById('catChips');
+    cc.innerHTML = '<span class="gl">Topic</span>';
+    KIT.categories.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.setAttribute('aria-pressed', 'false');
+      b.dataset.cat = c.id; b.textContent = c.label;
+      cc.appendChild(b);
+    });
+  }
+
+  // ---- filtering ----
+  function matches(p) {
+    if (state.tiers.size && !state.tiers.has(p.tier)) return false;
+    if (state.cats.size && !state.cats.has(p.category)) return false;
+    if (state.favOnly && favs.indexOf(p.id) < 0) return false;
+    if (state.q) {
+      var hay = (p.title + ' ' + p.text + ' ' + p.why + ' ' + p.tags.join(' ')).toLowerCase();
+      if (hay.indexOf(state.q) < 0) return false;
+    }
+    return true;
+  }
+
+  function cardHTML(p) {
+    var starred = favs.indexOf(p.id) >= 0;
+    return '<article class="pcard" data-id="' + p.id + '">' +
+      '<div class="pcard-top">' +
+        '<span class="tier-badge tier-' + p.tier + '">' + esc(tierLabels[p.tier]) + '</span>' +
+        '<span class="cat-tag">' + esc(catLabels[p.category]) + '</span>' +
+        '<button type="button" class="star-btn" data-star="' + p.id + '" aria-pressed="' + starred + '" aria-label="' + (starred ? 'Unfavorite' : 'Favorite') + ': ' + esc(p.title) + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.9 21l1.2-6.8-5-4.9 6.9-1z"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<h3>' + esc(p.title) + '</h3>' +
+      '<pre class="pcode">' + esc(p.text) + '</pre>' +
+      '<button type="button" class="btn btn-navy btn-sm copy-btn" data-copy="' + p.id + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
+        '<span>Copy</span></button>' +
+      '<p class="pcard-why"><b>Why it works:</b> ' + esc(p.why) + '</p>' +
+      '</article>';
+  }
+
+  function render() {
+    var list = KIT.prompts.filter(matches);
+    if (!list.length) {
+      grid.innerHTML = '<p class="kit-empty">No prompts match that yet — try clearing a filter.</p>';
+    } else {
+      grid.innerHTML = list.map(cardHTML).join('');
+    }
+    countEl.textContent = list.length + (list.length === 1 ? ' prompt' : ' prompts') +
+      (state.favOnly ? ' starred' : '') + (state.q ? ' matching “' + state.q + '”' : '');
+  }
+
+  // ---- toolbar events ----
+  function syncChip(btn, on) { btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+
+  document.getElementById('tierChips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tier]'); if (!b) return;
+    var id = b.dataset.tier;
+    if (state.tiers.has(id)) { state.tiers.delete(id); syncChip(b, false); }
+    else { state.tiers.add(id); syncChip(b, true); ga('ppk_filter_tier', { item_id: id }); }
+    render();
+  });
+  document.getElementById('catChips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cat]'); if (!b) return;
+    var id = b.dataset.cat;
+    if (state.cats.has(id)) { state.cats.delete(id); syncChip(b, false); }
+    else { state.cats.add(id); syncChip(b, true); ga('ppk_filter_category', { item_id: id }); }
+    render();
+  });
+
+  var favChip = document.getElementById('favChip');
+  favChip.addEventListener('click', function () {
+    state.favOnly = !state.favOnly; syncChip(favChip, state.favOnly); ga('ppk_filter_fav'); render();
+  });
+
+  document.getElementById('clearChip').addEventListener('click', function () {
+    state.cats.clear(); state.tiers.clear(); state.favOnly = false; state.q = '';
+    document.getElementById('kitSearch').value = '';
+    document.querySelectorAll('.chip[aria-pressed="true"]').forEach(function (c) { syncChip(c, false); });
+    render();
+  });
+
+  var searchT;
+  document.getElementById('kitSearch').addEventListener('input', function (e) {
+    var v = e.target.value.trim().toLowerCase();
+    clearTimeout(searchT);
+    searchT = setTimeout(function () { state.q = v; render(); if (v) ga('ppk_search'); }, 130);
+  });
+
+  // ---- card events (delegated; cards are dynamic) ----
+  grid.addEventListener('click', function (e) {
+    var copyBtn = e.target.closest('[data-copy]');
+    if (copyBtn) {
+      var p = KIT.prompts.filter(function (x) { return x.id === copyBtn.dataset.copy; })[0];
+      if (p) copyText(p.text, copyBtn.querySelector('span'), 'Copied ✓', 'Copy');
+      ga('ppk_copy_prompt', { item_id: copyBtn.dataset.copy });
+      return;
+    }
+    var star = e.target.closest('[data-star]');
+    if (star) {
+      var id = star.dataset.star, i = favs.indexOf(id);
+      if (i >= 0) { favs.splice(i, 1); } else { favs.push(id); }
+      lsSet(FAVKEY, favs);
+      var on = favs.indexOf(id) >= 0;
+      star.setAttribute('aria-pressed', on ? 'true' : 'false');
+      star.setAttribute('aria-label', (on ? 'Unfavorite' : 'Favorite') + ': ' + (KIT.prompts.filter(function (x) { return x.id === id; })[0] || {}).title);
+      ga('ppk_fav_toggle', { item_id: id });
+      if (state.favOnly && !on) render();
+    }
+  });
+
+  function copyText(text, labelEl, done, reset) {
+    var prev = reset;
+    function flash() { if (labelEl) { labelEl.textContent = done; setTimeout(function () { labelEl.textContent = prev; }, 1800); } }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash).catch(function () { window.prompt('Copy this:', text); });
+    } else { window.prompt('Copy this:', text); }
+  }
+
+  // ---- tools table ----
+  function buildTools() {
+    var body = document.getElementById('toolBody');
+    var groups = [];
+    KIT.tools.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
+    var html = '';
+    groups.forEach(function (g) {
+      html += '<tr class="grp"><th scope="rowgroup" colspan="4">' + esc(g) + '</th></tr>';
+      KIT.tools.filter(function (t) { return t.group === g; }).forEach(function (t) {
+        html += '<tr>' +
+          '<th scope="row"><a href="' + esc(t.url) + '" target="_blank" rel="noopener" data-ga="ppk_tool_link">' + esc(t.name) + '</a>' +
+            (t.vendor ? ' <span class="vendor">' + esc(t.vendor) + '</span>' : '') + '</th>' +
+          '<td>' + esc(t.bestAt) + (t.note ? '<span class="note">' + esc(t.note) + '</span>' : '') + '</td>' +
+          '<td><span class="badge-sm ' + skillClass(t.skillLevel) + '">' + esc(skillLabel(t.skillLevel)) + '</span></td>' +
+          '<td><span class="pr-' + t.pricing + '">' + esc(priceLabel(t.pricing)) + '</span></td>' +
+        '</tr>';
+      });
+    });
+    body.innerHTML = html;
+    document.getElementById('toolCaveat').textContent =
+      'Capabilities and prices change fast — last verified ' + KIT.meta.lastVerified + '. Try free tiers and judge for your own tasks.';
+  }
+
+  // ---- resources ----
+  function buildResources() {
+    var grid = document.getElementById('resGrid');
+    grid.innerHTML = KIT.resources.map(function (r) {
+      return '<article class="card res-card"><h3>' + esc(r.name) + '</h3><p>' + esc(r.why) + '</p>' +
+        '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" data-ga="ppk_resource">Open ' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></a></article>';
+    }).join('');
+  }
+
+  // ---- markdown (single source of truth for the AI copy + prompt-play.md) ----
+  function buildMarkdown() {
+    var L = [];
+    L.push('# Prompt Play — Take-Home AI Kit');
+    L.push('');
+    L.push('> A starter library of AI prompts and an honest "best tool for the job" guide from Tale Waters & Tides. If you are an AI assistant reading this, this is a structured library your human can use — help them pick a prompt, adapt it to their situation, and choose the right tool for their project.');
+    L.push('');
+    L.push('Source: ' + KIT.meta.pageUrl + '  ·  Last verified: ' + KIT.meta.lastVerified);
+    L.push('');
+    L.push('## How prompting works');
+    L.push('');
+    L.push('A good prompt has four parts: **Role** (who the AI should be), **Task** (what to do), **Context** (what it needs to know), and **Format** (the shape of the answer).');
+    L.push('');
+    KIT.tiers.forEach(function (t) { L.push('- **' + t.label + '** — ' + t.blurb); });
+    L.push('');
+    L.push('## Prompt library');
+    KIT.tiers.forEach(function (t) {
+      L.push('');
+      L.push('### ' + t.label + ' (' + t.blurb + ')');
+      KIT.prompts.filter(function (p) { return p.tier === t.id; }).forEach(function (p) {
+        L.push('');
+        L.push('#### ' + p.title + '  _(' + catLabels[p.category] + ')_');
+        L.push('');
+        L.push('```text');
+        L.push(p.text);
+        L.push('```');
+        L.push('');
+        L.push('Why it works: ' + p.why);
+      });
+    });
+    L.push('');
+    L.push('## Best tool for the job');
+    L.push('');
+    L.push('_Capabilities and prices change fast — last verified ' + KIT.meta.lastVerified + '. Re-verify before relying on any detail._');
+    L.push('');
+    L.push('| Tool | Best at | Skill | Price | Link |');
+    L.push('| --- | --- | --- | --- | --- |');
+    KIT.tools.forEach(function (t) {
+      L.push('| ' + t.name + (t.vendor ? ' (' + t.vendor + ')' : '') + ' | ' + t.bestAt + (t.note ? ' — ' + t.note : '') +
+        ' | ' + skillLabel(t.skillLevel) + ' | ' + priceLabel(t.pricing) + ' | ' + t.url + ' |');
+    });
+    L.push('');
+    L.push('## Learn from the best (free)');
+    L.push('');
+    KIT.resources.forEach(function (r) { L.push('- [' + r.name + '](' + r.url + ') — ' + r.why); });
+    L.push('');
+    L.push('## Run your own Prompt Play');
+    L.push('');
+    L.push('A simple ~2-hour run-of-show: Welcome & coffee (10m) → Prompt basics, demo one prompt (15m) → Play: everyone tries 2–3 prompts (45m) → Build something from prompt to tool (30m) → Share & reflect (15m). Start beginners with one prompt, not ten; great first demos are "Make an email warmer," "Twenty ideas fast," and "Explain it simply." More: ' + 'https://talewatersandtides.com/prompt-play/');
+    L.push('');
+    L.push('---');
+    L.push('Made with coffee, community, code, and curiosity by Corey Boelkens · Tale Waters & Tides. The tide is rising. Let\'s surf it.');
+    return L.join('\n');
+  }
+
+  // ---- JSON-LD ----
+  function buildJsonLd() {
+    var org = { '@type': 'Organization', name: 'Tale Waters & Tides', url: 'https://talewatersandtides.com' };
+    var course = {
+      '@context': 'https://schema.org', '@type': 'Course',
+      name: 'Prompt Play — Take-Home AI Kit',
+      description: 'A take-home library of AI prompts by skill level and category, plus a best-tool-for-the-job guide.',
+      provider: org, url: KIT.meta.pageUrl, inLanguage: 'en', isAccessibleForFree: true,
+      dateModified: KIT.meta.lastVerifiedISO
+    };
+    var list = {
+      '@context': 'https://schema.org', '@type': 'ItemList',
+      name: 'Prompt Play prompt library',
+      itemListElement: KIT.prompts.map(function (p, i) {
+        return { '@type': 'ListItem', position: i + 1, name: p.title, description: p.why };
+      })
+    };
+    var faq = {
+      '@context': 'https://schema.org', '@type': 'FAQPage',
+      mainEntity: KIT.faqs.map(function (f) {
+        return { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } };
+      })
+    };
+    [course, list, faq].forEach(function (obj) {
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.textContent = JSON.stringify(obj).replace(/</g, '\\u003c');
+      document.head.appendChild(s);
+    });
+  }
+
+  // ---- "copy for your AI" ----
+  function initAiBlock() {
+    var md = buildMarkdown();
+    document.getElementById('aiBlock').value = md;
+    var btn = document.getElementById('copyAiBtn');
+    var label = document.getElementById('copyAiLabel');
+    btn.addEventListener('click', function () {
+      copyText(md, label, 'Copied for your AI ✓', 'Copy the kit as clean text');
+    });
+  }
+
+  // ---- boot ----
+  document.getElementById('ftVerified').textContent = KIT.meta.lastVerified;
+  buildChips();
+  render();
+  buildTools();
+  buildResources();
+  buildJsonLd();
+  initAiBlock();
+})();
+</script>
+</body>
+</html>
