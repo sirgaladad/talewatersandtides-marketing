@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PFG Market Intelligence Dashboard — Tale Waters & Tides</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1a2f5a;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-dim: #0d948820;
+    --amber: #f59e0b;
+    --amber-light: #fbbf24;
+    --red: #ef4444;
+    --red-dim: #ef444420;
+    --green: #22c55e;
+    --green-dim: #22c55e20;
+    --yellow: #eab308;
+    --yellow-dim: #eab30820;
+    --blue-dim: #3b82f620;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --border: #1e3a5f;
+    --card: #111d35;
+    --card-hover: #162542;
+    --surface: #0d1929;
+    --radius: 10px;
+    --gap: 16px;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-brand .fish-icon {
+    width: 28px;
+    height: 28px;
+    fill: var(--teal-light);
+  }
+  .topbar-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .topbar-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .topbar-meta { font-size: 11px; color: var(--text-dim); text-align: right; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-live { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+  .badge-high { background: var(--red-dim); color: var(--red); }
+  .badge-med { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-low { background: var(--green-dim); color: var(--green); }
+  .badge-opp { background: var(--teal-dim); color: var(--teal-light); }
+  .badge-new { background: #7c3aed20; color: #a78bfa; border: 1px solid #7c3aed; }
+
+  /* NAV TABS */
+  .nav-tabs {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--teal-light); border-bottom-color: var(--teal-light); }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 1280px; margin: 0 auto; padding: 24px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION HEADER */
+  .section-header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 { font-size: 20px; font-weight: 700; color: var(--text); }
+  .section-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  /* GRID UTILITIES */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+  .stack { display: flex; flex-direction: column; gap: var(--gap); }
+  .row { display: flex; gap: var(--gap); align-items: flex-start; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .card-sm { padding: 14px; }
+  .card h3 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--text-muted); }
+
+  /* KPI CARDS */
+  .kpi-val { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1.1; }
+  .kpi-val span { font-size: 14px; font-weight: 500; color: var(--teal-light); margin-left: 4px; }
+  .kpi-label { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .kpi-trend { font-size: 11px; color: var(--green); margin-top: 6px; }
+  .kpi-trend.down { color: var(--red); }
+
+  /* ALERT BOXES */
+  .alert {
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px;
+    border-left: 3px solid;
+    margin-bottom: 14px;
+  }
+  .alert-red { background: var(--red-dim); border-color: var(--red); color: #fca5a5; }
+  .alert-amber { background: var(--yellow-dim); border-color: var(--amber); color: #fde68a; }
+  .alert-green { background: var(--green-dim); border-color: var(--green); color: #86efac; }
+  .alert-teal { background: var(--teal-dim); border-color: var(--teal); color: #5eead4; }
+  .alert strong { display: block; font-weight: 700; margin-bottom: 4px; }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .fill-green { background: var(--green); }
+  .fill-yellow { background: var(--yellow); }
+  .fill-red { background: var(--red); }
+  .fill-teal { background: var(--teal-light); }
+  .fill-amber { background: var(--amber); }
+
+  /* COMPETITOR CARDS */
+  .competitor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--gap);
+  }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .comp-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .comp-card.expanded { border-color: var(--teal-light); }
+  .comp-header {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .comp-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .comp-tagline { font-size: 11px; color: var(--text-muted); }
+  .comp-body { padding: 14px 16px; }
+  .comp-stats { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .comp-stat { font-size: 11px; color: var(--text-muted); }
+  .comp-stat strong { color: var(--text); display: block; font-size: 13px; }
+  .comp-details { display: none; padding-top: 12px; border-top: 1px solid var(--border); margin-top: 12px; }
+  .comp-card.expanded .comp-details { display: block; }
+  .comp-detail-row { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; display: flex; gap: 6px; }
+  .comp-detail-row::before { content: "→"; color: var(--teal); flex-shrink: 0; }
+
+  /* THREAT METER */
+  .threat-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .threat-label { font-size: 11px; color: var(--text-dim); width: 48px; flex-shrink: 0; }
+  .threat-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .threat-fill { height: 100%; border-radius: 2px; }
+
+  /* FEATURE MATRIX */
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .matrix-table th {
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .matrix-table th:first-child { text-align: left; min-width: 180px; }
+  .matrix-table th.pfg-col { color: var(--teal-light); }
+  .matrix-table td {
+    padding: 9px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .matrix-table td:first-child {
+    text-align: left;
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .matrix-table tr:hover td { background: var(--card-hover); }
+  .matrix-table .group-header td {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    padding: 6px 8px;
+  }
+  .cell-yes { font-size: 15px; }
+  .cell-no { font-size: 15px; opacity: 0.4; }
+  .cell-partial { font-size: 15px; color: var(--yellow); }
+  .cell-pfg { font-size: 15px; }
+  .has-tooltip { position: relative; cursor: help; }
+  .has-tooltip:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  /* LEAN CANVAS */
+  .lean-canvas {
+    display: grid;
+    grid-template-areas:
+      "problem solution uvp unfair segments"
+      "problem keymetrics uvp channels segments"
+      "coststructure coststructure coststructure revenuestreams revenuestreams";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .lc-box {
+    background: var(--card);
+    padding: 14px;
+    min-height: 120px;
+  }
+  .lc-box h4 {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--teal);
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .lc-box ul { list-style: none; padding: 0; }
+  .lc-box li { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; padding-left: 10px; position: relative; }
+  .lc-box li::before { content: "·"; position: absolute; left: 0; color: var(--teal-light); font-weight: 700; }
+  .lc-box.uvp { background: var(--navy-light); }
+  .lc-box.uvp h4 { color: var(--amber-light); }
+  .lc-box.uvp li { color: var(--text); }
+  .lc-problem { grid-area: problem; }
+  .lc-solution { grid-area: solution; }
+  .lc-uvp { grid-area: uvp; }
+  .lc-unfair { grid-area: unfair; }
+  .lc-segments { grid-area: segments; }
+  .lc-keymetrics { grid-area: keymetrics; }
+  .lc-channels { grid-area: channels; }
+  .lc-cost { grid-area: coststructure; }
+  .lc-revenue { grid-area: revenuestreams; }
+
+  /* OPPORTUNITIES */
+  .opp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+  .opp-card:hover { border-color: var(--teal); }
+  .opp-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    color: var(--teal-light);
+    font-size: 13px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .opp-body h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .opp-body p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .opp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .opp-tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .tag-quick { background: #7c3aed20; color: #a78bfa; }
+  .tag-medium { background: var(--teal-dim); color: var(--teal-light); }
+  .tag-long { background: var(--yellow-dim); color: var(--yellow); }
+  .tag-growth { background: var(--green-dim); color: var(--green); }
+  .tag-risk { background: var(--red-dim); color: var(--red); }
+  .tag-revenue { background: #f59e0b20; color: var(--amber-light); }
+
+  /* BEST PRACTICES CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { width: 18px; height: 18px; border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-top: 1px; }
+  .check-done { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+  .check-partial { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+  .check-todo { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+  .check-label { color: var(--text); font-weight: 500; }
+  .check-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+  .tl-dot.green { background: var(--green-dim); border-color: var(--green); }
+  .tl-dot.teal { background: var(--teal-dim); border-color: var(--teal); }
+  .tl-dot.amber { background: var(--yellow-dim); border-color: var(--amber); }
+  .tl-dot.red { background: var(--red-dim); border-color: var(--red); }
+  .tl-date { font-size: 11px; color: var(--text-dim); margin-bottom: 3px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .tl-body { font-size: 12px; color: var(--text-muted); }
+
+  /* SCORE RUBRIC */
+  .rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .rubric-table th {
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+  }
+  .rubric-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .rubric-table td:first-child { color: var(--text); font-weight: 600; }
+  .rubric-table tr:hover td { background: var(--card-hover); }
+  .score-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* FOOTER */
+  .dash-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .lean-canvas {
+      grid-template-areas:
+        "problem"
+        "solution"
+        "uvp"
+        "unfair"
+        "segments"
+        "keymetrics"
+        "channels"
+        "coststructure"
+        "revenuestreams";
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .main { padding: 16px; }
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* INLINE LINK */
+  a.link { color: var(--teal-light); text-decoration: none; }
+  a.link:hover { text-decoration: underline; }
+
+  /* SCROLL TO TOP */
+  .to-top {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    z-index: 99;
+  }
+  .to-top:hover { opacity: 1; }
+
+  /* PRINT */
+  @media print {
+    .topbar, .nav-tabs, .to-top { position: static; }
+    .tab-panel { display: block !important; page-break-before: always; }
+    .tab-panel:first-child { page-break-before: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <svg class="fish-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 12c0 0-3-5-10-5c-2 0-4 .5-5.5 1.5L4 7l-2 5 2 2.5 2.5-1.5C8 14.5 10 15 12 15c7 0 10-3 10-3zM8 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </svg>
+    <div>
+      <div class="topbar-title">PFG Market Intelligence</div>
+      <div class="topbar-sub">Pocket Fishing Guide · Competitive &amp; Market Landscape</div>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <div><span class="badge badge-live">Live Report</span></div>
+    <div style="margin-top:4px">June 23, 2026 · Tale Waters &amp; Tides</div>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs" id="navTabs">
+  <button class="tab-btn active" onclick="switchTab(event,'overview')">Overview</button>
+  <button class="tab-btn" onclick="switchTab(event,'competitors')">Competitors</button>
+  <button class="tab-btn" onclick="switchTab(event,'matrix')">Feature Matrix</button>
+  <button class="tab-btn" onclick="switchTab(event,'lean-canvas')">Lean Canvas</button>
+  <button class="tab-btn" onclick="switchTab(event,'opportunities')">Opportunities</button>
+  <button class="tab-btn" onclick="switchTab(event,'bestpractices')">Best Practices</button>
+  <button class="tab-btn" onclick="switchTab(event,'timeline')">Timeline</button>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ===================== OVERVIEW ===================== -->
+  <section class="tab-panel active" id="tab-overview">
+    <div class="section-header">
+      <h2>Market Overview &amp; Executive Summary</h2>
+      <p>Competitive scan as of June 23, 2026. Research sources: web search, app store intelligence, market reports.</p>
+    </div>
+
+    <!-- KEY ALERTS -->
+    <div class="alert alert-red">
+      <strong>HIGH PRIORITY: GilledIt emerging as category leader</strong>
+      GilledIt launched a free-forever model with a built-in tackle marketplace (Stripe Connect, 8% fee) and algorithmic social feed — now ranked #1 fishing app for most anglers in 2026. Represents the strongest competitive threat to PFG's free-tier positioning.
+    </div>
+    <div class="alert alert-amber">
+      <strong>OPPORTUNITY: Paywall backlash creating market opening</strong>
+      Fishbrain ($10–13/month) and FishAngler (v5.0 paywall of core forecast features) are both seeing high user churn and negative reviews. Users are actively seeking free, feature-rich alternatives — PFG's timing is ideal.
+    </div>
+    <div class="alert alert-green">
+      <strong>ADVANTAGE: No competitor owns the Arkansas-specific niche</strong>
+      Zero national fishing apps provide AGFC regulation-aware intelligence, Arkansas-specific water data, or 2026 trout limit changes. This local depth is PFG's strongest untouchable moat.
+    </div>
+
+    <!-- KPI GRID -->
+    <div class="grid-4" style="margin-bottom:var(--gap)">
+      <div class="card">
+        <h3>Market Size 2025</h3>
+        <div class="kpi-val">$1.28B</div>
+        <div class="kpi-label">Global fishing app market value</div>
+        <div class="kpi-trend">↑ Growing to $2.35B by 2032</div>
+        <div class="progress-bar"><div class="progress-fill fill-teal" style="width:55%"></div></div>
+      </div>
+      <div class="card">
+        <h3>US Anglers 2025</h3>
+        <div class="kpi-val">57.9M</div>
+        <div class="kpi-label">Americans who fished — all-time record</div>
+        <div class="kpi-trend">↑ 19% of U.S. population</div>
+        <div class="progress-bar"><div class="progress-fill fill-green" style="width:78%"></div></div>
+      </div>
+      <div class="card">
+        <h3>App Adoption</h3>
+        <div class="kpi-val">45%</div>
+        <div class="kpi-label">US anglers using mobile apps for planning</div>
+        <div class="kpi-trend">↑ 50M+ active app users globally</div>
+        <div class="progress-bar"><div class="progress-fill fill-amber" style="width:45%"></div></div>
+      </div>
+      <div class="card">
+        <h3>Market CAGR</h3>
+        <div class="kpi-val">9.1%<span>–11.7%</span></div>
+        <div class="kpi-label">Annual growth rate through 2032–2035</div>
+        <div class="kpi-trend">↑ NA holds 36.2% market share</div>
+        <div class="progress-bar"><div class="progress-fill fill-teal" style="width:65%"></div></div>
+      </div>
+    </div>
+
+    <!-- COMPETITIVE SUMMARY TABLE -->
+    <div class="card" style="margin-bottom:var(--gap)">
+      <h3 style="margin-bottom:14px">Competitive Threat Summary</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="border-bottom:2px solid var(--border)">
+            <th style="text-align:left;padding:8px 0;color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase">App</th>
+            <th style="text-align:center;padding:8px;color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase">Threat Level</th>
+            <th style="text-align:center;padding:8px;color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase">Free Tier</th>
+            <th style="text-align:center;padding:8px;color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase">AR Focus</th>
+            <th style="padding:8px;color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase">Key Move (2025–26)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">GilledIt</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-high">High</span></td>
+            <td style="text-align:center;padding:8px">✅ Full</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">Ranked #1 2026, tackle marketplace with Stripe Connect launched</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">Fishbrain</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-med">Med</span></td>
+            <td style="text-align:center;padding:8px">⚠️ Paywall</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">Crash reports, customer service complaints, $10–13/mo Pro backlash</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">FishAngler</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-med">Med</span></td>
+            <td style="text-align:center;padding:8px">⚠️ Changing</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">v5.0 moved forecast behind paywall; UX backlash; declining sentiment</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">Omnia Fishing</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-low">Low</span></td>
+            <td style="text-align:center;padding:8px">✅ Core</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">$59/yr PRO + tackle store hybrid; national focus</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">onX Fish</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-low">Low</span></td>
+            <td style="text-align:center;padding:8px">⚠️ Limited</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">10-state Midwest focus; 3D topo, DNR data</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">BassForecast</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-low">Low</span></td>
+            <td style="text-align:center;padding:8px">✅ Core</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">iOS 26 Liquid Glass update; bass-only niche</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 0;font-weight:600;color:var(--text)">Fishbox</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-med">Med</span></td>
+            <td style="text-align:center;padding:8px">✅ Core</td>
+            <td style="text-align:center;padding:8px">❌</td>
+            <td style="padding:8px;color:var(--text-muted)">AI fishing assistant + forecasts; emerging all-in-one</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0;font-weight:700;color:var(--teal-light)">PFG (Us)</td>
+            <td style="text-align:center;padding:8px"><span class="badge badge-opp">Unique</span></td>
+            <td style="text-align:center;padding:8px">✅ Full</td>
+            <td style="text-align:center;padding:8px;color:var(--teal-light)">✅ ONLY</td>
+            <td style="padding:8px;color:var(--text)">v0.4.0 QA; 39 AR waters; AGFC-aware; zero backend</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MARKET SNAPSHOT -->
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:12px">Market Sentiment Signals</h3>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Anti-paywall sentiment</span><span style="color:var(--red)">High</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-red" style="width:82%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Appetite for free alternatives</span><span style="color:var(--green)">Very High</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-green" style="width:88%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Demand for local/state-specific tools</span><span style="color:var(--teal-light)">High</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-teal" style="width:73%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Beginner angler growth</span><span style="color:var(--amber)">Increasing</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-amber" style="width:65%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>AI feature demand</span><span style="color:var(--teal-light)">Growing</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-teal" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:12px">PFG Positioning Strength</h3>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Arkansas local depth</span><span style="color:var(--green)">Unmatched</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-green" style="width:95%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Free core feature access</span><span style="color:var(--green)">Strong</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-green" style="width:90%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>AGFC regulation integration</span><span style="color:var(--teal-light)">Unique</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-teal" style="width:92%"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>User retention tools</span><span style="color:var(--yellow)">Building</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:35%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px">
+            <span>Social / community features</span><span style="color:var(--red)">Gap</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill fill-red" style="width:10%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPETITORS ===================== -->
+  <section class="tab-panel" id="tab-competitors">
+    <div class="section-header">
+      <h2>Competitor Profiles</h2>
+      <p>Click any card to expand full details. Threat level reflects impact on PFG's Arkansas market position.</p>
+    </div>
+
+    <div class="competitor-grid">
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#0d948820;color:#14b8a6;font-size:13px;font-weight:900">GL</div>
+          <div>
+            <div class="comp-name">GilledIt <span class="badge badge-new" style="margin-left:6px">Rising</span></div>
+            <div class="comp-tagline">Free US Fishing App, Catch Log &amp; Marketplace</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>#1 Ranked</strong>Best app 2026</div>
+            <div class="comp-stat"><strong>Free</strong>All core features</div>
+            <div class="comp-stat"><strong>200+</strong>US species</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:85%;background:var(--red)"></div></div>
+            <span class="badge badge-high">High</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">Free catch logging: species, weight, length, location, gear, weather, photos in under 30 seconds</div>
+            <div class="comp-detail-row">Built-in tackle marketplace — only fishing app with buy/sell/trade + Stripe Connect escrow, 8% fee, offer negotiation</div>
+            <div class="comp-detail-row">Algorithmic “For You” social feed; weekly challenges; 30+ badges</div>
+            <div class="comp-detail-row">No paywall on core features (messaging, map, challenges, marketplace)</div>
+            <div class="comp-detail-row" style="color:var(--green)">Weakness: No state-specific regulation awareness; no hyperlocal Arkansas data</div>
+            <div class="comp-detail-row" style="color:var(--green)">Weakness: National scope means no Maumelle-level depth or AGFC integration</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#1e40af20;color:#60a5fa;font-size:13px;font-weight:900">FB</div>
+          <div>
+            <div class="comp-name">Fishbrain</div>
+            <div class="comp-tagline">Largest user base, heavy paywall</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>#1 Users</strong>By total count</div>
+            <div class="comp-stat"><strong>$10–13/mo</strong>Pro subscription</div>
+            <div class="comp-stat"><strong>AI</strong>BiteTime forecasts</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:55%;background:var(--yellow)"></div></div>
+            <span class="badge badge-med">Med</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">AI-powered BiteTime forecasts backed by millions of angler catch reports</div>
+            <div class="comp-detail-row">Interactive maps: Garmin Navionics + C-Map depth charts, boat ramps, fishing spots</div>
+            <div class="comp-detail-row">Weather, tides, moon phases, wind speed integration</div>
+            <div class="comp-detail-row" style="color:var(--red)">Weakness: App crashes and poor customer support widespread in 2025–26 reviews</div>
+            <div class="comp-detail-row" style="color:var(--red)">Weakness: Nearly all features behind $10–13/mo Pro paywall — high churn risk</div>
+            <div class="comp-detail-row" style="color:var(--green)">Opportunity: Frustrated users actively seeking free alternatives</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#7c3aed20;color:#a78bfa;font-size:13px;font-weight:900">FA</div>
+          <div>
+            <div class="comp-name">FishAngler <span class="badge" style="background:var(--red-dim);color:var(--red);margin-left:6px">Backlash</span></div>
+            <div class="comp-tagline">Fish Finder + Forecast App</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>Free</strong>Historically</div>
+            <div class="comp-stat"><strong>3D Maps</strong>Lake + ocean</div>
+            <div class="comp-stat"><strong>Declining</strong>Sentiment</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:45%;background:var(--yellow)"></div></div>
+            <span class="badge badge-med">Med</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">3D lake contours, ocean floor mapping, Garmin Navionics bathymetric charts</div>
+            <div class="comp-detail-row">FishForecast with faster scrolling through daily/monthly forecasts</div>
+            <div class="comp-detail-row" style="color:var(--red)">v5.0.0: Moved bite times (core feature) behind paywall — triggered significant user exodus</div>
+            <div class="comp-detail-row" style="color:var(--red)">UI redesign described as “terrible” and “not easy to read” — UX regression</div>
+            <div class="comp-detail-row" style="color:var(--green)">Opportunity: High churn risk — users explicitly citing this app as reason to try alternatives</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#f59e0b20;color:#fbbf24;font-size:13px;font-weight:900">OM</div>
+          <div>
+            <div class="comp-name">Omnia Fishing</div>
+            <div class="comp-tagline">Chart layers + in-app tackle store</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>$59/yr</strong>PRO membership</div>
+            <div class="comp-stat"><strong>Hybrid</strong>Maps + commerce</div>
+            <div class="comp-stat"><strong>10% back</strong>On tackle</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:25%;background:var(--green)"></div></div>
+            <span class="badge badge-low">Low</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">Navionics depth charts, near-real-time wind, water temp &amp; clarity for PRO members</div>
+            <div class="comp-detail-row">Free shipping + 10% back on tackle purchases with $59/yr PRO</div>
+            <div class="comp-detail-row">National focus — no Arkansas-specific data</div>
+            <div class="comp-detail-row" style="color:var(--green)">Model insight: Commerce integration as revenue stream — relevant to PFG's future guide/sponsor program</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#16a34a20;color:#4ade80;font-size:13px;font-weight:900">OX</div>
+          <div>
+            <div class="comp-name">onX Fish</div>
+            <div class="comp-tagline">Midwest states, DNR + 3D topo focus</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>10 States</strong>Midwest focus</div>
+            <div class="comp-stat"><strong>3D Topo</strong>Fish abundance</div>
+            <div class="comp-stat"><strong>DNR</strong>Integrated data</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:20%;background:var(--green)"></div></div>
+            <span class="badge badge-low">Low</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">Fish Species Abundance Insights: identifies lakes with highest density of target species</div>
+            <div class="comp-detail-row">Major/minor feeding times, lunar calendar, barometric pressure, wind, hourly weather</div>
+            <div class="comp-detail-row">Does not appear to cover Arkansas — Midwest only</div>
+            <div class="comp-detail-row" style="color:var(--green)">Model signal: State-specific DNR data integration is a proven differentiator — PFG's AGFC integration mirrors this</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#dc262620;color:#f87171;font-size:13px;font-weight:900">BF</div>
+          <div>
+            <div class="comp-name">BassForecast</div>
+            <div class="comp-tagline">Science-based bass feeding predictions</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>Bass-only</strong>Narrow niche</div>
+            <div class="comp-stat"><strong>BFR Score</strong>Proprietary</div>
+            <div class="comp-stat"><strong>iOS 26</strong>Ready</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:18%;background:var(--green)"></div></div>
+            <span class="badge badge-low">Low</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">BassForecast Rating (BFR) system: weather + water data + moon phases combined</div>
+            <div class="comp-detail-row">iOS 26 Liquid Glass support — smooth UI transitions; 2026 features announced</div>
+            <div class="comp-detail-row">Narrow: bass only; national; no local regulation data</div>
+            <div class="comp-detail-row" style="color:var(--green)">Low threat — different species focus; potential model for PFG's species-specific scoring expansion</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#0891b220;color:#22d3ee;font-size:13px;font-weight:900">FX</div>
+          <div>
+            <div class="comp-name">Fishbox</div>
+            <div class="comp-tagline">All-in-one: forecasts, charts, AI assistant</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>AI</strong>Fishing assistant</div>
+            <div class="comp-stat"><strong>All-in-one</strong>Platform</div>
+            <div class="comp-stat"><strong>Free</strong>Core tier</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:40%;background:var(--yellow)"></div></div>
+            <span class="badge badge-med">Med</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">Forecasts, bathymetric charts, AI fishing assistant, catch logging in one app</div>
+            <div class="comp-detail-row">Recommended as “strong default” for anglers wanting integrated experience</div>
+            <div class="comp-detail-row">No Arkansas-specific data, no AGFC regulation integration</div>
+            <div class="comp-detail-row" style="color:var(--green)">Medium threat — watch for AI assistant feature evolution; PFG's Claude API roadmap item is relevant</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" onclick="toggleComp(this)">
+        <div class="comp-header">
+          <div class="comp-icon" style="background:#71717a20;color:#a1a1aa;font-size:12px;font-weight:900">NAV</div>
+          <div>
+            <div class="comp-name">Navionics / Deeper</div>
+            <div class="comp-tagline">Navigation &amp; sonar hardware — different category</div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-stats">
+            <div class="comp-stat"><strong>Hardware</strong>Deeper sonar</div>
+            <div class="comp-stat"><strong>Navigation</strong>Navionics</div>
+            <div class="comp-stat"><strong>No overlap</strong>Different use</div>
+          </div>
+          <div class="threat-row">
+            <span class="threat-label">Threat</span>
+            <div class="threat-bar"><div class="threat-fill" style="width:5%;background:var(--green)"></div></div>
+            <span class="badge badge-low">None</span>
+          </div>
+          <div class="comp-details">
+            <div class="comp-detail-row">Navionics: best boat navigation but not a fishing intelligence tool</div>
+            <div class="comp-detail-row">Deeper: smart sonar hardware integration — hardware-linked app</div>
+            <div class="comp-detail-row" style="color:var(--green)">No competitive overlap with PFG's use case</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== FEATURE MATRIX ===================== -->
+  <section class="tab-panel" id="tab-matrix">
+    <div class="section-header">
+      <h2>Feature Comparison Matrix</h2>
+      <p>✅ = Full · ⚠️ = Partial/Limited · ❌ = None · 🔒 = Paywall required</p>
+    </div>
+
+    <div class="card" style="overflow-x:auto">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="pfg-col">PFG (Us)</th>
+            <th>GilledIt</th>
+            <th>Fishbrain</th>
+            <th>FishAngler</th>
+            <th>Omnia</th>
+            <th>onX Fish</th>
+            <th>BassForecast</th>
+            <th>Fishbox</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-header"><td colspan="9">Core Intelligence</td></tr>
+          <tr>
+            <td>State-specific regulation data</td>
+            <td class="has-tooltip" data-tip="AGFC integration, 2026 trout limits"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="DNR data, Midwest states only"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Condition-aware lure scoring</td>
+            <td class="has-tooltip" data-tip="21-lure library, clarity × flow × spawn phase"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="BiteTime AI, requires Pro"><span class="cell-partial">⚠️🔒</span></td>
+            <td class="has-tooltip" data-tip="FishForecast, limited"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Feeding time predictions"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="BFR scoring system, bass only"><span class="cell-yes">✅</span></td>
+            <td class="has-tooltip" data-tip="AI assistant + forecast integration"><span class="cell-partial">⚠️</span></td>
+          </tr>
+          <tr>
+            <td>Real-time USGS / flow data</td>
+            <td class="has-tooltip" data-tip="USGS + NWS + USACE, no API keys"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Water temp + clarity"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="Weather + barometric pressure"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Weather + tides integration"><span class="cell-partial">⚠️</span></td>
+          </tr>
+          <tr>
+            <td>Spawn phase tracking</td>
+            <td><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Moon phase + BFR, not spawn specifically"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Weather / forecast</td>
+            <td class="has-tooltip" data-tip="NWS integration"><span class="cell-pfg">✅</span></td>
+            <td class="has-tooltip" data-tip="Included in catch log"><span class="cell-yes">✅</span></td>
+            <td class="has-tooltip" data-tip="Pro required"><span class="cell-partial">⚠️🔒</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td class="has-tooltip" data-tip="PRO tier"><span class="cell-partial">⚠️🔒</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+          </tr>
+          <tr class="group-header"><td colspan="9">Monetization &amp; Access</td></tr>
+          <tr>
+            <td>Free core features</td>
+            <td><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Core now behind paywall post-v5.0"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td class="has-tooltip" data-tip="Limited free tier"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+          </tr>
+          <tr>
+            <td>No subscription required</td>
+            <td><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Changing post v5.0"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="$59/yr for full features"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="Subscription model"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+          </tr>
+          <tr>
+            <td>In-app commerce / marketplace</td>
+            <td class="has-tooltip" data-tip="In roadmap: guide profiles + partner program"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="Tackle marketplace w/ Stripe Connect escrow"><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Tackle store integration"><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr class="group-header"><td colspan="9">Local Depth &amp; Education</td></tr>
+          <tr>
+            <td>Arkansas-specific waters</td>
+            <td class="has-tooltip" data-tip="39 AR water bodies — lakes, rivers, tailwaters"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Local pro tips / expert notes</td>
+            <td class="has-tooltip" data-tip="Pro Intel accordion, roadmap: Maumelle deep dive"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="General fishing tips"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Beginner education / skill levels</td>
+            <td class="has-tooltip" data-tip="Partial: lure how-tos; full edu in later roadmap"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Local tackle shop directory</td>
+            <td class="has-tooltip" data-tip="In roadmap: Maumelle Deep Dive"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr class="group-header"><td colspan="9">Retention &amp; Social</td></tr>
+          <tr>
+            <td>Weekly fishing reports / digest</td>
+            <td class="has-tooltip" data-tip="In roadmap: EmailJS Friday digest"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Pro tier"><span class="cell-partial">⚠️🔒</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Push / spawn window alerts</td>
+            <td class="has-tooltip" data-tip="In roadmap: browser push notifications"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Pro tier"><span class="cell-partial">⚠️🔒</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Social catch log / feed</td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Algorithmic For You feed + badges"><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+          </tr>
+          <tr>
+            <td>PWA / Add to home screen</td>
+            <td class="has-tooltip" data-tip="In roadmap"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+            <td><span class="cell-yes">✅</span></td>
+          </tr>
+          <tr>
+            <td>AI / ML predictions</td>
+            <td class="has-tooltip" data-tip="In roadmap: Claude API + ML spawn model"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="BiteTime AI (Pro)"><span class="cell-partial">⚠️🔒</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td class="has-tooltip" data-tip="Species abundance insights"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="BFR algorithm"><span class="cell-partial">⚠️</span></td>
+            <td class="has-tooltip" data-tip="AI fishing assistant"><span class="cell-yes">✅</span></td>
+          </tr>
+          <tr class="group-header"><td colspan="9">Technical Architecture</td></tr>
+          <tr>
+            <td>Zero backend (static / no API keys)</td>
+            <td class="has-tooltip" data-tip="GitHub Pages, USGS/NWS direct, GA4 GTM"><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+          <tr>
+            <td>Offline / on-water capable</td>
+            <td class="has-tooltip" data-tip="Static HTML; data cached; PWA in roadmap"><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+            <td><span class="cell-partial">⚠️</span></td>
+          </tr>
+          <tr>
+            <td>Open source / transparent</td>
+            <td><span class="cell-pfg">✅</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+            <td><span class="cell-no">❌</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-teal" style="margin-top:16px">
+      <strong>Rubric Legend</strong>
+      ✅ Full implementation · ⚠️ Partial or planned · ❌ Not available · 🔒 Paywall required · Hover cells for detail notes.
+    </div>
+  </section>
+
+  <!-- ===================== LEAN CANVAS ===================== -->
+  <section class="tab-panel" id="tab-lean-canvas">
+    <div class="section-header">
+      <h2>Lean Canvas — Pocket Fishing Guide</h2>
+      <p>Business model snapshot as of June 2026, updated with competitive context.</p>
+    </div>
+
+    <div class="lean-canvas">
+      <div class="lc-box lc-problem">
+        <h4>Problem</h4>
+        <ul>
+          <li>No fishing app gives AR anglers hyperlocal intelligence without a paywall</li>
+          <li>National apps are shallow on Arkansas-specific waters, species, and regulations</li>
+          <li>Beginners have no structured path from "what do I fish?" to "how do I catch it?"</li>
+          <li>AGFC regulation changes (2026 trout limits) aren't surfaced in real time</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-solution">
+        <h4>Solution</h4>
+        <ul>
+          <li>39 Arkansas water bodies with AGFC-aware, condition-tuned lure scoring</li>
+          <li>Real-time USGS, NWS, USACE data — no API keys, zero cost</li>
+          <li>21-lure library ranked by clarity × flow × spawn phase</li>
+          <li>Pro Intel accordion with local expert knowledge per water body</li>
+          <li>Future: guide profiles, education paths, weekly digest</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-uvp uvp">
+        <h4>Unique Value Proposition</h4>
+        <ul>
+          <li>The only fishing guide built FOR Arkansas, BY Arkansas outdoors people</li>
+          <li>Free forever on core features — no subscription, no paywall</li>
+          <li>Field-tested on lakes &amp; rivers that matter to AR anglers</li>
+          <li>“Pocket-sized expert” for every skill level from first cast to tournament</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-unfair">
+        <h4>Unfair Advantage</h4>
+        <ul>
+          <li>AGFC relationship + local data no national app will replicate</li>
+          <li>TWT founder is an Arkansas angler — authentic credibility</li>
+          <li>Open source → community contributions &amp; trust</li>
+          <li>Zero infrastructure cost = sustainable free tier indefinitely</li>
+          <li>AI-assisted development velocity (Claude, Codex, Copilot pipeline)</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-segments">
+        <h4>Customer Segments</h4>
+        <ul>
+          <li>Arkansas anglers (beginner → tournament)</li>
+          <li>Lake Maumelle crappie &amp; white bass regulars</li>
+          <li>AGFC-licensed anglers (~600k AR fishing licenses)</li>
+          <li>AR fishing guides seeking booking &amp; profile tools</li>
+          <li>Outdoor recreation families — first-time anglers</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-keymetrics">
+        <h4>Key Metrics</h4>
+        <ul>
+          <li>DAU / WAU / MAU active users</li>
+          <li>Water selected events per session</li>
+          <li>Lure click-through rate</li>
+          <li>Return visit rate (funnel baseline)</li>
+          <li>Ko-fi donations (current revenue signal)</li>
+          <li>p50 first-interaction time (&lt;3s target)</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-channels">
+        <h4>Channels</h4>
+        <ul>
+          <li>AGFC partnerships + official mentions</li>
+          <li>Arkansas fishing forums &amp; Facebook groups</li>
+          <li>Local bait shops near Maumelle, Conway, LR</li>
+          <li>YouTube how-to content per water</li>
+          <li>GitHub (developer + contributor community)</li>
+          <li>Word of mouth from guide partners</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-cost">
+        <h4>Cost Structure</h4>
+        <ul>
+          <li>Hosting: Near-zero (GitHub Pages static deploy)</li>
+          <li>Data: Zero (USGS, NWS, USACE all public APIs)</li>
+          <li>Development: AI-assisted (Claude + Codex reduces hours)</li>
+          <li>Content: Founder / field time for water research &amp; tip curation</li>
+          <li>Future: Supabase backend when user base justifies it</li>
+        </ul>
+      </div>
+      <div class="lc-box lc-revenue">
+        <h4>Revenue Streams</h4>
+        <ul>
+          <li>Ko-fi voluntary donations (active now)</li>
+          <li>Guide profile listings (partner program, scoped)</li>
+          <li>Tackle shop partner placements (Maumelle deep dive)</li>
+          <li>Sponsorship / tournament partner banners</li>
+          <li>Patreon tier (future: free + premium + patron)</li>
+          <li>NMMA / marine industry partnerships via TWT</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OPPORTUNITIES ===================== -->
+  <section class="tab-panel" id="tab-opportunities">
+    <div class="section-header">
+      <h2>Strategic Opportunities</h2>
+      <p>Ranked by impact × feasibility within PFG's current architecture and roadmap.</p>
+    </div>
+
+    <div class="stack">
+
+      <div class="opp-card">
+        <div class="opp-num">1</div>
+        <div class="opp-body">
+          <h4>Capitalize on Fishbrain &amp; FishAngler paywall backlash</h4>
+          <p>Both leading apps have triggered high user churn with aggressive paywall moves. Users are explicitly naming free alternatives. A simple landing page message — "Free forever for Arkansas anglers. No subscriptions." — paired with an AGFC integration callout could convert defectors. Consider a targeted Arkansas fishing forum post.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-quick">Quick Win</span>
+            <span class="opp-tag tag-growth">Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">2</div>
+        <div class="opp-body">
+          <h4>Own the 2026 AGFC regulation change narrative</h4>
+          <p>The 2026 Arkansas Fishing Guidebook introduced new trout limits on Bull Shoals, Norfork, and Greers Ferry tailwaters due to 2025 stocking shortage. Lake Monticello also changed from catch-and-release to harvest. No fishing app surfaces these changes. PFG adding a "2026 Reg Update" chip or banner on affected waters is a zero-effort high-value differentiator that no national competitor can match quickly.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-quick">Quick Win</span>
+            <span class="opp-tag tag-growth">Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">3</div>
+        <div class="opp-body">
+          <h4>Ship PWA + add-to-home-screen before v0.5.0</h4>
+          <p>Every single competitor already has native app or PWA status. PFG is the only major fishing intelligence tool in the space that doesn't support add-to-home-screen. This is a critical gap for on-water use when users need offline or home-screen access. PWA manifest is already in the roadmap — prioritize it. It's the feature gap that makes PFG feel like a "website" vs. an "app" regardless of quality.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-quick">Quick Win</span>
+            <span class="opp-tag tag-growth">Retention</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">4</div>
+        <div class="opp-body">
+          <h4>Launch weekly Friday fishing digest via EmailJS</h4>
+          <p>No competitor offers a free, state-specific weekly fishing digest. GilledIt and Fishbrain focus on social/in-app engagement loops. A simple EmailJS-powered Friday report with spawn phase, top water picks, and AGFC news for Arkansas creates a retention and distribution channel that competitors don't have and can't easily copy. Roadmap item — this should be a v0.5 priority given zero infrastructure cost.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-medium">Medium-term</span>
+            <span class="opp-tag tag-growth">Retention</span>
+            <span class="opp-tag tag-revenue">Revenue Path</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">5</div>
+        <div class="opp-body">
+          <h4>Build the beginner education gap nobody else is filling</h4>
+          <p>Across all eight competitors analyzed, zero apps offer structured skill-level education (beginner → intermediate → advanced paths). The record 57.9M anglers in 2025 includes a massive wave of new-to-fishing users who don't know what a jig is. A "First Cast" or "Skill Level" toggle that surfaces simpler lures and technique explanations for beginners is a unique, defensible feature no national platform will build fast for a single state.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-medium">Medium-term</span>
+            <span class="opp-tag tag-growth">Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">6</div>
+        <div class="opp-body">
+          <h4>Guide profiles + local bait shop directory as first revenue layer</h4>
+          <p>Omnia Fishing's model (commerce integration with maps) validates that anglers accept commercial elements when they add value. PFG's Partner Program scoping (already documented) is the right move: local guide listings + nearby tackle shop directory per water body. Lake Maumelle guide listings would be a natural pilot. Omnia charges $59/yr — PFG's guide listing fee should be competitive at ~$49–99/yr per profile.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-medium">Medium-term</span>
+            <span class="opp-tag tag-revenue">Revenue</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">7</div>
+        <div class="opp-body">
+          <h4>GilledIt's marketplace as benchmark — watch for AR guide monetization opportunity</h4>
+          <p>GilledIt's Stripe Connect tackle marketplace (8% fee, escrow, offer negotiation) is the most innovative monetization move in the fishing app space in 2026. While PFG's scale doesn't justify a full marketplace yet, the model validates angler willingness to transact in-app. As PFG's guide profiles grow, in-app booking capability (guide trips, seminars) is a natural evolution. Monitor GilledIt's marketplace adoption as a bellwether.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-long">Long-term</span>
+            <span class="opp-tag tag-revenue">Revenue</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-num">8</div>
+        <div class="opp-body">
+          <h4>Claude API agentic features as v2.0 differentiator</h4>
+          <p>Fishbox leads on AI fishing assistant; Fishbrain has BiteTime AI (paywalled). PFG's roadmap includes Claude API for pattern detection → auto-scoped issues and ML spawn prediction. When ready, a free AI fishing assistant that understands Arkansas water conditions, seasonal patterns, and AGFC regulations — something Fishbox cannot offer for Arkansas — would be a genuine breakthrough feature. The groundwork (AGFC data, spawn tracking, lure library) already exists.</p>
+          <div class="opp-tags">
+            <span class="opp-tag tag-long">Long-term</span>
+            <span class="opp-tag tag-growth">Differentiation</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== BEST PRACTICES ===================== -->
+  <section class="tab-panel" id="tab-bestpractices">
+    <div class="section-header">
+      <h2>Best Practices Rubric</h2>
+      <p>Industry standards for fishing &amp; outdoor intelligence apps. PFG status assessed against competitive benchmarks.</p>
+    </div>
+
+    <div class="grid-2">
+
+      <div class="card">
+        <h3 style="margin-bottom:14px">Product &amp; UX</h3>
+        <ul class="checklist">
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Mobile-first, touch-optimized UI</div>
+              <div class="check-detail">44px touch targets in roadmap audit; bottom-sheet nav in progress</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Sub-3-second first-interaction time</div>
+              <div class="check-detail">p50 target set; static HTML ensures fast load with no server round-trips</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-partial">~</div>
+            <div>
+              <div class="check-label">Add-to-home-screen / PWA manifest</div>
+              <div class="check-detail">In roadmap — not yet shipped; every competitor has this</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Offline-capable core features</div>
+              <div class="check-detail">Static HTML + cached data works without live connection in most scenarios</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-partial">~</div>
+            <div>
+              <div class="check-label">Persistent state / user preferences</div>
+              <div class="check-detail">No user accounts yet; favorites/last water not persisted — roadmap gap</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Desktop + mobile responsive grid</div>
+              <div class="check-detail">Two-column desktop grid in v0.4.0 shipping</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:14px">Data &amp; Intelligence</h3>
+        <ul class="checklist">
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Real-time conditions (flow, temp, weather)</div>
+              <div class="check-detail">USGS, NWS, USACE integrated; 6-hour auto-refresh via GitHub Actions</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">State regulation data surfaced in-app</div>
+              <div class="check-detail">AGFC-aware; 2026 guidebook changes trackable — unique to PFG</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Condition-aware lure / technique scoring</div>
+              <div class="check-detail">21-lure library: clarity × flow × spawn phase algorithm</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Spawn phase tracking</div>
+              <div class="check-detail">White Bass + Crappie phases; spawn window calendar in roadmap</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Historical data time-series</div>
+              <div class="check-detail">Roadmap: USGS historical cron — not yet built; competitors lack this too</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">AI / ML-powered predictions</div>
+              <div class="check-detail">In roadmap (Claude API + spawn ML model); not yet shipped</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:14px">Growth &amp; Retention</h3>
+        <ul class="checklist">
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Analytics instrumented (GA4 + GTM)</div>
+              <div class="check-detail">GA4 live; event taxonomy being finalized in v0.4.0</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-partial">~</div>
+            <div>
+              <div class="check-label">Funnel baseline established</div>
+              <div class="check-detail">Events defined; baseline not yet captured — analytics hardening is next sprint</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Email retention loop (weekly digest)</div>
+              <div class="check-detail">Roadmap: EmailJS Friday digest — high priority given zero-cost architecture</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Push notifications for spawn windows</div>
+              <div class="check-detail">Browser push in roadmap; requires PWA manifest first</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Social / community features</div>
+              <div class="check-detail">Not in current roadmap — GilledIt's social feed is a gap PFG hasn't addressed</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-partial">~</div>
+            <div>
+              <div class="check-label">Calendar / spawn window downloads</div>
+              <div class="check-detail">.ics downloads in roadmap — differentiates from all competitors</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:14px">Monetization &amp; Business Model</h3>
+        <ul class="checklist">
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Free core features — no paywall on intelligence</div>
+              <div class="check-detail">Strongest competitive position given paywall backlash across all major apps</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-partial">~</div>
+            <div>
+              <div class="check-label">Donation / voluntary support mechanism</div>
+              <div class="check-detail">Ko-fi active — validate demand before adding Patreon tiers</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Guide / partner listing revenue</div>
+              <div class="check-detail">Partner Program scoped but not launched; highest-impact near-term revenue</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Sponsorship / tackle shop integration</div>
+              <div class="check-detail">Roadmap: tackle shop directory per water — natural sponsorship hook</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-done">✓</div>
+            <div>
+              <div class="check-label">Near-zero infrastructure cost</div>
+              <div class="check-detail">GitHub Pages static deploy — sustainable free tier indefinitely; unique advantage</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon check-todo">✗</div>
+            <div>
+              <div class="check-label">Premium tier / Patreon foundation</div>
+              <div class="check-detail">Later roadmap; ensure free tier delivers clear value first</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:var(--gap)">
+      <h3 style="margin-bottom:16px">Rubric Score Summary</h3>
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Score</th>
+            <th>Notes</th>
+            <th>Priority Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Product &amp; UX</td>
+            <td><span class="score-pill" style="background:var(--yellow-dim);color:var(--yellow)">72 / 100</span></td>
+            <td>Strong foundation; PWA and persistent state gaps hold it back</td>
+            <td>Ship PWA manifest in v0.4 or v0.5</td>
+          </tr>
+          <tr>
+            <td>Data &amp; Intelligence</td>
+            <td><span class="score-pill" style="background:var(--green-dim);color:var(--green)">88 / 100</span></td>
+            <td>Best-in-class for Arkansas; historical time-series and AI are future gaps</td>
+            <td>USGS historical cron as v0.5 data milestone</td>
+          </tr>
+          <tr>
+            <td>Growth &amp; Retention</td>
+            <td><span class="score-pill" style="background:var(--red-dim);color:var(--red)">38 / 100</span></td>
+            <td>Biggest gap area — no email loop, no push, no social, no persistence</td>
+            <td>EmailJS Friday digest is #1 priority for retention</td>
+          </tr>
+          <tr>
+            <td>Monetization</td>
+            <td><span class="score-pill" style="background:var(--yellow-dim);color:var(--yellow)">45 / 100</span></td>
+            <td>Ko-fi is placeholder; guide listings would transform the model</td>
+            <td>Launch Partner Program pilot (2–3 Maumelle guides)</td>
+          </tr>
+          <tr>
+            <td>Competitive Positioning</td>
+            <td><span class="score-pill" style="background:var(--green-dim);color:var(--green)">92 / 100</span></td>
+            <td>Unmatched Arkansas moat; free tier timing is perfect given paywall backlash</td>
+            <td>Market the free + AR-specific angle more actively</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== TIMELINE ===================== -->
+  <section class="tab-panel" id="tab-timeline">
+    <div class="section-header">
+      <h2>Market &amp; Product Timeline</h2>
+      <p>Key events in the fishing app landscape and PFG development history.</p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:var(--gap)">
+          <h3 style="margin-bottom:16px">Competitive Market Events</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot red"></div>
+              <div class="tl-date">Late 2025</div>
+              <div class="tl-title">FishAngler v5.0.0 paywall controversy</div>
+              <div class="tl-body">Core bite time forecasts moved behind paywall. “Terrible” UI redesign. High churn event — users actively seeking free alternatives.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot amber"></div>
+              <div class="tl-date">2025–2026</div>
+              <div class="tl-title">Fishbrain crash &amp; support complaints peak</div>
+              <div class="tl-body">Ongoing app stability issues and poor customer support at $10–13/month Pro price. User trust declining.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot teal"></div>
+              <div class="tl-date">2025</div>
+              <div class="tl-title">GilledIt tackle marketplace launch</div>
+              <div class="tl-body">Only fishing app with built-in buy/sell/trade for tackle. Stripe Connect escrow, 8% fee. Becoming default recommendation for most anglers.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot green"></div>
+              <div class="tl-date">2025</div>
+              <div class="tl-title">All-time high: 57.9M US anglers</div>
+              <div class="tl-body">19% of U.S. population fished in 2025. Record growth in beginner anglers. Mobile app adoption at 45% of all anglers.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot amber"></div>
+              <div class="tl-date">Jan 2026</div>
+              <div class="tl-title">AGFC 2026 Fishing Guidebook trout limit changes</div>
+              <div class="tl-body">Trout limits revised on Bull Shoals, Norfork, and Greers Ferry tailwaters due to 2025 stocking shortage. Lake Monticello harvest policy change.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot green"></div>
+              <div class="tl-date">June 2026</div>
+              <div class="tl-title">GilledIt ranked #1 fishing app for 2026</div>
+              <div class="tl-body">Multiple independent rankings place GilledIt #1. Free model + marketplace + social feed outcompeting subscription apps.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot teal"></div>
+              <div class="tl-date">June 2026</div>
+              <div class="tl-title">BassForecast iOS 26 Liquid Glass update</div>
+              <div class="tl-body">First fishing app to support iOS 26 Liquid Glass UI. Infrastructure updates announced for 2026 feature set.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3 style="margin-bottom:16px">PFG Development History</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot teal"></div>
+              <div class="tl-date">Feb 2026</div>
+              <div class="tl-title">ROADMAP v1.0 — Initial 5-phase vision</div>
+              <div class="tl-body">Full vision documented. Arkansas focus established. Zero backend, GitHub Pages architecture chosen.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot green"></div>
+              <div class="tl-date">Mar 2026</div>
+              <div class="tl-title">ROADMAP v2.0 — Condensed for public launch</div>
+              <div class="tl-body">Original 5-phase vision archived. Now-Next-Later structure. 39 AR water bodies milestone confirmed.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot green"></div>
+              <div class="tl-date">2026 Q1</div>
+              <div class="tl-title">v0.3.0 shipped</div>
+              <div class="tl-body">39 AR waters, White Bass + Crappie intelligence, real-time USGS/NWS/USACE data, 21-lure library, 6-hour GitHub Actions refresh.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot amber"></div>
+              <div class="tl-date">2026 Q2</div>
+              <div class="tl-title">v0.4.0 feature-complete, in QA</div>
+              <div class="tl-body">Tackle Box modal, Live Bait Toggle, Lure Scoring Engine, Conditions Strip, Pro Intel accordion, Desktop grid. Final QA in progress.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot amber"></div>
+              <div class="tl-date">June 2026</div>
+              <div class="tl-title">Analytics hardening sprint</div>
+              <div class="tl-body">GA4 + GTM event taxonomy defined. Funnel baseline (Load → Water → Lure → Return) being established. Drop-off experiment planned.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot teal"></div>
+              <div class="tl-date">Next</div>
+              <div class="tl-title">UX Revision — mobile compression</div>
+              <div class="tl-body">Header compression, water selector bottom-sheet, bottom nav polish, scroll-collapse behavior, touch target audit.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot teal"></div>
+              <div class="tl-date">Later</div>
+              <div class="tl-title">Maumelle Deep Dive + PWA + Email digest</div>
+              <div class="tl-body">Definitive Maumelle resource, local tackle shops, PWA manifest, EmailJS Friday reports, spawn window .ics downloads.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="dash-footer">
+  <strong>PFG Market Intelligence Dashboard</strong> · Tale Waters &amp; Tides · June 23, 2026
+  <br>Generated by Claude Code (scheduled routine) · Sources: web search, app store intelligence, market reports, PFG GitHub repos
+  <br>Data for strategic planning only — verify market figures against primary sources before investor use
+</div>
+
+<button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script>
+  function switchTab(event, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleComp(card) {
+    const wasExpanded = card.classList.contains('expanded');
+    document.querySelectorAll('.comp-card').forEach(c => c.classList.remove('expanded'));
+    if (!wasExpanded) card.classList.add('expanded');
+  }
+
+  window.addEventListener('scroll', () => {
+    const btn = document.querySelector('.to-top');
+    btn.style.display = window.scrollY > 200 ? 'flex' : 'none';
+  });
+  document.querySelector('.to-top').style.display = 'none';
+</script>
+
+</body>
+</html>
