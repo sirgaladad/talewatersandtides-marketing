@@ -490,7 +490,7 @@
     .gauge { text-align: center; }
     .gauge svg { width: 96px; height: 96px; }
     .gauge .track { fill: none; stroke: var(--surface2); stroke-width: 9; }
-    .gauge .val { fill: none; stroke-width: 9; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+    .gauge .val { fill: none; stroke-width: 9; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transform-box: fill-box; }
     .gauge .num { font-size: 22px; font-weight: 800; fill: var(--text); }
     .gauge .pct { font-size: 9px; fill: var(--muted); }
     .gauge-cap { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
@@ -1911,7 +1911,10 @@
       <p>An inward pass over Pocket Fishing Guide — the live app, the marketing site, and the GitHub README — scored against the same bar we hold competitors to. The question: <b>are we saying what we actually ship?</b></p>
     </div>
 
-    <div class="alert alert-info">📋 <div>Source pass June 26, 2026 — PFG README + CHANGELOG, shipped <code>index.html</code>, and talewatersandtides.com copy. Scores and parity verdicts below trace to those sources; no invented metrics.</div></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">📋</span>
+      <div class="alert-body">Source pass June 26, 2026 — PFG README + CHANGELOG, shipped <code>index.html</code>, and talewatersandtides.com copy. Scores and parity verdicts below trace to those sources; no invented metrics.</div>
+    </div>
 
     <!-- gauges -->
     <div class="card" style="margin-bottom:20px;">
@@ -1984,8 +1987,8 @@
         </div>
         <div>
           <div class="chart-legend" style="justify-content:flex-start;margin-top:0;margin-bottom:14px;">
-            <span><i class="dot" style="background:var(--accent)"></i> Today</span>
-            <span><i class="dot" style="background:var(--purple)"></i> Roadmap target</span>
+            <span><i class="dot" aria-hidden="true" style="background:var(--accent)"></i> Today</span>
+            <span><i class="dot" aria-hidden="true" style="background:var(--purple)"></i> Roadmap target</span>
           </div>
           <ul class="hfe-list focus">
             <li><b>The moat is data.</b> Real-time USGS/NWS/USACE on a 6-hour refresh scores near-max — competitors rarely match this depth for Arkansas.</li>
@@ -2000,7 +2003,7 @@
     <div class="card" style="margin-bottom:20px;">
       <div class="card-title">Self-reflection rubric — scored today vs roadmap target</div>
       <table class="rubric">
-        <thead><tr><th style="min-width:180px;">Dimension</th><th style="min-width:120px;">Today</th><th style="min-width:120px;">Target</th><th>Read</th></tr></thead>
+        <thead><tr><th style="min-width:180px;">Dimension</th><th style="min-width:120px;">Today</th><th style="min-width:120px;">Target</th><th>Analysis</th></tr></thead>
         <tbody>
           <tr>
             <td>Product Completeness</td>
