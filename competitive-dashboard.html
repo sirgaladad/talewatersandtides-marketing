@@ -1869,7 +1869,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
 
 const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
 const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
-const REDIRECT = 'https://talewatersandtides.com/competitive-dashboard.html';
+// Redirect back to this same page, whatever origin it's served from (localhost / staging / prod).
+// Each origin must be allowlisted in Supabase Auth → URL Configuration → Redirect URLs.
+const REDIRECT = window.location.origin + window.location.pathname;
 
 const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
 
@@ -1880,9 +1882,14 @@ $('sendLink').addEventListener('click', async () => {
   const email = $('gateEmail').value.trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { return msg($('gateMsg'), 'error', 'Enter a valid email.'); }
   $('sendLink').disabled = true;
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
-  $('sendLink').disabled = false;
-  msg($('gateMsg'), error ? 'error' : 'ok', error ? error.message : 'Check your email and tap the link on this device.');
+  try {
+    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
+    msg($('gateMsg'), error ? 'error' : 'ok', error ? error.message : 'Check your email and tap the link on this device.');
+  } catch (err) {
+    msg($('gateMsg'), 'error', (err && err.message) || 'Network hiccup — check your connection and try again.');
+  } finally {
+    $('sendLink').disabled = false;
+  }
 });
 $('gateEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('sendLink').click(); });
 $('signOut').addEventListener('click', () => sb.auth.signOut());
