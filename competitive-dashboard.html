@@ -473,6 +473,8 @@
     }
     #signOut:hover { color: var(--text); border-color: var(--accent); }
     body.locked #signOut { display: none; }
+    body.denied #authGate .gate-signin { display: none; }
+    body:not(.denied) #authGate .gate-denied { display: none; }
     /* ── SELF-ASSESSMENT: charts & layouts ── */
     .chart-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; }
     @media (max-width: 860px) { .chart-row { grid-template-columns: 1fr; } }
@@ -529,14 +531,20 @@
 
 <!-- ── MAGIC-LINK GATE ── -->
 <div id="authGate">
-  <div class="gate-card">
+  <div class="gate-card gate-signin">
     <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
     <h2>Sign in to view</h2>
-    <p class="gate-sub">Enter your email and we'll send a one-time magic link — no password. Tap it on this device to open the competitive intelligence dashboard.</p>
+    <p class="gate-sub">Enter your email and we'll send a one-time magic link — no password. Tap it on this device to open the intelligence dashboard. Access is limited to the TWT team.</p>
     <label for="gateEmail">Email</label>
     <input id="gateEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email address" />
     <button id="sendLink" class="gate-btn" type="button">Send me a magic link</button>
     <p id="gateMsg" class="gate-msg" hidden></p>
+  </div>
+  <div class="gate-card gate-denied">
+    <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
+    <h2>No access</h2>
+    <p class="gate-sub" id="deniedWho"></p>
+    <button id="signOutDenied" class="gate-btn" type="button">Sign out &amp; try another email</button>
   </div>
 </div>
 <button id="signOut" type="button">Sign out</button>
@@ -2274,11 +2282,19 @@ $('sendLink').addEventListener('click', async () => {
 });
 $('gateEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('sendLink').click(); });
 $('signOut').addEventListener('click', () => sb.auth.signOut());
+$('signOutDenied').addEventListener('click', () => sb.auth.signOut());
 
-// Any signed-in email unlocks the dashboard (no allowlist).
+// Access is limited to the TWT team. A signed-in session only unlocks if the
+// verified email is on the allowlist; other signed-in users see the denied card.
+const ALLOW = ['cboelkens@gmail.com', 'corey@talewatersandtides.com'];
 sb.auth.onAuthStateChange((_event, session) => {
-  const signedIn = !!(session && session.user);
-  document.body.classList.toggle('locked', !signedIn);
+  const email = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  const allowed = !!email && ALLOW.indexOf(email) !== -1;
+  document.body.classList.toggle('locked', !allowed);
+  document.body.classList.toggle('denied', !!email && !allowed);
+  if (email && !allowed) {
+    $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard.";
+  }
 });
 </script>
 
