@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PFG Competitive Intelligence Dashboard — Tale Waters & Tides</title>
+  <title>PFG Intelligence Dashboard — Tale Waters & Tides</title>
   <meta name="robots" content="noindex,nofollow" />
   <style>
     :root {
@@ -476,7 +476,7 @@
     /* ── SELF-ASSESSMENT: charts & layouts ── */
     .chart-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; }
     @media (max-width: 860px) { .chart-row { grid-template-columns: 1fr; } }
-    .radar-wrap, .gauge-wrap { display: flex; justify-content: center; }
+    .radar-wrap { display: flex; justify-content: center; }
     .radar { width: 100%; max-width: 360px; height: auto; }
     .radar .ring { fill: none; stroke: var(--border); }
     .radar .axis { stroke: var(--border); }
@@ -494,6 +494,7 @@
     .gauge .num { font-size: 22px; font-weight: 800; fill: var(--text); }
     .gauge .pct { font-size: 9px; fill: var(--muted); }
     .gauge-cap { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+    @media (max-width: 560px) { .gauges { gap: 8px; } .gauge svg { width: 72px; height: 72px; } }
 
     /* hedge / focus / expand columns */
     .hfe-head { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
@@ -1921,19 +1922,19 @@
       <div class="card-title">Self-health at a glance</div>
       <div class="gauges">
         <div class="gauge">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Overall self-health 53 of 100">
+          <svg viewBox="0 0 100 100" role="img" aria-label="Overall self-health 55 of 100">
             <circle class="track" cx="50" cy="50" r="42"></circle>
-            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--yellow);stroke-dasharray:139.9 124.0"></circle>
-            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">53</text>
+            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--yellow);stroke-dasharray:145.1 118.8"></circle>
+            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">55</text>
             <text class="pct" x="50" y="70" text-anchor="middle">/ 100</text>
           </svg>
           <div class="gauge-cap">Overall self-health</div>
         </div>
         <div class="gauge">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Messaging parity 45 percent">
+          <svg viewBox="0 0 100 100" role="img" aria-label="Messaging parity 60 percent">
             <circle class="track" cx="50" cy="50" r="42"></circle>
-            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--red);stroke-dasharray:118.8 145.1"></circle>
-            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">45</text>
+            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--yellow);stroke-dasharray:158.3 105.6"></circle>
+            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">60</text>
             <text class="pct" x="50" y="70" text-anchor="middle">% parity</text>
           </svg>
           <div class="gauge-cap">Say-vs-ship parity</div>
@@ -1973,7 +1974,7 @@
             <!-- target (drawn under) -->
             <polygon class="target" points="160,52 236.4,83.6 268,160 227.9,227.9 160,268 100.6,219.4 76,160 109.1,109.1"></polygon>
             <!-- today -->
-            <polygon class="today" points="160,88 236.4,83.6 244,160 193.9,193.9 160,256 134.5,185.5 124,160 143,143"></polygon>
+            <polygon class="today" points="160,88 236.4,83.6 244,160 210.9,210.9 160,256 134.5,185.5 124,160 143,143"></polygon>
             <!-- labels -->
             <text x="160" y="25" text-anchor="middle">Product</text>
             <text x="255" y="66" text-anchor="start">Data</text>
@@ -2002,6 +2003,7 @@
     <!-- self rubric -->
     <div class="card" style="margin-bottom:20px;">
       <div class="card-title">Self-reflection rubric — scored today vs roadmap target</div>
+      <div class="matrix-wrap">
       <table class="rubric">
         <thead><tr><th style="min-width:180px;">Dimension</th><th style="min-width:120px;">Today</th><th style="min-width:120px;">Target</th><th>Analysis</th></tr></thead>
         <tbody>
@@ -2025,9 +2027,9 @@
           </tr>
           <tr>
             <td>Messaging Consistency</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:40%;background:var(--yellow);"></div></div><span class="score-num" style="color:var(--yellow);">4</span></div></td>
+            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:60%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">6</span></div></td>
             <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:80%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">8</span></div></td>
-            <td>Site says "39 waters · 27 species"; the CHANGELOG ships 9 waters and the UI toggles ~2 species.</td>
+            <td>Marketing touts 27 species, but only White Bass + Crappie intel has shipped; the public CHANGELOG is also stale (still lists 9 waters).</td>
           </tr>
           <tr>
             <td>README / Docs Accuracy</td>
@@ -2055,18 +2057,26 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <!-- parity table -->
     <div class="card" style="margin-bottom:20px;">
       <div class="card-title">Say-vs-ship parity — are we describing the product we actually have?</div>
+      <div class="matrix-wrap">
       <table class="rubric">
         <thead><tr><th style="min-width:190px;">Claim</th><th>Where we say it</th><th>Shipped reality</th><th style="min-width:130px;">Verdict</th></tr></thead>
         <tbody>
           <tr>
-            <td>"39 water bodies · 27 species"</td>
-            <td>Marketing site + README</td>
-            <td>CHANGELOG ships "9 Arkansas waters" (v0.1–0.3); app toggles ~2 species (White Bass, Crappie).</td>
+            <td>"39 Arkansas waters" live</td>
+            <td>Marketing + README + this report</td>
+            <td>Corroborated — 39 waters with live USGS/NWS/USACE conditions. (The public CHANGELOG is stale: it still lists the early 9-water builds.)</td>
+            <td><span class="badge badge-green">✓ Aligned</span></td>
+          </tr>
+          <tr>
+            <td>"27 species" coverage</td>
+            <td>Marketing site</td>
+            <td>Only White Bass + Crappie have shipped intel today; the rest aren't yet surfaced in the app.</td>
             <td><span class="badge badge-yellow">⚠ Overstated</span></td>
           </tr>
           <tr>
@@ -2107,6 +2117,7 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <!-- review cadence -->
@@ -2137,7 +2148,7 @@
         <ul class="hfe-list hedge">
           <li><b>Keep the legacy static app as source of truth.</b> It's the most complete shipped surface — don't let the V2 migration regress it.</li>
           <li><b>Ring-fence the fishing core.</b> Recent v0.4.0 energy is all Pocket Paddler; reserve cycles so the flagship product doesn't stall.</li>
-          <li><b>Fix the counts before they bite.</b> Reconcile "39 waters / 27 species" with what's live so a user can't catch the gap.</li>
+          <li><b>Fix the counts before they bite.</b> Only White Bass + Crappie intel has shipped — reconcile the "27 species" claim and refresh the stale changelog so the public numbers match what's live.</li>
           <li><b>Harden free-API reliance.</b> USGS/NWS/USACE are the moat and a single point of failure — cache + graceful degradation.</li>
         </ul>
       </div>
