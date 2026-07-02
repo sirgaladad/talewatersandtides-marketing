@@ -475,6 +475,25 @@
     body.locked #signOut { display: none; }
     body.denied #authGate .gate-signin { display: none; }
     body:not(.denied) #authGate .gate-denied { display: none; }
+
+    /* export-to-PDF button */
+    #exportPdf { margin-top: 8px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
+    #exportPdf:hover { border-color: var(--accent); }
+    body.locked #exportPdf { display: none; }
+
+    /* print / export-to-PDF: expand every tab into one shareable document.
+       Only fires when unlocked — a locked/denied user's Ctrl+P still prints nothing,
+       because .main stays hidden by the body.locked rule above. */
+    @media print {
+      @page { margin: 8mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      #authGate, #signOut, #exportPdf, .tab-nav { display: none !important; }
+      .tab-panel { display: block !important; }
+      .tab-panel + .tab-panel { break-before: page; }
+      .main { max-width: none; padding: 12px; }
+      .card, .comp-card, .matrix-wrap, table, .opp-card, .ei-q { break-inside: avoid; }
+      .matrix-wrap { overflow: visible !important; }
+    }
     /* ── SELF-ASSESSMENT: charts & layouts ── */
     .chart-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; }
     @media (max-width: 860px) { .chart-row { grid-template-columns: 1fr; } }
@@ -561,6 +580,7 @@
   <div class="report-meta">
     <div class="date">Report Date: June 26, 2026</div>
     <div class="version">v1.1 — + Self-Assessment</div>
+    <button id="exportPdf" type="button" title="Export the full report as a PDF to share">⤓ Export PDF</button>
   </div>
 </header>
 
@@ -2296,6 +2316,12 @@ sb.auth.onAuthStateChange((_event, session) => {
     $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard.";
   }
 });
+
+// Export the full report (all tabs expanded) as a shareable PDF via the print dialog.
+$('exportPdf').addEventListener('click', () => window.print());
+const _docTitle = document.title;
+window.addEventListener('beforeprint', () => { document.title = 'PFG-Intelligence-Report'; });
+window.addEventListener('afterprint', () => { document.title = _docTitle; });
 </script>
 
 </body>
