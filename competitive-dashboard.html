@@ -2010,24 +2010,34 @@ sb.auth.onAuthStateChange((_event, session) => {
 // NOT in this static source. Fetch it, inflate (gzip+base64), and inject only after an authorized
 // sign-in — RLS returns rows only for allowlisted emails, so a public/denied viewer gets nothing.
 const SECURE_PLACEHOLDER = '<div class="secure-loading">🔒 Loading team-only content…</div>';
+const REQUIRED_SECTIONS = ['self-assessment', 'game-plan'];
 let _sectionsPromise = null;
+let _authGen = 0; // bumped whenever access is lost; a load from a stale generation must not inject
 async function inflateB64(b64){
   const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
   const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
   return new TextDecoder().decode(await new Response(stream).arrayBuffer());
 }
 // Fetch + inject once per allowed session; memoized so concurrent callers (auth event, PDF export)
-// await the same in-flight load rather than racing.
+// await the same in-flight load. Rejects if a required section is missing, so the export flow can't
+// print blank internal pages. Injection is generation-guarded so a fetch that resolves after sign-out
+// cannot re-populate the locked page.
 function loadSecureSections(){
   if (_sectionsPromise) return _sectionsPromise;
+  const gen = _authGen;
   _sectionsPromise = (async () => {
     const { data, error } = await sb.from('dashboard_sections').select('key,html');
     if (error) throw error;
-    for (const row of (data || [])){
-      const panel = document.querySelector('[data-section="' + row.key + '"]');
-      if (!panel) continue;
-      try { panel.innerHTML = await inflateB64(row.html); }
-      catch (e){ panel.innerHTML = '<div class="secure-loading">Couldn’t decode team content.</div>'; }
+    const rows = (data || []).filter(r => REQUIRED_SECTIONS.includes(r.key));
+    const missing = REQUIRED_SECTIONS.filter(k => !rows.some(r => r.key === k));
+    if (missing.length) throw new Error('Missing dashboard sections: ' + missing.join(', '));
+    // Inflate everything BEFORE touching the DOM, then bail if access changed while we were fetching.
+    const inflated = [];
+    for (const row of rows){ inflated.push([row.key, await inflateB64(row.html)]); }
+    if (gen !== _authGen) return; // signed out / access revoked mid-flight — do not inject
+    for (const [key, html] of inflated){
+      const panel = document.querySelector('[data-section="' + key + '"]');
+      if (panel) panel.innerHTML = html;
     }
   })().catch((e) => {
     _sectionsPromise = null; // allow a later retry
@@ -2036,9 +2046,10 @@ function loadSecureSections(){
   });
   return _sectionsPromise;
 }
-// On sign-out or a denied sign-in, wipe the injected content so the next local user of this browser
-// can't read stale team-only DOM without an allowed session.
+// On sign-out or a denied sign-in, invalidate any in-flight load and wipe the injected content so the
+// next local user of this browser can't read stale team-only DOM without an allowed session.
 function clearSecureSections(){
+  _authGen++;
   _sectionsPromise = null;
   document.querySelectorAll('[data-section]').forEach(p => { p.innerHTML = SECURE_PLACEHOLDER; });
 }
