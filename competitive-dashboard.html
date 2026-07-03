@@ -488,7 +488,9 @@
     @media print {
       @page { size: landscape; margin: 8mm; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      #authGate, #signOut, #exportPdf, .tab-nav, .secure-loading { display: none !important; }
+      #authGate, #signOut, #exportPdf, .tab-nav { display: none !important; }
+      /* keep the loading/error marker visible in print (native Ctrl+P bypasses the button's await),
+         so an unfetched team tab prints its placeholder instead of a blank page */
       .tab-panel { display: block !important; }
       .tab-panel + .tab-panel { break-before: page; }
       .main { max-width: none; padding: 12px; }
