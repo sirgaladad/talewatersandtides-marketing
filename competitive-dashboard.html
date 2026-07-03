@@ -2000,7 +2000,7 @@ sb.auth.onAuthStateChange((_event, session) => {
   const allowed = !!email && ALLOW.indexOf(email) !== -1;
   document.body.classList.toggle('locked', !allowed);
   document.body.classList.toggle('denied', !!email && !allowed);
-  if (allowed) { loadSecureSections(); }
+  if (allowed) { loadSecureSections(); } else { clearSecureSections(); }
   if (email && !allowed) {
     $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard.";
   }
@@ -2009,16 +2009,18 @@ sb.auth.onAuthStateChange((_event, session) => {
 // Team-only tab content (Self-Assessment, Game Plan) lives in Supabase behind RLS (allowlist) and is
 // NOT in this static source. Fetch it, inflate (gzip+base64), and inject only after an authorized
 // sign-in — RLS returns rows only for allowlisted emails, so a public/denied viewer gets nothing.
-let _sectionsLoaded = false;
+const SECURE_PLACEHOLDER = '<div class="secure-loading">🔒 Loading team-only content…</div>';
+let _sectionsPromise = null;
 async function inflateB64(b64){
   const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
   const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
   return new TextDecoder().decode(await new Response(stream).arrayBuffer());
 }
-async function loadSecureSections(){
-  if (_sectionsLoaded) return;
-  _sectionsLoaded = true;
-  try {
+// Fetch + inject once per allowed session; memoized so concurrent callers (auth event, PDF export)
+// await the same in-flight load rather than racing.
+function loadSecureSections(){
+  if (_sectionsPromise) return _sectionsPromise;
+  _sectionsPromise = (async () => {
     const { data, error } = await sb.from('dashboard_sections').select('key,html');
     if (error) throw error;
     for (const row of (data || [])){
@@ -2027,14 +2029,34 @@ async function loadSecureSections(){
       try { panel.innerHTML = await inflateB64(row.html); }
       catch (e){ panel.innerHTML = '<div class="secure-loading">Couldn’t decode team content.</div>'; }
     }
-  } catch (e){
-    _sectionsLoaded = false; // let a later auth event retry
+  })().catch((e) => {
+    _sectionsPromise = null; // allow a later retry
     document.querySelectorAll('.secure-loading').forEach(el => { el.textContent = "Couldn’t load team-only content — refresh to retry."; });
-  }
+    throw e;
+  });
+  return _sectionsPromise;
+}
+// On sign-out or a denied sign-in, wipe the injected content so the next local user of this browser
+// can't read stale team-only DOM without an allowed session.
+function clearSecureSections(){
+  _sectionsPromise = null;
+  document.querySelectorAll('[data-section]').forEach(p => { p.innerHTML = SECURE_PLACEHOLDER; });
 }
 
 // Export the full report (all tabs expanded) as a shareable PDF via the print dialog.
-$('exportPdf').addEventListener('click', () => window.print());
+// Ensure the Supabase-backed team tabs are injected first, so the PDF never has blank internal pages.
+$('exportPdf').addEventListener('click', async () => {
+  const btn = $('exportPdf'), orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Preparing…';
+  try {
+    await loadSecureSections();
+    window.print();
+  } catch (e) {
+    alert('Team-only content is still loading — please try again in a moment.');
+  } finally {
+    btn.disabled = false; btn.textContent = orig;
+  }
+});
 const _docTitle = document.title;
 window.addEventListener('beforeprint', () => { document.title = 'PFG-Intelligence-Report'; });
 window.addEventListener('afterprint', () => { document.title = _docTitle; });
