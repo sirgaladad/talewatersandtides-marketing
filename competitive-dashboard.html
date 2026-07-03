@@ -480,19 +480,25 @@
     #exportPdf { margin-top: 8px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
     #exportPdf:hover { border-color: var(--accent); }
     body.locked #exportPdf { display: none; }
+    .secure-loading { text-align: center; color: var(--muted); font-size: 13px; padding: 48px 16px; }
 
     /* print / export-to-PDF: expand every tab into one shareable document.
        Only fires when unlocked — a locked/denied user's Ctrl+P still prints nothing,
        because .main stays hidden by the body.locked rule above. */
     @media print {
-      @page { margin: 8mm; }
+      @page { size: landscape; margin: 8mm; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      #authGate, #signOut, #exportPdf, .tab-nav { display: none !important; }
+      #authGate, #signOut, #exportPdf, .tab-nav, .secure-loading { display: none !important; }
       .tab-panel { display: block !important; }
       .tab-panel + .tab-panel { break-before: page; }
       .main { max-width: none; padding: 12px; }
       .card, .comp-card, .matrix-wrap, table, .opp-card, .ei-q { break-inside: avoid; }
       .matrix-wrap { overflow: visible !important; }
+      /* keep wide comparison tables on the page (landscape + shrink + wrap) instead of clipping */
+      .matrix-wrap table, .rubric { font-size: 8px; width: 100%; table-layout: fixed; }
+      .matrix-wrap th, .matrix-wrap td, .rubric th, .rubric td {
+        white-space: normal; word-break: break-word; min-width: 0 !important; padding: 4px 5px;
+      }
     }
     /* ── SELF-ASSESSMENT: charts & layouts ── */
     .chart-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; }
@@ -1934,330 +1940,12 @@
   <!-- ══════════════════════════════════════════
        TAB 8 — SELF-ASSESSMENT (inward lens)
   ══════════════════════════════════════════ -->
-  <section id="tab-self" class="tab-panel">
-    <div class="section-header">
-      <h2>Self-Assessment 🪞</h2>
-      <p>An inward pass over Pocket Fishing Guide — the live app, the marketing site, and the GitHub README — scored against the same bar we hold competitors to. The question: <b>are we saying what we actually ship?</b></p>
-    </div>
-
-    <div class="alert alert-info">
-      <span class="alert-icon">📋</span>
-      <div class="alert-body">Source pass June 26, 2026 — PFG README + CHANGELOG, shipped <code>index.html</code>, and talewatersandtides.com copy. Scores and parity verdicts below trace to those sources; no invented metrics.</div>
-    </div>
-
-    <!-- gauges -->
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">Self-health at a glance</div>
-      <div class="gauges">
-        <div class="gauge">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Overall self-health 55 of 100">
-            <circle class="track" cx="50" cy="50" r="42"></circle>
-            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--yellow);stroke-dasharray:145.1 118.8"></circle>
-            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">55</text>
-            <text class="pct" x="50" y="70" text-anchor="middle">/ 100</text>
-          </svg>
-          <div class="gauge-cap">Overall self-health</div>
-        </div>
-        <div class="gauge">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Messaging parity 60 percent">
-            <circle class="track" cx="50" cy="50" r="42"></circle>
-            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--yellow);stroke-dasharray:158.3 105.6"></circle>
-            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">60</text>
-            <text class="pct" x="50" y="70" text-anchor="middle">% parity</text>
-          </svg>
-          <div class="gauge-cap">Say-vs-ship parity</div>
-        </div>
-        <div class="gauge">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Shipped versus claimed 65 percent">
-            <circle class="track" cx="50" cy="50" r="42"></circle>
-            <circle class="val" cx="50" cy="50" r="42" style="stroke:var(--accent);stroke-dasharray:171.5 92.4"></circle>
-            <text class="num" x="50" y="50" text-anchor="middle" dominant-baseline="central">65</text>
-            <text class="pct" x="50" y="70" text-anchor="middle">% shipped</text>
-          </svg>
-          <div class="gauge-cap">Claims actually shipped</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- radar + read -->
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">Capability radar — today vs roadmap target</div>
-      <div class="chart-row">
-        <div class="radar-wrap">
-          <svg class="radar" viewBox="-40 -20 400 360" role="img" aria-label="Radar of eight self-assessment dimensions, today versus target">
-            <!-- grid rings -->
-            <polygon class="ring" points="160,40 244.85,75.15 280,160 244.85,244.85 160,280 75.15,244.85 40,160 75.15,75.15"></polygon>
-            <polygon class="ring" points="160,70 223.6,96.4 250,160 223.6,223.6 160,250 96.4,223.6 70,160 96.4,96.4"></polygon>
-            <polygon class="ring" points="160,100 202.4,117.6 220,160 202.4,202.4 160,220 117.6,202.4 100,160 117.6,117.6"></polygon>
-            <polygon class="ring" points="160,130 181.2,138.8 190,160 181.2,181.2 160,190 138.8,181.2 130,160 138.8,138.8"></polygon>
-            <!-- axes -->
-            <line class="axis" x1="160" y1="160" x2="160" y2="40"></line>
-            <line class="axis" x1="160" y1="160" x2="244.85" y2="75.15"></line>
-            <line class="axis" x1="160" y1="160" x2="280" y2="160"></line>
-            <line class="axis" x1="160" y1="160" x2="244.85" y2="244.85"></line>
-            <line class="axis" x1="160" y1="160" x2="160" y2="280"></line>
-            <line class="axis" x1="160" y1="160" x2="75.15" y2="244.85"></line>
-            <line class="axis" x1="160" y1="160" x2="40" y2="160"></line>
-            <line class="axis" x1="160" y1="160" x2="75.15" y2="75.15"></line>
-            <!-- target (drawn under) -->
-            <polygon class="target" points="160,52 236.4,83.6 268,160 227.9,227.9 160,268 100.6,219.4 76,160 109.1,109.1"></polygon>
-            <!-- today -->
-            <polygon class="today" points="160,88 236.4,83.6 244,160 210.9,210.9 160,256 134.5,185.5 124,160 143,143"></polygon>
-            <!-- labels -->
-            <text x="160" y="25" text-anchor="middle">Product</text>
-            <text x="255" y="66" text-anchor="start">Data</text>
-            <text x="295" y="163" text-anchor="start">UX</text>
-            <text x="255" y="258" text-anchor="start">Messaging</text>
-            <text x="160" y="298" text-anchor="middle">Docs</text>
-            <text x="65" y="258" text-anchor="end">SEO</text>
-            <text x="25" y="163" text-anchor="end">Growth</text>
-            <text x="65" y="66" text-anchor="end">Monetize</text>
-          </svg>
-        </div>
-        <div>
-          <div class="chart-legend" style="justify-content:flex-start;margin-top:0;margin-bottom:14px;">
-            <span><i class="dot" aria-hidden="true" style="background:var(--accent)"></i> Today</span>
-            <span><i class="dot" aria-hidden="true" style="background:var(--purple)"></i> Roadmap target</span>
-          </div>
-          <ul class="hfe-list focus">
-            <li><b>The moat is data.</b> Real-time USGS/NWS/USACE on a 6-hour refresh scores near-max — competitors rarely match this depth for Arkansas.</li>
-            <li><b>The drag is the outer ring.</b> SEO, growth, and monetization sit lowest — the brand is still largely un-indexed and there's no premium path live.</li>
-            <li><b>The credibility risk is messaging.</b> The widest today-vs-target gap after the outer ring is consistency between what we claim and what the UI shows.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- self rubric -->
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">Self-reflection rubric — scored today vs roadmap target</div>
-      <div class="matrix-wrap">
-      <table class="rubric">
-        <thead><tr><th style="min-width:180px;">Dimension</th><th style="min-width:120px;">Today</th><th style="min-width:120px;">Target</th><th>Analysis</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Product Completeness</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:60%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">6</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">9</span></div></td>
-            <td>Core fishing intel shipped; V2 parity + stubbed surfaces (Favorites, Premium, Maps) pending.</td>
-          </tr>
-          <tr>
-            <td>Data Freshness &amp; Reliability</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">9</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">9</span></div></td>
-            <td>USGS + NWS + USACE, auto-refreshed every 6h via GitHub Actions. The clearest strength.</td>
-          </tr>
-          <tr>
-            <td>UX &amp; Mobile</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:70%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">7</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">9</span></div></td>
-            <td>Mobile-first, fast, modal-driven; V2 polish + onboarding will lift it.</td>
-          </tr>
-          <tr>
-            <td>Messaging Consistency</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:60%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">6</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:80%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">8</span></div></td>
-            <td>Marketing touts 27 species, but only White Bass + Crappie intel has shipped; the public CHANGELOG is also stale (still lists 9 waters).</td>
-          </tr>
-          <tr>
-            <td>README / Docs Accuracy</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:80%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">8</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green);"></div></div><span class="score-num" style="color:var(--green);">9</span></div></td>
-            <td>Unusually candid status taxonomy (Shipped/Partial/Stubbed/Future) — a real asset.</td>
-          </tr>
-          <tr>
-            <td>Discoverability / SEO</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:30%;background:var(--red);"></div></div><span class="score-num" style="color:var(--red);">3</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:70%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">7</span></div></td>
-            <td>Market scan: brand barely indexed. Low-cost, high-upside fix.</td>
-          </tr>
-          <tr>
-            <td>Distribution / Growth</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:30%;background:var(--red);"></div></div><span class="score-num" style="color:var(--red);">3</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:70%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">7</span></div></td>
-            <td>No public "what's new", thin funnel; we ship more than we surface.</td>
-          </tr>
-          <tr>
-            <td>Monetization Readiness</td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:20%;background:var(--red);"></div></div><span class="score-num" style="color:var(--red);">2</span></div></td>
-            <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:60%;background:var(--accent);"></div></div><span class="score-num" style="color:var(--accent);">6</span></div></td>
-            <td>Ko-fi donations only; Premium is stubbed "soon".</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-
-    <!-- parity table -->
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">Say-vs-ship parity — are we describing the product we actually have?</div>
-      <div class="matrix-wrap">
-      <table class="rubric">
-        <thead><tr><th style="min-width:190px;">Claim</th><th>Where we say it</th><th>Shipped reality</th><th style="min-width:130px;">Verdict</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>"39 Arkansas waters" live</td>
-            <td>Marketing + README + this report</td>
-            <td>Corroborated — 39 waters with live USGS/NWS/USACE conditions. (The public CHANGELOG is stale: it still lists the early 9-water builds.)</td>
-            <td><span class="badge badge-green">✓ Aligned</span></td>
-          </tr>
-          <tr>
-            <td>"27 species" coverage</td>
-            <td>Marketing site</td>
-            <td>Only White Bass + Crappie have shipped intel today; the rest aren't yet surfaced in the app.</td>
-            <td><span class="badge badge-yellow">⚠ Overstated</span></td>
-          </tr>
-          <tr>
-            <td>Real-time USGS / NWS intelligence</td>
-            <td>Marketing site + live app</td>
-            <td>Live pipeline shipped — USGS, NWS, USACE; pre-fetched every 6h.</td>
-            <td><span class="badge badge-green">✓ Aligned</span></td>
-          </tr>
-          <tr>
-            <td>"V2 — Next.js / Supabase rebuild"</td>
-            <td>README (framed as active)</td>
-            <td><code>web/</code> partial; Favorites, Premium, Maps, My Plan all stubbed "soon".</td>
-            <td><span class="badge badge-yellow">⚠ Overstated</span></td>
-          </tr>
-          <tr>
-            <td>Version / "What's new"</td>
-            <td>README + CHANGELOG.md (detailed)</td>
-            <td>Not surfaced anywhere on the live app.</td>
-            <td><span class="badge badge-blue">◔ Understated</span></td>
-          </tr>
-          <tr>
-            <td>Release cadence</td>
-            <td>CHANGELOG: v0.3.0 on 2026-02-14</td>
-            <td>v0.4.0 still "Unreleased" — nothing public in ~4 months.</td>
-            <td><span class="badge badge-orange">⏳ Stale</span></td>
-          </tr>
-          <tr>
-            <td>Pocket Paddler safety</td>
-            <td>README "Shipped/core"</td>
-            <td>Real and active (<code>paddler.html</code>); recent v0.4.0 work concentrates here.</td>
-            <td><span class="badge badge-green">✓ Aligned</span></td>
-          </tr>
-          <tr>
-            <td>"Premium" monetization</td>
-            <td>README chrome ("soon")</td>
-            <td>Stubbed; only Ko-fi donations are live.</td>
-            <td><span class="badge badge-blue">◔ Early</span></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-
-    <!-- review cadence -->
-    <div class="card">
-      <div class="card-title">Review cadence — make the next pass mechanical</div>
-      <ul class="checklist">
-        <li>📥 <span><b>Pull</b> the README + CHANGELOG from GitHub (raw) and the shipped <code>index.html</code>.</span></li>
-        <li>🔍 <span><b>Diff</b> claimed counts vs the live UI — waters, species, and "soon" features.</span></li>
-        <li>📊 <span><b>Re-score</b> the eight rubric dimensions (Today) and refresh the radar.</span></li>
-        <li>✅ <span><b>Update</b> the parity verdicts and log what changed since the last pass.</span></li>
-      </ul>
-      <div class="muted" style="margin-top:14px;font-size:12px;color:var(--muted);">Last reviewed: <b style="color:var(--light);">June 26, 2026</b> · Suggested next pass: quarterly, or on any release that changes coverage or pricing.</div>
-    </div>
+  <!-- Self-Assessment content is stored in Supabase (RLS: team allowlist) and injected after an authorized sign-in — it is NOT in this static source. -->
+  <section id="tab-self" class="tab-panel" data-section="self-assessment">
+    <div class="secure-loading">🔒 Loading team-only content…</div>
   </section>
-
-  <!-- ══════════════════════════════════════════
-       TAB 9 — GAME PLAN (prescriptive)
-  ══════════════════════════════════════════ -->
-  <section id="tab-gameplan" class="tab-panel">
-    <div class="section-header">
-      <h2>Game Plan 🧭</h2>
-      <p>Prescriptive moves drawn from both lenses — the market scan and the self-assessment. Where to <b>hedge</b> the downside, <b>focus</b> the next sprint, and <b>expand</b> the strengths that already set us apart.</p>
-    </div>
-
-    <div class="grid-3" style="margin-bottom:20px;">
-      <div class="card">
-        <div class="hfe-head"><div class="comp-icon" style="background:rgba(245,158,11,0.15);">🛡️</div><div><h3>Hedge</h3><div class="sub">Protect the downside</div></div></div>
-        <ul class="hfe-list hedge">
-          <li><b>Keep the legacy static app as source of truth.</b> It's the most complete shipped surface — don't let the V2 migration regress it.</li>
-          <li><b>Ring-fence the fishing core.</b> Recent v0.4.0 energy is all Pocket Paddler; reserve cycles so the flagship product doesn't stall.</li>
-          <li><b>Fix the counts before they bite.</b> Only White Bass + Crappie intel has shipped — reconcile the "27 species" claim and refresh the stale changelog so the public numbers match what's live.</li>
-          <li><b>Harden free-API reliance.</b> USGS/NWS/USACE are the moat and a single point of failure — cache + graceful degradation.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="hfe-head"><div class="comp-icon" style="background:rgba(14,165,233,0.15);">🎯</div><div><h3>Focus</h3><div class="sub">The next sprint</div></div></div>
-        <ul class="hfe-list focus">
-          <li><b>Finish V2 parity for <code>/waters</code> &amp; <code>/species</code>.</b> The migration's top roadmap item — close the Next.js-vs-legacy gap.</li>
-          <li><b>Surface a public "What's new".</b> You ship more than you show; exposing the changelog builds trust and SEO at once.</li>
-          <li><b>Align messaging to shipped reality.</b> Make the marketing counts match the UI — or expand the UI to earn the counts.</li>
-          <li><b>Ship onboarding / profile creation.</b> README's #2 priority and the front door to retention and future premium.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="hfe-head"><div class="comp-icon" style="background:rgba(16,185,129,0.15);">🚀</div><div><h3>Expand</h3><div class="sub">Grow the pros</div></div></div>
-        <ul class="hfe-list expand">
-          <li><b>Lean into deep local Arkansas intel.</b> The clearest moat vs national apps (onWater, Fishbrain) — productize "pro intel" content.</li>
-          <li><b>Win the un-indexed brand on SEO.</b> Low cost, high upside while no one else owns the local terms.</li>
-          <li><b>Ship the Mapbox live map.</b> A visible, competitive feature already on the roadmap.</li>
-          <li><b>Push the paddler-safety wedge.</b> Buffalo River safety + RIDB/NPS is a differentiated niche already in motion.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-bottom:20px;">
-      <div class="card">
-        <div class="card-title">Pros to double down on — our moats</div>
-        <ul class="hfe-list expand" style="margin-top:6px;">
-          <li>🌊 <b>Hyper-local Arkansas depth</b> — intel competitors' national breadth can't match.</li>
-          <li>📡 <b>Real, free, live data</b> — USGS/NWS/USACE on a 6-hour refresh, zero data cost.</li>
-          <li>📱 <b>Mobile-first &amp; no-login core</b> — fast time-to-value for anglers in the field.</li>
-          <li>🛶 <b>Pocket Paddler</b> — a differentiated safety surface few rivals carry.</li>
-          <li>📖 <b>Candid docs</b> — an honest status taxonomy that makes iteration fast and trustworthy.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card-title">Quick wins — &lt; 2 hours, $0</div>
-        <ul class="checklist">
-          <li>✅ <span><b>Publish the CHANGELOG</b> — link a "What's new" in the app footer.</span></li>
-          <li>✅ <span><b>Align homepage counts</b> with shipped reality (or list the waters to back them).</span></li>
-          <li>✅ <span><b>Add a version badge</b> to the live app.</span></li>
-          <li>✅ <span><b>Add meta / OG tags + a sitemap</b> to start indexing the brand.</span></li>
-          <li>✅ <span><b>Add a coverage map / waters list</b> as proof for the "39 waters" claim.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Prioritization — effort vs impact</div>
-      <div class="ei-quad">
-        <div class="ei-q win">
-          <h5>Do now · low effort, high impact</h5>
-          <ul>
-            <li>Publish changelog / "What's new"</li>
-            <li>Align marketing counts with the UI</li>
-            <li>SEO meta + sitemap</li>
-          </ul>
-        </div>
-        <div class="ei-q big">
-          <h5>Plan · high effort, high impact</h5>
-          <ul>
-            <li>Finish V2 <code>/waters</code> &amp; <code>/species</code> parity</li>
-            <li>Onboarding / profile creation</li>
-            <li>Mapbox live map</li>
-          </ul>
-        </div>
-        <div class="ei-q fill">
-          <h5>Fill-in · low effort, low impact</h5>
-          <ul>
-            <li>Version badge on the app</li>
-            <li>Footer links cleanup</li>
-          </ul>
-        </div>
-        <div class="ei-q skip">
-          <h5>Defer · high effort, low impact</h5>
-          <ul>
-            <li>Sponsor marketplace / guide booking</li>
-            <li>CMS &amp; Fishing Buddy (backlog only)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <section id="tab-gameplan" class="tab-panel" data-section="game-plan">
+    <div class="secure-loading">🔒 Loading team-only content…</div>
   </section>
 
 </main>
@@ -2312,10 +2000,38 @@ sb.auth.onAuthStateChange((_event, session) => {
   const allowed = !!email && ALLOW.indexOf(email) !== -1;
   document.body.classList.toggle('locked', !allowed);
   document.body.classList.toggle('denied', !!email && !allowed);
+  if (allowed) { loadSecureSections(); }
   if (email && !allowed) {
     $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard.";
   }
 });
+
+// Team-only tab content (Self-Assessment, Game Plan) lives in Supabase behind RLS (allowlist) and is
+// NOT in this static source. Fetch it, inflate (gzip+base64), and inject only after an authorized
+// sign-in — RLS returns rows only for allowlisted emails, so a public/denied viewer gets nothing.
+let _sectionsLoaded = false;
+async function inflateB64(b64){
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return new TextDecoder().decode(await new Response(stream).arrayBuffer());
+}
+async function loadSecureSections(){
+  if (_sectionsLoaded) return;
+  _sectionsLoaded = true;
+  try {
+    const { data, error } = await sb.from('dashboard_sections').select('key,html');
+    if (error) throw error;
+    for (const row of (data || [])){
+      const panel = document.querySelector('[data-section="' + row.key + '"]');
+      if (!panel) continue;
+      try { panel.innerHTML = await inflateB64(row.html); }
+      catch (e){ panel.innerHTML = '<div class="secure-loading">Couldn’t decode team content.</div>'; }
+    }
+  } catch (e){
+    _sectionsLoaded = false; // let a later auth event retry
+    document.querySelectorAll('.secure-loading').forEach(el => { el.textContent = "Couldn’t load team-only content — refresh to retry."; });
+  }
+}
 
 // Export the full report (all tabs expanded) as a shareable PDF via the print dialog.
 $('exportPdf').addEventListener('click', () => window.print());
