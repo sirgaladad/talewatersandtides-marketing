@@ -288,9 +288,50 @@ table.matrix { width: 100%; border-collapse: collapse; font-size: 12px; }
   .rubric-desc { grid-column: span 2; }
   .grid-2 { grid-template-columns: 1fr; }
 }
+/* ── MAGIC-LINK GATE (team-only) ── */
+body.locked > *:not(#authGate) { display: none !important; }
+body:not(.locked) #authGate { display: none; }
+#authGate { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: var(--navy-deep, #0d1b2a); padding: 24px; }
+#authGate .gate-card { width: 100%; max-width: 420px; background: var(--card, #162436); border: 1px solid var(--border, #2a3f5c); border-radius: 14px; padding: 28px; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+#authGate .gate-eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--amber, #d4a017); font-weight: 700; margin-bottom: 10px; }
+#authGate h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text, #e8edf2); }
+#authGate p.gate-sub { color: var(--text-muted, #8fa3b8); font-size: 13px; margin-bottom: 18px; line-height: 1.5; }
+#authGate label { display: block; font-size: 12px; color: var(--text-muted, #8fa3b8); margin-bottom: 6px; }
+#authGate input[type="email"] { width: 100%; font-size: 16px; color: var(--text, #e8edf2); background: var(--navy-mid, #1b2d45); border: 1px solid var(--border, #2a3f5c); border-radius: 10px; padding: 11px 13px; margin-bottom: 14px; }
+#authGate input[type="email"]:focus { outline: none; border-color: var(--amber, #d4a017); }
+#authGate button.gate-btn { width: 100%; font-size: 14px; font-weight: 600; cursor: pointer; color: #0d1b2a; background: var(--amber, #d4a017); border: none; border-radius: 999px; padding: 12px 18px; }
+#authGate button.gate-btn:disabled { opacity: .55; cursor: not-allowed; }
+#authGate .gate-msg { font-size: 13px; margin-top: 12px; padding: 9px 12px; border-radius: 8px; }
+#authGate .gate-msg[hidden] { display: none; }
+#authGate .gate-msg.ok { color: #7ee0a8; background: rgba(46,125,82,.15); border: 1px solid rgba(46,125,82,.35); }
+#authGate .gate-msg.error { color: #f19a8e; background: rgba(192,57,43,.12); border: 1px solid rgba(192,57,43,.35); }
+body.denied #authGate .gate-signin { display: none; }
+body:not(.denied) #authGate .gate-denied { display: none; }
+#signOut { position: fixed; top: 14px; right: 16px; z-index: 200; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text-muted, #8fa3b8); background: var(--card, #162436); border: 1px solid var(--border, #2a3f5c); border-radius: 999px; padding: 7px 14px; }
+body.locked #signOut { display: none; }
 </style>
 </head>
-<body>
+<body class="locked">
+
+<!-- ── MAGIC-LINK GATE (team-only) ── -->
+<div id="authGate">
+  <div class="gate-card gate-signin">
+    <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
+    <h2>Sign in to view</h2>
+    <p class="gate-sub">Enter your email and we'll send a one-time magic link — no password. Tap it on this device to open the market intelligence dashboard. Access is limited to the TWT team.</p>
+    <label for="gateEmail">Email</label>
+    <input id="gateEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email address" />
+    <button id="sendLink" class="gate-btn" type="button">Send me a magic link</button>
+    <p id="gateMsg" class="gate-msg" hidden></p>
+  </div>
+  <div class="gate-card gate-denied">
+    <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
+    <h2>No access</h2>
+    <p class="gate-sub" id="deniedWho"></p>
+    <button id="signOutDenied" class="gate-btn" type="button">Sign out &amp; try another email</button>
+  </div>
+</div>
+<button id="signOut" type="button">Sign out</button>
 
 <div class="header">
   <div class="header-brand">
@@ -1284,6 +1325,38 @@ window.addEventListener('load', () => {
     });
     animateBars();
   }, 200);
+});
+</script>
+
+<!-- ── MAGIC-LINK AUTH GATE (team allowlist) ── -->
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
+const REDIRECT = window.location.origin + window.location.pathname;
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+const $ = (id) => document.getElementById(id);
+function gmsg(el, kind, text){ el.textContent = text; el.className = 'gate-msg ' + kind; el.hidden = false; }
+$('sendLink').addEventListener('click', async () => {
+  const email = $('gateEmail').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { return gmsg($('gateMsg'), 'error', 'Enter a valid email.'); }
+  $('sendLink').disabled = true;
+  try {
+    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
+    gmsg($('gateMsg'), error ? 'error' : 'ok', error ? error.message : 'Check your email and tap the link on this device.');
+  } catch (err) { gmsg($('gateMsg'), 'error', (err && err.message) || 'Network hiccup — check your connection and try again.'); }
+  finally { $('sendLink').disabled = false; }
+});
+$('gateEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('sendLink').click(); });
+$('signOut').addEventListener('click', () => sb.auth.signOut());
+$('signOutDenied').addEventListener('click', () => sb.auth.signOut());
+const ALLOW = ['cboelkens@gmail.com', 'corey@talewatersandtides.com'];
+sb.auth.onAuthStateChange((_event, session) => {
+  const email = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  const allowed = !!email && ALLOW.indexOf(email) !== -1;
+  document.body.classList.toggle('locked', !allowed);
+  document.body.classList.toggle('denied', !!email && !allowed);
+  if (email && !allowed) { $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard."; }
 });
 </script>
 </body>
