@@ -698,8 +698,10 @@ function loadSecureSections(){
       if (panel) panel.innerHTML = html;
     }
   })().catch((e) => {
-    _sectionsPromise = null; // allow a later retry
-    document.querySelectorAll('.secure-loading').forEach(el => { el.textContent = "Couldn’t load team-only content — refresh to retry."; });
+    if (gen === _authGen) { // only touch shared state/DOM if this load is still the current session's
+      _sectionsPromise = null; // allow a later retry
+      document.querySelectorAll('.secure-loading').forEach(el => { el.textContent = "Couldn’t load team-only content — refresh to retry."; });
+    }
     throw e;
   });
   return _sectionsPromise;
