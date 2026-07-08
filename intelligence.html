@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PFG Intelligence — Tale Waters & Tides</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --surface: #111827;
+      --surface2: #1a2234;
+      --border: #1e2d45;
+      --accent: #0ea5e9;
+      --accent2: #06b6d4;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --orange: #f97316;
+      --purple: #8b5cf6;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --light: #94a3b8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: linear-gradient(135deg, #0a0f1a 0%, #0c1928 50%, #0a1628 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .brand { display: flex; align-items: center; gap: 12px; }
+    .site-header .brand-mark {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .site-header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .site-header .subtitle { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .report-meta { text-align: right; }
+    .report-meta .date { font-size: 12px; color: var(--muted); }
+    .report-meta .version { font-size: 11px; color: var(--accent); margin-top: 2px; }
+
+    /* ── NAV TABS ── */
+    .tab-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 14px 20px;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── LAYOUT ── */
+    .main { max-width: 1400px; margin: 0 auto; padding: 32px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── CARDS & GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .card-sm { padding: 16px; }
+    .card-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .card h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+
+    /* ── STAT TILES ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .stat-tile .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+    .stat-tile .value { font-size: 28px; font-weight: 800; margin: 6px 0 4px; color: var(--accent); }
+    .stat-tile .detail { font-size: 12px; color: var(--light); }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+    .badge-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
+    .badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+    .badge-blue { background: rgba(14,165,233,0.15); color: var(--accent); }
+    .badge-purple { background: rgba(139,92,246,0.15); color: var(--purple); }
+    .badge-orange { background: rgba(249,115,22,0.15); color: var(--orange); }
+
+    /* ── COMPETITOR CARDS ── */
+    .competitor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .comp-card-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .comp-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .comp-card-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .comp-card-header .comp-meta { font-size: 11px; color: var(--muted); }
+    .comp-card-body { padding: 20px 24px; }
+    .comp-card-body p { font-size: 13px; color: var(--light); margin-bottom: 14px; }
+    .comp-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .feature-chip {
+      padding: 3px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--light);
+    }
+    .comp-threat { display: flex; align-items: center; justify-content: space-between; }
+    .threat-label { font-size: 11px; color: var(--muted); }
+    .threat-bar { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; margin: 0 10px; }
+    .threat-fill { height: 100%; border-radius: 2px; }
+
+    details summary {
+      cursor: pointer;
+      padding: 10px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+      user-select: none;
+    }
+    details summary::before { content: '▶'; font-size: 10px; transition: transform 0.2s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    details .detail-body {
+      padding: 12px 0;
+      font-size: 13px;
+      color: var(--light);
+    }
+    details .detail-body ul { padding-left: 18px; }
+    details .detail-body li { margin-bottom: 6px; }
+
+    /* ── FEATURE MATRIX ── */
+    .matrix-wrap { overflow-x: auto; }
+    .matrix {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12px;
+    }
+    .matrix th, .matrix td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .matrix th {
+      background: var(--surface2);
+      font-weight: 600;
+      text-align: center;
+      font-size: 11px;
+      color: var(--light);
+      white-space: nowrap;
+    }
+    .matrix th:first-child { text-align: left; }
+    .matrix td:first-child { font-weight: 500; color: var(--text); }
+    .matrix td { text-align: center; color: var(--muted); }
+    .matrix tr:hover td { background: rgba(255,255,255,0.02); }
+    .matrix .pfg-col { background: rgba(14,165,233,0.05); }
+    .matrix .pfg-col-h { background: rgba(14,165,233,0.1); color: var(--accent) !important; }
+
+    .check { color: var(--green); font-size: 15px; }
+    .partial { color: var(--yellow); font-size: 15px; }
+    .cross { color: var(--red); font-size: 15px; }
+    .planned { color: var(--purple); font-size: 13px; font-style: italic; }
+
+    /* ── LEAN CANVAS ── */
+    .lean-canvas {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .lc-cell {
+      background: var(--surface);
+      padding: 18px;
+      min-height: 140px;
+    }
+    .lc-cell.span2 { grid-column: span 2; }
+    .lc-cell.accent-border { border-top: 3px solid var(--accent); }
+    .lc-cell.green-border { border-top: 3px solid var(--green); }
+    .lc-cell.yellow-border { border-top: 3px solid var(--yellow); }
+    .lc-cell.purple-border { border-top: 3px solid var(--purple); }
+    .lc-cell.red-border { border-top: 3px solid var(--red); }
+    .lc-cell.orange-border { border-top: 3px solid var(--orange); }
+    .lc-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .lc-cell ul { list-style: none; padding: 0; }
+    .lc-cell ul li {
+      font-size: 12px;
+      color: var(--light);
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .lc-cell ul li::before { content: '–'; color: var(--muted); flex-shrink: 0; }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .tl-event {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .tl-event::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--surface);
+    }
+    .tl-event.pfg::before { background: var(--accent); border-color: var(--accent); }
+    .tl-event.competitor::before { background: var(--red); border-color: var(--red); }
+    .tl-event.market::before { background: var(--green); border-color: var(--green); }
+    .tl-date { font-size: 11px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+    .tl-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .tl-body { font-size: 13px; color: var(--light); }
+
+    /* ── OPPORTUNITIES ── */
+    .opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .opp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .opp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+    }
+    .opp-card.high::before { background: var(--green); }
+    .opp-card.medium::before { background: var(--yellow); }
+    .opp-card.low::before { background: var(--muted); }
+    .opp-priority {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+    .opp-card.high .opp-priority { color: var(--green); }
+    .opp-card.medium .opp-priority { color: var(--yellow); }
+    .opp-card.low .opp-priority { color: var(--muted); }
+    .opp-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .opp-card p { font-size: 13px; color: var(--light); }
+    .opp-card .opp-action {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    /* ── RUBRIC TABLE ── */
+    .rubric {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12px;
+    }
+    .rubric th, .rubric td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .rubric th {
+      background: var(--surface2);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--light);
+    }
+    .rubric td { color: var(--light); vertical-align: top; }
+    .rubric td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .score-bar { height: 6px; border-radius: 3px; background: var(--surface2); flex: 1; min-width: 80px; }
+    .score-fill { height: 100%; border-radius: 3px; }
+    .score-num { font-size: 12px; font-weight: 700; width: 28px; text-align: right; }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      margin-bottom: 24px;
+    }
+    .section-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .section-header p {
+      color: var(--light);
+      font-size: 14px;
+    }
+
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: var(--yellow); }
+    .alert-info { background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); color: var(--accent); }
+    .alert-success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: var(--green); }
+    .alert .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .alert .alert-body { color: var(--text); font-size: 13px; }
+    .alert .alert-body strong { color: inherit; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+    /* links */
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Source list */
+    .sources { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .sources h3 { font-size: 13px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.6px; }
+    .sources ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px; }
+    .sources ul li { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: baseline; }
+    .sources ul li::before { content: '→'; color: var(--border); }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .stat-row { grid-template-columns: 1fr; }
+      .lean-canvas { grid-template-columns: 1fr 1fr; }
+      .lc-cell.span2 { grid-column: span 1; }
+      .main { padding: 16px; }
+    }
+
+    /* ── MAGIC-LINK GATE ── */
+    body.locked > *:not(#authGate) { display: none !important; }
+    body:not(.locked) #authGate { display: none; }
+    #authGate {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg); padding: 24px;
+    }
+    #authGate .gate-card {
+      width: 100%; max-width: 420px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px;
+    }
+    #authGate .gate-eyebrow {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-weight: 700; margin-bottom: 10px;
+    }
+    #authGate h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    #authGate p.gate-sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+    #authGate label { display: block; font-size: 12px; color: var(--light); margin-bottom: 6px; }
+    #authGate input[type="email"] {
+      width: 100%; font-size: 16px; color: var(--text);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 13px; margin-bottom: 14px;
+    }
+    #authGate input[type="email"]:focus { outline: none; border-color: var(--accent); }
+    #authGate button.gate-btn {
+      width: 100%; font-size: 14px; font-weight: 600; cursor: pointer;
+      color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 999px; padding: 12px 18px;
+    }
+    #authGate button.gate-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    #authGate .gate-msg { font-size: 13px; margin-top: 12px; padding: 9px 12px; border-radius: 8px; }
+    #authGate .gate-msg[hidden] { display: none; }
+    #authGate .gate-msg.ok { color: #6ee7b7; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); }
+    #authGate .gate-msg.error { color: #fca5a5; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); }
+    #signOut {
+      position: fixed; top: 14px; right: 16px; z-index: 200;
+      font-size: 12px; font-weight: 600; cursor: pointer; color: var(--light);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 999px; padding: 7px 14px;
+    }
+    #signOut:hover { color: var(--text); border-color: var(--accent); }
+    body.locked #signOut { display: none; }
+    body.denied #authGate .gate-signin { display: none; }
+    body:not(.denied) #authGate .gate-denied { display: none; }
+
+    /* export-to-PDF button */
+    #exportPdf { margin-top: 8px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
+    #exportPdf:hover { border-color: var(--accent); }
+    body.locked #exportPdf { display: none; }
+    .secure-loading { text-align: center; color: var(--muted); font-size: 13px; padding: 48px 16px; }
+
+    /* print / export-to-PDF: expand every tab into one shareable document.
+       Only fires when unlocked — a locked/denied user's Ctrl+P still prints nothing,
+       because .main stays hidden by the body.locked rule above. */
+    @media print {
+      @page { size: landscape; margin: 8mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      #authGate, #signOut, #exportPdf, .tab-nav { display: none !important; }
+      /* keep the loading/error marker visible in print (native Ctrl+P bypasses the button's await),
+         so an unfetched team tab prints its placeholder instead of a blank page */
+      .tab-panel { display: block !important; }
+      .tab-panel + .tab-panel { break-before: page; }
+      .main { max-width: none; padding: 12px; }
+      .card, .comp-card, .matrix-wrap, table, .opp-card, .ei-q { break-inside: avoid; }
+      .matrix-wrap { overflow: visible !important; }
+      /* keep wide comparison tables on the page (landscape + shrink + wrap) instead of clipping */
+      .matrix-wrap table, .rubric { font-size: 8px; width: 100%; table-layout: fixed; }
+      .matrix-wrap th, .matrix-wrap td, .rubric th, .rubric td {
+        white-space: normal; word-break: break-word; min-width: 0 !important; padding: 4px 5px;
+      }
+    }
+    /* ── SELF-ASSESSMENT: charts & layouts ── */
+    .chart-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; }
+    @media (max-width: 860px) { .chart-row { grid-template-columns: 1fr; } }
+    .radar-wrap { display: flex; justify-content: center; }
+    .radar { width: 100%; max-width: 360px; height: auto; }
+    .radar .ring { fill: none; stroke: var(--border); }
+    .radar .axis { stroke: var(--border); }
+    .radar text { fill: var(--light); font-size: 10px; }
+    .radar .today { fill: rgba(14,165,233,0.18); stroke: var(--accent); stroke-width: 2; }
+    .radar .target { fill: rgba(139,92,246,0.10); stroke: var(--purple); stroke-width: 2; stroke-dasharray: 4 3; }
+    .chart-legend { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: 14px; font-size: 12px; color: var(--light); }
+    .chart-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .gauges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .gauge { text-align: center; }
+    .gauge svg { width: 96px; height: 96px; }
+    .gauge .track { fill: none; stroke: var(--surface2); stroke-width: 9; }
+    .gauge .val { fill: none; stroke-width: 9; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transform-box: fill-box; }
+    .gauge .num { font-size: 22px; font-weight: 800; fill: var(--text); }
+    .gauge .pct { font-size: 9px; fill: var(--muted); }
+    .gauge-cap { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+    @media (max-width: 560px) { .gauges { gap: 8px; } .gauge svg { width: 72px; height: 72px; } }
+
+    /* hedge / focus / expand columns */
+    .hfe-head { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+    .hfe-head .comp-icon { width: 38px; height: 38px; font-size: 18px; }
+    .hfe-head h3 { margin: 0; font-size: 16px; }
+    .hfe-head .sub { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .hfe-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .hfe-list li { font-size: 13px; color: var(--light); padding-left: 18px; position: relative; line-height: 1.5; }
+    .hfe-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; border-radius: 2px; }
+    .hfe-list.hedge li::before { background: var(--yellow); }
+    .hfe-list.focus li::before { background: var(--accent); }
+    .hfe-list.expand li::before { background: var(--green); }
+    .hfe-list li b { color: var(--text); font-weight: 600; }
+
+    /* effort / impact quadrant */
+    .ei-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ei-q { border: 1px solid var(--border); border-radius: 8px; padding: 14px; background: var(--surface2); }
+    .ei-q h5 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 9px; }
+    .ei-q.win h5 { color: var(--green); }
+    .ei-q.big h5 { color: var(--accent); }
+    .ei-q.fill h5 { color: var(--yellow); }
+    .ei-q.skip h5 { color: var(--muted); }
+    .ei-q ul { list-style: none; font-size: 12px; color: var(--light); display: flex; flex-direction: column; gap: 6px; }
+
+    /* simple checklist */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .checklist li { font-size: 13px; color: var(--light); display: flex; gap: 9px; align-items: flex-start; line-height: 1.5; }
+    .checklist li b { color: var(--text); font-weight: 600; }
+  </style>
+</head>
+<body class="locked">
+
+<!-- ── MAGIC-LINK GATE ── -->
+<div id="authGate">
+  <div class="gate-card gate-signin">
+    <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
+    <h2>Sign in to view</h2>
+    <p class="gate-sub">Enter your email and we'll send a one-time magic link — no password. Tap it on this device to open the intelligence dashboard. Access is limited to the TWT team.</p>
+    <label for="gateEmail">Email</label>
+    <input id="gateEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email address" />
+    <button id="sendLink" class="gate-btn" type="button">Send me a magic link</button>
+    <p id="gateMsg" class="gate-msg" hidden></p>
+  </div>
+  <div class="gate-card gate-denied">
+    <p class="gate-eyebrow">Tale Waters &amp; Tides · Intelligence</p>
+    <h2>No access</h2>
+    <p class="gate-sub" id="deniedWho"></p>
+    <button id="signOutDenied" class="gate-btn" type="button">Sign out &amp; try another email</button>
+  </div>
+</div>
+<button id="signOut" type="button">Sign out</button>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">🎣</div>
+    <div>
+      <h1>PFG Intelligence</h1>
+      <div class="subtitle">Tale Waters &amp; Tides — Internal self-assessment &amp; game plan · team only</div>
+    </div>
+  </div>
+  <div class="report-meta">
+    <div class="date">Team-only · internal review</div>
+    <div class="version">Self-Assessment &amp; Game Plan</div>
+    <button id="exportPdf" type="button" title="Export the full report as a PDF to share">⤓ Export PDF</button>
+  </div>
+</header>
+<!-- ── TABS ── -->
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active" onclick="showTab(this,'self')">Self-Assessment</button>
+  <button class="tab-btn" onclick="showTab(this,'gameplan')">Game Plan</button>
+</nav>
+
+<main class="main">
+
+  <section id="tab-self" class="tab-panel" data-section="self-assessment">
+    <div class="secure-loading">🔒 Loading team-only content…</div>
+  </section>
+  <section id="tab-gameplan" class="tab-panel" data-section="game-plan">
+    <div class="secure-loading">🔒 Loading team-only content…</div>
+  </section>
+
+</main>
+
+<!-- ── JS: Tab switching ── -->
+<script>
+  function showTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+</script>
+
+<!-- ── MAGIC-LINK AUTH GATE ── -->
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+
+const SB_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
+// Redirect back to this same page, whatever origin it's served from (localhost / staging / prod).
+// Each origin must be allowlisted in Supabase Auth → URL Configuration → Redirect URLs.
+const REDIRECT = window.location.origin + window.location.pathname;
+
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+
+const $ = (id) => document.getElementById(id);
+function msg(el, kind, text){ el.textContent = text; el.className = 'gate-msg ' + kind; el.hidden = false; }
+
+$('sendLink').addEventListener('click', async () => {
+  const email = $('gateEmail').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { return msg($('gateMsg'), 'error', 'Enter a valid email.'); }
+  $('sendLink').disabled = true;
+  try {
+    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT } });
+    msg($('gateMsg'), error ? 'error' : 'ok', error ? error.message : 'Check your email and tap the link on this device.');
+  } catch (err) {
+    msg($('gateMsg'), 'error', (err && err.message) || 'Network hiccup — check your connection and try again.');
+  } finally {
+    $('sendLink').disabled = false;
+  }
+});
+$('gateEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('sendLink').click(); });
+$('signOut').addEventListener('click', () => sb.auth.signOut());
+$('signOutDenied').addEventListener('click', () => sb.auth.signOut());
+
+// Access is limited to the TWT team. A signed-in session only unlocks if the
+// verified email is on the allowlist; other signed-in users see the denied card.
+const ALLOW = ['cboelkens@gmail.com', 'corey@talewatersandtides.com'];
+sb.auth.onAuthStateChange((_event, session) => {
+  const email = session && session.user ? (session.user.email || '').toLowerCase() : null;
+  const allowed = !!email && ALLOW.indexOf(email) !== -1;
+  document.body.classList.toggle('locked', !allowed);
+  document.body.classList.toggle('denied', !!email && !allowed);
+  if (allowed) { loadSecureSections(); } else { clearSecureSections(); }
+  if (email && !allowed) {
+    $('deniedWho').textContent = 'Signed in as ' + email + " — that account doesn't have access to this dashboard.";
+  }
+});
+
+// Team-only tab content (Self-Assessment, Game Plan) lives in Supabase behind RLS (allowlist) and is
+// NOT in this static source. Fetch it, inflate (gzip+base64), and inject only after an authorized
+// sign-in — RLS returns rows only for allowlisted emails, so a public/denied viewer gets nothing.
+const SECURE_PLACEHOLDER = '<div class="secure-loading">🔒 Loading team-only content…</div>';
+const REQUIRED_SECTIONS = ['self-assessment', 'game-plan'];
+let _sectionsPromise = null;
+let _authGen = 0; // bumped whenever access is lost; a load from a stale generation must not inject
+async function inflateB64(b64){
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return new TextDecoder().decode(await new Response(stream).arrayBuffer());
+}
+// Fetch + inject once per allowed session; memoized so concurrent callers (auth event, PDF export)
+// await the same in-flight load. Rejects if a required section is missing, so the export flow can't
+// print blank internal pages. Injection is generation-guarded so a fetch that resolves after sign-out
+// cannot re-populate the locked page.
+function loadSecureSections(){
+  if (_sectionsPromise) return _sectionsPromise;
+  const gen = _authGen;
+  _sectionsPromise = (async () => {
+    const { data, error } = await sb.from('dashboard_sections').select('key,html');
+    if (error) throw error;
+    const rows = (data || []).filter(r => REQUIRED_SECTIONS.includes(r.key));
+    const missing = REQUIRED_SECTIONS.filter(k => !rows.some(r => r.key === k));
+    if (missing.length) throw new Error('Missing dashboard sections: ' + missing.join(', '));
+    // Inflate everything BEFORE touching the DOM, then bail if access changed while we were fetching.
+    const inflated = [];
+    for (const row of rows){ inflated.push([row.key, await inflateB64(row.html)]); }
+    if (gen !== _authGen) return; // signed out / access revoked mid-flight — do not inject
+    for (const [key, html] of inflated){
+      const panel = document.querySelector('[data-section="' + key + '"]');
+      if (panel) panel.innerHTML = html;
+    }
+  })().catch((e) => {
+    _sectionsPromise = null; // allow a later retry
+    document.querySelectorAll('.secure-loading').forEach(el => { el.textContent = "Couldn’t load team-only content — refresh to retry."; });
+    throw e;
+  });
+  return _sectionsPromise;
+}
+// On sign-out or a denied sign-in, invalidate any in-flight load and wipe the injected content so the
+// next local user of this browser can't read stale team-only DOM without an allowed session.
+function clearSecureSections(){
+  _authGen++;
+  _sectionsPromise = null;
+  document.querySelectorAll('[data-section]').forEach(p => { p.innerHTML = SECURE_PLACEHOLDER; });
+}
+
+// Export the full report (all tabs expanded) as a shareable PDF via the print dialog.
+// Ensure the Supabase-backed team tabs are injected first, so the PDF never has blank internal pages.
+$('exportPdf').addEventListener('click', async () => {
+  const btn = $('exportPdf'), orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Preparing…';
+  try {
+    await loadSecureSections();
+    window.print();
+  } catch (e) {
+    alert('Team-only content is still loading — please try again in a moment.');
+  } finally {
+    btn.disabled = false; btn.textContent = orig;
+  }
+});
+const _docTitle = document.title;
+window.addEventListener('beforeprint', () => { document.title = 'PFG-Intelligence-Report'; });
+window.addEventListener('afterprint', () => { document.title = _docTitle; });
+</script>
+
+</body>
+</html>
