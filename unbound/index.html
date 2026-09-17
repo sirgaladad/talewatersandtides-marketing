@@ -380,6 +380,7 @@ footer p a { color: var(--navy); }
   var overlay = document.getElementById('overlay');
   var player = document.getElementById('player');
   var celebratedLines = countLines(state.marks);
+  var lastFocus = null;
 
   function load() {
     var s = null;
@@ -454,13 +455,13 @@ footer p a { color: var(--navy); }
     track('bingo_mark', { event_label: buildCard(state.seed)[i], value: state.marks[i] ? 1 : 0 });
     if (after > before) {
       celebratedLines = after;
-      celebrate(after);
+      celebrate(after, i);
     } else if (after < before) {
       celebratedLines = after;
     }
   }
 
-  function celebrate(lines) {
+  function celebrate(lines, cellIndex) {
     var title = document.getElementById('win-title');
     var copy = document.getElementById('win-copy');
     var label = lines === 1 ? 'Bingo!' : lines === 2 ? 'Double Bingo!' : lines >= 12 ? 'Blackout!' : lines + 'x Bingo!';
@@ -468,6 +469,8 @@ footer p a { color: var(--navy); }
     copy.textContent = lines === 1
       ? 'Five in a row. Somebody owes you a coffee.'
       : lines >= 12 ? 'Every square. You have achieved personalization at scale.' : 'Another line. Your pipeline is looking very healthy.';
+    // The grid re-renders before this runs, so remember the square by index rather than by element.
+    lastFocus = typeof cellIndex === 'number' ? cellIndex : document.activeElement;
     overlay.hidden = false;
     overlay.classList.add('on');
     document.getElementById('btn-win-close').focus();
@@ -478,6 +481,15 @@ footer p a { color: var(--navy); }
   function closeOverlay() {
     overlay.classList.remove('on');
     overlay.hidden = true;
+    // Return keyboard focus to the square that completed the line, or its replacement after re-render.
+    var target = null;
+    if (typeof lastFocus === 'number') {
+      target = grid.querySelector('.cell[data-i="' + lastFocus + '"]');
+    } else if (lastFocus && document.contains(lastFocus)) {
+      target = lastFocus;
+    }
+    if (target && typeof target.focus === 'function') { target.focus(); }
+    lastFocus = null;
   }
 
   function shuffle() {
@@ -516,15 +528,26 @@ footer p a { color: var(--navy); }
     var body = marked.length ? 'Heard so far: ' + marked.join(', ') + '.' : 'Nothing marked yet. Suspiciously quiet keynote.';
     return head + '\n' + body + '\nPlay along: https://talewatersandtides.com/unbound/';
   }
+  // Share chain: native share sheet, then clipboard, then a prompt the user can copy from.
+  // A cancelled share sheet (AbortError) stops the chain; any other failure falls through.
   function share() {
     var text = shareText();
     track('bingo_share', { value: countLines(state.marks) });
     if (navigator.share) {
-      navigator.share({ title: 'UNBOUND Buzzword Bingo', text: text }).catch(function () { /* user cancelled */ });
+      navigator.share({ title: 'UNBOUND Buzzword Bingo', text: text }).catch(function (err) {
+        if (err && err.name === 'AbortError') { return; }
+        copyOrPrompt(text);
+      });
       return;
     }
+    copyOrPrompt(text);
+  }
+  function copyOrPrompt(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { setHint('Copied to clipboard. Paste it in the team chat.'); }, function () { setHint('Could not copy. Screenshot works too.'); });
+      navigator.clipboard.writeText(text).then(
+        function () { setHint('Copied to clipboard. Paste it in the team chat.'); },
+        function () { window.prompt('Copy your bingo status:', text); }
+      );
       return;
     }
     window.prompt('Copy your bingo status:', text);
