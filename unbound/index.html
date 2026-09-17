@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>UNBOUND Buzzword Bingo — Tale Waters &amp; Tides</title>
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="apple-touch-icon" href="/assets/twt_favicon.png">
+<meta name="description" content="Unofficial attendee edition of UNBOUND Buzzword Bingo. Hear it. See it. Mark it. Five in a row wins. Boston, September 16-18, 2026.">
+<meta name="theme-color" content="#1b2a4a">
+<meta property="og:title" content="UNBOUND Buzzword Bingo">
+<meta property="og:description" content="We came for the insights. We stayed for the seamless integrations. Play buzzword bingo with your team at UNBOUND 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://talewatersandtides.com/unbound/">
+<link rel="canonical" href="https://talewatersandtides.com/unbound/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<style>
+/* ============================================================
+   UNBOUND BUZZWORD BINGO — unofficial attendee edition
+   Palette lifted from the printed card: navy, orange, cream.
+   Mobile-first. No build step. No dependencies.
+   ============================================================ */
+:root {
+  --navy: #1b2a4a;
+  --navy-2: #24365c;
+  --orange: #f26522;
+  --orange-2: #d9541a;
+  --cream: #f3ede2;
+  --cream-2: #e9e1d2;
+  --paper: #faf7f1;
+  --ink: #1b2a4a;
+  --ink-soft: #4a5872;
+  --line: #1b2a4a;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(27,42,74,.14);
+  --fh: 'Oswald', 'Arial Narrow', Impact, sans-serif;
+  --fb: 'Lora', Georgia, serif;
+  --mw: 640px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--cream);
+  background-image: radial-gradient(rgba(27,42,74,.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+a { color: var(--orange-2); }
+
+.wrap { max-width: var(--mw); margin: 0 auto; padding: 0 16px; }
+
+/* ---- TOP BAR ---- */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 16px; background: var(--navy); color: var(--cream);
+}
+.top-brand { display: inline-flex; align-items: center; }
+.top-brand img { height: 36px; width: auto; display: block; }
+.top-tag { font-family: var(--fh); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; font-size: .7rem; color: rgba(243,237,226,.75); text-align: right; }
+
+/* ---- HEADER (poster) ---- */
+.hero { position: relative; text-align: center; padding: 18px 0 8px; }
+.skyline { display: block; width: 100%; height: auto; max-height: 96px; margin: 0 auto 4px; }
+.scribble { font-family: var(--fb); font-style: italic; font-weight: 600; color: var(--navy); font-size: .95rem; line-height: 1.15; position: absolute; top: 6px; transform: rotate(-8deg); max-width: 90px; text-align: left; }
+.scribble.l { left: 8px; }
+.scribble.r { right: 8px; transform: rotate(6deg); text-align: right; }
+h1 {
+  font-family: var(--fh); font-weight: 700; text-transform: uppercase; line-height: .95;
+  font-size: clamp(2.2rem, 11vw, 4.2rem); letter-spacing: -.01em; color: var(--navy); margin: 4px 0 8px;
+}
+h1 em { font-style: normal; color: var(--orange); }
+.tagline { font-family: var(--fb); font-size: clamp(.95rem, 3.6vw, 1.2rem); color: var(--navy); }
+.when {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: 10px 0 14px; font-family: var(--fh); font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+  font-size: .72rem; color: var(--navy);
+}
+.when::before, .when::after { content: ""; flex: 0 0 28px; height: 2px; background: var(--orange); }
+@media (max-width: 420px) { .when { letter-spacing: .14em; font-size: .66rem; gap: 8px; } .stat { flex: 1 1 100%; text-align: center; } }
+
+/* ---- PLAYER BAR ---- */
+.bar {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  background: var(--paper); border: 2px solid var(--navy); padding: 10px; margin-bottom: 12px;
+}
+.bar label { font-family: var(--fh); text-transform: uppercase; letter-spacing: .1em; font-size: .72rem; color: var(--ink-soft); }
+.bar input {
+  flex: 1 1 120px; min-width: 0; min-height: 44px; padding: 8px 10px; font: inherit; font-size: 1rem;
+  border: 2px solid var(--navy); background: var(--white); color: var(--ink); border-radius: 0;
+}
+.bar input::placeholder { color: #9aa3b5; }
+.stat { font-family: var(--fh); font-weight: 500; font-size: .85rem; letter-spacing: .04em; color: var(--navy); white-space: nowrap; }
+.stat b { color: var(--orange); font-weight: 700; }
+
+/* ---- CARD ---- */
+.card { background: var(--paper); border: 3px solid var(--navy); box-shadow: var(--shadow); }
+.bingo-head { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: var(--orange); border-bottom: 3px solid var(--navy); }
+.bingo-head span {
+  font-family: var(--fh); font-weight: 700; color: var(--white); text-align: center;
+  font-size: clamp(1.9rem, 9vw, 3.2rem); line-height: 1.25; padding: 2px 0;
+  border-right: 3px solid var(--navy);
+}
+.bingo-head span:last-child { border-right: 0; }
+.grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.cell {
+  position: relative; display: flex; align-items: center; justify-content: center; text-align: center;
+  aspect-ratio: 1 / 1; min-height: 60px; padding: 4px 3px;
+  background: var(--paper); border: 0; border-right: 3px solid var(--navy); border-bottom: 3px solid var(--navy);
+  font-family: var(--fh); font-weight: 700; color: var(--navy); line-height: 1.05;
+  font-size: clamp(.64rem, 2.8vw, 1.02rem); letter-spacing: -.01em; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto;
+  transition: background .15s ease, color .15s ease, transform .1s ease;
+  user-select: none; -webkit-user-select: none;
+}
+.cell:nth-child(5n) { border-right: 0; }
+.cell:nth-last-child(-n+5) { border-bottom: 0; }
+.cell:active { transform: scale(.96); }
+.cell[aria-pressed="true"] { background: var(--orange); color: var(--white); }
+.cell[aria-pressed="true"]::after {
+  content: ""; position: absolute; inset: 6px; border: 2px solid rgba(255,255,255,.55); border-radius: 50%;
+  transform: rotate(-6deg); pointer-events: none;
+}
+.cell.free { background: var(--orange); color: var(--white); flex-direction: column; gap: 2px; }
+.cell.free::after { content: none; }
+.cell.free small { font-size: .55em; letter-spacing: .12em; font-weight: 500; }
+.cell.free big { font-size: 1.9em; line-height: 1; }
+.cell.free big::before, .cell.free big::after { content: "\2727"; font-size: .45em; vertical-align: super; opacity: .85; margin: 0 3px; }
+.cell.win { background: var(--navy); color: var(--cream); }
+.cell.win::after { border-color: rgba(242,101,34,.8); }
+.cell.free.win { background: var(--navy); }
+@media (min-width: 480px) { .cell { min-height: 84px; padding: 6px; } }
+
+/* ---- RULES / ACTIONS ---- */
+.rule { text-align: center; font-family: var(--fb); font-size: .95rem; color: var(--navy); margin: 14px 0 6px; }
+.slogan { text-align: center; font-family: var(--fh); font-weight: 700; text-transform: none; color: var(--navy); font-size: clamp(1.25rem, 5.4vw, 1.75rem); line-height: 1.15; margin: 0 0 14px; }
+.slogan::after { content: ""; display: block; width: 72px; height: 3px; background: var(--orange); margin: 8px auto 0; }
+.actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+.btn {
+  min-height: 48px; padding: 10px 12px; border: 2px solid var(--navy); background: var(--paper);
+  font-family: var(--fh); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; color: var(--navy);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn:hover { background: var(--cream-2); }
+.btn.primary { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.btn.primary:hover { background: var(--orange-2); border-color: var(--orange-2); }
+.btn.dark { background: var(--navy); color: var(--cream); }
+.btn.dark:hover { background: var(--navy-2); }
+.hint { text-align: center; font-size: .82rem; color: var(--ink-soft); font-style: italic; min-height: 1.3em; margin-bottom: 14px; }
+
+/* ---- HOW TO PLAY ---- */
+.how { background: var(--paper); border: 2px solid var(--navy); padding: 14px 16px; margin-bottom: 18px; }
+.how h2 { font-family: var(--fh); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+.how ol { padding-left: 20px; }
+.how li { margin-bottom: 6px; font-size: .95rem; }
+.how li b { font-family: var(--fh); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; font-size: .82rem; color: var(--orange-2); }
+
+/* ---- WIN OVERLAY ---- */
+.overlay {
+  position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center;
+  background: rgba(27,42,74,.82); padding: 24px; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+}
+.overlay.on { display: flex; }
+.modal {
+  width: min(100%, 420px); background: var(--cream); border: 4px solid var(--orange); box-shadow: var(--shadow);
+  padding: 22px 18px; text-align: center; transform: rotate(-1.5deg);
+}
+.modal h2 { font-family: var(--fh); font-weight: 700; text-transform: uppercase; font-size: clamp(2.4rem, 14vw, 4rem); line-height: .95; color: var(--orange); }
+.modal h2 span { display: block; font-size: .32em; letter-spacing: .3em; color: var(--navy); margin-bottom: 4px; }
+.modal p { margin: 10px 0 14px; color: var(--navy); font-style: italic; }
+.modal .actions { margin-bottom: 0; }
+#confetti { position: fixed; inset: 0; z-index: 40; pointer-events: none; display: none; }
+#confetti.on { display: block; }
+
+/* ---- FOOTER ---- */
+footer { border-top: 3px solid var(--navy); margin-top: 8px; padding: 18px 0 28px; text-align: center; }
+footer img { height: 44px; width: auto; display: block; margin: 0 auto 10px; }
+footer p { font-size: .8rem; color: var(--ink-soft); line-height: 1.5; }
+footer p a { color: var(--navy); }
+.tape { display: inline-block; font-family: var(--fb); font-style: italic; font-weight: 600; color: var(--orange-2); font-size: .9rem; margin-bottom: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell, .cell:active { transition: none; transform: none; }
+  .modal { transform: none; }
+}
+@media print {
+  body { background: #fff; }
+  .top, .actions, .hint, .how, .bar, footer { display: none !important; }
+  .card { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="/" class="top-brand" aria-label="Tale Waters and Tides home"><img src="/assets/TalewatersandTides_Logo_White_Horizontal.png" alt="Tale Waters and Tides"></a>
+  <div class="top-tag">Unofficial<br>attendee edition</div>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="title">
+    <div class="scribble l" aria-hidden="true">Good ideas travel further</div>
+    <div class="scribble r" aria-hidden="true">Boston brings it together</div>
+    <svg class="skyline" viewBox="0 0 640 110" aria-hidden="true" focusable="false">
+      <g fill="#1b2a4a">
+        <rect x="30" y="70" width="14" height="30"/>
+        <rect x="52" y="58" width="22" height="42"/>
+        <rect x="84" y="40" width="16" height="60"/>
+        <rect x="106" y="62" width="30" height="38"/>
+        <rect x="146" y="30" width="14" height="70"/>
+        <rect x="150" y="18" width="6" height="14"/>
+        <rect x="168" y="52" width="24" height="48"/>
+        <rect x="200" y="44" width="12" height="56"/>
+        <rect x="220" y="22" width="26" height="78"/>
+        <rect x="256" y="60" width="18" height="40"/>
+        <rect x="282" y="12" width="20" height="88"/>
+        <rect x="288" y="2" width="8" height="12"/>
+        <rect x="310" y="48" width="30" height="52"/>
+        <rect x="348" y="34" width="16" height="66"/>
+        <rect x="372" y="8" width="24" height="92"/>
+        <rect x="380" y="0" width="8" height="10"/>
+        <rect x="404" y="56" width="20" height="44"/>
+        <rect x="432" y="36" width="12" height="64"/>
+        <rect x="452" y="64" width="28" height="36"/>
+        <rect x="488" y="46" width="14" height="54"/>
+        <rect x="510" y="70" width="24" height="30"/>
+        <rect x="542" y="58" width="16" height="42"/>
+        <rect x="566" y="74" width="30" height="26"/>
+        <rect x="0" y="100" width="640" height="10"/>
+      </g>
+      <g fill="#f26522">
+        <rect x="88" y="34" width="8" height="6"/>
+        <rect x="224" y="16" width="18" height="6"/>
+        <rect x="376" y="4" width="16" height="4"/>
+        <rect x="536" y="54" width="8" height="4"/>
+      </g>
+      <g stroke="#1b2a4a" stroke-width="2" fill="none">
+        <path d="M600 100 L622 40 L644 100"/>
+        <path d="M604 100 L622 40 M610 100 L622 40 M616 100 L622 40 M628 100 L622 40 M634 100 L622 40 M640 100 L622 40"/>
+      </g>
+    </svg>
+    <h1 id="title">Unbound <em>Buzzword</em> Bingo</h1>
+    <p class="tagline">We came for the insights. We stayed for the seamless integrations.</p>
+    <div class="when">Boston &middot; September 16&ndash;18, 2026</div>
+  </section>
+
+  <div class="bar">
+    <label for="player">Player</label>
+    <input id="player" type="text" maxlength="24" autocomplete="nickname" placeholder="Your name (for sharing)">
+    <div class="stat" aria-live="polite"><b id="marked">0</b>/24 marked &middot; <b id="lines">0</b> <span id="lines-label">lines</span></div>
+  </div>
+
+  <section class="card" aria-label="Bingo card">
+    <div class="bingo-head" aria-hidden="true"><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <p class="rule">Hear it. See it. Mark it. Five in a row wins.</p>
+  <p class="slogan">Our bingo card is now a revenue platform.</p>
+
+  <div class="actions">
+    <button class="btn" id="btn-shuffle" type="button" data-ga="bingo_shuffle">Shuffle card</button>
+    <button class="btn" id="btn-classic" type="button" data-ga="bingo_classic">Poster card</button>
+    <button class="btn dark" id="btn-reset" type="button" data-ga="bingo_reset">Clear marks</button>
+    <button class="btn primary" id="btn-share" type="button" data-ga="bingo_share">Share</button>
+  </div>
+  <p class="hint" id="hint"></p>
+
+  <section class="how" aria-labelledby="how-title">
+    <h2 id="how-title">Playing with the team</h2>
+    <ol>
+      <li><b>One phone, one card.</b> Marks save on this device, so you can close the tab between sessions.</li>
+      <li><b>Shuffle</b> gives everyone a different card from the same buzzword pool. Poster card matches the printed one.</li>
+      <li><b>Tap a square</b> when you hear it on stage, at a booth, or in the coffee line. Tap again to undo.</li>
+      <li><b>Five in a row</b> (any row, column, or diagonal) is a Bingo. Share it before someone at the booth says "quick demo?"</li>
+    </ol>
+  </section>
+</main>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="win-title" hidden>
+  <div class="modal">
+    <h2 id="win-title"><span>Same people, higher pipeline</span>Bingo!</h2>
+    <p id="win-copy">Five in a row. Somebody owes you a coffee.</p>
+    <div class="actions">
+      <button class="btn primary" id="btn-win-share" type="button">Share it</button>
+      <button class="btn" id="btn-win-close" type="button">Keep playing</button>
+    </div>
+  </div>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<footer>
+  <img src="/assets/TWT_Logo_horizontal_blue.png" alt="Tale Waters and Tides">
+  <span class="tape">People &middot; Process &middot; Progress</span>
+  <p>Unofficial attendee edition by <a href="/">Tale Waters &amp; Tides</a>, an outdoor recreation innovation lab.<br>Not affiliated with, sponsored by, or endorsed by HubSpot or UNBOUND.<br>Terms and conference clich&eacute;s subject to change without notice.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORE_KEY = 'twt_unbound_bingo_v1';
+  var FREE_INDEX = 12;
+  var GRID_N = 5;
+
+  // The printed poster card, read left to right, top to bottom. Index 12 is the free space.
+  var POSTER = [
+    'Agentic AI', 'Breeze', 'Seamless integration', 'RevOps', 'Scan my badge',
+    'AI search', 'Single source of truth', '10x', 'Agent Hub', 'Quick demo?',
+    'GTM', 'Personalization at scale', 'FREE', 'Break down silos', 'Game changer',
+    'Customer journey', 'Real-time insights', 'OpenAI', 'Email deliverability', 'Human in the loop',
+    'Pipeline', 'Canva', 'Data-driven', 'Someone says INBOUND', 'Do more with less'
+  ];
+
+  // Extra buzzwords mixed in when a card is shuffled.
+  var EXTRA = [
+    'Flywheel', 'Customer platform', 'Attribution', 'Churn', 'Net new',
+    'Growth engine', 'Synergy', 'Low-hanging fruit', 'Circle back', 'North star metric',
+    'Lead scoring', 'Workflow automation', 'Prompt engineering', 'Copilot', 'Vibe coding',
+    'Zero-click', 'AEO / GEO', 'Dark social', 'Signal-based selling', 'Buyer intent',
+    'Unified data', 'Hyper-personalization', 'Founder-led', 'Loyalty', 'Ecosystem',
+    'ROI', 'Change management', 'Thought leadership', 'The AI era', 'Wi-Fi is down',
+    'Free swag', 'Coffee line', 'Clam chowder', 'Sold out', 'Same people, higher pipeline'
+  ];
+
+  var POOL = POSTER.filter(function (w, i) { return i !== FREE_INDEX; }).concat(EXTRA);
+
+  var LINES = (function () {
+    var lines = [], r, c, row, col, d1 = [], d2 = [];
+    for (r = 0; r < GRID_N; r++) {
+      row = []; col = [];
+      for (c = 0; c < GRID_N; c++) { row.push(r * GRID_N + c); col.push(c * GRID_N + r); }
+      lines.push(row); lines.push(col);
+      d1.push(r * GRID_N + r); d2.push(r * GRID_N + (GRID_N - 1 - r));
+    }
+    lines.push(d1); lines.push(d2);
+    return lines;
+  })();
+
+  // Small seeded PRNG (mulberry32) so a seed always reproduces the same card.
+  function rng(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      var t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function buildCard(seed) {
+    if (seed === 0) { return POSTER.slice(); }
+    var rand = rng(seed), pool = POOL.slice(), i, j, tmp, words = [];
+    for (i = pool.length - 1; i > 0; i--) { j = Math.floor(rand() * (i + 1)); tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp; }
+    words = pool.slice(0, GRID_N * GRID_N - 1);
+    words.splice(FREE_INDEX, 0, 'FREE');
+    return words;
+  }
+
+  function freshMarks() {
+    var m = [], i;
+    for (i = 0; i < GRID_N * GRID_N; i++) { m.push(i === FREE_INDEX); }
+    return m;
+  }
+
+  var state = load();
+  var grid = document.getElementById('grid');
+  var hint = document.getElementById('hint');
+  var overlay = document.getElementById('overlay');
+  var player = document.getElementById('player');
+  var celebratedLines = countLines(state.marks);
+  var lastFocus = null;
+
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) { s = null; }
+    if (!s || !Array.isArray(s.marks) || s.marks.length !== GRID_N * GRID_N || typeof s.seed !== 'number') {
+      s = { seed: 0, marks: freshMarks(), name: '' };
+    }
+    s.marks[FREE_INDEX] = true;
+    return s;
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* private mode: play without persistence */ }
+  }
+
+  function track(name, params) {
+    if (typeof gtag === 'function') { gtag('event', name, Object.assign({ event_category: 'bingo' }, params || {})); }
+  }
+
+  function countLines(marks) {
+    return LINES.filter(function (line) { return line.every(function (i) { return marks[i]; }); }).length;
+  }
+  function winningCells(marks) {
+    var set = {};
+    LINES.forEach(function (line) {
+      if (line.every(function (i) { return marks[i]; })) { line.forEach(function (i) { set[i] = true; }); }
+    });
+    return set;
+  }
+
+  function render() {
+    var words = buildCard(state.seed), wins = winningCells(state.marks), frag = document.createDocumentFragment();
+    grid.innerHTML = '';
+    words.forEach(function (word, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cell' + (i === FREE_INDEX ? ' free' : '') + (wins[i] ? ' win' : '');
+      b.setAttribute('data-i', i);
+      if (i === FREE_INDEX) {
+        b.innerHTML = '<small>FREE SPACE</small><big>AI</big>';
+        b.setAttribute('aria-label', 'Free space: AI');
+        b.setAttribute('aria-pressed', 'true');
+        b.disabled = true;
+      } else {
+        b.textContent = word;
+        b.setAttribute('aria-pressed', state.marks[i] ? 'true' : 'false');
+      }
+      frag.appendChild(b);
+    });
+    grid.appendChild(frag);
+    updateStats();
+  }
+
+  function updateStats() {
+    var marked = state.marks.filter(Boolean).length - 1;
+    var lines = countLines(state.marks);
+    document.getElementById('marked').textContent = marked;
+    document.getElementById('lines').textContent = lines;
+    document.getElementById('lines-label').textContent = lines === 1 ? 'line' : 'lines';
+  }
+
+  function setHint(text) {
+    hint.textContent = text || '';
+    if (text) { clearTimeout(setHint.t); setHint.t = setTimeout(function () { hint.textContent = ''; }, 3500); }
+  }
+
+  function toggle(i) {
+    if (i === FREE_INDEX) { return; }
+    state.marks[i] = !state.marks[i];
+    save();
+    var before = celebratedLines, after = countLines(state.marks);
+    render();
+    track('bingo_mark', { event_label: buildCard(state.seed)[i], value: state.marks[i] ? 1 : 0 });
+    if (after > before) {
+      celebratedLines = after;
+      celebrate(after, i);
+    } else if (after < before) {
+      celebratedLines = after;
+    }
+  }
+
+  function celebrate(lines, cellIndex) {
+    var title = document.getElementById('win-title');
+    var copy = document.getElementById('win-copy');
+    var label = lines === 1 ? 'Bingo!' : lines === 2 ? 'Double Bingo!' : lines >= 12 ? 'Blackout!' : lines + 'x Bingo!';
+    title.innerHTML = '<span>Same people, higher pipeline</span>' + label;
+    copy.textContent = lines === 1
+      ? 'Five in a row. Somebody owes you a coffee.'
+      : lines >= 12 ? 'Every square. You have achieved personalization at scale.' : 'Another line. Your pipeline is looking very healthy.';
+    // The grid re-renders before this runs, so remember the square by index rather than by element.
+    lastFocus = typeof cellIndex === 'number' ? cellIndex : document.activeElement;
+    overlay.hidden = false;
+    overlay.classList.add('on');
+    document.getElementById('btn-win-close').focus();
+    confetti();
+    track('bingo_win', { event_label: label, value: lines });
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('on');
+    overlay.hidden = true;
+    // Return keyboard focus to the square that completed the line, or its replacement after re-render.
+    var target = null;
+    if (typeof lastFocus === 'number') {
+      target = grid.querySelector('.cell[data-i="' + lastFocus + '"]');
+    } else if (lastFocus && document.contains(lastFocus)) {
+      target = lastFocus;
+    }
+    if (target && typeof target.focus === 'function') { target.focus(); }
+    lastFocus = null;
+  }
+
+  function shuffle() {
+    state.seed = (Date.now() % 2147483647) || 1;
+    state.marks = freshMarks();
+    celebratedLines = 0;
+    save(); render();
+    setHint('New card dealt. Marks cleared.');
+    track('bingo_shuffle', { value: state.seed });
+  }
+  function classic() {
+    if (state.seed === 0) { setHint('Already on the poster card.'); return; }
+    state.seed = 0;
+    state.marks = freshMarks();
+    celebratedLines = 0;
+    save(); render();
+    setHint('Back to the printed poster card.');
+    track('bingo_classic');
+  }
+  function reset() {
+    var had = state.marks.filter(Boolean).length - 1;
+    if (had > 0 && !window.confirm('Clear all ' + had + ' marks on this card?')) { return; }
+    state.marks = freshMarks();
+    celebratedLines = 0;
+    save(); render();
+    setHint('Marks cleared. Card kept.');
+    track('bingo_reset', { value: had });
+  }
+
+  function shareText() {
+    var words = buildCard(state.seed);
+    var marked = words.filter(function (w, i) { return i !== FREE_INDEX && state.marks[i]; });
+    var lines = countLines(state.marks);
+    var who = state.name ? state.name : 'Someone on the TWT crew';
+    var head = lines > 0 ? who + ' hit ' + (lines === 1 ? 'BINGO' : lines + 'x BINGO') + ' at UNBOUND 2026.' : who + ' is ' + marked.length + '/24 at UNBOUND Buzzword Bingo.';
+    var body = marked.length ? 'Heard so far: ' + marked.join(', ') + '.' : 'Nothing marked yet. Suspiciously quiet keynote.';
+    return head + '\n' + body + '\nPlay along: https://talewatersandtides.com/unbound/';
+  }
+  // Share chain: native share sheet, then clipboard, then a prompt the user can copy from.
+  // A cancelled share sheet (AbortError) stops the chain; any other failure falls through.
+  function share() {
+    var text = shareText();
+    track('bingo_share', { value: countLines(state.marks) });
+    if (navigator.share) {
+      navigator.share({ title: 'UNBOUND Buzzword Bingo', text: text }).catch(function (err) {
+        if (err && err.name === 'AbortError') { return; }
+        copyOrPrompt(text);
+      });
+      return;
+    }
+    copyOrPrompt(text);
+  }
+  function copyOrPrompt(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { setHint('Copied to clipboard. Paste it in the team chat.'); },
+        function () { window.prompt('Copy your bingo status:', text); }
+      );
+      return;
+    }
+    window.prompt('Copy your bingo status:', text);
+  }
+
+  // Lightweight confetti in poster colors. Skipped when the user prefers reduced motion.
+  function confetti() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { return; }
+    var canvas = document.getElementById('confetti');
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = window.innerWidth, H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr);
+    canvas.classList.add('on');
+    var colors = ['#f26522', '#1b2a4a', '#f3ede2', '#ffffff'];
+    var bits = [], i, start = null;
+    for (i = 0; i < 140; i++) {
+      bits.push({ x: Math.random() * W, y: -20 - Math.random() * H * 0.5, w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+        vy: 120 + Math.random() * 160, vx: -40 + Math.random() * 80, rot: Math.random() * Math.PI, vr: -4 + Math.random() * 8,
+        c: colors[i % colors.length] });
+    }
+    function frame(ts) {
+      if (start === null) { start = ts; }
+      var t = (ts - start) / 1000, dt = 1 / 60;
+      ctx.clearRect(0, 0, W, H);
+      bits.forEach(function (b) {
+        b.y += b.vy * dt; b.x += b.vx * dt; b.rot += b.vr * dt;
+        ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.rot); ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); ctx.restore();
+      });
+      if (t < 3.2) { requestAnimationFrame(frame); } else { ctx.clearRect(0, 0, W, H); canvas.classList.remove('on'); }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  grid.addEventListener('click', function (e) {
+    var b = e.target.closest('.cell');
+    if (!b || b.disabled) { return; }
+    toggle(parseInt(b.getAttribute('data-i'), 10));
+  });
+  document.getElementById('btn-shuffle').addEventListener('click', shuffle);
+  document.getElementById('btn-classic').addEventListener('click', classic);
+  document.getElementById('btn-reset').addEventListener('click', reset);
+  document.getElementById('btn-share').addEventListener('click', share);
+  document.getElementById('btn-win-share').addEventListener('click', function () { closeOverlay(); share(); });
+  document.getElementById('btn-win-close').addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) { closeOverlay(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('on')) { closeOverlay(); } });
+
+  player.value = state.name || '';
+  player.addEventListener('input', function () { state.name = player.value.trim().slice(0, 24); save(); });
+
+  render();
+})();
+</script>
+</body>
+</html>

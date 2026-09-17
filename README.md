@@ -58,6 +58,7 @@ Single-file static marketing page (`index.html`) deployed via GitHub Pages.
 talewatersandtides-marketing/
 ├── index.html                          # Main marketing page (single-file, no build step)
 ├── CNAME                               # Custom domain for GitHub Pages
+├── unbound/index.html                  # UNBOUND Buzzword Bingo (unofficial attendee edition, /unbound/)
 ├── assets/                             # Images and media assets
 │   ├── AbbySims.jpeg                   # Team photo — Abby Sims, CTO
 │   ├── CoreyBoelkens.jpeg              # Team photo — Corey Boelkens, Founder
@@ -73,6 +74,7 @@ talewatersandtides-marketing/
 │   │   └── design_decision.md          # Design / architecture decision template
 │   └── workflows/
 │       ├── static.yml                  # Deploy to GitHub Pages on push to main
+│       ├── html-lint.yml               # HTMLHint on PRs and pushes that touch .html files
 │       └── triage.yml                  # Green Team AI auto-triage for issues
 ├── README.md                           # This file
 ├── CHANGELOG.md                        # Version history
