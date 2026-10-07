@@ -1,0 +1,42 @@
+# Type-check, lint, and unit-test the Supabase `intake` Edge Function.
+# Deploys are manual (Supabase MCP or `supabase functions deploy intake`);
+# this workflow is the quality gate before a merge.
+name: Intake function
+
+on:
+  pull_request:
+    paths:
+      - "supabase/functions/**"
+      - ".github/workflows/intake-function.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "supabase/functions/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: intake-function-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: supabase/functions/intake
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Lint
+        run: deno lint
+      - name: Type-check
+        run: deno check index.ts
+      - name: Unit tests
+        run: deno test --no-check=remote intake_test.ts

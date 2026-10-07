@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- `supabase/functions/intake/` — lead intake Edge Function for the services site. `/scan` fetches a prospect's homepage (SSRF-guarded), detects booking/CRM/review signals, and classifies the business with Claude into the readiness-check option sets (keyword fallback without a key). `/lead` validates, spam-traps (honeypot + elapsed time), rate-limits and stores leads; optional Resend email alert.
+- `supabase/migrations/20261007000000_leads_intake.sql` — `leads`, `intake_events`, `site_scans` tables; RLS on, no anon access.
+- `.github/workflows/intake-function.yml` — Deno lint, type-check and unit tests for the intake function.
 - `unbound/index.html` — UNBOUND Buzzword Bingo at `/unbound/`, an unofficial attendee edition for the team at HubSpot's UNBOUND 2026 (Boston, Sept 16-18). Mobile-first, no dependencies. Tap-to-mark card in the poster's navy/orange/cream palette, per-device persistence via `localStorage`, seeded shuffle so teammates get different cards, poster-card mode matching the printed version, five-in-a-row detection with a win overlay and confetti, Web Share / clipboard sharing, GA events (`bingo_mark`, `bingo_win`, `bingo_shuffle`, `bingo_share`), reduced-motion support, and a print stylesheet.
 - `.github/workflows/html-lint.yml` and `.htmlhintrc` — HTMLHint runs on every pull request and push to `main` that touches an `.html` file.
 - `projects/index.html` — new portfolio landing page at `/projects/`, digital-agency style. Launches with five cards: Pocket Fishing Guide (LIVE), Quest (PLAYGROUND), and three "IN PROGRESS" placeholders (Guide Marketplace MVP, PFG White-Label Demo, Outdoor AI Field Notes).
