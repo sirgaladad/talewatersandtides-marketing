@@ -9,7 +9,7 @@ Project: `feldynpqhzvstpssztra` (talewatersandtides-events).
 
 | Route | Body | Returns | Limits |
 |-------|------|---------|--------|
-| `POST /functions/v1/intake/scan` | `{ url }` | `{ domain, facts, summary, signals, source }` | 10 per IP per hour, 400 per day, 7-day cache per domain |
+| `POST /functions/v1/intake/scan` | `{ url }` | `{ domain, facts, signals, source }` (always scans the homepage) | 10 per IP per hour, 400 per day, 7-day cache per domain |
 | `POST /functions/v1/intake/lead` | lead fields, `source: contact \| readiness` | `{ id }` | 6 per IP per hour, 500 per day |
 
 Both require the public anon key as `Authorization: Bearer` and `apikey` (verify_jwt is on) and an allowed `Origin`.
@@ -24,12 +24,14 @@ Both require the public anon key as `Authorization: Bearer` and `apikey` (verify
 
 Page content is treated as untrusted data in the prompt, and the output is constrained to enums, so injected text cannot widen what the scan returns.
 
+**Known limit (DNS rebinding).** Deno's `fetch` resolves DNS again after the SSRF check, so a hostile domain could switch to a private address between the two lookups. Mitigation in place: the browser only ever receives enum facts and fixed-vocabulary signal names (`publicScan`), never page-derived text, and fetch errors are not echoed; the free-text summary stays in `site_scans`. A complete fix needs an egress proxy that enforces public destinations.
+
 ## Data
 
 | Table | Written by | Purpose |
 |-------|-----------|---------|
 | `leads` | `/lead` | One row per submission. `status` defaults to `new` for triage. |
-| `intake_events` | both | Rate-limit ledger (hashed IP, kind, time). Pruned after a day. |
+| `intake_events` | both | Rate-limit ledger (hashed IP, kind, time), checked atomically by `public.intake_rate_limit()`. Pruned after a day. |
 | `site_scans` | `/scan` | Cached scan result per domain. |
 
 RLS is enabled with no policies and anon/authenticated privileges are revoked: only the service role (this function) touches these tables. Read leads in the Supabase dashboard or with SQL.

@@ -32,6 +32,7 @@ export interface ScanFacts {
 export interface ScanResult {
   domain: string;
   facts: ScanFacts;
+  /** Free text derived from page content. Stored server-side only, never returned to the browser. */
   summary: string;
   signals: string[];
   source: 'claude' | 'heuristic';
@@ -169,16 +170,17 @@ async function fetchPage(start: URL): Promise<{ url: URL; html: string }> {
 }
 
 export function extractText(html: string): { title: string; description: string; text: string } {
-  const title = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '').trim();
+  const title = (html.match(/<title[^>]*>([\s\S]*?)<\/title[^>]*>/i)?.[1] ?? '').trim();
   const description =
     html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i)?.[1] ??
     html.match(/<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']*)["']/i)?.[1] ??
     '';
   const text = html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ')
-    .replace(/<svg[\s\S]*?<\/svg>/gi, ' ')
+    // End tags may carry whitespace or junk before '>' (`</script >`, `</script foo>`).
+    .replace(/<script\b[\s\S]*?<\/script[^>]*>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style[^>]*>/gi, ' ')
+    .replace(/<noscript\b[\s\S]*?<\/noscript[^>]*>/gi, ' ')
+    .replace(/<svg\b[\s\S]*?<\/svg[^>]*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
@@ -267,7 +269,9 @@ async function classifyWithClaude(
 }
 
 export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<ScanResult> {
-  const start = normaliseUrl(rawUrl);
+  // Always scan the homepage: the cache is per domain, so a deep link must not
+  // decide the classification for everyone else who scans the same site.
+  const start = new URL('/', normaliseUrl(rawUrl));
   const domain = start.hostname.replace(/^www\./, '').toLowerCase();
 
   const cutoff = new Date(Date.now() - CACHE_DAYS * 86400_000).toISOString();
@@ -305,9 +309,19 @@ export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<Scan
   } catch (err) {
     // Unreachable site: still return editable defaults so the visitor can correct them.
     console.error('fetch failed', domain, (err as Error).message);
-    return { domain, facts: heuristicFacts(domain), summary: '', signals: [`unreachable: ${(err as Error).message}`], source: 'heuristic' };
+    // The reason stays in the logs only: echoing it would tell a caller how an address responded.
+    return { domain, facts: heuristicFacts(domain), summary: '', signals: ['unreachable'], source: 'heuristic' };
   }
 
   await db.from('site_scans').upsert({ domain, result, created_at: new Date().toISOString() });
   return result;
+}
+
+/**
+ * The part of a scan that goes back to the browser: enum facts and signal names
+ * from fixed vocabularies, no page-derived free text. If DNS rebinding ever slips
+ * past the host checks, the response still cannot carry an internal page's content.
+ */
+export function publicScan(r: ScanResult): Omit<ScanResult, 'summary'> {
+  return { domain: r.domain, facts: r.facts, signals: r.signals, source: r.source };
 }

@@ -102,7 +102,7 @@ async function notify(lead: ReturnType<typeof buildLead>): Promise<void> {
   const rows = Object.entries(lead)
     .filter(([k, v]) => !['user_agent', 'ip_hash'].includes(k) && v != null && !(Array.isArray(v) && !v.length))
     .map(([k, v]) => `${k}: ${typeof v === 'object' ? JSON.stringify(v) : v}`);
-  await fetch('https://api.resend.com/emails', {
+  const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -114,4 +114,5 @@ async function notify(lead: ReturnType<typeof buildLead>): Promise<void> {
     }),
     signal: AbortSignal.timeout(5000),
   });
+  if (!res.ok) throw new Error(`resend ${res.status}: ${(await res.text()).slice(0, 200)}`);
 }

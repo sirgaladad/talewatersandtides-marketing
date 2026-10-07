@@ -60,6 +60,8 @@ export function adminClient(): SupabaseClient {
 /**
  * Returns true when the caller is under both limits, and records the event.
  * perIp: max events per IP in the last hour. global: max events of this kind in the last day.
+ * Count, check and insert run in one Postgres function under an advisory lock
+ * (public.intake_rate_limit), so a parallel burst cannot all read the same count.
  */
 export async function rateLimit(
   db: SupabaseClient,
@@ -68,21 +70,18 @@ export async function rateLimit(
   perIp: number,
   global: number
 ): Promise<boolean> {
-  const hourAgo = new Date(Date.now() - 3600_000).toISOString();
-  const dayAgo = new Date(Date.now() - 86400_000).toISOString();
-  const [mine, all] = await Promise.all([
-    db.from('intake_events').select('id', { count: 'exact', head: true })
-      .eq('kind', kind).eq('ip_hash', hash).gte('created_at', hourAgo),
-    db.from('intake_events').select('id', { count: 'exact', head: true })
-      .eq('kind', kind).gte('created_at', dayAgo),
-  ]);
-  if ((mine.count ?? 0) >= perIp || (all.count ?? 0) >= global) return false;
-  await db.from('intake_events').insert({ kind, ip_hash: hash });
+  const { data, error } = await db.rpc('intake_rate_limit', {
+    p_kind: kind,
+    p_ip_hash: hash,
+    p_per_ip: perIp,
+    p_global: global,
+  });
+  if (error) throw new Error('rate limit check failed: ' + error.message);
   // Opportunistic prune; failures are irrelevant to the caller.
   if (Math.random() < 0.05) {
-    await db.from('intake_events').delete().lt('created_at', dayAgo);
+    await db.from('intake_events').delete().lt('created_at', new Date(Date.now() - 86400_000).toISOString());
   }
-  return true;
+  return data === true;
 }
 
 export function str(v: unknown, max: number): string | null {

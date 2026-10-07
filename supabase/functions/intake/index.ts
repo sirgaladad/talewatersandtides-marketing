@@ -1,6 +1,6 @@
 // Intake Edge Function for talewatersandtides.com.
 //
-//   POST /functions/v1/intake/scan  { url }        -> { domain, facts, summary, signals, source }
+//   POST /functions/v1/intake/scan  { url }        -> { domain, facts, signals, source }
 //   POST /functions/v1/intake/lead  { source, ... } -> { id }
 //
 // Called from the static site with the project's public anon key (verify_jwt on).
@@ -14,7 +14,7 @@
 //   RESEND_API_KEY, LEAD_NOTIFY_EMAIL, LEAD_FROM_EMAIL   optional new-lead email alert
 
 import { adminClient, corsHeaders, ipHash, json, originAllowed, rateLimit, str } from './http.ts';
-import { scanSite } from './scan.ts';
+import { publicScan, scanSite } from './scan.ts';
 import { buildLead, LeadError, saveLead } from './lead.ts';
 
 Deno.serve(async (req) => {
@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
         return json(req, 429, { error: 'scan limit reached, fill the basics by hand' });
       }
       try {
-        return json(req, 200, await scanSite(db, url));
+        return json(req, 200, publicScan(await scanSite(db, url)));
       } catch (err) {
         return json(req, 400, { error: (err as Error).message });
       }

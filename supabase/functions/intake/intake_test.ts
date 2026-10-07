@@ -2,7 +2,7 @@
 //   deno test supabase/functions/intake/intake_test.ts
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
-import { detectSignals, extractText, heuristicFacts, normaliseUrl } from './scan.ts';
+import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan } from './scan.ts';
 import { buildLead, LeadError } from './lead.ts';
 
 const meta = { ipHash: 'abc', userAgent: 'test' };
@@ -27,6 +27,16 @@ Deno.test('extractText strips scripts and reads title/description', () => {
   assertEquals(t.title, 'Swank Salon');
   assertEquals(t.description, 'Hair in LR');
   assertEquals(t.text.includes('evil'), false);
+});
+
+Deno.test('extractText handles end tags with whitespace or attributes', () => {
+  const t = extractText('<p>keep</p><script>a()</script ><style>.x{}</style foo><p>also</p>');
+  assertEquals(t.text, 'keep also');
+});
+
+Deno.test('publicScan never returns page-derived summary text', () => {
+  const pub = publicScan({ domain: 'a.com', facts: heuristicFacts('a.com'), summary: 'internal secret', signals: [], source: 'claude' });
+  assertEquals('summary' in pub, false);
 });
 
 Deno.test('detectSignals and heuristicFacts', () => {
