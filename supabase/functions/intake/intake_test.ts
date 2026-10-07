@@ -3,7 +3,7 @@
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
 import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan } from './scan.ts';
-import { buildLead, LeadError } from './lead.ts';
+import { buildLead, LeadError, validDate } from './lead.ts';
 
 const meta = { ipHash: 'abc', userAgent: 'test' };
 
@@ -77,4 +77,12 @@ Deno.test('buildLead cleans and clamps a readiness payload', () => {
   assertEquals(lead.kickoff, '2026-10-20');
   assertEquals(lead.looking_for, 'Something else');
   assertEquals(Object.keys(lead.scan!).sort(), ['domain', 'signals', 'source', 'summary']);
+});
+
+Deno.test('validDate rejects impossible calendar dates', () => {
+  assertEquals(validDate('2026-10-20'), '2026-10-20');
+  assertEquals(validDate('2028-02-29'), '2028-02-29');
+  assertEquals(validDate('2026-02-31'), null);
+  assertEquals(validDate('2026-13-01'), null);
+  assertEquals(validDate(20261020), null);
 });

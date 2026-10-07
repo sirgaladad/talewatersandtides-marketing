@@ -109,8 +109,9 @@ function isPrivateIp(ip: string): boolean {
 }
 
 async function assertResolvesPublic(host: string): Promise<void> {
-  // Deno.resolveDns may be unavailable in some runtimes; hostname checks above still apply.
-  if (typeof Deno.resolveDns !== 'function') return;
+  // Fail closed: without DNS validation the private-range check can't run, so don't fetch.
+  // The caller falls back to editable defaults, so the form still works.
+  if (typeof Deno.resolveDns !== 'function') throw new Error('dns validation unavailable');
   const addrs: string[] = [];
   for (const type of ['A', 'AAAA'] as const) {
     try {

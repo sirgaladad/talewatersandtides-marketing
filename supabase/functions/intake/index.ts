@@ -31,6 +31,9 @@ Deno.serve(async (req) => {
   } catch {
     return json(req, 400, { error: 'invalid json' });
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return json(req, 400, { error: 'body must be a json object' });
+  }
 
   const db = adminClient();
   const hash = await ipHash(req);

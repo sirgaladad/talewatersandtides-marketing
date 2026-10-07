@@ -17,6 +17,13 @@ const LOOKING_FOR = [
 
 export class LeadError extends Error {}
 
+/** YYYY-MM-DD that is a real calendar date (rejects 2026-02-31), else null. */
+export function validDate(v: unknown): string | null {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return null;
+  const d = new Date(v + 'T00:00:00Z');
+  return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v ? v : null;
+}
+
 // deno-lint-ignore no-explicit-any
 type Body = Record<string, any>;
 
@@ -47,7 +54,7 @@ export function buildLead(body: Body, meta: { ipHash: string; userAgent: string 
     }
   }
   const score = Number.isInteger(body.score) && body.score >= 0 && body.score <= 100 ? body.score : null;
-  const kickoff = typeof body.kickoff === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.kickoff) ? body.kickoff : null;
+  const kickoff = validDate(body.kickoff);
   const lookingFor = str(body.looking_for, 80);
 
   return {
