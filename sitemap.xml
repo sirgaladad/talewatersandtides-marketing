@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://talewatersandtides.com/</loc><lastmod>2026-10-07</lastmod><priority>1.0</priority></url>
   <url><loc>https://talewatersandtides.com/corey/</loc><lastmod>2026-10-07</lastmod><priority>0.9</priority></url>
+  <url><loc>https://talewatersandtides.com/readiness/</loc><lastmod>2026-10-07</lastmod><priority>0.9</priority></url>
   <url><loc>https://talewatersandtides.com/lab/</loc><lastmod>2026-10-07</lastmod><priority>0.7</priority></url>
   <url><loc>https://talewatersandtides.com/projects/</loc><priority>0.6</priority></url>
   <url><loc>https://talewatersandtides.com/prompt-play/</loc><priority>0.6</priority></url>

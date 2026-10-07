@@ -1,94 +1,89 @@
 # Tale Waters & Tides — Marketing Site
 
-> **Outdoor Recreation Innovation Lab** · [talewatersandtides.com](https://talewatersandtides.com)
+> **AI your team actually uses.** · [talewatersandtides.com](https://talewatersandtides.com)
 
-We build what's next above and below the surface. Software, strategy, and field-tested execution for outdoor and marine environments.
-
----
-
-## Who We Are
-
-**Tale Waters & Tides** is an Arkansas-based outdoor recreation innovation lab founded by [Corey Boelkens](https://www.linkedin.com/in/boelkens/), with CTO [Abby Sims](https://www.linkedin.com/in/abbysims/).
-
-- **Corey Boelkens** — Founder & Principal. 20+ years in product, CRM, and marine tech. Founded RaftUp. Built the NMMA Water Taxi App. DEKA Research intern. PADI Divemaster.
-- **Abby Sims** — Chief Technology Officer. 20 years full-stack dev. Government and nonprofit delivery. Founded Idestini. SVP Solutions, Trabian. Arkansas-based since 2002.
-
-We operate inside a $1.3 trillion outdoor economy — 5.2M jobs, 2.4% of U.S. GDP (BEA 2024).
+Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arkansas, led by [Corey Boelkens](https://talewatersandtides.com/corey/). We set AI up in the tools a business already pays for, train the team on real work, and run it with them until it sticks. The outdoor lab (Pocket Fishing Guide) stays as proof.
 
 ---
 
-## What We've Built
+## Pages
 
-### 🎣 Pocket Fishing Guide (LIVE)
-[pocketfishinguide.com](https://pocketfishinguide.com)
+| Path | Purpose | Primary action |
+|------|---------|----------------|
+| `/` | Services home: two doors (owners, marketing/ops leaders), five stages, week-by-week 90-day plan, proof, FAQ, routed contact form | Book a call |
+| `/readiness/` | One-page AI readiness check: site scan, three questions, gated reading and dated plan | Get my reading |
+| `/corey/` | Executive profile, career, principles, press; prints as a one-page profile | Work with Corey |
+| `/lab/` | Outdoor Recreation Innovation Lab: Pocket Fishing Guide and origin story | Open PFG |
+| `/privacy/` | What the forms and scan collect | — |
+| `/projects/`, `/prompt-play/`, `/events/`, `/first-contact/`, `/unbound/` | Existing lab, event and workshop pages (unchanged, out of the main nav) | — |
 
-Live fishing intelligence for Arkansas anglers. Real-time USGS water temps, NWS barometric pressure, spawn phase data across **39 water bodies** and **27 species**. AI-native. Solo-built. Learning and shipping every day.
+## Facts used on the site
 
-### 🚤 RaftUp Technologies
-Outdoor social platform. **30k+ users. $1M+ raised.** Top 30 Travel app on iPhone. Farmers Insurance licensing. Featured in [Arkansas Money & Politics](https://armoneyandpolitics.com/hottest-mobile-applications-raftup/).
+| Fact | Value | Source |
+|------|-------|--------|
+| Pocket Fishing Guide coverage | 57 waters, 33 species | `pocket-fishing-guide` repo data files (validated 2026-10-07) |
+| PFG data sources | USGS, NWS, USACE, AGFC (+ Open-Meteo, USNO); 20-minute refresh | `pocket-fishing-guide/docs/data-sources.yaml` |
+| RaftUp | 30K+ users, $1M+ raised | Previous site |
+| Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 
-### 🏆 NMMA / Miami International Boat Show
-Real-time water taxi app for the **Progressive Insurance Miami International Boat Show**, 2019 & 2020. Built in partnership with NMMA. [Coverage](https://boatingindustry.com/news/2018/11/06/mibs-partners-with-raftup-technologies-for-enhanced-transportation-opportunities/)
-
-### 🥇 Ark Tank & Delta Regional Authority Winner
-Inaugural startup pitch winner at the AR Governor's Conference on Tourism. Delta Regional Authority winner. [Coverage](https://armoneyandpolitics.com/raftup-winner-ark-tank/)
-
----
-
-## What We're Exploring
-
-- **Guide marketplace** — $89.8B fishing tourism market (2025). 57 million Americans fish annually. No dominant platform connecting anglers with local guides.
-- **Platform expansion** — White-label PFG for other states? Broader outdoor intelligence? We're letting the product lead.
-
----
-
-## This Site
-
-Single-file static marketing page (`index.html`) deployed via GitHub Pages.
-
-- No build step, no framework dependencies
-- Live PFG widget in the hero pulls real-time fishing data
-- Responsive from 390px mobile through 1440px desktop
+Change a fact in one place, then search the repo for the old value: it also appears in JSON-LD, `llms.txt`, and the FAQ.
 
 ---
 
-## Repository Structure
+## Lead intake
+
+Both forms post to the Supabase Edge Function `intake` (project `feldynpqhzvstpssztra`). Leads land in the `leads` table, which has no public access. See [`supabase/functions/intake/README.md`](supabase/functions/intake/README.md) for routes, limits, secrets and the site-scan design.
+
+## Development
+
+No build step. Serve the repo root so absolute paths resolve:
+
+```bash
+python3 -m http.server 8080   # then open http://localhost:8080
+```
+
+`localhost:8080` is in the intake function's default CORS allowlist, so forms work locally.
+
+## Quality gates
+
+| Check | Command | CI |
+|-------|---------|----|
+| HTML lint | `npx htmlhint@1 "**/*.html"` | `html-lint.yml` |
+| SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors | `node scripts/check-site.mjs` | `html-lint.yml` |
+| Intake function: lint, type-check, unit tests | `deno lint && deno check index.ts && deno test --no-check=remote intake_test.ts` (in `supabase/functions/intake`) | `intake-function.yml` |
+
+Add a new top-level page to `sitemap.xml`, and it is checked automatically.
+
+---
+
+## Repository structure
 
 ```
 talewatersandtides-marketing/
-├── index.html                          # Main marketing page (single-file, no build step)
-├── CNAME                               # Custom domain for GitHub Pages
-├── unbound/index.html                  # UNBOUND Buzzword Bingo (unofficial attendee edition, /unbound/)
-├── assets/                             # Images and media assets
-│   ├── AbbySims.jpeg                   # Team photo — Abby Sims, CTO
-│   ├── CoreyBoelkens.jpeg              # Team photo — Corey Boelkens, Founder
-│   ├── IMG_0393.png                    # Source photo (used for hero base64 embed)
-│   ├── TWT_Background.png              # Brand background image (source asset)
-│   └── TalewatersandTides_Logo_White_Horizontal.png  # Brand logo (source asset)
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.md               # Bug report template
-│   │   ├── feature_request.md          # Feature request template
-│   │   ├── feedback.md                 # General feedback template
-│   │   ├── ux_evaluation.md            # UX evaluation template
-│   │   └── design_decision.md          # Design / architecture decision template
-│   └── workflows/
-│       ├── static.yml                  # Deploy to GitHub Pages on push to main
-│       ├── html-lint.yml               # HTMLHint on PRs and pushes that touch .html files
-│       └── triage.yml                  # Green Team AI auto-triage for issues
-├── README.md                           # This file
-├── CHANGELOG.md                        # Version history
-├── CONTRIBUTING.md                     # How to contribute
-├── SECURITY.md                         # Security / vulnerability reporting policy
-├── CODE_OF_CONDUCT.md                  # Contributor Covenant code of conduct
-├── LICENSE                             # MIT License
-├── .gitignore                          # Git ignore rules
-└── .prettierrc                         # Prettier formatting config
+├── index.html                 # Services home
+├── readiness/index.html       # AI readiness check (intake)
+├── corey/index.html           # Executive profile
+├── lab/index.html             # Outdoor Recreation Innovation Lab
+├── privacy/index.html         # Privacy notice
+├── assets/
+│   ├── css/site.css           # Design tokens and components (Tide Chart direction)
+│   ├── js/site.js             # Nav, GA events, UTM capture, intake client, contact form
+│   ├── js/home.js             # 90-day plan tabs and kickoff dates
+│   └── js/readiness.js        # Readiness check logic and scoring
+├── supabase/
+│   ├── functions/intake/      # Lead intake + site scan Edge Function
+│   └── migrations/            # Database migrations (applied via Supabase)
+├── scripts/
+│   ├── check-site.mjs         # SEO and link checks
+│   └── gen-md.mjs             # Prompt Play kit Markdown mirror
+├── sitemap.xml, robots.txt, llms.txt, CNAME
+└── .github/workflows/         # Pages deploy, HTML lint + site checks, intake tests, triage
 ```
 
----
+## Deployment
+
+GitHub Pages deploys on every push to `main` (`static.yml`). The intake function is deployed separately (see its README).
 
 ## Contact
 
-Collaborate: [corey@talewatersandtides.com](mailto:corey@talewatersandtides.com)  
-LinkedIn: [linkedin.com/in/boelkens](https://www.linkedin.com/in/boelkens/)
+[corey@talewatersandtides.com](mailto:corey@talewatersandtides.com) · [LinkedIn](https://www.linkedin.com/in/boelkens/)

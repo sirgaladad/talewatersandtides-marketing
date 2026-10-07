@@ -1,4 +1,5 @@
-# Lint every HTML page with HTMLHint (rules in .htmlhintrc).
+# Lint every HTML page with HTMLHint (rules in .htmlhintrc), then run the
+# SEO and internal-link checks in scripts/check-site.mjs.
 # The site has no build step, so this is the only automated quality gate
 # before a merge to main triggers the GitHub Pages deploy.
 name: HTML lint
@@ -8,6 +9,8 @@ on:
     paths:
       - "**/*.html"
       - ".htmlhintrc"
+      - "sitemap.xml"
+      - "scripts/check-site.mjs"
       - ".github/workflows/html-lint.yml"
   push:
     branches: ["main"]
@@ -36,3 +39,5 @@ jobs:
           node-version: "22"
       - name: Run HTMLHint
         run: npx --yes htmlhint@1 "**/*.html"
+      - name: SEO and link checks (sitemap pages)
+        run: node scripts/check-site.mjs
