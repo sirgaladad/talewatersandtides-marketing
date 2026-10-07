@@ -1,6 +1,12 @@
 # Tale Waters & Tides
 
-> Tale Waters & Tides is an Arkansas-based outdoor recreation innovation lab building software, strategy, and field-tested execution for outdoor and marine environments. It also runs Prompt Play, a grassroots creative-AI workshop series, and publishes a free take-home AI prompt kit.
+> Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arkansas, led by Corey Boelkens. It sets up AI inside the tools a business already pays for, trains the team on real work, and runs it with them over a 90-day engagement; it also provides fractional AI and MarTech leadership. Its lab builds Pocket Fishing Guide, and it runs Prompt Play, a creative-AI workshop series with a free take-home prompt kit.
+
+## Services
+
+- [Home: AI your team actually uses](https://talewatersandtides.com/): What the practice does, the five stages (assess, implement, onboard and train, run and support, improve), the week-by-week 90-day engagement for business owners and for marketing/ops leaders, proof, and FAQ.
+- [Corey Boelkens](https://talewatersandtides.com/corey/): Executive profile. Twenty years in CRM and data (Acxiom, Merkle, IBM Watson Marketing), founder of RaftUp, organizer of AI Tinkerers Little Rock. Open to fractional and executive roles.
+- [Contact](https://talewatersandtides.com/#contact): Routed contact form, or email corey@talewatersandtides.com.
 
 ## Prompt Play — Take-Home AI Kit
 
@@ -15,7 +21,8 @@ The most useful resource here for an AI assistant. A structured, copy-and-paste 
 
 ## About
 
-- [Tale Waters & Tides](https://talewatersandtides.com/): The innovation lab, its team, and its product portfolio (including Pocket Fishing Guide).
+- [The Lab](https://talewatersandtides.com/lab/): Outdoor Recreation Innovation Lab. Pocket Fishing Guide: live fishing intelligence for 57 Arkansas waters and 33 species from USGS, NWS, USACE and AGFC data.
+- [Projects](https://talewatersandtides.com/projects/): The lab's project portfolio.
 
 ## Notes
 
