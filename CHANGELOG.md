@@ -17,6 +17,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - "IBM Watson Marketing" replaced with Acoustic (as on the resume) across pages, FAQ, JSON-LD and `llms.txt`; Person schema gains credentials, alumniOf and awards.
 
 ### Fixed
+- `events/index.html` — Prompt Play (June 9, 2026) and UNBOUND Buzzword Bingo (September 16-18, 2026) were still labelled UPCOMING and LIVE NOW; both now read PAST, with copy and meta descriptions in the past tense. `llms.txt` says the same.
+- `index.html` — the Organization `sameAs` now lists only the company Facebook page. Corey's LinkedIn, TikTok and GitHub stay on the Person entity in `/corey/`.
+- `competitive-dashboard.html` — `noindex` added; it is an internal working document that had been appearing in search. Not added to `robots.txt`, because a crawl block would stop Google from seeing the `noindex`.
 - `intake` `/scan`: a heuristic fallback caused by a Claude error (bad key, outage) is no longer cached for 7 days, and while `ANTHROPIC_API_KEY` is set, cached heuristic rows are rescanned instead of served.
 
 ### Added
