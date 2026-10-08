@@ -1,8 +1,8 @@
 // Unit tests for the pure parts of the intake function.
-//   deno test supabase/functions/intake/intake_test.ts
+//   deno test --no-check=remote --allow-env supabase/functions/intake/intake_test.ts
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
-import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan } from './scan.ts';
+import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan, scanSite, useCached } from './scan.ts';
 import { buildLead, LeadError, validDate } from './lead.ts';
 
 const meta = { ipHash: 'abc', userAgent: 'test' };
@@ -37,6 +37,48 @@ Deno.test('extractText handles end tags with whitespace or attributes', () => {
 Deno.test('publicScan never returns page-derived summary text', () => {
   const pub = publicScan({ domain: 'a.com', facts: heuristicFacts('a.com'), summary: 'internal secret', signals: [], source: 'claude' });
   assertEquals('summary' in pub, false);
+});
+
+Deno.test('useCached skips heuristic rows once a key is set', () => {
+  const base = { domain: 'a.com', facts: heuristicFacts('a.com'), summary: '', signals: [] };
+  assertEquals(useCached({ ...base, source: 'heuristic' }, true), false);
+  assertEquals(useCached({ ...base, source: 'heuristic' }, false), true);
+  assertEquals(useCached({ ...base, source: 'claude' }, true), true);
+});
+
+Deno.test('scanSite does not cache a fallback caused by a Claude error', async () => {
+  const upserts: unknown[] = [];
+  const db = {
+    from: () => ({
+      select: () => ({ eq: () => ({ gte: () => ({ maybeSingle: () => Promise.resolve({ data: null }) }) }) }),
+      upsert: (row: unknown) => (upserts.push(row), Promise.resolve({ error: null })),
+    }),
+  };
+  const realFetch = globalThis.fetch;
+  const realDns = Deno.resolveDns;
+  const realKey = Deno.env.get('ANTHROPIC_API_KEY');
+  globalThis.fetch = (input: string | URL | Request) => {
+    const url = input instanceof Request ? input.url : String(input);
+    if (new URL(url).hostname === 'api.anthropic.com') {
+      return Promise.resolve(new Response('{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"}}', { status: 401, headers: { 'content-type': 'application/json' } }));
+    }
+    return Promise.resolve(new Response('<title>Swank Salon</title><p>hair salon</p>', { headers: { 'content-type': 'text/html' } }));
+  };
+  // deno-lint-ignore no-explicit-any
+  (Deno as any).resolveDns = (_h: string, type: string) => Promise.resolve(type === 'A' ? ['93.184.216.34'] : []);
+  Deno.env.set('ANTHROPIC_API_KEY', 'sk-ant-test-invalid');
+  try {
+    // deno-lint-ignore no-explicit-any
+    const r = await scanSite(db as any, 'swanksalon.com');
+    assertEquals(r.source, 'heuristic');
+    assertEquals(upserts.length, 0);
+  } finally {
+    globalThis.fetch = realFetch;
+    // deno-lint-ignore no-explicit-any
+    (Deno as any).resolveDns = realDns;
+    if (realKey === undefined) Deno.env.delete('ANTHROPIC_API_KEY');
+    else Deno.env.set('ANTHROPIC_API_KEY', realKey);
+  }
 });
 
 Deno.test('detectSignals and heuristicFacts', () => {

@@ -19,7 +19,7 @@ Both require the public anon key as `Authorization: Bearer` and `apikey` (verify
 1. The URL is normalised and checked: public domain only, no IP literals, private hostnames, credentials or odd ports. DNS results are checked for private ranges, and every redirect hop is re-validated (SSRF guard).
 2. The homepage is fetched (8 s timeout, 400 KB cap) and reduced to title, description and visible text.
 3. Third-party signals are detected deterministically: booking tools (Vagaro, Calendly, Jobber...), CRM and email scripts (HubSpot, Mailchimp...), and review profiles.
-4. With `ANTHROPIC_API_KEY` set, Claude classifies the business into the exact option sets the form chips use (JSON-schema structured output, low effort, server-side refusal fallback). Without the key, or on any model error, a keyword heuristic answers instead, and the response says `source: heuristic`.
+4. With `ANTHROPIC_API_KEY` set, Claude classifies the business into the exact option sets the form chips use (JSON-schema structured output, low effort, server-side refusal fallback). Without the key, or on any model error, a keyword heuristic answers instead, and the response says `source: heuristic`. A fallback caused by a model error is not cached, and while a key is set, cached heuristic rows are ignored and rescanned, so fixing the key takes effect immediately.
 5. The visitor corrects the chips; the scan never blocks the form.
 
 Page content is treated as untrusted data in the prompt, and the output is constrained to enums, so injected text cannot widen what the scan returns.
@@ -51,7 +51,7 @@ supabase secrets set IP_HASH_SALT=...                 # optional
 
 ```bash
 cd supabase/functions/intake
-deno lint && deno check index.ts && deno test --no-check=remote intake_test.ts
+deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts
 supabase functions deploy intake --project-ref feldynpqhzvstpssztra
 ```
 

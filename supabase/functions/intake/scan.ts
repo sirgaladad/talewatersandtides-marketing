@@ -275,11 +275,14 @@ export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<Scan
   const start = new URL('/', normaliseUrl(rawUrl));
   const domain = start.hostname.replace(/^www\./, '').toLowerCase();
 
+  const hasKey = Boolean(Deno.env.get('ANTHROPIC_API_KEY'));
   const cutoff = new Date(Date.now() - CACHE_DAYS * 86400_000).toISOString();
   const cached = await db.from('site_scans').select('result').eq('domain', domain).gte('created_at', cutoff).maybeSingle();
-  if (cached.data?.result) return cached.data.result as ScanResult;
+  const hit = cached.data?.result as ScanResult | undefined;
+  if (hit && useCached(hit, hasKey)) return hit;
 
   let result: ScanResult;
+  let cacheable = true;
   try {
     const { html } = await fetchPage(start);
     const page = extractText(html);
@@ -290,7 +293,7 @@ export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<Scan
       ...signals.reviews.map((n) => `reviews: ${n}`),
     ];
     const reviews = signals.reviews.length ? signals.reviews.join(' · ') : 'Not found';
-    if (Deno.env.get('ANTHROPIC_API_KEY')) {
+    if (hasKey) {
       try {
         const c = await classifyWithClaude(domain, page, signals);
         result = {
@@ -302,6 +305,8 @@ export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<Scan
         };
       } catch (err) {
         console.error('claude classify failed', (err as Error).message);
+        // A bad key or an outage is not a fact about the site: don't pin the fallback for CACHE_DAYS.
+        cacheable = false;
         result = { domain, facts: heuristicFacts(domain, page.text, signals), summary: page.description.slice(0, 240), signals: signalList, source: 'heuristic' };
       }
     } else {
@@ -314,8 +319,13 @@ export async function scanSite(db: SupabaseClient, rawUrl: string): Promise<Scan
     return { domain, facts: heuristicFacts(domain), summary: '', signals: ['unreachable'], source: 'heuristic' };
   }
 
-  await db.from('site_scans').upsert({ domain, result, created_at: new Date().toISOString() });
+  if (cacheable) await db.from('site_scans').upsert({ domain, result, created_at: new Date().toISOString() });
   return result;
+}
+
+/** A heuristic row cached before the key was set (or while it was broken) is not reused once Claude is available. */
+export function useCached(r: ScanResult, hasKey: boolean): boolean {
+  return !(hasKey && r.source === 'heuristic');
 }
 
 /**

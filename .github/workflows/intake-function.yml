@@ -39,4 +39,4 @@ jobs:
       - name: Type-check
         run: deno check index.ts
       - name: Unit tests
-        run: deno test --no-check=remote intake_test.ts
+        run: deno test --no-check=remote --allow-env intake_test.ts
