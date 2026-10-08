@@ -8,11 +8,11 @@
 
 The audit reviewed the live homepage, `/corey/`, `/lab/`, `/projects/`, `/events/`, `/readiness/`, `robots.txt`, `sitemap.xml` and page source. Its headline: the technical foundation is sound, the public identity needs tightening, and the consulting services are less discoverable and less credible than the lab projects.
 
-| Area | Audit assessment | Our reading |
-|------|------------------|-------------|
-| SEO | Good foundation, limited service depth | Agree. `check-site.mjs` already enforces the basics; the gap is pages, not tags. |
-| AEO | Strong start; add cost, fit, tools, measurement answers | Agree. The FAQ and 90-day plan are the right shape; the missing answers belong on service pages. |
-| GEO | Credibility needs cleanup; conflicting descriptions across channels | Agree, with one caveat: this is a transition still propagating through search and social profiles, not an indexing fault. |
+| Area | Audit assessment                                                    | Our reading                                                                                                               |
+| ---- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| SEO  | Good foundation, limited service depth                              | Agree. `check-site.mjs` already enforces the basics; the gap is pages, not tags.                                          |
+| AEO  | Strong start; add cost, fit, tools, measurement answers             | Agree. The FAQ and 90-day plan are the right shape; the missing answers belong on service pages.                          |
+| GEO  | Credibility needs cleanup; conflicting descriptions across channels | Agree, with one caveat: this is a transition still propagating through search and social profiles, not an indexing fault. |
 
 The audit's closing point matches Google's own documentation: AI Overviews and AI Mode have no requirements beyond ordinary Search eligibility and helpful content. No "GEO" product is needed.
 
@@ -22,17 +22,17 @@ The audit's closing point matches Google's own documentation: AI Overviews and A
 
 Every claim was checked against `main` at `2007cb5` on 2026-10-08. The live site could not be fetched from the agent container (egress blocked), so "live" statements rely on the audit plus the fact that `main` deploys automatically.
 
-| # | Claim | Result | Evidence |
-|---|-------|--------|----------|
-| 1 | A GTM container ID is passed to gtag.js | Confirmed | `GTM-TZVTR5TG` in the loader URL and in `gtag('config', …)` on all 14 HTML pages. `G-NT708SKWZL` was the ID until commit `17a1348` (2026-03-18). |
-| 2 | Site says Corey is currently at Allant Group | Confirmed | `index.html` FAQ, About, JSON-LD; `corey/index.html` at-a-glance, results, timeline ("Dec 2025 – present"); `llms.txt`. Source per CHANGELOG: the June 2026 resume. Accuracy cannot be verified from the repo. |
-| 3 | Dates for Tale Waters & Tides (Aug 2022) and Acoustic (Apr 2021 – Aug 2022) conflict with Corey's history | Cannot verify | Only the owner can settle this. RaftUp (Jun 2017 – Dec 2021) also overlaps Acoustic. |
-| 4 | Organization `sameAs` includes personal LinkedIn, TikTok, GitHub | Confirmed | `index.html` JSON-LD. The Person entity on `/corey/` already carries the same three links. |
-| 5 | `/events/` shows June and September events as UPCOMING and LIVE NOW | Confirmed | `events/index.html` lines 170 and 181. `/prompt-play/` still has a booking link for June 9. |
-| 6 | Competitive dashboard is indexable | Confirmed | `competitive-dashboard.html` at the site root, no `noindex`, no robots rule, served by the Pages deploy of `.`. 22 draft PRs from a scheduled routine (#54–#76) target it. |
-| 7 | Three services share one homepage | Confirmed | One "What you can hire me for" section with three offers; no service pages. |
-| 8 | Result numbers lack context | Confirmed | Track-record strip on `/` gives numbers without role, baseline or period. |
-| 9 | Search still shows the older lab homepage; LinkedIn says AI studio | Not checkable here | Plausible: the services-first rebuild merged 2026-10-07 (PR #78). |
+| #   | Claim                                                                                                     | Result             | Evidence                                                                                                                                                                                                       |
+| --- | --------------------------------------------------------------------------------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | A GTM container ID is passed to gtag.js                                                                   | Confirmed          | `GTM-TZVTR5TG` in the loader URL and in `gtag('config', …)` on all 14 HTML pages. `G-NT708SKWZL` was the ID until commit `17a1348` (2026-03-18).                                                               |
+| 2   | Site says Corey is currently at Allant Group                                                              | Confirmed          | `index.html` FAQ, About, JSON-LD; `corey/index.html` at-a-glance, results, timeline ("Dec 2025 – present"); `llms.txt`. Source per CHANGELOG: the June 2026 resume. Accuracy cannot be verified from the repo. |
+| 3   | Dates for Tale Waters & Tides (Aug 2022) and Acoustic (Apr 2021 – Aug 2022) conflict with Corey's history | Cannot verify      | Only the owner can settle this. RaftUp (Jun 2017 – Dec 2021) also overlaps Acoustic.                                                                                                                           |
+| 4   | Organization `sameAs` includes personal LinkedIn, TikTok, GitHub                                          | Confirmed          | `index.html` JSON-LD. The Person entity on `/corey/` already carries the same three links.                                                                                                                     |
+| 5   | `/events/` shows June and September events as UPCOMING and LIVE NOW                                       | Confirmed          | `events/index.html` lines 170 and 181. `/prompt-play/` still has a booking link for June 9.                                                                                                                    |
+| 6   | Competitive dashboard is indexable                                                                        | Confirmed          | `competitive-dashboard.html` at the site root, no `noindex`, no robots rule, served by the Pages deploy of `.`. 22 draft PRs from a scheduled routine (#54–#76) target it.                                     |
+| 7   | Three services share one homepage                                                                         | Confirmed          | One "What you can hire me for" section with three offers; no service pages.                                                                                                                                    |
+| 8   | Result numbers lack context                                                                               | Confirmed          | Track-record strip on `/` gives numbers without role, baseline or period.                                                                                                                                      |
+| 9   | Search still shows the older lab homepage; LinkedIn says AI studio                                        | Not checkable here | Plausible: the services-first rebuild merged 2026-10-07 (PR #78).                                                                                                                                              |
 
 Additional findings while checking:
 
@@ -56,29 +56,29 @@ Conclusion: the audit is right that collection is unconfirmed. The two credible 
 
 ## 4. Decisions needed from the owner
 
-| Decision | Options | Blocks |
-|----------|---------|--------|
-| Analytics install path | A: gtag.js with `G-NT708SKWZL`. B: official GTM snippet with GA4 inside the container. | #85 |
-| Career dates and current role | Confirm or correct each row in #86 | #86, then any copy on `/` and `/corey/` |
-| Competitive dashboard | A: public with `noindex` (done). B: move to a private repo or doc. C: keep in repo, exclude from deploy. | #83 |
-| Service pages | A: three pages. B: one `/services/` page. | #87 |
-| Case-study candidates and numbers | Which two or three, and the verified figures | #88 |
+| Decision                          | Options                                                                                                  | Blocks                                  |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Analytics install path            | A: gtag.js with `G-NT708SKWZL`. B: official GTM snippet with GA4 inside the container.                   | #85                                     |
+| Career dates and current role     | Confirm or correct each row in #86                                                                       | #86, then any copy on `/` and `/corey/` |
+| Competitive dashboard             | A: public with `noindex` (done). B: move to a private repo or doc. C: keep in repo, exclude from deploy. | #83                                     |
+| Service pages                     | A: three pages. B: one `/services/` page.                                                                | #87                                     |
+| Case-study candidates and numbers | Which two or three, and the verified figures                                                             | #88                                     |
 
 ---
 
 ## 5. Slices and sequencing
 
-| Order | Slice | Issue | Type | Who | Status |
-|-------|-------|-------|------|-----|--------|
-| 0 | Archive events on `/events/`, split `sameAs`, `noindex` dashboard, `llms.txt` | PR #81 | Chore | Claude | Draft PR open |
-| 1 | Analytics decision, fix, verification, `check-site.mjs` rule | #85 | Bug | Owner decides, Codex implements | Open |
-| 2 | Career facts confirmed and updated everywhere | #86 | Bug | Owner, then Codex | Open |
-| 3 | Service pages (design decision, then one PR per page) | #87 | Design / Feature | Claude scopes, owner writes facts, Codex builds | Open |
-| 4 | Case studies | #88 | Feature | Owner supplies numbers, Claude drafts | Open |
-| 5 | `/prompt-play/` archive and date gate | #89 | Chore | Codex | Open |
-| 6 | Dashboard location and the 22 routine PRs | #83 | Chore | Owner | Open |
-| 7 | Company description across channels, Search Console recrawl | #84 | Chore | Owner | Open |
-| 8 | Process-doc hygiene | #90 | Chore | Claude | Open |
+| Order | Slice                                                                         | Issue  | Type             | Who                                             | Status        |
+| ----- | ----------------------------------------------------------------------------- | ------ | ---------------- | ----------------------------------------------- | ------------- |
+| 0     | Archive events on `/events/`, split `sameAs`, `noindex` dashboard, `llms.txt` | PR #81 | Chore            | Claude                                          | Draft PR open |
+| 1     | Analytics decision, fix, verification, `check-site.mjs` rule                  | #85    | Bug              | Owner decides, Codex implements                 | Open          |
+| 2     | Career facts confirmed and updated everywhere                                 | #86    | Bug              | Owner, then Codex                               | Open          |
+| 3     | Service pages (design decision, then one PR per page)                         | #87    | Design / Feature | Claude scopes, owner writes facts, Codex builds | Open          |
+| 4     | Case studies                                                                  | #88    | Feature          | Owner supplies numbers, Claude drafts           | Open          |
+| 5     | `/prompt-play/` archive and date gate                                         | #89    | Chore            | Codex                                           | Open          |
+| 6     | Dashboard location and the 22 routine PRs                                     | #83    | Chore            | Owner                                           | Open          |
+| 7     | Company description across channels, Search Console recrawl                   | #84    | Chore            | Owner                                           | Open          |
+| 8     | Process-doc hygiene                                                           | #90    | Chore            | Claude                                          | Open          |
 
 Why this order: measurement and factual accuracy first (cheap, credibility and data depend on them), then the pages that create demand, then cleanup that only removes noise.
 
@@ -98,14 +98,14 @@ Things that should fail CI rather than wait for a human to notice:
 
 ## 7. Testing and quality control
 
-| Check | When | How |
-|-------|------|-----|
-| HTMLHint and `check-site.mjs` | Every PR | `html-lint.yml` (already in place; PR #81 passes locally) |
-| Rich results | After JSON-LD changes | Google Rich Results Test on `/`, `/corey/`, new service pages |
-| Analytics | After #85 | Tag Assistant on three pages; GA4 Realtime shows `page_view` and one custom event |
-| Indexing | After each content PR | Search Console URL inspection, request indexing; resubmit sitemap |
-| Removal | After `noindex` on the dashboard | Search Console removal request; add `robots.txt` Disallow only after it drops |
-| Copy accuracy | Before merging #86 and #88 | Owner sign-off on every date and number in the PR description |
+| Check                         | When                             | How                                                                               |
+| ----------------------------- | -------------------------------- | --------------------------------------------------------------------------------- |
+| HTMLHint and `check-site.mjs` | Every PR                         | `html-lint.yml` (already in place; PR #81 passes locally)                         |
+| Rich results                  | After JSON-LD changes            | Google Rich Results Test on `/`, `/corey/`, new service pages                     |
+| Analytics                     | After #85                        | Tag Assistant on three pages; GA4 Realtime shows `page_view` and one custom event |
+| Indexing                      | After each content PR            | Search Console URL inspection, request indexing; resubmit sitemap                 |
+| Removal                       | After `noindex` on the dashboard | Search Console removal request; add `robots.txt` Disallow only after it drops     |
+| Copy accuracy                 | Before merging #86 and #88       | Owner sign-off on every date and number in the PR description                     |
 
 ---
 
