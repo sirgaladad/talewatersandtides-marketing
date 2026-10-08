@@ -413,10 +413,10 @@
     $('[data-lead-badge]').textContent = S.sent === true ? 'Captured' : 'Not sent';
     $('[data-lead-fine]').textContent = S.sent === true
       ? 'Stored as a lead tagged with stage, fit, workflows and kickoff. Scan signals are attached.'
-      : 'This record did not reach Corey. Use "Book the kickoff call" to send it by email.';
+      : 'This record did not reach Corey. Use "Email Corey this plan" to send it.';
     $('[data-lock-status]').textContent = S.sent === true
       ? 'Your answers are already with Corey.'
-      : 'Your answers have not reached Corey yet; the kickoff email below carries them.';
+      : 'Your answers have not reached Corey yet; use "Email Corey this plan" below.';
     if (S.sent !== true) warn.textContent = "Your reading is below, but it didn't reach Corey (" + S.sent + '). Use the kickoff button to email it.';
 
     var p = leadPayload(m);
