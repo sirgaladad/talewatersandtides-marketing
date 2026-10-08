@@ -318,8 +318,9 @@
   function leadPayload(m) {
     return {
       source: 'readiness', name: S.name, email: S.email, role: S.role,
-      website: S.scanState === 'done' ? domainOf(S.url) : null,
-      facts: S.facts, tools: S.tools, tools_other: S.toolsOther,
+      // Keep the entered site even if the scan failed and the visitor filled the basics by hand.
+      website: enteredDomain(),
+      facts: reviewedFacts(), tools: S.tools, tools_other: S.toolsOther,
       stack_maturity: ['none', 'basic', 'connected', 'connected', 'mature'][Math.round(m.toolScore)],
       hurts: S.leaks.map(function (k) { return nameOf(LEAKS, k); }),
       impacts: S.impacts.map(function (k) { return nameOf(IMPACTS, k); }),
@@ -327,6 +328,19 @@
       fit: m.isLeader ? 'fractional_lead' : 'owner_90day', kickoff: S.startDate, slot: S.slot,
       scan: S.scan, company_website: $('[data-hp]').value,
     };
+  }
+
+  // A domain the visitor typed, if it looks like one (has a dot, no spaces).
+  function enteredDomain() {
+    var d = domainOf(S.url);
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d) ? d : null;
+  }
+  // Only the four facts the visitor saw as chips and could correct; booking and review
+  // signals still reach Corey through scan.signals.
+  function reviewedFacts() {
+    var out = {};
+    FACTS.forEach(function (f) { if (S.facts[f[0]]) out[f[0]] = S.facts[f[0]]; });
+    return out;
   }
 
   // ---------- page 2 ----------
@@ -368,7 +382,7 @@
 
   function renderResult() {
     var m = model();
-    var domain = S.scanState === 'done' ? domainOf(S.url) : S.facts.industry;
+    var domain = enteredDomain() || S.facts.industry;
     $('[data-result-eyebrow]').textContent = S.name.trim().split(' ')[0] + ' · ' + (domain || '');
     $('[data-stage-headline]').textContent = m.stage.headline;
     $('[data-stage-body]').textContent = m.stage.body;
