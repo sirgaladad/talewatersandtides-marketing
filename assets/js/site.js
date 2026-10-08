@@ -78,7 +78,16 @@
   utm();
 
   // ---- intake client ----
+  // The backend treats a lead sent within 2.5 s of page load as a bot and drops it silently.
+  // A real person using autofill can be that fast, so hold the request until the threshold passes.
+  var MIN_ELAPSED_MS = 2600;
   function intake(route, body) {
+    var wait = route === 'lead' ? Math.max(0, MIN_ELAPSED_MS - (Date.now() - loadedAt)) : 0;
+    return new Promise(function (resolve) { setTimeout(resolve, wait); }).then(function () {
+      return send(route, body);
+    });
+  }
+  function send(route, body) {
     var payload = Object.assign({}, body, {
       page: location.pathname,
       utm: utm(),

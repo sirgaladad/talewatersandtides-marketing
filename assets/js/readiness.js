@@ -162,7 +162,7 @@
         : lock('Cost', 'What the leak is costing, and the metric we track'),
       m.have.ai && m.have.leaks ? open('Pattern', m.aiScore === 0 ? 'Clean slate: rules and an owner before any tool.' : m.aiScore < 3 ? 'Scattered use. The fix is ownership, not more tools.' : 'Shared practice already. Next is making it compound.', true) : lock('Pattern', 'Unlocks with questions 3 and 4'),
       m.filled >= 4 ? open('Fit', m.isLeader ? 'Fractional AI / MarTech lead, one quarter.' : '90-day owner engagement, two workflows.', true) : lock('Fit', 'Engagement shape and your time per week'),
-      m.have.contact && m.filled === 5 ? open('Stage', 'Ready. Your score and dated plan are one tap away.', true) : lock('Stage', 'Score, stage and a dated 90-day plan, sent to you'),
+      m.have.contact && m.filled === 5 ? open('Stage', 'Ready. Your score and dated plan are one tap away.', true) : lock('Stage', 'Score, stage and a dated 90-day plan, shown after you add your details'),
     ];
     var ul = $('[data-insights]'); ul.textContent = '';
     items.forEach(function (it) {
@@ -395,6 +395,14 @@
 
     var warn = $('[data-send-warn]');
     warn.hidden = S.sent === true;
+    // Never claim a lead was stored when the request failed.
+    $('[data-lead-badge]').textContent = S.sent === true ? 'Captured' : 'Not sent';
+    $('[data-lead-fine]').textContent = S.sent === true
+      ? 'Stored as a lead tagged with stage, fit, workflows and kickoff. Scan signals are attached.'
+      : 'This record did not reach Corey. Use "Book the kickoff call" to send it by email.';
+    $('[data-lock-status]').textContent = S.sent === true
+      ? 'Your answers are already with Corey.'
+      : 'Your answers have not reached Corey yet; the kickoff email below carries them.';
     if (S.sent !== true) warn.textContent = "Your reading is below, but it didn't reach Corey (" + S.sent + '). Use the kickoff button to email it.';
 
     var p = leadPayload(m);
