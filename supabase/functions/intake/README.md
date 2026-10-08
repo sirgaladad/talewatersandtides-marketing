@@ -51,7 +51,7 @@ supabase secrets set IP_HASH_SALT=...                 # optional
 
 ```bash
 cd supabase/functions/intake
-deno lint && deno check index.ts && deno test --no-check=remote intake_test.ts
+deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts
 supabase functions deploy intake --project-ref feldynpqhzvstpssztra
 ```
 

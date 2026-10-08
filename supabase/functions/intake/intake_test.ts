@@ -1,5 +1,5 @@
 // Unit tests for the pure parts of the intake function.
-//   deno test supabase/functions/intake/intake_test.ts
+//   deno test --no-check=remote --allow-env supabase/functions/intake/intake_test.ts
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
 import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan, scanSite, useCached } from './scan.ts';
