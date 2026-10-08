@@ -116,6 +116,7 @@ a:hover { color: var(--gold); }
 .btn:hover { color: var(--navy); background: #e0b85a; }
 .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-3); font-weight: 400; }
 .btn-ghost:hover { background: rgba(245, 240, 232, 0.06); color: var(--text); }
+@media (max-width: 420px) { .btn { white-space: normal; text-align: center; } }
 .btn-dark { background: var(--navy); color: var(--cream); }
 .btn-dark:hover { background: #172b42; color: var(--cream); }
 .light .btn-dark, .light .btn-dark:hover { color: var(--cream); }
@@ -538,7 +539,7 @@ textarea.rc-wide { resize: vertical; margin-top: 16px; }
    ============================================================ */
 .hero-h1 { font-size: clamp(38px, 5vw, 64px); }
 .hero-person { margin: 0; justify-self: end; max-width: 420px; width: 100%; }
-.hero-person img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+.hero-person img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
 .hero-person figcaption {
   background: var(--panel); border: 1px solid rgba(245, 240, 232, 0.14); border-top: 0;
   border-radius: 0 0 var(--radius) var(--radius); padding: 18px 20px; display: grid; gap: 6px; font-size: 15px;
