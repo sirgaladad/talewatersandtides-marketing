@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- `intake` `/scan`: a heuristic fallback caused by a Claude error (bad key, outage) is no longer cached for 7 days, and while `ANTHROPIC_API_KEY` is set, cached heuristic rows are rescanned instead of served.
+
 ### Added
 - Services-first site from the Tide Chart redesign: `index.html` rebuilt (two doors, five-stage tide line, week-by-week 90-day plan with owner/leader tabs and kickoff dates, proof, ground rules, FAQ, routed contact form), plus `/corey/` (executive profile, Person schema, print one-pager), `/lab/` (Outdoor Recreation Innovation Lab, PFG), `/privacy/`.
 - `/readiness/` — one-page AI readiness check: real site scan via the `intake` function, categorized tools, where-it-hurts and cost chips, a reading panel that sharpens as answers land, gated score/stage, dated interactive plan, and lead capture.

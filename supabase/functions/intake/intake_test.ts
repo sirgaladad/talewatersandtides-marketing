@@ -2,7 +2,7 @@
 //   deno test supabase/functions/intake/intake_test.ts
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
-import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan } from './scan.ts';
+import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan, useCached } from './scan.ts';
 import { buildLead, LeadError, validDate } from './lead.ts';
 
 const meta = { ipHash: 'abc', userAgent: 'test' };
@@ -37,6 +37,13 @@ Deno.test('extractText handles end tags with whitespace or attributes', () => {
 Deno.test('publicScan never returns page-derived summary text', () => {
   const pub = publicScan({ domain: 'a.com', facts: heuristicFacts('a.com'), summary: 'internal secret', signals: [], source: 'claude' });
   assertEquals('summary' in pub, false);
+});
+
+Deno.test('useCached skips heuristic rows once a key is set', () => {
+  const base = { domain: 'a.com', facts: heuristicFacts('a.com'), summary: '', signals: [] };
+  assertEquals(useCached({ ...base, source: 'heuristic' }, true), false);
+  assertEquals(useCached({ ...base, source: 'heuristic' }, false), true);
+  assertEquals(useCached({ ...base, source: 'claude' }, true), true);
 });
 
 Deno.test('detectSignals and heuristicFacts', () => {
