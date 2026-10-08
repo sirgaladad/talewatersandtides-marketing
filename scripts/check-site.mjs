@@ -1,5 +1,5 @@
-// SEO and link checks for the pages listed in sitemap.xml (plus any extra
-// paths passed as arguments). No dependencies; runs in CI next to HTMLHint.
+// SEO checks for the pages listed in sitemap.xml, plus link and alt-text checks for
+// every HTML page in the repo (and any extra paths passed as arguments). No dependencies; runs in CI next to HTMLHint.
 //
 //   node scripts/check-site.mjs            # pages from sitemap.xml
 //   node scripts/check-site.mjs readiness/ # plus extra pages
@@ -9,7 +9,7 @@
 // <img>, and every internal href/src resolving to a file in the repo
 // (including #fragments that must exist on the target page).
 
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -26,6 +26,19 @@ const fileFor = (urlPath) => {
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
 const pages = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(ORIGIN, ''));
 for (const extra of process.argv.slice(2)) pages.push('/' + extra.replace(/^\//, ''));
+
+// Every other HTML page in the repo gets the link and alt-text checks too, so a page
+// that isn't in the sitemap (an event page, a project page) can't keep dead links.
+const walk = (dir) =>
+  readdirSync(join(root, dir), { withFileTypes: true }).flatMap((d) => {
+    if (d.name.startsWith('.') || d.name === 'node_modules' || d.name === 'supabase') return [];
+    const rel = dir + d.name;
+    return d.isDirectory() ? walk(rel + '/') : d.name.endsWith('.html') ? ['/' + rel] : [];
+  });
+for (const f of walk('')) {
+  const page = f.endsWith('/index.html') ? f.slice(0, -'index.html'.length) : f;
+  if (!pages.includes(page)) pages.push(page);
+}
 
 const idsCache = new Map();
 const idsOf = (file) => {

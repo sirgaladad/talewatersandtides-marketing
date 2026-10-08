@@ -486,7 +486,6 @@ a.proof:hover { color: var(--navy); border-color: rgba(13, 27, 42, 0.35); }
 .rc-found { margin-top: 16px; border: 1px solid rgba(212, 168, 67, 0.35); border-radius: 8px; background: var(--panel); padding: 18px; }
 .rc-found-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .rc-domain { font-size: 12px; color: var(--text-4); }
-.rc-summary { font-size: 14px; color: var(--text-2); margin: -4px 0 14px; }
 .rc-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 14px; }
 .rc-fact-k { font-size: 12px; color: var(--text-4); margin-bottom: 6px; }
 .rc-manual { margin: 10px 0 0; font-size: 13px; color: var(--text-4); }

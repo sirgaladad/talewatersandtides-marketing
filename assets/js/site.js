@@ -70,6 +70,8 @@
     }
     if (!stored.ref && document.referrer && document.referrer.indexOf(location.host) === -1) {
       stored.ref = document.referrer.slice(0, 120);
+      // Persist so the external referrer survives the next same-site page view.
+      try { sessionStorage.setItem('twt_utm', JSON.stringify(stored)); } catch (err) { /* private mode */ }
     }
     return stored;
   }

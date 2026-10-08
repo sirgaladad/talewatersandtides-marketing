@@ -191,9 +191,6 @@
     $('[data-manual-wrap]').hidden = S.scanState !== 'idle';
     if (m.scanned) {
       $('[data-domain]').textContent = S.scanState === 'manual' ? 'entered by hand' : (S.scan && S.scan.domain) || domainOf(S.url);
-      var sum = $('[data-summary]');
-      sum.hidden = !(S.scan && S.scan.summary);
-      if (S.scan && S.scan.summary) sum.textContent = S.scan.summary;
       renderFacts();
     }
     renderChips();
@@ -201,10 +198,14 @@
   }
 
   // ---------- scan ----------
+  // Each scan gets a sequence number; a response is applied only if it is still the latest
+  // request, so editing the URL (or rescanning) mid-flight can't apply a stale result.
+  var scanSeq = 0;
   function scan() {
     var url = S.url.trim();
-    if (!url) return;
+    if (!url || S.scanState === 'scanning') return; // Enter while scanning must not start another
     var domain = domainOf(url);
+    var seq = ++scanSeq;
     var lines = ['Fetching ' + domain, 'Reading services, locations, hours', 'Checking booking, chat, forms', 'Looking for review profiles', 'Estimating team size from staff and roles'];
     var log = $('[data-scan-log]');
     var err = $('[data-scan-err]');
@@ -225,12 +226,16 @@
     var timer = setInterval(addLine, 900);
     window.TWT.intake('scan', { url: url })
       .then(function (res) {
-        S.scan = { domain: res.domain, source: res.source, summary: res.summary, signals: res.signals || [] };
+        if (seq !== scanSeq) return;
+        // The function returns no page-derived text (see supabase/functions/intake), only enums and signal names.
+        S.scan = { domain: res.domain, source: res.source, signals: res.signals || [] };
+        S.scannedDomain = domain;
         S.facts = Object.assign({}, res.facts);
         S.scanState = 'done';
         window.TWT.track('readiness_scan', { source: res.source });
       })
       .catch(function (e) {
+        if (seq !== scanSeq) return;
         S.scan = null;
         S.facts = { industry: 'Professional services', size: '5–15', locations: '1', crm: 'Unclear' };
         S.scanState = 'manual';
@@ -239,6 +244,7 @@
       })
       .then(function () {
         clearInterval(timer);
+        if (seq !== scanSeq) return;
         log.hidden = true;
         render();
       });
@@ -246,7 +252,19 @@
 
   // ---------- wiring ----------
   renderStatic();
-  $('[data-url]').addEventListener('input', function (e) { S.url = e.target.value; render(); });
+  $('[data-url]').addEventListener('input', function (e) {
+    S.url = e.target.value;
+    // A different domain invalidates the previous scan (and any scan still in flight).
+    var changed = (S.scanState === 'done' && domainOf(S.url) !== S.scannedDomain) || S.scanState === 'scanning';
+    if (changed) {
+      scanSeq++;
+      S.scanState = 'idle';
+      S.scan = null;
+      S.facts = {};
+      $('[data-scan-log]').hidden = true;
+    }
+    render();
+  });
   $('[data-url]').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); scan(); } });
   $('[data-scan]').addEventListener('click', scan);
   $('[data-manual]').addEventListener('click', function () {
