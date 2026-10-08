@@ -36,6 +36,7 @@
   var S = {
     url: '', scanState: 'idle', scan: null, facts: {}, tools: [], toolsOther: '', leaks: [], impacts: [], pain: '',
     ai: null, name: '', email: '', role: 'owner', startDate: '', slot: 'Tuesday 9:00', optional: {}, sent: null,
+    captured: null, submitting: false,
   };
   var form = $('[data-rc-form]');
   if (!form) return;
@@ -276,14 +277,24 @@
         : 'Question 5: add your name and a valid work email.';
       return;
     }
+    // One request at a time: a double click or an impatient second click must not create a second lead.
+    if (S.submitting) return;
+    S.submitting = true;
     err.hidden = true;
     var btn = $('[data-submit]');
+    btn.disabled = true;
     btn.textContent = 'Sending…';
     btn.setAttribute('aria-disabled', 'true');
+    // Snapshot what is stored, so the result page shows what Corey actually has.
+    S.captured = { kickoff: S.startDate, slot: S.slot };
     window.TWT.intake('lead', leadPayload(m))
       .then(function () { S.sent = true; window.TWT.track('generate_lead', { form: 'readiness', stage: m.stage.name }); })
       .catch(function (ex) { S.sent = ex.message; })
-      .then(function () { showResult(); });
+      .then(function () {
+        S.submitting = false;
+        btn.disabled = false;
+        showResult();
+      });
   });
 
   function leadPayload(m) {
@@ -369,11 +380,13 @@
     if (S.sent !== true) warn.textContent = "Your reading is below, but it didn't reach Corey (" + S.sent + '). Use the kickoff button to email it.';
 
     var p = leadPayload(m);
-    var rows = [['name', p.name], ['email', p.email], ['role', p.role], ['website', p.website || '—'], ['industry', S.facts.industry], ['team_size', S.facts.size], ['locations', S.facts.locations], ['records_in', S.facts.crm], ['stack', m.toolsAll.join(', ') || '—'], ['stack_maturity', p.stack_maturity], ['hurts', p.hurts.join(', ') || '—'], ['impacts', p.impacts.join(', ') || '—'], ['pain_note', p.pain_note.trim() ? '"' + p.pain_note.trim().slice(0, 90) + (p.pain_note.trim().length > 90 ? '…' : '') + '"' : '—'], ['ai_today', p.ai_today || '—'], ['score', p.score + ' · ' + p.stage], ['fit', p.fit], ['kickoff', S.startDate], ['slot', S.slot], ['scan_note', S.scan ? (S.scan.source + (S.scan.signals.length ? ': ' + S.scan.signals.slice(0, 3).join('; ') : '')) : 'manual entry']];
+    var rows = [['name', p.name], ['email', p.email], ['role', p.role], ['website', p.website || '—'], ['industry', S.facts.industry], ['team_size', S.facts.size], ['locations', S.facts.locations], ['records_in', S.facts.crm], ['stack', m.toolsAll.join(', ') || '—'], ['stack_maturity', p.stack_maturity], ['hurts', p.hurts.join(', ') || '—'], ['impacts', p.impacts.join(', ') || '—'], ['pain_note', p.pain_note.trim() ? '"' + p.pain_note.trim().slice(0, 90) + (p.pain_note.trim().length > 90 ? '…' : '') + '"' : '—'], ['ai_today', p.ai_today || '—'], ['score', p.score + ' · ' + p.stage], ['fit', p.fit], ['kickoff', S.captured ? S.captured.kickoff : S.startDate], ['slot', S.captured ? S.captured.slot : S.slot], ['scan_note', S.scan ? (S.scan.source + (S.scan.signals.length ? ': ' + S.scan.signals.slice(0, 3).join('; ') : '')) : 'manual entry']];
     var dl = $('[data-lead-rows]'); dl.textContent = '';
     rows.forEach(function (r) { dl.appendChild(el('dt', {}, r[0])); dl.appendChild(el('dd', {}, String(r[1] == null ? '—' : r[1]))); });
 
-    var body = 'Kickoff: ' + S.startDate + ', ' + S.slot + '\nStage: ' + m.stage.name + ' (' + m.total + ')\nWorkflows: ' + ($('[data-workflows]').textContent) + '\n';
+    var changed = S.captured && (S.captured.kickoff !== S.startDate || S.captured.slot !== S.slot);
+    $('[data-plan-changed]').hidden = !changed;
+    var body = (changed ? 'Updated plan (differs from my form submission)\n' : '') + 'Kickoff: ' + S.startDate + ', ' + S.slot + '\nStage: ' + m.stage.name + ' (' + m.total + ')\nWorkflows: ' + ($('[data-workflows]').textContent) + '\n';
     $('[data-book]').href = 'mailto:corey@talewatersandtides.com?subject=' + encodeURIComponent('Kickoff call: ' + (S.name.trim() || 'readiness check')) + '&body=' + encodeURIComponent(body);
   }
 
