@@ -1,11 +1,11 @@
 # Tale Waters & Tides
 
-> Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arkansas, led by Corey Boelkens. It sets up AI inside the tools a business already pays for, trains the team on real work, and runs it with them over a 90-day engagement; it also provides fractional AI and MarTech leadership. Its lab builds Pocket Fishing Guide, and it runs Prompt Play, a creative-AI workshop series with a free take-home prompt kit.
+> Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arkansas, led by Corey Boelkens (20+ years of Fortune 500 marketing technology). It sets up AI inside the tools a business already pays for, trains the team on real work, and runs it with them over a 90-day engagement; it also provides fractional AI and MarTech leadership. Its lab builds Pocket Fishing Guide, and it runs Prompt Play, a creative-AI workshop series with a free take-home prompt kit.
 
 ## Services
 
 - [Home: AI your team actually uses](https://talewatersandtides.com/): What the practice does, the five stages (assess, implement, onboard and train, run and support, improve), the week-by-week 90-day engagement for business owners and for marketing/ops leaders, proof, and FAQ.
-- [Corey Boelkens](https://talewatersandtides.com/corey/): Executive profile. Twenty years in CRM and data (Acxiom, Merkle, IBM Watson Marketing), founder of RaftUp, organizer of AI Tinkerers Little Rock. Open to fractional and executive roles.
+- [Corey Boelkens](https://talewatersandtides.com/corey/): Executive profile. Marketing technology, program and applied-AI leader; 20+ years at Acxiom, Merkle/Dentsu and Acoustic; 25+ Fortune 500 transformation programs ($2.5M-$8M); Principal, Analytics at Allant Group; founder of RaftUp and Tale Waters and Tides. Open to fractional and executive roles.
 - [Contact](https://talewatersandtides.com/#contact): Routed contact form, or email corey@talewatersandtides.com.
 
 ## Prompt Play — Take-Home AI Kit
