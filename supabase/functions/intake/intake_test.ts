@@ -59,7 +59,7 @@ Deno.test('scanSite does not cache a fallback caused by a Claude error', async (
   const realKey = Deno.env.get('ANTHROPIC_API_KEY');
   globalThis.fetch = (input: string | URL | Request) => {
     const url = input instanceof Request ? input.url : String(input);
-    if (url.includes('anthropic.com')) {
+    if (new URL(url).hostname === 'api.anthropic.com') {
       return Promise.resolve(new Response('{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"}}', { status: 401, headers: { 'content-type': 'application/json' } }));
     }
     return Promise.resolve(new Response('<title>Swank Salon</title><p>hair salon</p>', { headers: { 'content-type': 'text/html' } }));
