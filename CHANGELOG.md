@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Clarity pass on `/` and `/corey/`, using Corey's June 2026 resume as the source of truth:
+  - Home hero says plainly what the practice does and for whom; the fishing-app panel is replaced by Corey's photo and credentials.
+  - The unsourced 76%/14% stat band and the two identical "doors" are replaced by a track-record strip (25+ Fortune 500 programs, Harley-Davidson +20%, Dell CMO audit to $7M+, RaftUp 30K+) and "What you can hire me for" (three offers with who, what, how long).
+  - Proof leads with enterprise results; PFG and RaftUp follow as "I still build". The empty case-study placeholder is removed.
+  - `/corey/` rebuilt for recruiters: summary, at-a-glance numbers, selected results, dated experience with titles, skills grouped by area, education and credentials, recognition and publications, Book a call / LinkedIn / Save as PDF.
+  - "IBM Watson Marketing" replaced with Acoustic (as on the resume) across pages, FAQ, JSON-LD and `llms.txt`; Person schema gains credentials, alumniOf and awards.
+
 ### Fixed
 - `intake` `/scan`: a heuristic fallback caused by a Claude error (bad key, outage) is no longer cached for 7 days, and while `ANTHROPIC_API_KEY` is set, cached heuristic rows are rescanned instead of served.
 
