@@ -69,11 +69,8 @@ const assetsDir = join(root, 'assets');
 const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
 const allHtml = boards.map((b) => readFileSync(join(canvasDir, b), 'utf8')).join('\n');
 for (const asset of walk(assetsDir)) {
-  const name = asset.slice(root.length + 1);
-  if (!allHtml.includes(name.replace(/^assets\//, 'assets/'))) {
-    const base = asset.split('/').pop();
-    if (!allHtml.includes(base)) errors.push(`asset ${name} is not referenced by any board`);
-  }
+  const name = asset.slice(root.length + 1); // e.g. assets/species/walleye.png; boards reference ../assets/...
+  if (!allHtml.includes(name)) errors.push(`asset ${name} is not referenced by any board`);
 }
 
 if (errors.length) {
