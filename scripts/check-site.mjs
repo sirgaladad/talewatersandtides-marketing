@@ -73,7 +73,7 @@ const fail = (page, msg) => {
 };
 
 // Only check new-style pages strictly; legacy pages in the sitemap get link checks only.
-const STRICT = new Set(['/', '/corey/', '/lab/', '/privacy/', '/readiness/']);
+const STRICT = new Set(['/', '/corey/', '/lab/', '/privacy/', '/readiness/', '/ai-implementation/', '/fractional-ai-martech/', '/ai-workshops/', '/work/pocket-fishing-guide/']);
 
 for (const page of pages) {
   const file = fileFor(page);
@@ -143,6 +143,14 @@ for (const page of pages) {
       for (const u of [].concat(n.sameAs || [])) {
         if (!ORG_SAMEAS.has(u)) fail(page, `Organization sameAs ${u} is not an approved company identity (personal profiles go on the Person entity)`);
       }
+    }
+  }
+
+  // Booking links carry the event date; on an indexable page, one for a past date is a stale CTA
+  // (noindex event-day pages keep their history).
+  if (indexable) {
+    for (const m of html.matchAll(/ecom\.roller\.app[^"'\s]*[?&]date=(\d{4}-\d{2}-\d{2})/g)) {
+      if (m[1] < TODAY) fail(page, `booking link for a past date (${m[1]})`);
     }
   }
 

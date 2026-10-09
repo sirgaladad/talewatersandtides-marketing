@@ -6,10 +6,10 @@
 
 ## Organization Context
 
-**Tale Waters & Tides (TWT)** is an Arkansas-based outdoor recreation innovation lab.
+**Tale Waters & Tides (TWT)** is an AI implementation practice in Little Rock, Arkansas. It sets AI up inside the tools a business already pays for, trains the team on real work, and supports them for 90 days; it also provides fractional AI and MarTech leadership and runs workshops. Its Outdoor Recreation Innovation Lab (Pocket Fishing Guide) is the proof.
 - **Founder:** Corey Boelkens (@sirgaladad) — product, CRM, marine tech
 - **CTO:** Abby Sims — full-stack, government and nonprofit delivery
-- **Mission:** Build software, strategy, and field-tested execution for outdoor and marine environments
+- **Mission:** AI your team actually uses: set up in your tools, trained on your work, supported until it sticks. The lab proves the pattern in public.
 
 **Active products:**
 - `pocket-fishing-guide` — live fishing intelligence app for Arkansas anglers (GitHub Pages)
@@ -81,13 +81,13 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 **Live site:** https://talewatersandtides.com
 
-**Purpose:** Brand presence, team bios, product portfolio (Pocket Fishing Guide, RaftUp, NMMA), and lead pipeline for the TWT innovation lab.
+**Purpose:** Services site and lead pipeline for the AI implementation practice (three service pages, readiness check, routed contact form), Corey's profile, and the lab as proof (Pocket Fishing Guide case study, projects, events).
 
 ### Architecture
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | The entire site (static HTML/CSS/JS, no framework) |
+| `index.html` | Services home (static HTML/CSS/JS, no framework); service pages live at `/ai-implementation/`, `/fractional-ai-martech/`, `/ai-workshops/`; case studies under `/work/` |
 | `assets/` | Team photos, logos, background images |
 | `CNAME` | Custom domain configuration (`talewatersandtides.com`) |
 | `.github/workflows/static.yml` | Deploy to GitHub Pages on push to `main` |
@@ -95,7 +95,8 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 ### Development Notes
 
-- No build step — edit `index.html` directly, preview in browser
+- No build step — edit the HTML directly, preview with `python3 -m http.server 8080`; run `npx htmlhint@1 "**/*.html"` and `node scripts/check-site.mjs` before a PR
+- Facts (dates, numbers, IDs) live in the README table; change them there first, then everywhere they appear
 - Custom domain via `CNAME` — do not delete or rename this file
 - Images in `assets/` are referenced directly from `index.html`
 - Deploy is automatic on merge to `main` via GitHub Actions
