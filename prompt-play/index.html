@@ -275,11 +275,11 @@ section { padding: 52px 0; }
 // Date gates. Any element with data-until="YYYY-MM-DD" is hidden once that date passes (use it on the next
 // event's booking CTA so it cannot go stale); data-since="YYYY-MM-DD" is shown only after that date (the recap).
 // scripts/check-site.mjs separately fails the build on any booking link whose date= is in the past.
-(function(){
+document.addEventListener('DOMContentLoaded', function () {
   var today = new Date().toISOString().slice(0, 10);
   document.querySelectorAll('[data-until]').forEach(function (el) { if (el.dataset.until < today) el.hidden = true; });
   document.querySelectorAll('[data-since]').forEach(function (el) { if (el.dataset.since <= today) el.hidden = false; });
-})();
+});
 (function(){
   var b = document.getElementById('tonightBanner');
   if (!b) return;

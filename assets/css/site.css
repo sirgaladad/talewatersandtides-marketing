@@ -156,6 +156,9 @@ a:hover { color: var(--gold); }
   .menu-panel[data-open='true'] {
     display: grid; position: absolute; left: 0; right: 0; top: var(--nav-h);
     background: var(--navy); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 20px;
+    /* Nine links no longer fit a short phone (568px); keep the panel inside the viewport and scrollable. */
+    max-height: calc(100vh - var(--nav-h)); max-height: calc(100dvh - var(--nav-h));
+    overflow-y: auto; overscroll-behavior: contain;
   }
   .menu-panel a {
     text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 17px;
