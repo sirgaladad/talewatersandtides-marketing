@@ -16,7 +16,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `/corey/` rebuilt for recruiters: summary, at-a-glance numbers, selected results, dated experience with titles, skills grouped by area, education and credentials, recognition and publications, Book a call / LinkedIn / Save as PDF.
   - "IBM Watson Marketing" replaced with Acoustic (as on the resume) across pages, FAQ, JSON-LD and `llms.txt`; Person schema gains credentials, alumniOf and awards.
 
+### Added
+- Service pages, one per offer, each with who it is for and not for, deliverables, the plan week by week, pricing approach, how success is measured, tools worked in, proof, FAQ and a booking action; `Service`, `FAQPage` and `BreadcrumbList` JSON-LD: `/ai-implementation/`, `/fractional-ai-martech/`, `/ai-workshops/`.
+- `/work/pocket-fishing-guide/` — first case study, from verified first-party facts, with its limits stated.
+- Footer, mobile menu and the home offers link to the service pages; the home proof card for Pocket Fishing Guide links to the case study; `llms.txt` and the README list the new pages; `CLAUDE.md` describes the company as the AI implementation practice it is.
+
 ### Changed
+- `/prompt-play/` is archived as a past event: the booking link for June 9 is gone, the hero and recap point to the take-home kit and `/events/`, and the page carries `Event` JSON-LD with the real dates and venue.
 - Analytics moved to the official Google Tag Manager install (container `GTM-TZVTR5TG`): `gtm.js` snippet in `<head>` and the `<noscript>` iframe after `<body>` on every indexable page, including `/projects/quest/`, which had no analytics before. The old `gtag.js` loader and the no-op `gtag('config','GTM-…')` line are gone. A head shim turns the site's `gtag('event', …)` calls into `dataLayer` events GTM triggers can see. README "Analytics" lists what the container must hold.
 - `scripts/check-site.mjs` — new interlocks: GTM snippet and noscript on every indexable page, no `gtag.js` loader, no `GTM-` ID in `gtag('config')`, every indexable page listed in `sitemap.xml`, Organization `sameAs` limited to company identities, and UPCOMING / LIVE NOW badges must carry a future `data-until` date.
 - `sitemap.xml` — added `/projects/buffalo-river/`, `/projects/quest/` and `/unbound/`, which were public but unlisted.

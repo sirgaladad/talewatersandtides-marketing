@@ -11,6 +11,10 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | Path | Purpose | Primary action |
 |------|---------|----------------|
 | `/` | Services home: two doors (owners, marketing/ops leaders), five stages, week-by-week 90-day plan, proof, FAQ, routed contact form | Book a call |
+| `/ai-implementation/` | Service page: AI setup for 5–50 person businesses; who it is for, deliverables, 90 days week by week, pricing approach, measurement, tools, FAQ | Book a call |
+| `/fractional-ai-martech/` | Service page: one quarter as fractional AI and MarTech lead; deliverables, quarter plan, pricing approach, measurement, tools, FAQ | Book a call |
+| `/ai-workshops/` | Service page: executive sprints, team workshops, talks, community nights; formats, pricing approach, FAQ | Request a workshop |
+| `/work/pocket-fishing-guide/` | Case study with stated limits: role, what was built, result, what carries over | Open the app / see the client version |
 | `/readiness/` | One-page AI readiness check: site scan, three questions, gated reading and dated plan | Get my reading |
 | `/corey/` | Executive profile, career, principles, press; prints as a one-page profile | Work with Corey |
 | `/lab/` | Outdoor Recreation Innovation Lab: Pocket Fishing Guide and origin story | Open PFG |

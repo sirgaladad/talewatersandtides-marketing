@@ -5,6 +5,10 @@
 ## Services
 
 - [Home: AI your team actually uses](https://talewatersandtides.com/): What the practice does, the five stages (assess, implement, onboard and train, run and support, improve), the week-by-week 90-day engagement for business owners and for marketing/ops leaders, proof, and FAQ.
+- [AI implementation for small businesses](https://talewatersandtides.com/ai-implementation/): Who it is for, the six deliverables, the 90 days week by week, how pricing works (one quote for the engagement, not hourly), how success is measured (hours, response time, misses), tools worked in, FAQ.
+- [Fractional AI and MarTech lead](https://talewatersandtides.com/fractional-ai-martech/): One quarter embedded with a marketing or operations leader: stack audit, ranked use cases, two to four in production with approval gates, team enablement, leadership readout. Pricing per quarter. FAQ.
+- [AI workshops and design sprints](https://talewatersandtides.com/ai-workshops/): Executive design sprints, team workshops in the tools a team already has, talks, and free community nights. Priced per session. FAQ.
+- [Case study: Pocket Fishing Guide](https://talewatersandtides.com/work/pocket-fishing-guide/): First-party case study with its limits stated: 57 waters, 33 species, 20-minute refresh, 723 users in the first 90 days, built and run by one person.
 - [Corey Boelkens](https://talewatersandtides.com/corey/): Executive profile. Marketing technology, program and applied-AI leader; 20+ years at Acxiom, Merkle/Dentsu and Acoustic; 25+ Fortune 500 transformation programs ($2.5M-$8M); Principal, Analytics at Allant Group; founder of RaftUp and Tale Waters and Tides. Open to fractional and executive roles.
 - [Contact](https://talewatersandtides.com/#contact): Routed contact form, or email corey@talewatersandtides.com.
 

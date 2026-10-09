@@ -398,6 +398,9 @@ a.proof:hover { color: var(--navy); border-color: rgba(13, 27, 42, 0.35); }
 .prose p, .prose li { color: var(--text-2); }
 .prose ul { padding-left: 20px; display: grid; gap: 8px; }
 .prose a { color: var(--gold); }
+ul.prose { padding-left: 20px; display: grid; gap: 8px; margin: 16px 0 0; }
+.light .prose p, .light .prose li, .card-light .prose p, .card-light .prose li { color: var(--ink); }
+.light .prose a, .card-light .prose a { color: var(--gold-ink); }
 
 /* ============================================================
    print: the /corey/ one-page profile

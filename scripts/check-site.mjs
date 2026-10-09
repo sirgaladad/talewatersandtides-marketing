@@ -73,7 +73,7 @@ const fail = (page, msg) => {
 };
 
 // Only check new-style pages strictly; legacy pages in the sitemap get link checks only.
-const STRICT = new Set(['/', '/corey/', '/lab/', '/privacy/', '/readiness/']);
+const STRICT = new Set(['/', '/corey/', '/lab/', '/privacy/', '/readiness/', '/ai-implementation/', '/fractional-ai-martech/', '/ai-workshops/', '/work/pocket-fishing-guide/']);
 
 for (const page of pages) {
   const file = fileFor(page);
