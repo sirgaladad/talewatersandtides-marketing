@@ -113,7 +113,7 @@ for (const page of pages) {
 
   // Analytics: one install path, on every indexable page, with the right container.
   if (/googletagmanager\.com\/gtag\/js/.test(html)) fail(page, 'loads gtag.js; the site uses the GTM container snippet');
-  const badConfig = html.match(/gtag\('config',\s*'(GTM-[^']+)'\)/);
+  const badConfig = html.match(/gtag\(\s*["']config["']\s*,\s*["'](GTM-[^"']+)["']/);
   if (badConfig) fail(page, `gtag('config') with container ID ${badConfig[1]} (no-op)`);
   const hasGtm = html.includes('googletagmanager.com/gtm.js?id=') && html.includes(`'${GTM_ID}'`);
   const hasNoscript = html.includes(`googletagmanager.com/ns.html?id=${GTM_ID}`);

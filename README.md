@@ -47,8 +47,21 @@ The container must hold, for events to reach GA4:
 | Tag or trigger | Setting |
 |----------------|---------|
 | Google tag (GA4) | The reporting property's measurement ID; fires on Initialization |
-| GA4 Event tag | Event name `{{Event}}`; parameters `event_category`, `event_label`, `link_url`, `plan`, `source`, `form`, `stage` from Data Layer Variables of the same names |
+| GA4 Event tag | Event name `{{Event}}`; one Data Layer Variable and parameter mapping per key the site emits (full list below) |
 | Custom Event trigger for that tag | Event name matches regex `^(?!gtm\.).+` |
+
+Every parameter key the site's events emit, so none is dropped by the mapping. Add a row here and a Data Layer Variable in the container whenever a new key is introduced.
+
+| Key | Emitted by |
+|-----|------------|
+| `event_category`, `event_label` | every `click` and `section_view`; kit, bingo and First Contact events |
+| `link_url` | `click` events on `[data-ga]` links |
+| `value` | bingo marks, wins, shuffles, shares and resets; First Contact feedback |
+| `form`, `looking_for`, `stage` | `generate_lead` from the contact form (`form`, `looking_for`) and the readiness check (`form`, `stage`) |
+| `source` | `readiness_scan` |
+| `plan` | `plan_toggle` on the home engagement tabs |
+| `item_id` | Prompt Play kit filters, copies and favourites |
+| `experience`, `tool`, `title` | First Contact `onboard`, `prompt_logged`, `spec_copy` |
 
 Verify after any change: Tag Assistant preview on `/`, `/readiness/` and `/projects/quest/` shows the Google tag and one GA4 event per click; GA4 Realtime shows `page_view` and `click` with `event_label`.
 

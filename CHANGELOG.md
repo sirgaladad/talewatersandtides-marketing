@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Analytics moved to the official Google Tag Manager install (container `GTM-TZVTR5TG`): `gtm.js` snippet in `<head>` and the `<noscript>` iframe after `<body>` on every indexable page, including `/projects/quest/`, which had no analytics before. The old `gtag.js` loader and the no-op `gtag('config','GTM-…')` line are gone. A head shim turns the site's `gtag('event', …)` calls into `dataLayer` events GTM triggers can see. README "Analytics" lists what the container must hold.
 - `scripts/check-site.mjs` — new interlocks: GTM snippet and noscript on every indexable page, no `gtag.js` loader, no `GTM-` ID in `gtag('config')`, every indexable page listed in `sitemap.xml`, Organization `sameAs` limited to company identities, and UPCOMING / LIVE NOW badges must carry a future `data-until` date.
 - `sitemap.xml` — added `/projects/buffalo-river/`, `/projects/quest/` and `/unbound/`, which were public but unlisted.
+- `html-lint.yml` — the push filter now includes `sitemap.xml` and `scripts/check-site.mjs`, so the interlocks also run when those change on `main`.
 - `projects/pfg-intelligence/index.html` — `noindex`; it is an unlinked copy of the internal market-intelligence dashboard.
 
 ### Fixed
