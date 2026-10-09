@@ -26,8 +26,40 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | RaftUp | 30K+ users, $1M+ raised | Previous site |
 | Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 | Booking link | `https://calendar.app.google/MmHqpVo9QuN93jYt8` (Google Calendar appointment page), used by every "Book a call" button | Owner-provided |
+| Analytics | Google Tag Manager container `GTM-TZVTR5TG` on every indexable page; the GA4 property lives inside the container (expected `G-929WWD4EZ4`, confirm in GA4 admin) | Commits `5cb2786`, `17a1348`; owner to confirm the property |
 
 Change a fact in one place, then search the repo for the old value: it also appears in JSON-LD, `llms.txt`, and the FAQ.
+
+---
+
+## Analytics
+
+Every indexable page carries the official Google Tag Manager snippet in `<head>` and the `<noscript>` iframe right after `<body>`, container `GTM-TZVTR5TG`. The site never loads `gtag.js` directly; `scripts/check-site.mjs` fails if a page does, if a page passes a `GTM-` ID to `gtag('config')`, or if an indexable page has no snippet. `noindex` and redirect pages are exempt.
+
+The site's event calls are `gtag('event', name, params)` (in `assets/js/site.js` and page scripts). A small shim in the head turns each into a `dataLayer.push({ event: name, ...params })`, resetting the previous event's parameters first so values do not leak between events. Other commands (`consent`, `set`) pass through unchanged.
+
+The container must hold, for events to reach GA4:
+
+| Tag or trigger | Setting |
+|----------------|---------|
+| Google tag (GA4) | The reporting property's measurement ID; fires on Initialization |
+| GA4 Event tag | Event name `{{Event}}`; one Data Layer Variable and parameter mapping per key the site emits (full list below) |
+| Custom Event trigger for that tag | Event name matches regex `^(?!gtm\.).+` |
+
+Every parameter key the site's events emit, so none is dropped by the mapping. Add a row here and a Data Layer Variable in the container whenever a new key is introduced.
+
+| Key | Emitted by |
+|-----|------------|
+| `event_category`, `event_label` | every `click` and `section_view`; kit, bingo and First Contact events |
+| `link_url` | `click` events on `[data-ga]` links |
+| `value` | bingo marks, wins, shuffles, shares and resets; First Contact feedback |
+| `form`, `looking_for`, `stage` | `generate_lead` from the contact form (`form`, `looking_for`) and the readiness check (`form`, `stage`) |
+| `source` | `readiness_scan` |
+| `plan` | `plan_toggle` on the home engagement tabs |
+| `item_id` | Prompt Play kit filters, copies and favourites |
+| `experience`, `tool`, `title` | First Contact `onboard`, `prompt_logged`, `spec_copy` |
+
+Verify after any change: Tag Assistant preview on `/`, `/readiness/` and `/projects/quest/` shows the Google tag and one GA4 event per click; GA4 Realtime shows `page_view` and `click` with `event_label`.
 
 ---
 
@@ -50,7 +82,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 | Check | Command | CI |
 |-------|---------|----|
 | HTML lint | `npx htmlhint@1 "**/*.html"` | `html-lint.yml` |
-| SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors | `node scripts/check-site.mjs` | `html-lint.yml` |
+| SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors; analytics snippet on every indexable page; every indexable page in the sitemap; Organization `sameAs` allowlist; date-gated event badges | `node scripts/check-site.mjs` | `html-lint.yml` |
 | Intake function: lint, type-check, unit tests | `deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts` (in `supabase/functions/intake`) | `intake-function.yml` |
 
 Add a new top-level page to `sitemap.xml`, and it is checked automatically.
