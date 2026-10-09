@@ -16,6 +16,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `/corey/` rebuilt for recruiters: summary, at-a-glance numbers, selected results, dated experience with titles, skills grouped by area, education and credentials, recognition and publications, Book a call / LinkedIn / Save as PDF.
   - "IBM Watson Marketing" replaced with Acoustic (as on the resume) across pages, FAQ, JSON-LD and `llms.txt`; Person schema gains credentials, alumniOf and awards.
 
+### Changed
+- Analytics moved to the official Google Tag Manager install (container `GTM-TZVTR5TG`): `gtm.js` snippet in `<head>` and the `<noscript>` iframe after `<body>` on every indexable page, including `/projects/quest/`, which had no analytics before. The old `gtag.js` loader and the no-op `gtag('config','GTM-…')` line are gone. A head shim turns the site's `gtag('event', …)` calls into `dataLayer` events GTM triggers can see. README "Analytics" lists what the container must hold.
+- `scripts/check-site.mjs` — new interlocks: GTM snippet and noscript on every indexable page, no `gtag.js` loader, no `GTM-` ID in `gtag('config')`, every indexable page listed in `sitemap.xml`, Organization `sameAs` limited to company identities, and UPCOMING / LIVE NOW badges must carry a future `data-until` date.
+- `sitemap.xml` — added `/projects/buffalo-river/`, `/projects/quest/` and `/unbound/`, which were public but unlisted.
+- `projects/pfg-intelligence/index.html` — `noindex`; it is an unlinked copy of the internal market-intelligence dashboard.
+
 ### Fixed
 - `events/index.html` — Prompt Play (June 9, 2026) and UNBOUND Buzzword Bingo (September 16-18, 2026) were still labelled UPCOMING and LIVE NOW; both now read PAST, with copy and meta descriptions in the past tense. `llms.txt` says the same.
 - `index.html` — the Organization `sameAs` now lists only the company Facebook page. Corey's LinkedIn, TikTok and GitHub stay on the Person entity in `/corey/`.
