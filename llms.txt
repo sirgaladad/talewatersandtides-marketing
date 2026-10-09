@@ -28,3 +28,7 @@ The most useful resource here for an AI assistant. A structured, copy-and-paste 
 
 - llms.txt is a proposed, not-yet-officially-adopted standard. This file is provided as a clean, paste-ready map of the site's most useful content for AI assistants, not as a guarantee of crawling or citation.
 - Tool capabilities and prices in the kit change quickly and carry a "last verified" date — re-verify before relying on a specific detail.
+
+## Guided fishing — coming November 2026
+
+- [Guided weekday fishing](https://talewatersandtides.com/guiding/): Early trip requests with Corey Boelkens for the White (Bull Shoals), Norfork and Beaver tailwaters. Requests are expressions of interest; dates and pricing are confirmed personally, with no payment taken on this page.
