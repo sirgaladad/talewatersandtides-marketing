@@ -90,7 +90,7 @@ Things that should fail CI rather than wait for a human to notice:
 
 - [ ] `check-site.mjs`: fail if any indexable page has no analytics snippet (explicit exemption list for `noindex` and redirect pages), if any page passes a `GTM-` ID to `gtag('config', …)`, or if pages disagree on the tag ID (after #85 decides the ID)
 - [ ] `check-site.mjs`: fail on UPCOMING or LIVE NOW badges next to a date earlier than today (after #89)
-- [ ] `check-site.mjs`: when a page has Organization JSON-LD with `sameAs`, fail if the list contains `/in/` LinkedIn URLs or `github.com/<user>` profiles (personal identities belong on Person)
+- [ ] `check-site.mjs`: when a page has Organization JSON-LD with `sameAs`, fail unless every URL is on an allowlist of company identities kept in the script (today only `facebook.com/talewatersandtides`). Personal profiles (LinkedIn `/in/`, TikTok `@coreytheideaguy`, GitHub `sirgaladad`) belong on the Person entity only; an allowlist catches any of them, not just the two named in the audit
 - [ ] `check-site.mjs`: fail when an indexable page (no `noindex`, not a redirect stub) is missing from `sitemap.xml`. Today the script only checks that sitemap entries exist as files; the reverse is not enforced. Also make `STRICT` default-on for any page under a service or case-study path
 - [ ] README "Facts used on the site" table stays the single source for dates, numbers and IDs; a PR that changes a fact changes the table
 
