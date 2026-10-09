@@ -27,6 +27,7 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 |------|-------|--------|
 | Pocket Fishing Guide coverage | 57 waters, 33 species | `pocket-fishing-guide` repo data files (validated 2026-10-07) |
 | PFG data sources | USGS, NWS, USACE, AGFC (+ Open-Meteo, USNO); 20-minute refresh | `pocket-fishing-guide/docs/data-sources.yaml` |
+| PFG users | 723 in the first 90 days after launch | Owner-reported from the app's analytics in the 2026-10 services rebuild (PR #78); used on `/`, `/lab/`, `/work/pocket-fishing-guide/`, `llms.txt`. Launch month and an analytics export still to be attached (#88) |
 | RaftUp | 30K+ users, $1M+ raised | Previous site |
 | Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 | Booking link | `https://calendar.app.google/MmHqpVo9QuN93jYt8` (Google Calendar appointment page), used by every "Book a call" button | Owner-provided |

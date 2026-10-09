@@ -146,6 +146,14 @@ for (const page of pages) {
     }
   }
 
+  // Booking links carry the event date; on an indexable page, one for a past date is a stale CTA
+  // (noindex event-day pages keep their history).
+  if (indexable) {
+    for (const m of html.matchAll(/ecom\.roller\.app[^"'\s]*[?&]date=(\d{4}-\d{2}-\d{2})/g)) {
+      if (m[1] < TODAY) fail(page, `booking link for a past date (${m[1]})`);
+    }
+  }
+
   // Stale event badges: UPCOMING / LIVE NOW must be date-gated with data-until.
   for (const m of html.matchAll(/<([a-z]+)\b([^>]*)>\s*(UPCOMING|LIVE NOW)\s*<\/\1>/g)) {
     const until = m[2].match(/data-until="(\d{4}-\d{2}-\d{2})"/)?.[1];

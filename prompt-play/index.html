@@ -272,6 +272,14 @@ section { padding: 52px 0; }
   <span>Here for tonight? Tap for <b>First Contact</b> check-in &amp; materials</span>
 </a>
 <script>
+// Date gates. Any element with data-until="YYYY-MM-DD" is hidden once that date passes (use it on the next
+// event's booking CTA so it cannot go stale); data-since="YYYY-MM-DD" is shown only after that date (the recap).
+// scripts/check-site.mjs separately fails the build on any booking link whose date= is in the past.
+(function(){
+  var today = new Date().toISOString().slice(0, 10);
+  document.querySelectorAll('[data-until]').forEach(function (el) { if (el.dataset.until < today) el.hidden = true; });
+  document.querySelectorAll('[data-since]').forEach(function (el) { if (el.dataset.since <= today) el.hidden = false; });
+})();
 (function(){
   var b = document.getElementById('tonightBanner');
   if (!b) return;
@@ -327,7 +335,7 @@ section { padding: 52px 0; }
   <div class="wrap">
     <p class="eyebrow r">What this is</p>
     <h2 class="sec-h2 r">Not a class. Not a webinar.<br>A creative playground for the curious.</h2>
-    <p class="sec-lead r">Prompt Play is a hands-on, low-pressure space where curious minds, families, and builders explore what's possible when you treat AI like a creative partner. Bring an idea — or just bring yourself.</p>
+    <p class="sec-lead r">Prompt Play was a hands-on, low-pressure night where curious minds, families, and builders explored what's possible when you treat AI like a creative partner. Some brought an idea; most just brought themselves.</p>
 
     <div class="what-grid">
       <div class="feat r">
@@ -354,7 +362,7 @@ section { padding: 52px 0; }
 
     <div class="takeaway r">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-      <p><b>You'll leave with</b> a working prototype, a prompt workflow you'll actually use, and a few new people in your corner. No experience necessary — just curiosity.</p>
+      <p><b>People left with</b> a working prototype, a prompt workflow they would actually use, and a few new people in their corner. No experience was needed, just curiosity. The <a href="/prompt-play/kit/">kit</a> is the part you can still take home.</p>
     </div>
   </div>
 </section>
@@ -436,11 +444,11 @@ section { padding: 52px 0; }
 <!-- ============================================================ WHO / BRING -->
 <section data-ga-section="pp_who">
   <div class="wrap">
-    <p class="eyebrow r">Come as you are</p>
-    <h2 class="sec-h2 r">Who it's for &amp; what to bring</h2>
+    <p class="eyebrow r">Who came</p>
+    <h2 class="sec-h2 r">Who it was for &amp; what people brought</h2>
     <div class="split">
       <div class="card r">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>Who it's for</h3>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>Who it was for</h3>
         <ul class="tick">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Curious minds, families, and builders of every level</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Total beginners — no coding or AI experience required</li>
@@ -449,12 +457,12 @@ section { padding: 52px 0; }
         </ul>
       </div>
       <div class="card r">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>What to bring</h3>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>What people brought</h3>
         <ul class="tick">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>A laptop if you've got one (totally optional — we'll have ways to share)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>An idea you've been sitting on — or none at all</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>A laptop, or not; there were ways to share</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>An idea they had been sitting on, or none at all</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Curiosity and a willingness to make something a little messy</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Coffee's on us. Just bring yourself.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Coffee was on us.</li>
         </ul>
       </div>
     </div>
@@ -465,8 +473,8 @@ section { padding: 52px 0; }
 <section class="what" data-ga-section="pp_where">
   <div class="wrap">
     <p class="eyebrow r">The space</p>
-    <h2 class="sec-h2 r">Where it all happens</h2>
-    <p class="sec-lead r">Prompt Play is hosted in partnership with <strong>Hey, Let's Play</strong> — a bright creative community space in Benton, AR for curious minds, families, and builders.</p>
+    <h2 class="sec-h2 r">Where it happened</h2>
+    <p class="sec-lead r">Prompt Play was hosted in partnership with <strong>Hey, Let's Play</strong> — a bright creative community space in Benton, AR for curious minds, families, and builders.</p>
 
     <div class="partner r">
       <span class="partner-lbl">In partnership with</span>
@@ -476,27 +484,27 @@ section { padding: 52px 0; }
     <div class="venue-gallery r">
       <img src="/assets/OutdoorFrontage.webp" alt="The Hey, Let's Play storefront in Benton, AR with its neon sign lit at dusk" loading="lazy" decoding="async">
       <img src="/assets/Thinking%20Space.webp" alt="Inside Hey, Let's Play — a bright, open lounge with comfortable seating set up for creating together" loading="lazy" decoding="async">
-      <img src="/assets/Beverages.webp" alt="A fresh coffee at Hey, Let's Play — coffee is on us every Prompt Play night" loading="lazy" decoding="async">
+      <img src="/assets/Beverages.webp" alt="A fresh coffee at Hey, Let's Play — coffee was on us at Prompt Play" loading="lazy" decoding="async">
     </div>
 
     <div class="where-grid">
       <div class="where-card r">
-        <p class="eyebrow">Find us</p>
+        <p class="eyebrow">The venue</p>
         <h3>Hey, Let's Play</h3>
         <p class="addr"><a href="https://www.google.com/maps/search/?api=1&query=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="pp_where_map">417 W South St, Benton, AR 72015</a></p>
-        <p>Our partner Hey, Let's Play is a creative community space for curious minds, families, and builders. Huge thanks to them for making this grassroots experiment possible — a place to create, a community to grow, a future to build.</p>
+        <p>Our partner Hey, Let's Play is a creative community space for curious minds, families, and builders. Huge thanks to them for making this grassroots experiment possible. Worth a visit on its own.</p>
         <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&destination=417+W+South+St,+Benton,+AR+72015" target="_blank" rel="noopener" data-ga="pp_where_directions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Get directions
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Hey, Let's Play on the map
         </a>
       </div>
       <div class="where-aside">
         <div class="card r">
           <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>When</div>
-          <p>One night — Tuesday, June 9, 2026, 7:00–9:00 PM (Central).</p>
+          <p>One night: Tuesday, June 9, 2026, 7:00–9:00 PM Central. It has happened.</p>
         </div>
         <div class="card r">
           <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>Good to know</div>
-          <p>Coffee provided · family-friendly · accessible space · drop into any night. Questions? <a href="mailto:corey@talewatersandtides.com" data-ga="pp_where_email" style="color:var(--navy);text-decoration:underline">Email Corey</a>.</p>
+          <p>Coffee was provided · family-friendly · accessible space. Want one for your team or community? See <a href="/ai-workshops/" style="color:var(--navy);text-decoration:underline">workshops</a>. Questions? <a href="mailto:corey@talewatersandtides.com" data-ga="pp_where_email" style="color:var(--navy);text-decoration:underline">Email Corey</a>.</p>
         </div>
       </div>
     </div>
