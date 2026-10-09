@@ -17,6 +17,8 @@ on:
     paths:
       - "**/*.html"
       - ".htmlhintrc"
+      - "sitemap.xml"
+      - "scripts/check-site.mjs"
       - ".github/workflows/html-lint.yml"
   workflow_dispatch:
 
