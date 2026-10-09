@@ -1,0 +1,45 @@
+/* TWT Guiding — shared tokens for the mockup.
+   Public pages: talewatersandtides.com site.css (2026-10 redesign).
+   Signals and guide-side: Pocket Fishing Guide --pfg-* tokens. */
+:root {
+  --navy: #0d1b2a; --navy-deep: #0a1623; --panel: #11233a;
+  --cream: #f5f0e8; --card: #fffdf7;
+  --gold: #d4a843; --gold-ink: #8a6a1f; --teal-ink: #1d756c;
+  --ink: #1d2b36; --muted: #5d6b73; --error: #e8654e;
+  --text: #f5f0e8; --text-2: rgba(245,240,232,0.78); --text-3: rgba(245,240,232,0.7);
+  --line: rgba(245,240,232,0.12); --line-2: rgba(245,240,232,0.18); --line-dark: rgba(13,27,42,0.14);
+  --f-display: 'Fraunces', Georgia, serif;
+  --f-body: 'DM Sans', system-ui, sans-serif;
+  --f-mono: 'Spline Sans Mono', ui-monospace, Menlo, monospace;
+  --pfg-bg2: #1b2838; --pfg-bg3: #243447; --pfg-fg: #e6eef5; --pfg-fg-muted: #8da3b5;
+  --pfg-go: #4caf50; --pfg-scout: #ff9800; --pfg-hold: #5b9bd5; --pfg-accent: #f4a72a;
+  --pfg-font: 'Inter', system-ui, sans-serif;
+}
+body { margin: 0; }
+.g-eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin: 0; }
+.g-eyebrow-ink { color: var(--gold-ink); }
+.g-h1 { font-family: var(--f-display); font-weight: 500; font-size: 64px; line-height: 1.02; letter-spacing: -0.01em; margin: 0; }
+.g-h2 { font-family: var(--f-display); font-weight: 500; font-size: 38px; line-height: 1.08; margin: 0; }
+.g-h3 { font-family: var(--f-display); font-weight: 500; font-size: 22px; line-height: 1.15; margin: 0; }
+.g-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border-radius: 8px; background: var(--gold); color: var(--navy); font-family: var(--f-body); font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--gold); cursor: pointer; }
+.g-btn:hover { background: #e0b85a; }
+.g-btn-ghost { background: transparent; color: var(--text); border-color: rgba(245,240,232,0.3); font-weight: 400; }
+.g-btn-ghost:hover { background: rgba(245,240,232,0.06); }
+.g-btn-dark { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+.g-btn-dark:hover { background: #172b42; }
+.g-card { border: 1px solid var(--line-2); border-radius: 10px; background: var(--panel); padding: 22px; }
+.g-card-light { border: 1px solid var(--line-dark); border-radius: 10px; background: var(--card); padding: 24px; color: var(--navy); }
+.g-signal { display: inline-flex; align-items: center; gap: 8px; font-family: var(--pfg-font); font-size: 13px; font-variant-numeric: tabular-nums; padding: 6px 12px; border-radius: 8px; background: var(--pfg-bg2); border: 1px solid rgba(255,255,255,0.06); color: var(--pfg-fg); }
+.g-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.g-go { background: var(--pfg-go); box-shadow: 0 0 12px rgba(76,175,80,0.35); }
+.g-scout { background: var(--pfg-scout); }
+.g-hold { background: var(--pfg-hold); }
+.g-input { width: 100%; box-sizing: border-box; min-height: 48px; padding: 12px 14px; border: 1px solid rgba(13,27,42,0.25); border-radius: 8px; background: #fff; color: var(--navy); font-family: var(--f-body); font-size: 16px; }
+.g-label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--navy); }
+.g-pill { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(13,27,42,0.25); background: #fff; color: var(--navy); font-family: var(--f-body); font-size: 15px; cursor: pointer; }
+.g-pill-on { border: 2px solid var(--teal-ink); background: rgba(29,117,108,0.1); font-weight: 600; }
+.g-day { min-height: 44px; display: grid; place-items: center; border-radius: 8px; font-family: var(--f-mono); font-size: 14px; border: 1px solid transparent; cursor: pointer; }
+.g-day-open { background: rgba(29,117,108,0.12); color: var(--navy); border-color: rgba(29,117,108,0.35); }
+.g-day-off { color: rgba(29,43,54,0.3); }
+.g-day-on { background: var(--navy); color: var(--cream); border-color: var(--navy); font-weight: 600; }
+.g-chip { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; border: 1px solid currentColor; }

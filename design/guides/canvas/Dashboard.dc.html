@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guide dashboard</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="g.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>body{margin:0;background:#0d1b2a;color:#e6eef5;font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.45}a{color:#e6eef5}a:hover{color:#f4a72a}</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 100%; background: #0d1b2a; color: #e6eef5; font-family: 'Inter', system-ui, sans-serif;">
+
+  <nav aria-label="Guide" style="flex: 1 1 220px; max-width: 240px; padding: 20px 16px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 6px;">
+    <div style="padding: 4px 10px 16px;">
+      <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,188,212,0.8);">Tale Waters &amp; Tides</div>
+      <div style="font-size: 18px; font-weight: 800; letter-spacing: -0.3px;">Guide <span style="color: #00bcd4;">Buddy</span></div>
+    </div>
+    <a href="#requests" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #243447; text-decoration: none; font-weight: 600;">Booking requests <span style="font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #f4a72a; color: #0d1b2a;">3</span></a>
+    <a href="#open-days" style="padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #8da3b5;">Open days</a>
+    <a href="#packages" style="padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #8da3b5;">Trip packages</a>
+    <a href="#packages" style="padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #8da3b5;">Earnings &amp; payouts</a>
+    <a href="#packages" style="padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #8da3b5;">Reviews</a>
+    <a href="Guides.dc.html" style="padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #8da3b5;">Public profile ↗</a>
+    <div style="margin-top: auto; padding: 12px; border-radius: 8px; background: #1b2838; border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Credentials</div>
+      <div style="display: flex; justify-content: space-between;"><span>AGFC guide license</span><span style="color: #4caf50;">✓ 2027</span></div>
+      <div style="display: flex; justify-content: space-between;"><span>Insurance</span><span style="color: #4caf50;">✓</span></div>
+      <div style="display: flex; justify-content: space-between;"><span>Commercial auto</span><span style="color: #ff9800;">Pending</span></div>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; padding: 20px 24px 32px; display: flex; flex-direction: column; gap: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <div><div style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #8da3b5;">Corey Boelkens · White River</div><h1 style="margin: 2px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">This week</h1></div>
+      <div class="g-signal"><span class="g-dot g-go"></span>GO 78 · 54.5°F · 2 of 8 units · USGS 9m ago</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 10px; font-variant-numeric: tabular-nums;">
+      <div style="background: #1b2838; border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.04);"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Trips booked</div><div style="font-size: 28px; font-weight: 800;">4</div></div>
+      <div style="background: #1b2838; border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.04);"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Open days left</div><div style="font-size: 28px; font-weight: 800;">9</div></div>
+      <div style="background: #1b2838; border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.04);"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Deposits held</div><div style="font-size: 28px; font-weight: 800;">$1,100</div></div>
+      <div style="background: #1b2838; border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.04);"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Chicken boxes to order</div><div style="font-size: 28px; font-weight: 800;">7 <span style="font-size: 13px; font-weight: 500; color: #8da3b5;">after go calls</span></div></div>
+    </div>
+
+    <section id="requests" style="background: #1b2838; border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Booking requests</div>
+      <sc-for list="{{requests}}" as="r" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; background: #243447; flex-wrap: wrap;">
+          <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-weight: 600;">{{r.who}} · {{r.party}}</span>
+            <span style="font-size: 13px; color: #8da3b5;">{{r.trip}} · {{r.date}} · {{r.from}}</span>
+          </div>
+          <span style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; border: 1px solid {{r.color}}; color: {{r.color}};">{{r.status}}</span>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" onClick="{{r.accept}}" style="min-height: 40px; padding: 8px 14px; border-radius: 8px; border: 0; background: #00bcd4; color: #0d1b2a; font-weight: 600; font-family: inherit; cursor: pointer;">{{r.primary}}</button>
+            <button type="button" onClick="{{r.counter}}" style="min-height: 40px; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: transparent; color: #e6eef5; font-family: inherit; cursor: pointer;">Counter date</button>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px;">
+      <section id="open-days" style="background: #1b2838; border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Open days · October 2026</div><span style="font-size: 12px; color: #8da3b5;">Weekdays default · tap to toggle</span></div>
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-size: 11px; color: #8da3b5; text-align: center;"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-variant-numeric: tabular-nums;">
+          <span></span><span></span><span></span>
+          <sc-for list="{{days}}" as="d" hint-placeholder-count="31">
+            <button type="button" onClick="{{d.toggle}}" style="min-height: 36px; border-radius: 6px; border: 1px solid {{d.border}}; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 13px; cursor: pointer;">{{d.n}}</button>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 14px; font-size: 12px; color: #8da3b5;"><span><span class="g-dot" style="background: rgba(0,188,212,0.5);"></span> open</span><span><span class="g-dot" style="background: #f4a72a;"></span> booked</span><span><span class="g-dot" style="background: #243447;"></span> off</span></div>
+      </section>
+
+      <section id="packages" style="background: #1b2838; border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><div style="font-size: 11px; color: #8da3b5; text-transform: uppercase; letter-spacing: 1px;">Trip packages</div><a href="#packages" style="font-size: 12px; color: #00bcd4; text-decoration: none;">+ New package</a></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-variant-numeric: tabular-nums;">
+          <div style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; background: #243447; border-left: 3px solid #f4a72a;"><span>Full Day · 8 h · any tailwater · default</span><span style="font-weight: 600;">$550</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; background: #243447;"><span>Half Day · 4 h</span><span style="font-weight: 600;">$400</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; background: #243447;"><span>Confluence Day · 9 h · lower White</span><span style="font-weight: 600;">$600</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; background: #243447; color: #8da3b5;"><span>Little Rock Departure · full day · needs commercial auto</span><span style="font-weight: 600;">$750</span></div>
+        </div>
+        <p style="margin: 4px 0 0; font-size: 12px; color: #8da3b5;">A package is live only when every credential it needs is current. The public site reads the same list.</p>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    // October 2026 starts on a Thursday; weekdays open by default, weekends off unless toggled.
+    this.state = { st: { a: 'new', b: 'new', c: 'confirmed' }, days: { open: [1, 2, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 26, 27, 28, 29, 30], booked: [13, 14, 20] } };
+  }
+  renderVals() {
+    const s = this.state;
+    const color = st => (st === 'new' ? '#f4a72a' : st === 'confirmed' ? '#4caf50' : '#5b9bd5');
+    const label = st => (st === 'new' ? 'New' : st === 'confirmed' ? 'Confirmed' : 'Countered');
+    const mk = (id, who, party, trip, date, from) => ({
+      who, party, trip, date, from, status: label(s.st[id]), color: color(s.st[id]),
+      primary: s.st[id] === 'new' ? 'Confirm' : s.st[id] === 'confirmed' ? 'Send deposit link' : 'Resend',
+      accept: () => this.setState({ st: { ...s.st, [id]: 'confirmed' } }),
+      counter: () => this.setState({ st: { ...s.st, [id]: 'countered' } }),
+    });
+    const requests = [
+      mk('a', 'Pat Angler', '2 anglers · browns, tackle', 'Full Day · Bull Shoals', 'Tue Oct 13', 'Meet at the ramp'),
+      mk('b', 'Jordan Lee', '1 angler · first time', 'Half Day · Norfork', 'Sat Oct 17 · weekend request', 'From Little Rock'),
+      mk('c', 'The Nguyens', '3 anglers · kids 9 and 12', 'Full Day · Bull Shoals', 'Wed Oct 21', 'Meet at Cotter'),
+    ];
+    const days = [];
+    for (let n = 1; n <= 31; n++) {
+      const booked = s.days.booked.includes(n), open = s.days.open.includes(n);
+      days.push({
+        n: String(n),
+        bg: booked ? '#f4a72a' : open ? 'rgba(0,188,212,0.18)' : '#243447',
+        fg: booked ? '#0d1b2a' : open ? '#e6eef5' : '#8da3b5',
+        border: open && !booked ? 'rgba(0,188,212,0.5)' : 'transparent',
+        toggle: () => { if (booked) return; const o = open ? s.days.open.filter(x => x !== n) : s.days.open.concat(n); this.setState({ days: { ...s.days, open: o } }); },
+      });
+    }
+    return { requests, days };
+  }
+}
+</script>
+</body>
+</html>
