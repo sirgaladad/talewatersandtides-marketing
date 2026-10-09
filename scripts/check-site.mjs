@@ -31,7 +31,7 @@ for (const extra of process.argv.slice(2)) pages.push('/' + extra.replace(/^\//,
 // that isn't in the sitemap (an event page, a project page) can't keep dead links.
 const walk = (dir) =>
   readdirSync(join(root, dir), { withFileTypes: true }).flatMap((d) => {
-    if (d.name.startsWith('.') || d.name === 'node_modules' || d.name === 'supabase') return [];
+    if (d.name.startsWith('.') || d.name === 'node_modules' || d.name === 'supabase' || (dir === '' && d.name === 'design')) return [];
     const rel = dir + d.name;
     return d.isDirectory() ? walk(rel + '/') : d.name.endsWith('.html') ? ['/' + rel] : [];
   });

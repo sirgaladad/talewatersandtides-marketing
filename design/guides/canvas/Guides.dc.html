@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guides directory</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="g.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Spline+Sans+Mono:wght@400;500&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>body{margin:0;background:#0d1b2a;color:#f5f0e8;font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.55}a{color:#f5f0e8}a:hover{color:#d4a843}</style>
+</helmet>
+<div style="display: flex; flex-direction: column; min-height: 100%; background: #0d1b2a; color: #f5f0e8; font-family: 'DM Sans', system-ui, sans-serif;">
+
+  <nav aria-label="Guides" style="border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <a href="Main.dc.html" style="text-decoration: none; display: flex; align-items: baseline; gap: 10px;"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px;">Tale Waters &amp; Tides</span><span style="font-family: 'Spline Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #d4a843;">Guides</span></a>
+      <a href="Dashboard.dc.html" class="g-btn g-btn-ghost" style="min-height: 40px; padding: 8px 18px; font-size: 15px;">Guide sign-in</a>
+    </div>
+  </nav>
+
+  <header style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 32px; display: flex; flex-direction: column; gap: 16px; width: 100%; box-sizing: border-box;">
+    <p class="g-eyebrow">Arkansas · licensed guides</p>
+    <h1 class="g-h1" style="font-size: 52px; max-width: 760px;">Find a guide who knows the water you want.</h1>
+    <p style="margin: 0; color: rgba(245,240,232,0.78); max-width: 560px;">Every guide here holds an AGFC guide license and carries insurance. Pick a water, see who's open, request a date.</p>
+  </header>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 24px 32px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end;">
+      <div role="group" aria-label="Water" style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Water</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <sc-for list="{{waters}}" as="w" hint-placeholder-count="4">
+            <button type="button" onClick="{{w.pick}}" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.3); background: {{w.bg}}; color: {{w.fg}}; font-family: inherit; font-size: 15px; cursor: pointer;">{{w.name}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div role="group" aria-label="Method" style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Method</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid #d4a843; background: #d4a843; color: #0d1b2a; font-family: inherit; font-size: 15px; cursor: pointer;">Tackle &amp; bait</button>
+          <button type="button" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.3); background: transparent; color: #f5f0e8; font-family: inherit; font-size: 15px; cursor: pointer;">Trout</button>
+          <button type="button" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.3); background: transparent; color: #f5f0e8; font-family: inherit; font-size: 15px; cursor: pointer;">Walleye</button>
+          <button type="button" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.3); background: transparent; color: #f5f0e8; font-family: inherit; font-size: 15px; cursor: pointer;">Smallmouth</button>
+        </div>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Open on</span>
+        <input type="date" style="min-height: 44px; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(245,240,232,0.3); background: #11233a; color: #f5f0e8; font-family: inherit; font-size: 15px;">
+      </label>
+    </div>
+    <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7);">{{countText}}</p>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 24px 88px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px;">
+    <sc-for list="{{guides}}" as="g" hint-placeholder-count="3">
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 14px; border-color: {{g.border}}; opacity: {{g.opacity}};">
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <div aria-hidden="true" style="width: 56px; height: 56px; border-radius: 50%; background: #0d1b2a; border: 2px solid #d4a843; display: grid; place-items: center; font-family: 'Fraunces', serif; font-size: 20px;">{{g.initials}}</div>
+          <div style="flex: 1; min-width: 0;">
+            <h2 class="g-h3" style="font-size: 22px;">{{g.name}}</h2>
+            <p style="margin: 2px 0 0; font-size: 13px; color: rgba(245,240,232,0.7);">{{g.base}}</p>
+          </div>
+          <span class="g-chip" style="color: {{g.statusColor}};">{{g.status}}</span>
+        </div>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">{{g.blurb}}</p>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <span class="g-chip" style="color: rgba(245,240,232,0.7);">{{g.water}}</span>
+          <span class="g-chip" style="color: rgba(245,240,232,0.7);">{{g.method}}</span>
+          <span class="g-chip" style="color: rgba(245,240,232,0.7);">{{g.boat}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-family: 'Inter', system-ui, sans-serif; font-variant-numeric: tabular-nums;">
+          <div style="background: #0d1b2a; border-radius: 8px; padding: 10px;"><div style="font-size: 11px; color: #8da3b5;">From</div><div style="font-size: 16px; font-weight: 600;">{{g.from}}</div></div>
+          <div style="background: #0d1b2a; border-radius: 8px; padding: 10px;"><div style="font-size: 11px; color: #8da3b5;">Next open</div><div style="font-size: 16px; font-weight: 600;">{{g.next}}</div></div>
+          <div style="background: #0d1b2a; border-radius: 8px; padding: 10px;"><div style="font-size: 11px; color: #8da3b5;">Reviews</div><div style="font-size: 16px; font-weight: 600;">{{g.reviews}}</div></div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="{{g.href}}" class="g-btn" style="min-height: 44px; padding: 10px 18px; font-size: 15px;">{{g.cta}}</a>
+          <a href="Main.dc.html" class="g-btn g-btn-ghost" style="min-height: 44px; padding: 10px 18px; font-size: 15px;">Profile</a>
+        </div>
+      </article>
+    </sc-for>
+    <article style="display: flex; flex-direction: column; gap: 12px; justify-content: center; padding: 22px; border: 1px dashed rgba(245,240,232,0.3); border-radius: 10px;">
+      <p class="g-eyebrow">Guides</p>
+      <h2 class="g-h3" style="font-size: 22px;">Guide in Arkansas? List here.</h2>
+      <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Keep 100% of your trip price. Anglers pay a small service fee. Open days, packages and requests in one place; payouts through Stripe.</p>
+      <a href="Dashboard.dc.html" class="g-btn g-btn-ghost" style="align-self: flex-start; min-height: 44px; padding: 10px 18px; font-size: 15px;">Apply to guide</a>
+    </article>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1160}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { water: 'white' }; }
+  renderVals() {
+    const w = this.state.water;
+    const waters = [
+      { id: 'all', name: 'All waters' }, { id: 'white', name: 'White River' }, { id: 'norfork', name: 'Norfork' }, { id: 'beaver', name: 'Beaver tailwater' }, { id: 'littlered', name: 'Little Red' },
+    ].map(x => ({ ...x, bg: x.id === w ? '#d4a843' : 'transparent', fg: x.id === w ? '#0d1b2a' : '#f5f0e8', pick: () => this.setState({ water: x.id }) }));
+    const all = [
+      { id: 'corey', name: 'Corey Boelkens', initials: 'CB', base: 'Little Rock · boat in Mountain Home · Divemaster', status: 'Open', statusColor: '#4caf50', blurb: 'Grew up in a guide\'s boat on the White. Trout, walleye and smallmouth on tackle or bait across all three tailwaters, year-round, weekdays. Underwater photos of the fish you\'re after.', water: 'White · Norfork · Beaver', method: 'Tackle & bait', boat: 'Jon boat', from: '$400', next: 'Tue Oct 13', reviews: 'New', href: 'Flow.dc.html', cta: 'Pick a weekday', border: '#d4a843', opacity: '1', waters: ['white', 'norfork', 'beaver'] },
+      { id: 'g2', name: '[Second guide]', initials: 'G2', base: '[Cotter] · White & Norfork', status: 'Open', statusColor: '#4caf50', blurb: '[A guide who joins later fills this card from their own profile: waters, species, method, boat, open days.]', water: 'White · Norfork', method: 'Tackle & bait', boat: 'River sled', from: '[$—]', next: '[date]', reviews: '[—]', href: 'Flow.dc.html', cta: 'Check dates', border: 'rgba(245,240,232,0.18)', opacity: '0.75', waters: ['white', 'norfork'] },
+      { id: 'g3', name: '[Third guide]', initials: 'G3', base: '[Heber Springs] · Little Red', status: 'Booked out', statusColor: '#ff9800', blurb: '[Status comes from open days: none left this month reads as Booked out, never hidden.]', water: 'Little Red', method: 'Tackle & bait', boat: 'Pontoon', from: '[$—]', next: 'Nov', reviews: '[—]', href: 'Flow.dc.html', cta: 'Join waitlist', border: 'rgba(245,240,232,0.18)', opacity: '0.75', waters: ['littlered'] },
+    ];
+    const guides = w === 'all' ? all : all.filter(g => g.waters.includes(w));
+    return { waters, guides, countText: guides.length + (guides.length === 1 ? ' guide' : ' guides') + ' · sorted by next open day' };
+  }
+}
+</script>
+</body>
+</html>

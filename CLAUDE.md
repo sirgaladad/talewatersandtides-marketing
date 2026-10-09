@@ -99,3 +99,30 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 - Custom domain via `CNAME` — do not delete or rename this file
 - Images in `assets/` are referenced directly from `index.html`
 - Deploy is automatic on merge to `main` via GitHub Actions
+
+---
+
+## Guides (Tale Waters & Tides · Guides)
+
+The guide service section of the site. Three doors on the site: Consult (`/`) · Build (`/lab/`) · Guides (`/guiding/`).
+
+| Path | Purpose |
+|------|---------|
+| `design/guides/` | Design package: canvas boards, shared `g.css`, species and background assets. Read `design/guides/README.md` for the board-to-route map. |
+| `docs/guides/` | Planning docs exported from Claude Docs. `GUIDES-PR-PLAN-DEV-ENVIRONMENT.md` is current; it wins over earlier docs. |
+| `data/guiding.json` | Single source for packages, prices, hours, lunch options, credentials flags, policy text. |
+| `guiding/` | The built pages. |
+| `scripts/check-guiding.mjs` | CI: page, JSON and intake function agree. |
+| `scripts/check-design.mjs` | CI: boards reference real assets, no placeholders ship, rules hold. |
+| `.github/workflows/design-build.yml` | Label an issue `design-build` (use the Design Build issue template) and the agent builds that board into a PR. |
+
+### Rules
+
+- Prices, hours and policy text come only from `data/guiding.json`. Never hard-code them in HTML.
+- No fly fishing. No guiding on the Buffalo River. No Little Red River. CI blocks all three.
+- Trips are weekdays, year-round, full day by default, on the White (Bull Shoals), Norfork and Beaver tailwaters.
+- Every link into Pocket Fishing Guide carries `utm_source=twt&utm_medium=referral&utm_campaign=guiding`.
+- Tailwater cards link to `/water/<id>?tab=tailwaters`; species cards to `/species/<id>?water=<water_id>`.
+- Booking, calendar and comms live in `pocket-fishing-guide` (Vercel + Supabase), not here. This repo is request intake and static pages only.
+- Headlines short and literal. No catch counts, sizes or guarantees. No bracketed placeholder copy in a PR.
+- The weather rule and cancellation table appear once above the book button and once at the review step.

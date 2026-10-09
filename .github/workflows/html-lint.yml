@@ -11,6 +11,8 @@ on:
       - ".htmlhintrc"
       - "sitemap.xml"
       - "scripts/check-site.mjs"
+      - "scripts/check-design.mjs"
+      - "design/**"
       - ".github/workflows/html-lint.yml"
   push:
     branches: ["main"]
@@ -38,6 +40,8 @@ jobs:
         with:
           node-version: "22"
       - name: Run HTMLHint
-        run: npx --yes htmlhint@1 "**/*.html"
+        run: npx --yes htmlhint@1 "**/*.html" --ignore "design/**"
+      - name: Design package checks
+        run: node scripts/check-design.mjs
       - name: SEO and link checks (sitemap pages)
         run: node scripts/check-site.mjs

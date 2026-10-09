@@ -1,0 +1,29 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-09T14:40:00Z" },
+  "title": "TWT Guiding — Booking Flow Mockup",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1280, "h": 2560, "title": "Landing · /guiding/ (desktop)", "expand": "fill", "is_interactive": true },
+    "Trip.dc.html": { "x": 1360, "y": 0, "w": 390, "h": 1560, "title": "Trip detail · Confluence Day (phone)", "expand": "fill", "is_interactive": true },
+    "Flow.dc.html": { "x": 1830, "y": 0, "w": 390, "h": 844, "title": "Booking flow · 5 steps (phone, interactive)", "is_interactive": true },
+    "Guides.dc.html": { "x": 0, "y": 2900, "w": 1280, "h": 1160, "title": "Guides directory · multi-guide seam (desktop)", "expand": "fill", "is_interactive": true },
+    "Dashboard.dc.html": { "x": 1360, "y": 2900, "w": 1280, "h": 900, "title": "Guide dashboard · requests, open days, packages", "expand": "fill", "is_interactive": true },
+    "Species.dc.html": { "x": 0, "y": 4300, "w": 1280, "h": 2000, "title": "Species · records, seasons, rules (desktop)", "expand": "fill", "is_interactive": true }
+  },
+  "order": ["Main.dc.html", "Trip.dc.html", "Flow.dc.html", "Guides.dc.html", "Dashboard.dc.html", "Species.dc.html"],
+  "notes": {
+    "t1": { "x": 0, "y": -300, "text": "Public pages — talewatersandtides.com/guiding", "kind": "title1", "maxW": 2220 },
+    "t2": { "x": 0, "y": 2600, "text": "Platform seam — the same objects, many guides", "kind": "title1", "maxW": 2640 },
+    "s1": { "x": 2300, "y": 0, "w": 300, "text": "Flow is one artboard: press Play, tap through Target → Water → Length → Weekday → Party → Review → Confirmed. Full Day is preselected; weekends show as by-request. The mode tweak flips request vs deposit.", "fill": "teal" },
+    "s2": { "x": 2300, "y": 420, "w": 300, "text": "Tailwater card pulls PFG's tailwater feature: GO/SCOUT/HOLD per dam, units running, next change, and curated arrival lags (Bull Shoals → Cotter ≈ 70 min). Mock shows sample values.", "fill": "blue" },
+    "s3": { "x": 2700, "y": 2900, "w": 300, "text": "Guide-side objects mirror Guide Buddy: Booking Requests, Open Days, Trip Packages. Corey is guide #1; a second guide is the same card with a different slug.", "fill": "orange" },
+    "t3": { "x": 0, "y": 4000, "text": "Sell the fish — PFG species data, AGFC records and rules", "kind": "title1", "maxW": 2640 },
+    "s4": { "x": 1360, "y": 4300, "w": 300, "text": "Species plates are PFG's own (web/public/species). Peak months, temps and limits come from species.json and regulation_zones.json. Records from AGFC via arkansas.com and Stacker. Beaver tailwater has no species or zone rows in PFG yet.", "fill": "green" }
+  },
+  "designSystems": [
+    { "title": "Tale Waters Tides Design System", "namespace": "tale-waters-tides", "artifact": "https://claude.ai/artifact/6V7BXWhCNMzL1LBQHLn6MG", "version": "1791241521-e91e", "copiedAt": "2026-10-09T14:40:00Z" },
+    { "title": "Pocket Fishing Guide Design System", "namespace": "pocket-fishing-guide", "artifact": "https://claude.ai/artifact/J5BdHRjkTUTv7BuAP8bgs6", "version": "1791241518-fdd1", "copiedAt": "2026-10-09T14:40:00Z" }
+  ]
+}
