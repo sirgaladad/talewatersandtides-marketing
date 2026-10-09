@@ -42,6 +42,12 @@ for (const board of boards) {
     if (!existsSync(target)) errors.push(`${board}: css url ${ref} does not exist`);
   }
 
+  // Assets named inside the board's renderVals() data (img: '../assets/...') are not attributes; check them too.
+  for (const m of html.matchAll(/\.\.\/assets\/[^"'\s)]+/g)) {
+    const target = resolve(dirname(file), m[0]);
+    if (!existsSync(target)) errors.push(`${board}: ${m[0]} does not exist`);
+  }
+
   // Leftover canvas blobs mean the asset was never copied into the repo.
   if (html.includes('/_blob/')) errors.push(`${board}: still references a /_blob/ asset`);
 
