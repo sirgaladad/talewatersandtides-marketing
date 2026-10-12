@@ -30,7 +30,8 @@ const GTM_ID = 'GTM-TZVTR5TG';
 // Company identities allowed on the Organization entity. Personal profiles (LinkedIn /in/,
 // TikTok, GitHub user) belong on the Person entity in /corey/ only.
 const ORG_SAMEAS = new Set(['https://www.facebook.com/talewatersandtides']);
-const TODAY = new Date().toISOString().slice(0, 10);
+// Today's date in the events' timezone (Central), matching the page-side gates; en-CA formats as YYYY-MM-DD.
+const TODAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
 const fileFor = (urlPath) => {
   const clean = decodeURIComponent(urlPath.split('#')[0].split('?')[0]);
