@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://talewatersandtides.com/</loc><lastmod>2026-10-07</lastmod><priority>1.0</priority></url>
+  <url><loc>https://talewatersandtides.com/ai-implementation/</loc><lastmod>2026-10-09</lastmod><priority>0.9</priority></url>
+  <url><loc>https://talewatersandtides.com/fractional-ai-martech/</loc><lastmod>2026-10-09</lastmod><priority>0.9</priority></url>
+  <url><loc>https://talewatersandtides.com/ai-workshops/</loc><lastmod>2026-10-09</lastmod><priority>0.8</priority></url>
+  <url><loc>https://talewatersandtides.com/work/pocket-fishing-guide/</loc><lastmod>2026-10-09</lastmod><priority>0.7</priority></url>
   <url><loc>https://talewatersandtides.com/corey/</loc><lastmod>2026-10-07</lastmod><priority>0.9</priority></url>
   <url><loc>https://talewatersandtides.com/readiness/</loc><lastmod>2026-10-07</lastmod><priority>0.9</priority></url>
   <url><loc>https://talewatersandtides.com/lab/</loc><lastmod>2026-10-07</lastmod><priority>0.7</priority></url>
@@ -8,6 +12,9 @@
   <url><loc>https://talewatersandtides.com/prompt-play/</loc><priority>0.6</priority></url>
   <url><loc>https://talewatersandtides.com/prompt-play/kit/</loc><priority>0.6</priority></url>
   <url><loc>https://talewatersandtides.com/events/</loc><priority>0.5</priority></url>
+  <url><loc>https://talewatersandtides.com/projects/buffalo-river/</loc><priority>0.5</priority></url>
+  <url><loc>https://talewatersandtides.com/projects/quest/</loc><priority>0.4</priority></url>
+  <url><loc>https://talewatersandtides.com/unbound/</loc><priority>0.3</priority></url>
   <url><loc>https://talewatersandtides.com/privacy/</loc><lastmod>2026-10-07</lastmod><priority>0.2</priority></url>
   <url><loc>https://talewatersandtides.com/guiding/</loc><lastmod>2026-10-09</lastmod><priority>0.8</priority></url>
 </urlset>
