@@ -86,7 +86,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 
 | Check | Command | CI |
 |-------|---------|----|
-| HTML lint | `npx htmlhint@1 "**/*.html"` | `html-lint.yml` |
+| HTML lint | `npx htmlhint@1 "**/*.html" --ignore "design/**"` | `html-lint.yml` |
 | SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors; analytics snippet on every indexable page; every indexable page in the sitemap; Organization `sameAs` allowlist; date-gated event badges | `node scripts/check-site.mjs` | `html-lint.yml` |
 | Intake function: lint, type-check, unit tests | `deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts` (in `supabase/functions/intake`) | `intake-function.yml` |
 

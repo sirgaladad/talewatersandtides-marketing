@@ -95,7 +95,7 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 ### Development Notes
 
-- No build step — edit the HTML directly, preview with `python3 -m http.server 8080`; run `npx htmlhint@1 "**/*.html"` and `node scripts/check-site.mjs` before a PR
+- No build step — edit the HTML directly, preview with `python3 -m http.server 8080`; run `npx htmlhint@1 "**/*.html" --ignore "design/**"` and `node scripts/check-site.mjs` before a PR
 - Facts (dates, numbers, IDs) live in the README table; change them there first, then everywhere they appear
 - Custom domain via `CNAME` — do not delete or rename this file
 - Images in `assets/` are referenced directly from `index.html`

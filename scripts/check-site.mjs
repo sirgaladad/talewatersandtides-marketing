@@ -117,9 +117,12 @@ for (const page of pages) {
   if (badConfig) fail(page, `gtag('config') with container ID ${badConfig[1]} (no-op)`);
   const hasGtm = html.includes('googletagmanager.com/gtm.js?id=') && html.includes(`'${GTM_ID}'`);
   const hasNoscript = html.includes(`googletagmanager.com/ns.html?id=${GTM_ID}`);
+  // The shim must null out the previous event's parameter keys before pushing the next event.
+  const hasResetShim = /window\.gtag=function\(\)\{[^<]*for\(k in seen\)reset\[k\]=null;[^<]*dataLayer\.push\(reset\)/.test(html);
   if (indexable) {
     if (!hasGtm) fail(page, `indexable page without the GTM snippet (${GTM_ID})`);
     if (!hasNoscript) fail(page, 'indexable page without the GTM noscript iframe');
+    if (!hasResetShim) fail(page, "gtag shim without the parameter reset (previous event's keys would leak into the next event)");
     if (!sitemapPages.has(page)) fail(page, 'indexable page missing from sitemap.xml (add it, or mark it noindex)');
   }
   for (const m of html.matchAll(/googletagmanager\.com\/(?:gtm|ns)\.(?:js|html)\?id=(GTM-[A-Z0-9]+)/g)) {
