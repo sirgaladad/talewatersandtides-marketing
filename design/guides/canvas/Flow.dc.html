@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Booking flow</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="g.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Spline+Sans+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background:#f5f0e8;color:#0d1b2a;font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.5}a{color:#0d1b2a}a:hover{color:#8a6a1f}</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #f5f0e8; color: #0d1b2a; font-family: 'DM Sans', system-ui, sans-serif; overflow: hidden;">
+
+  <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px 0;">
+    <button type="button" onClick="{{back}}" aria-label="Back" style="width: 44px; height: 44px; margin-left: -8px; border: 0; background: transparent; color: #0d1b2a; cursor: pointer; display: grid; place-items: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div style="flex: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px;" aria-label="Progress">
+      <span style="height: 4px; border-radius: 2px; background: {{p1}};"></span>
+      <span style="height: 4px; border-radius: 2px; background: {{p2}};"></span>
+      <span style="height: 4px; border-radius: 2px; background: {{p3}};"></span>
+      <span style="height: 4px; border-radius: 2px; background: {{p4}};"></span>
+      <span style="height: 4px; border-radius: 2px; background: {{p5}};"></span>
+    </div>
+    <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; color: #5d6b73; min-width: 36px; text-align: right;">{{stepLabel}}</span>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px;">
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{true}}">
+      <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Step 1 of 5</p>
+      <h1 class="g-h2" style="font-size: 30px;">Where and what</h1>
+      <div role="group" aria-label="Target" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <sc-for list="{{targets}}" as="t" hint-placeholder-count="4"><button type="button" onClick="{{t.pick}}" class="g-pill {{t.cls}}">{{t.name}}</button></sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 10px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); font-size: 14px;">
+        <span class="g-dot g-go"></span><span>{{targetHint}}</span>
+      </div>
+      <a href="Main.dc.html" style="font-size: 14px; color: #5d6b73;">Just looking? Get the weekday river report instead →</a>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Water</span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <sc-for list="{{waters}}" as="w" hint-placeholder-count="3">
+            <div style="display: flex; gap: 8px; align-items: stretch;">
+              <button type="button" onClick="{{w.pick}}" style="flex: 1; min-width: 0; text-align: left; display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 10px; background: #fffdf7; border: {{w.border}}; cursor: pointer; font-family: inherit; color: #0d1b2a;">
+                <div style="flex: 1; min-width: 0;"><div style="font-family: 'Fraunces', serif; font-size: 18px;">{{w.name}}</div><div style="font-size: 13px; color: #5d6b73;">{{w.note}}</div></div>
+                <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; color: {{w.sigColor}};">{{w.sig}}</span>
+              </button>
+              <a href="{{w.href}}" target="_blank" rel="noopener noreferrer" aria-label="{{w.aria}}" style="width: 44px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(13,27,42,0.14); background: #fffdf7; color: #1d756c; text-decoration: none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+            </div>
+          </sc-for>
+          <span style="font-size: 12px; color: #5d6b73;">The arrow opens that tailwater's live view on Pocket Fishing Guide.</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{false}}">
+      <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Step 2 of 5 · {{targetName}} · {{waterName}}</p>
+      <h1 class="g-h2" style="font-size: 30px;">How long?</h1>
+      <div role="group" aria-label="Where you start" style="display: flex; gap: 8px;">
+        <button type="button" onClick="{{atRiver}}" class="g-pill {{riverCls}}">Meet at the river</button>
+        <button type="button" onClick="{{fromLR}}" class="g-pill {{lrCls}}">From Little Rock</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <sc-for list="{{trips}}" as="t" hint-placeholder-count="3">
+          <button type="button" onClick="{{t.pick}}" style="text-align: left; display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 10px; background: #fffdf7; border: {{t.border}}; cursor: pointer; font-family: inherit; color: #0d1b2a;">
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: 'Fraunces', serif; font-size: 19px;">{{t.name}}</span>
+              <span style="font-size: 13px; color: #5d6b73;">{{t.len}} · {{t.note}}</span>
+            </div>
+            <span style="font-family: 'Spline Sans Mono', monospace; font-size: 20px; color: #8a6a1f; font-variant-numeric: tabular-nums;">{{t.price}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: #5d6b73;">Prices for 1–2 anglers. Boat, rods, tackle and bait included.</p>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{false}}">
+      <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Step 3 of 5 · {{chosenName}}</p>
+      <h1 class="g-h2" style="font-size: 30px;">Pick a weekday.</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; gap: 6px;">
+          <button type="button" onClick="{{prevMonth}}" aria-label="Previous month" style="width: 40px; height: 40px; border-radius: 8px; border: 1px solid rgba(13,27,42,0.25); background: #fff; cursor: pointer; color: #0d1b2a;">‹</button>
+          <button type="button" onClick="{{nextMonth}}" aria-label="Next month" style="width: 40px; height: 40px; border-radius: 8px; border: 1px solid rgba(13,27,42,0.25); background: #fff; cursor: pointer; color: #0d1b2a;">›</button>
+        </div>
+        <span style="font-family: 'Fraunces', serif; font-size: 20px;">{{monthName}}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; font-family: 'Spline Sans Mono', monospace; font-size: 11px; color: #5d6b73; text-align: center;">
+        <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span style="color: rgba(93,107,115,0.5);">S</span><span style="color: rgba(93,107,115,0.5);">S</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px;">
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="35">
+          <button type="button" onClick="{{d.pick}}" class="g-day {{d.cls}}" style="border-width: 1px; font-family: 'Spline Sans Mono', monospace;">{{d.n}}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 10px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); font-size: 14px;">
+        <span class="g-dot" style="background: {{hintColor}};"></span>
+        <span>{{dateHint}}</span>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: #5d6b73;">Weekends are by request: pick one and I'll confirm by text.</p>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{false}}">
+      <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Step 4 of 5 · {{dateText}}</p>
+      <h1 class="g-h2" style="font-size: 30px;">Who's coming?</h1>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Anglers</span>
+        <div role="group" aria-label="Anglers" style="display: flex; gap: 8px;">
+          <button type="button" onClick="{{party1}}" class="g-pill {{c1}}" style="flex: 1; justify-content: center;">1</button>
+          <button type="button" onClick="{{party2}}" class="g-pill {{c2}}" style="flex: 1; justify-content: center;">2</button>
+          <button type="button" onClick="{{party3}}" class="g-pill {{c3}}" style="flex: 1; justify-content: center;">3 · {{extraText}}</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">How do you like to fish?</span>
+        <div role="group" aria-label="Method" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" onClick="{{mTackle}}" class="g-pill {{m1}}">Tackle</button>
+          <button type="button" onClick="{{mBait}}" class="g-pill {{m2}}">Bait</button>
+          <button type="button" onClick="{{mMix}}" class="g-pill {{m3}}">Corey's call</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Lunch</span>
+        <div role="group" aria-label="Lunch" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" onClick="{{lBox}}" class="g-pill {{l1}}">Chicken box · {{boxPrice}}</button>
+          <button type="button" onClick="{{lLocal}}" class="g-pill {{l2}}">Pre-order local</button>
+          <button type="button" onClick="{{lOwn}}" class="g-pill {{l3}}">Our own · {{ownPrice}}</button>
+        </div>
+        <span style="font-size: 13px; color: #5d6b73;">Ordered the evening before, after the go call. Cold fried chicken, slaw, roll, fruit, cookie.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Experience</span>
+        <div role="group" aria-label="Experience" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" onClick="{{exFirst}}" class="g-pill {{e1}}">First time</button>
+          <button type="button" onClick="{{exSome}}" class="g-pill {{e2}}">Some</button>
+          <button type="button" onClick="{{exPro}}" class="g-pill {{e3}}">Experienced</button>
+        </div>
+      </div>
+      <label class="g-label">Name<input class="g-input" type="text" autocomplete="name"></label>
+      <label class="g-label">Mobile<input class="g-input" type="tel" autocomplete="tel" placeholder="For the evening-before go/no-go text"></label>
+      <label class="g-label">Email<input class="g-input" type="email" autocomplete="email"></label>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{false}}">
+      <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Step 5 of 5</p>
+      <h1 class="g-h2" style="font-size: 30px;">Review and reserve.</h1>
+      <div class="g-card-light" style="display: flex; flex-direction: column; gap: 12px; padding: 18px;">
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Target</span><span style="font-weight: 600; text-align: right;">{{targetName}} · {{methodText}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Water</span><span style="font-weight: 600; text-align: right;">{{waterName}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Trip</span><span style="font-weight: 600; text-align: right;">{{chosenName}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Date</span><span style="font-weight: 600;">{{dateText}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Anglers</span><span style="font-weight: 600;">{{partyText}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Meet</span><span style="font-weight: 600; text-align: right;">{{meetText}}</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #5d6b73;">Lunch</span><span style="font-weight: 600; text-align: right;">{{lunchText}}</span></div>
+        <div style="border-top: 1px solid rgba(13,27,42,0.14); padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline;"><span style="color: #5d6b73;">Total</span><span style="font-family: 'Spline Sans Mono', monospace; font-size: 26px; color: #8a6a1f; font-variant-numeric: tabular-nums;">{{totalText}}</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); font-size: 14px;">
+        <div style="display: flex; gap: 8px; align-items: center;"><span class="g-dot" style="background: #ff9800;"></span><span style="font-weight: 600;">If the river says no</span></div>
+        <p style="margin: 0; color: #1d2b36;">Lightning, muddy water or heavy generation on all three dams and I call it by 7 PM the evening before. You pick: a new weekday, a different tailwater that morning, or a full refund.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); font-size: 14px;">
+        <div style="display: flex; gap: 8px; align-items: center;"><span class="g-dot" style="background: #5b9bd5;"></span><span style="font-weight: 600;">If you need to cancel</span></div>
+        <p style="margin: 0; color: #1d2b36;">14+ days out: full refund minus card fees. 3–14 days: your deposit becomes a 12-month credit. Inside 72 hours: deposit kept. No-show: full trip charged.</p>
+        <p style="margin: 0; color: #5d6b73; font-size: 13px;">Reminders go to your mobile and email. The day before at 5 PM you'll get "Reply GO." If I don't hear back I'll call; either way the trip runs as booked.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 10px; border: 1px dashed rgba(13,27,42,0.3); font-size: 14px;">
+        <div style="display: flex; justify-content: space-between;"><span style="font-weight: 600;">Due now</span><span style="font-family: 'Spline Sans Mono', monospace;">{{dueNow}}</span></div>
+        <div style="display: flex; justify-content: space-between; color: #5d6b73;"><span>Day of the trip</span><span style="font-family: 'Spline Sans Mono', monospace;">{{dueLater}}</span></div>
+        <p style="margin: 4px 0 0; color: #5d6b73; font-size: 13px;">{{payNote}}</p>
+      </div>
+      <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px;"><input type="checkbox" style="width: 20px; height: 20px; margin-top: 2px;"><span>I agree to the cancellation policy, to SMS and email at the contact details above (messages sent there count as delivered), and I'll bring an Arkansas license and trout permit.</span></label>
+    </sc-if>
+
+    <sc-if value="{{s6}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding-top: 24px;">
+        <span style="width: 56px; height: 56px; border-radius: 50%; background: rgba(29,117,108,0.14); display: grid; place-items: center; color: #1d756c;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <h1 class="g-h2" style="font-size: 32px;">{{doneTitle}}</h1>
+        <p style="margin: 0; color: #1d2b36;">{{doneBody}}</p>
+        <div class="g-card-light" style="width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+          <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">What happens next</p>
+          <div style="display: flex; gap: 12px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #8a6a1f;">1</span><span style="font-size: 15px;">Corey confirms within a day</span></div>
+          <div style="display: flex; gap: 12px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #8a6a1f;">2</span><span style="font-size: 15px;">7 days out: ramp, map, what to wear</span></div>
+          <div style="display: flex; gap: 12px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #8a6a1f;">3</span><span style="font-size: 15px;">Day before, 5 PM: "Reply GO" by text and email, with the generation schedule. No reply and I call you.</span></div>
+        </div>
+        <a href="https://www.agfc.com/hunting-fishing/licenses-permits/" class="g-btn g-btn-dark" style="width: 100%; box-sizing: border-box;">Buy your AGFC license</a>
+        <a href="Main.dc.html" style="font-size: 15px;">Back to trips</a>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{showFooter}}" hint-placeholder-val="{{true}}">
+    <div style="padding: 12px 16px 20px; border-top: 1px solid rgba(13,27,42,0.14); background: #fffdf7; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; flex-direction: column;"><span style="font-family: 'Spline Sans Mono', monospace; font-size: 18px; color: #8a6a1f;">{{totalText}}</span><span style="font-size: 12px; color: #5d6b73;">{{footNote}}</span></div>
+      <button type="button" onClick="{{next}}" class="g-btn g-btn-dark" style="flex: 1; max-width: 200px;">{{nextLabel}}</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["request","booking"],"default":"request","section":"Checkout"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { step: 1, target: 'trout', water: 'bull', start: 'river', trip: 'full', mi: 0, day: 15, party: 2, method: 'mix', ex: 'some', lunch: 'box' }; }
+  renderVals() {
+    const s = this.state, booking = (this.props.mode ?? 'request') === 'booking';
+    const on = (a, b) => (a === b ? 'g-pill-on' : '');
+    const targetsDef = [
+      { id: 'trout', name: 'Trout', hint: 'The trip. Browns and rainbows peak October through March; fishable all year.' },
+      { id: 'walleye', name: 'Try for walleye', hint: 'Spring and fall. We fish for trout and work them in if they are there.' },
+      { id: 'smallmouth', name: 'Try for smallmouth', hint: 'May to September near the Buffalo inflow, on a Confluence Day.' },
+      { id: 'any', name: "Whatever's biting", hint: "Trout first; I'll call the rest the week you come." },
+    ];
+    const targets = targetsDef.map(t => ({ ...t, cls: on(s.target, t.id), pick: () => this.setState({ target: t.id }) }));
+    const tDef = targetsDef.find(t => t.id === s.target);
+    const PFG = 'https://pocketfishinguide.com/water/', U = '?utm_source=twt&utm_medium=referral&utm_campaign=guiding&tab=tailwaters';
+    const watersDef = [
+      { id: 'beaver', name: 'Beaver tailwater', note: 'Upper White · closest to NW Arkansas', sig: 'SCOUT 61', sigColor: '#b26a00', wb: 'wb_white_river_beaver_tailwater' },
+      { id: 'bull', name: 'Bull Shoals tailwater', note: 'Dam to the Buffalo mouth · home water', sig: 'GO 78', sigColor: '#2e7d32', wb: 'wb_white_river_bull_shoals_tailwater' },
+      { id: 'norfork', name: 'Norfork tailwater', note: 'Five miles · fishes when the White is high', sig: 'GO 84', sigColor: '#2e7d32', wb: 'wb_north_fork_norfork_tailwater' },
+    ];
+    const waters = watersDef.map(w => ({ ...w, href: PFG + w.wb + U, aria: w.name + ' on Pocket Fishing Guide', border: w.id === s.water ? '2px solid #1d756c' : '1px solid rgba(13,27,42,0.14)', pick: () => this.setState({ water: w.id }) }));
+    const wDef = watersDef.find(w => w.id === s.water);
+    const river = [
+      { id: 'full', name: 'Full Day', len: '8 h', note: 'lunch included · the default', price: '$550', n: 550 },
+      { id: 'half', name: 'Half Day', len: '4 h', note: 'morning', price: '$400', n: 400 },
+      { id: 'confluence', name: 'Confluence Day', len: '9 h', note: 'lower White only', price: '$600', n: 600 },
+    ];
+    const lr = [
+      { id: 'lr-full', name: 'Little Rock Departure', len: 'Full day', note: 'pickup 4:30 AM', price: '$750', n: 750 },
+      { id: 'lit', name: 'Fly-in from LIT', len: 'Full day', note: 'airport pickup', price: '$750', n: 750 },
+      { id: 'lr-overnight', name: 'Overnight, two tailwaters', len: '2 days', note: 'lodging at cost', price: '$1,250', n: 1250 },
+    ];
+    const list = s.start === 'lr' ? lr : river;
+    const all = river.concat(lr);
+    const chosen = all.find(t => t.id === s.trip) || river[0];
+    const isLR = s.start === 'lr';
+    const extraN = isLR ? 150 : 100;
+    const extra = s.party === 3 ? extraN : 0;
+    const half = chosen.id === 'half';
+    const lunchAdj = s.lunch === 'box' ? (half ? 15 * s.party : 0) : s.lunch === 'own' ? (half ? 0 : -20) : 0;
+    const total = chosen.n + extra + lunchAdj;
+    const fmt = n => '$' + n.toLocaleString('en-US');
+    const trips = list.map(t => ({ ...t, border: t.id === s.trip ? '2px solid #1d756c' : '1px solid rgba(13,27,42,0.14)', pick: () => this.setState({ trip: t.id }) }));
+
+    // Calendar: months from Oct 2026; weekdays open, weekends by request, a few booked.
+    const monthsDef = [
+      { name: 'October 2026', lead: 3, len: 31, booked: [13, 14] },
+      { name: 'November 2026', lead: 6, len: 30, booked: [10] },
+      { name: 'December 2026', lead: 1, len: 31, booked: [] },
+      { name: 'March 2027', lead: 0, len: 31, booked: [16, 17] },
+    ];
+    const mo = monthsDef[s.mi];
+    const days = [];
+    for (let i = 0; i < mo.lead; i++) days.push({ n: '', cls: '', pick: () => {} });
+    for (let n = 1; n <= mo.len; n++) {
+      const dow = (mo.lead + n - 1) % 7; const weekend = dow >= 5; const booked = mo.booked.includes(n);
+      const cls = n === s.day ? 'g-day-on' : booked ? 'g-day-off' : weekend ? '' : 'g-day-open';
+      days.push({ n: String(n), cls, pick: () => { if (!booked) this.setState({ day: n }); } });
+    }
+    const dow = (mo.lead + s.day - 1) % 7; const weekend = dow >= 5;
+    const dn = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][dow];
+    const dateText = dn + ', ' + mo.name.replace(' 20', ' ' + s.day + ', 20');
+    const seasonHint = s.mi <= 2 ? 'Prime brown-trout water: the fall spawn is on.' : 'Walleye run plus trout. Low-water mornings.';
+    const dateHint = weekend ? 'Weekend: by request. Ramps are busy; I\'ll confirm within a day.' : dn + ' is open. ' + seasonHint;
+    const bar = i => (i <= s.step ? '#0d1b2a' : 'rgba(13,27,42,0.14)');
+    const dueNow = booking ? fmt(Math.round(total / 2)) : '$0';
+    const methodText = s.method === 'tackle' ? 'tackle' : s.method === 'bait' ? 'bait' : 'tackle or bait';
+    return {
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5, s6: s.step === 6,
+      p1: bar(1), p2: bar(2), p3: bar(3), p4: bar(4), p5: bar(5),
+      stepLabel: Math.min(5, s.step) + '/5', showFooter: s.step < 6,
+      targets, targetHint: tDef.hint, targetName: tDef.name, waters, waterName: wDef.name,
+      trips, atRiver: () => this.setState({ start: 'river', trip: 'full' }), fromLR: () => this.setState({ start: 'lr', trip: 'lr-full' }),
+      riverCls: on(s.start, 'river'), lrCls: on(s.start, 'lr'),
+      days, monthName: mo.name, dateHint, hintColor: weekend ? '#ff9800' : '#4caf50',
+      prevMonth: () => this.setState({ mi: Math.max(0, s.mi - 1), day: 15 }), nextMonth: () => this.setState({ mi: Math.min(monthsDef.length - 1, s.mi + 1), day: 15 }),
+      chosenName: chosen.name, dateText,
+      party1: () => this.setState({ party: 1 }), party2: () => this.setState({ party: 2 }), party3: () => this.setState({ party: 3 }),
+      c1: on(s.party, 1), c2: on(s.party, 2), c3: on(s.party, 3), extraText: '+' + fmt(extraN),
+      mTackle: () => this.setState({ method: 'tackle' }), mBait: () => this.setState({ method: 'bait' }), mMix: () => this.setState({ method: 'mix' }),
+      m1: on(s.method, 'tackle'), m2: on(s.method, 'bait'), m3: on(s.method, 'mix'), methodText,
+      lBox: () => this.setState({ lunch: 'box' }), lLocal: () => this.setState({ lunch: 'local' }), lOwn: () => this.setState({ lunch: 'own' }),
+      l1: on(s.lunch, 'box'), l2: on(s.lunch, 'local'), l3: on(s.lunch, 'own'),
+      boxPrice: half ? '$15 each' : 'included', ownPrice: half ? 'free' : '−$20',
+      lunchText: s.lunch === 'box' ? 'Chicken box' + (half ? ' (+' + fmt(15 * s.party) + ')' : '') : s.lunch === 'local' ? 'Pre-order local, menu price' : 'Bringing our own' + (half ? '' : ' (−$20)'),
+      exFirst: () => this.setState({ ex: 'first' }), exSome: () => this.setState({ ex: 'some' }), exPro: () => this.setState({ ex: 'pro' }),
+      e1: on(s.ex, 'first'), e2: on(s.ex, 'some'), e3: on(s.ex, 'pro'),
+      partyText: s.party + (s.party === 1 ? ' angler' : ' anglers'),
+      meetText: isLR ? (chosen.id === 'lit' ? 'Clinton National, arrivals' : 'Little Rock pickup point') : 'Ramp chosen for that day\'s water',
+      totalText: fmt(total), dueNow, dueLater: booking ? fmt(total - Math.round(total / 2)) : fmt(total),
+      payNote: booking ? '50% deposit holds the date. Full refund 14+ days out.' : 'Request mode: nothing is charged. Corey confirms by text or email, then sends a deposit link.',
+      footNote: s.step === 5 ? (booking ? 'Due now ' + dueNow : 'No charge today') : 'for ' + s.party + (s.party === 1 ? ' angler' : ' anglers'),
+      nextLabel: s.step === 5 ? (booking ? 'Pay deposit' : 'Send request') : 'Continue',
+      next: () => this.setState({ step: Math.min(6, s.step + 1) }),
+      back: () => this.setState({ step: Math.max(1, s.step - 1) }),
+      doneTitle: booking ? 'Date held.' : 'Request sent.',
+      doneBody: (booking ? chosen.name + ' on ' + dateText + ' is yours. Receipt and calendar invite are on the way.' : chosen.name + ' on ' + dateText + '. Corey will confirm within a day; no charge until then.'),
+      true: true, false: false,
+    };
+  }
+}
+</script>
+</body>
+</html>

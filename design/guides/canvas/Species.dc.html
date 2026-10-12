@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The fish, the records, the rules</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="g.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Spline+Sans+Mono:wght@400;500&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>body{margin:0;background:#0d1b2a;color:#f5f0e8;font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.55}a{color:#f5f0e8}a:hover{color:#d4a843}
+.g-stage{background-image:linear-gradient(180deg,rgba(13,27,42,0.05) 0%,rgba(13,27,42,0.55) 100%),url('../assets/underwater-stage.webp');background-size:cover;background-position:center 40%}
+.g-plate{filter:drop-shadow(0 18px 28px rgba(0,0,0,0.55))}</style>
+</helmet>
+<div style="display: flex; flex-direction: column; min-height: 100%; background: #0d1b2a; color: #f5f0e8; font-family: 'DM Sans', system-ui, sans-serif;">
+
+  <nav aria-label="Guided fishing" style="border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <a href="Main.dc.html" style="text-decoration: none; display: flex; align-items: baseline; gap: 10px;"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px;">Tale Waters &amp; Tides</span><span style="font-family: 'Spline Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #d4a843;">Guides</span></a>
+      <a href="Flow.dc.html" class="g-btn" style="min-height: 40px; padding: 8px 18px; font-size: 15px;">Pick a weekday</a>
+    </div>
+  </nav>
+
+  <header class="g-stage" style="border-bottom: 1px solid rgba(245,240,232,0.12);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 40px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+    <p class="g-eyebrow">The fish</p>
+    <h1 class="g-h1" style="font-size: 52px; max-width: 800px;">The fish</h1>
+    <p style="margin: 0; color: rgba(245,240,232,0.78); max-width: 620px;">Trout are the trip. Walleye and smallmouth are a bonus when they're in the stretch we fish. Months and limits from Pocket Fishing Guide and AGFC.</p>
+    <div role="group" aria-label="Species" style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+        <button type="button" onClick="{{t.pick}}" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.5); background: {{t.bg}}; color: {{t.fg}}; font-family: inherit; font-size: 15px; cursor: pointer;">{{t.name}}</button>
+      </sc-for>
+    </div>
+  </div>
+  </header>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 48px 24px 56px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 32px; align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div class="g-stage" style="padding: 32px 24px 24px; border-radius: 12px; border: 1px solid rgba(245,240,232,0.18); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+        <img class="g-plate" src="{{sp.img}}" alt="{{sp.name}} illustration" style="width: 100%; max-width: 560px; height: 340px; object-fit: contain;">
+        <h2 class="g-h2" style="text-align: center;">{{sp.name}}</h2>
+        <p style="margin: 0; font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: rgba(245,240,232,0.7); font-style: italic;">{{sp.latin}}</p>
+        <a href="{{sp.pfg}}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 18px; border-radius: 8px; background: #1b2838; border: 1px solid #00bcd4; color: #e6eef5; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; text-decoration: none;">Live read on Pocket Fishing Guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00bcd4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 10px; font-family: 'Inter', system-ui, sans-serif; font-variant-numeric: tabular-nums;">
+        <div style="background: #1b2838; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);"><div style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #8da3b5;">{{sp.recordKind}}</div><div style="font-size: 24px; font-weight: 800; color: #e6eef5;">{{sp.record}}</div><div style="font-size: 12px; color: #8da3b5;">{{sp.recordWhere}}</div></div>
+        <div style="background: #1b2838; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);"><div style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #8da3b5;">Likes water at</div><div style="font-size: 24px; font-weight: 800; color: #e6eef5;">{{sp.temp}}</div><div style="font-size: 12px; color: #8da3b5;">tailwaters run 45–55°F</div></div>
+        <div style="background: #1b2838; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);"><div style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #8da3b5;">Keeper</div><div style="font-size: 24px; font-weight: 800; color: #e6eef5;">{{sp.limit}}</div><div style="font-size: 12px; color: #8da3b5;">{{sp.limitNote}}</div></div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <p class="g-eyebrow">About</p>
+        <p style="margin: 0; font-size: 18px; color: rgba(245,240,232,0.88);">{{sp.pitch}}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <p class="g-eyebrow">When</p>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px;">
+          <sc-for list="{{sp.cells}}" as="c" hint-placeholder-count="12"><div style="display: flex; flex-direction: column; gap: 4px; align-items: center;"><span style="height: 28px; width: 100%; border-radius: 5px; background: {{c.bg}};"></span><span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #8da3b5;">{{c.n}}</span></div></sc-for>
+        </div>
+        <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7);">{{sp.when}}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <p class="g-eyebrow">How we fish it</p>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <sc-for list="{{sp.tactics}}" as="x" hint-placeholder-count="4"><span class="g-chip" style="color: rgba(245,240,232,0.85); font-size: 12px; letter-spacing: 0.08em; text-transform: none; padding: 6px 10px;">{{x.t}}</span></sc-for>
+        </div>
+        <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7);">Spinning gear, provided. Tackle where the rules require it; bait where it's allowed and the numbers matter.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <p class="g-eyebrow">Where</p>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">{{sp.where}}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: #11233a; border: 1px solid rgba(245,240,232,0.18);">
+        <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center;"><p class="g-eyebrow" style="font-size: 11px;">Under the surface</p><span class="g-chip" style="color: #d4a843;">Corey's photos</span></div>
+        <div aria-hidden="true" style="height: 120px; border-radius: 8px; background: linear-gradient(180deg, #1d4a5c, #0a1623); display: grid; place-items: center; font-family: 'Spline Sans Mono', monospace; font-size: 12px; color: rgba(245,240,232,0.6);">[Underwater photo: {{sp.name}} holding in current]</div>
+        <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.78);">{{sp.dive}}</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: #f5f0e8; color: #0d1b2a;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: flex; flex-direction: column; gap: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 12px;"><p class="g-eyebrow g-eyebrow-ink">The rules, plainly</p><h2 class="g-h2">Where bait is allowed, and where it isn't.</h2></div>
+        <p style="margin: 0; font-size: 14px; color: #5d6b73; max-width: 420px;">Special areas are artificial lures only and catch-and-release. We fish bait below them. 2026–27 AGFC guidebook; emergency rules can override, so I check the morning of.</p>
+      </div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); border-radius: 10px;">
+          <thead><tr style="text-align: left; font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #5d6b73;"><th style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.14);">Water · zone</th><th style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.14);">Gear</th><th style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.14);">Trout limit</th><th style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.14);">What it means for us</th></tr></thead>
+          <tbody>
+            <tr><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><strong>Bull Shoals</strong> · Dam to Rim Shoals special area</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><span class="g-chip" style="color: #8a6a1f;">Artificial only</span></td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Catch and release</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Jigs, spoons, cranks. Big browns live here.</td></tr>
+            <tr><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><strong>Bull Shoals</strong> · Wildcat Shoals, Rim Shoals areas</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><span class="g-chip" style="color: #8a6a1f;">Artificial only</span></td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Catch and release</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Low-water wade and drift tackle water.</td></tr>
+            <tr><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><strong>Bull Shoals</strong> · general water, dam to Guion</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><span class="g-chip" style="color: #1d756c;">Bait OK</span></td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">2 per day (2026)</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Most of our trips. Drift bait or tackle, your pick.</td></tr>
+            <tr><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><strong>Norfork</strong> · Dam special area</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><span class="g-chip" style="color: #8a6a1f;">Artificial only</span></td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Catch and release</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Trophy water on low generation.</td></tr>
+            <tr><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><strong>Norfork</strong> · below the special area</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);"><span class="g-chip" style="color: #1d756c;">Bait OK</span></td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">2 per day (2026)</td><td style="padding: 12px 14px; border-bottom: 1px solid rgba(13,27,42,0.08);">Five miles; fishes when the White is high.</td></tr>
+            <tr><td style="padding: 12px 14px;"><strong>Beaver</strong> · tailwater</td><td style="padding: 12px 14px;"><span class="g-chip" style="color: #5d6b73;">Verify</span></td><td style="padding: 12px 14px;">[2026 guidebook]</td><td style="padding: 12px 14px;">Zones not yet in PFG data; confirm before listing.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin: 0; font-size: 14px; color: #5d6b73;">Every angler 16+ needs an Arkansas fishing license; a trout permit on all three tailwaters. Walleye 18 in., 8 per day; smallmouth 12 in., 6 per day, statewide. <a href="https://www.agfc.com/fishing/where-to-fish/trout-waters/bull-shoals-tailwater/" style="color: #0d1b2a;">AGFC trout waters</a>.</p>
+    </div>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+    <h2 class="g-h2" style="max-width: 640px;">Pick a weekday</h2>
+    <a href="Flow.dc.html" class="g-btn">Pick a weekday</a>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { id: 'brown' }; }
+  renderVals() {
+    const now = 10;
+    const cells = (peak, ok) => ['J','F','M','A','M','J','J','A','S','O','N','D'].map((n, i) => { const m = i + 1; return { n, bg: peak.includes(m) ? '#4caf50' : ok.includes(m) ? 'rgba(76,175,80,0.3)' : '#243447' }; });
+    const T = s => s.map(t => ({ t }));
+    const all = {
+      brown: { name: 'Brown trout', latin: 'Salmo trutta', img: '../assets/species/brown_trout.png', recordKind: 'World record', record: '40 lb 4 oz', recordWhere: 'Little Red River, 1992', temp: '45–65°F', limit: '12 in · 5', limitNote: '2/day on the White & Norfork (2026)', pitch: 'Arkansas tailwaters hold the world record. The White below Bull Shoals still grows big ones, and fall is when they feed.', cells: cells([10,11,12,1,2],[3,4,9]), when: 'Peak October through February around the fall spawn; fishable spring and September.', tactics: T(['Jerkbaits & stickbaits', 'Spoons on low water', 'Jigs in the deep bends', 'Drifted bait below the special areas']), where: 'Bull Shoals tailwater, dam to the Buffalo mouth, and the Norfork. The catch-and-release areas near each dam are artificial-only.', dive: 'Big browns hold under cut banks and behind boulders in the deep bends.' },
+      rainbow: { name: 'Rainbow trout', latin: 'Oncorhynchus mykiss', img: '../assets/species/rainbow_trout.png', recordKind: 'State record', record: '19 lb 1 oz', recordWhere: 'White River, 1981', temp: '40–65°F', limit: '9 in · 5', limitNote: '2/day on the White & Norfork (2026)', pitch: 'Stocked weekly in fall and winter. The fish most trips are built on, and the one a first-timer catches.', cells: cells([10,11,12,1,2,3],[4,5,6,7,8,9]), when: 'Best October through March; fishable every month on cold tailwater.', tactics: T(['Drift-fished bait', 'Inline spinners', 'Small spoons', 'Jigs under a float']), where: 'All three tailwaters. Beaver is the closest to Northwest Arkansas.', dive: 'Rainbows stack in the seams where fast water meets slow.' },
+      walleye: { name: 'Walleye', latin: 'Sander vitreus', img: '../assets/species/walleye.png', recordKind: 'State record', record: '22 lb 11 oz', recordWhere: 'Greers Ferry Lake, 1982', temp: '50–70°F', limit: '18 in · 8', limitNote: 'statewide', pitch: 'Good eating, and in the White in spring and fall. If they're in the stretch we're fishing, we'll put a jig in front of them. No guarantees; this is a trout trip first.', cells: cells([3,4,5],[10,11,12]), when: 'Spring run March through May; a second window October through December.', tactics: T(['Jigs tipped and plain', 'Crankbaits on the drop', 'Slow-trolled stickbaits']), where: 'The White River, spring run upstream from Bull Shoals Lake and near the confluences.', dive: 'They sit on the bottom at the head of pools, facing the current.' },
+      smallmouth: { name: 'Smallmouth bass', latin: 'Micropterus dolomieu', img: '../assets/species/smallmouth_bass.png', recordKind: 'State record', record: '7 lb 5 oz', recordWhere: 'Bull Shoals Lake, 1969', temp: '55–75°F', limit: '12 in · 6', limitNote: 'statewide', pitch: 'The native. Summer fish near the warm Buffalo inflow, where the cold White slows them down. A bonus on a Confluence Day, not the plan.', cells: cells([5,6,7,8,9],[4,10]), when: 'May through September, spawning as water passes 55°F.', tactics: T(['Tubes and craw jigs', 'Topwater at first light', 'Small crankbaits', 'Live bait where allowed']), where: 'The lower White near the Buffalo inflow; the Confluence Day trip is built for it.', dive: 'Smallmouth sit on the gravel edges of the inflow, right at the temperature line.' },
+      brook: { name: 'Brook trout', latin: 'Salvelinus fontinalis', img: '../assets/species/brook_trout.png', recordKind: 'State record', record: '5 lb 0 oz', recordWhere: 'North Fork River, 2002', temp: '38–60°F', limit: '9 in · 5', limitNote: '2/day on the Norfork (2026)', pitch: 'Stocked in the Norfork. A bonus on a trout day.', cells: cells([10,11,12,1,2,3],[4]), when: 'October through March on the Norfork.', tactics: T(['Small spinners', 'Drifted bait', 'Micro jigs']), where: 'Norfork tailwater; occasional on the upper White.', dive: 'They tuck into the slowest water along the bank.' },
+    };
+    const ids = ['brown', 'rainbow', 'walleye', 'smallmouth', 'brook'];
+    const PFG = 'https://pocketfishinguide.com/species/', U = '?utm_source=twt&utm_medium=referral&utm_campaign=guiding&water=';
+    const pfgId = { brown: 'brown_trout', rainbow: 'rainbow_trout', walleye: 'walleye', smallmouth: 'smallmouth_bass', brook: 'brook_trout' };
+    const pfgWater = { brown: 'wb_white_river_bull_shoals_tailwater', rainbow: 'wb_white_river_bull_shoals_tailwater', walleye: 'wb_white_river_bull_shoals_tailwater', smallmouth: 'wb_white_river_bull_shoals_tailwater', brook: 'wb_north_fork_norfork_tailwater' };
+    const tabs = ids.map(id => ({ name: all[id].name, bg: id === this.state.id ? '#d4a843' : 'rgba(13,27,42,0.55)', fg: id === this.state.id ? '#0d1b2a' : '#f5f0e8', pick: () => this.setState({ id }) }));
+    const sp = { ...all[this.state.id], pfg: PFG + pfgId[this.state.id] + U + pfgWater[this.state.id] };
+    return { tabs, sp };
+  }
+}
+</script>
+</body>
+</html>

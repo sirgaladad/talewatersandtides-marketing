@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guided fishing landing</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="g.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Spline+Sans+Mono:wght@400;500&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#0d1b2a;color:#f5f0e8;font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.55}
+a{color:#f5f0e8}a:hover{color:#d4a843}
+.g-stage{background-image:linear-gradient(180deg,rgba(13,27,42,0.1) 0%,rgba(13,27,42,0.6) 100%),url('../assets/underwater-stage.webp');background-size:cover;background-position:center 40%}
+.g-plate{filter:drop-shadow(0 14px 22px rgba(0,0,0,0.55))}
+</style>
+</helmet>
+<div style="display: flex; flex-direction: column; min-height: 100%; background: #0d1b2a; color: #f5f0e8; font-family: 'DM Sans', system-ui, sans-serif;">
+
+  <nav aria-label="Guided fishing" style="position: sticky; top: 0; z-index: 10; background: rgba(13,27,42,0.92); border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <a href="Main.dc.html" style="text-decoration: none; display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px; font-weight: 500;">Tale Waters &amp; Tides</span>
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #d4a843;">Guides</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 24px; font-size: 15px; flex-wrap: wrap;">
+        <a href="#waters" style="text-decoration: none; color: rgba(245,240,232,0.85);">Waters</a>
+        <a href="#trips" style="text-decoration: none; color: rgba(245,240,232,0.85);">Trips</a>
+        <a href="#seasons" style="text-decoration: none; color: rgba(245,240,232,0.85);">What's biting</a>
+        <a href="#from-lr" style="text-decoration: none; color: rgba(245,240,232,0.85);">From Little Rock</a>
+        <a href="#plan" style="text-decoration: none; color: rgba(245,240,232,0.85);">Plan</a>
+        <a href="#report" style="text-decoration: none; color: rgba(245,240,232,0.85);">River report</a>
+        <a href="Flow.dc.html" class="g-btn" style="min-height: 40px; padding: 8px 18px; font-size: 15px;">Pick a weekday</a>
+      </div>
+    </div>
+  </nav>
+
+  <header style="background: radial-gradient(120% 80% at 70% 0%, #1d4a5c 0%, #0d1b2a 70%); border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 72px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 48px; align-items: end;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <p class="g-eyebrow">White · Norfork · Beaver tailwaters · Arkansas</p>
+        <h1 class="g-h1" style="max-width: 680px;">Guided fishing on the White.</h1>
+        <p style="font-size: 20px; color: rgba(245,240,232,0.78); max-width: 540px; margin: 0;">Trout on the White, Norfork and Beaver tailwaters, year-round. Full days, weekdays, tackle or bait. Pickup from Little Rock available.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="Flow.dc.html" class="g-btn">Pick a weekday</a>
+          <a href="#seasons" class="g-btn g-btn-ghost">What's biting now</a>
+        </div>
+        <p style="font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: rgba(245,240,232,0.7); margin: 0;">Year-round · Weekdays open, weekends by request · Nothing charged until your date is confirmed</p>
+      </div>
+      <div class="g-card" style="display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #1b2838; border-color: rgba(255,255,255,0.06); font-family: 'Inter', system-ui, sans-serif;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <span style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8da3b5;">Tailwaters today</span>
+          <span style="font-size: 11px; color: #8da3b5;">USGS · SWPA · LIVE · 9m ago</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-variant-numeric: tabular-nums;">
+          <sc-for list="{{tw}}" as="t" hint-placeholder-count="3">
+            <a href="{{t.href}}" target="_blank" rel="noopener noreferrer" aria-label="{{t.aria}}" style="text-decoration: none; display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 1fr) minmax(0, 1fr) 16px; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; background: #243447; border: 1px solid rgba(255,255,255,0.04); color: #e6eef5;">
+              <div style="min-width: 0;"><div style="font-size: 14px; font-weight: 600;">{{t.name}}</div><div style="font-size: 11px; color: #8da3b5;">{{t.sub}}</div></div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span class="g-dot" style="background: {{t.color}};"></span><span style="font-size: 20px; font-weight: 800; letter-spacing: -0.3px;">{{t.verdict}}</span></div>
+              <div><div style="font-size: 11px; color: #8da3b5;">Water</div><div style="font-size: 14px; font-weight: 600;">{{t.temp}}</div></div>
+              <div><div style="font-size: 11px; color: #8da3b5;">Generation</div><div style="font-size: 14px; font-weight: 600;">{{t.gen}}</div></div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+          </sc-for>
+        </div>
+        <p style="margin: 0; font-size: 12px; color: #8da3b5;">Bull Shoals change at 2:00 PM reaches Cotter ≈ 70 min later, Buffalo City ≈ 3 h (curated est.). Tap a dam for the full tailwater view: units, arrival times by access, and the 7-day trend.</p>
+      </div>
+    </div>
+  </header>
+
+  <section aria-label="Credentials" style="background: #0a1623; border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <ul style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: rgba(245,240,232,0.78);">
+      <li>· AGFC licensed guide</li><li>· Insured</li><li>· CPR &amp; First Aid</li><li>· Tackle &amp; bait, all gear included</li><li>· Boat kept in Mountain Home</li>
+    </ul>
+  </section>
+
+  <section id="waters" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 40px; display: flex; flex-direction: column; gap: 28px;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <p class="g-eyebrow">The waters</p>
+      <h2 class="g-h2">The waters</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px;">
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Beaver tailwater</span>
+        <h3 class="g-h3">The upper White, below Beaver Dam</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Short, cold and close to Northwest Arkansas. Stocked rainbows, a quiet morning float.</p>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="g-chip" style="color: rgba(245,240,232,0.7);">Trout</span><span class="g-chip" style="color: rgba(245,240,232,0.7);">Wade or boat</span></div>
+        <a href="https://pocketfishinguide.com/water/wb_white_river_beaver_tailwater?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=guiding&amp;tab=tailwaters" target="_blank" rel="noopener noreferrer" style="font-size: 13px; color: #00bcd4; text-decoration: none; margin-top: auto;">Tailwater view on Pocket Fishing Guide ↗</a>
+      </article>
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px; border-color: #d4a843;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #d4a843;">Bull Shoals tailwater · home water</span>
+        <h3 class="g-h3">The White from the dam to the Buffalo mouth</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Nearly 100 miles of brown and rainbow water. Walleye and smallmouth show up by season.</p>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="g-chip" style="color: rgba(245,240,232,0.7);">Trout</span><span class="g-chip" style="color: rgba(245,240,232,0.7);">Walleye</span><span class="g-chip" style="color: rgba(245,240,232,0.7);">Smallmouth</span></div>
+        <a href="https://pocketfishinguide.com/water/wb_white_river_bull_shoals_tailwater?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=guiding&amp;tab=tailwaters" target="_blank" rel="noopener noreferrer" style="font-size: 13px; color: #00bcd4; text-decoration: none; margin-top: auto;">Tailwater view on Pocket Fishing Guide ↗</a>
+      </article>
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Norfork tailwater</span>
+        <h3 class="g-h3">Five miles of cold, clear river</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Rainbows and browns, best September through April. Fishes when the White is high.</p>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="g-chip" style="color: rgba(245,240,232,0.7);">Trout</span><span class="g-chip" style="color: rgba(245,240,232,0.7);">Low-water wade</span></div>
+        <a href="https://pocketfishinguide.com/water/wb_north_fork_norfork_tailwater?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=guiding&amp;tab=tailwaters" target="_blank" rel="noopener noreferrer" style="font-size: 13px; color: #00bcd4; text-decoration: none; margin-top: auto;">Tailwater view on Pocket Fishing Guide ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="seasons" style="background: #0a1623; border-top: 1px solid rgba(245,240,232,0.12); border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: flex; flex-direction: column; gap: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p class="g-eyebrow">Seasons</p>
+          <h2 class="g-h2">What's biting, by month</h2>
+        </div>
+        <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7); max-width: 420px;">Peak months from Pocket Fishing Guide's species and reach data. The current month is marked.</p>
+      </div>
+      <div style="overflow-x: auto;">
+        <div style="min-width: 760px; display: grid; grid-template-columns: 180px repeat(12, minmax(0, 1fr)); gap: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 12px;">
+          <span></span>
+          <sc-for list="{{months}}" as="m" hint-placeholder-count="12"><span style="text-align: center; color: {{m.color}}; font-weight: {{m.weight}};">{{m.n}}</span></sc-for>
+          <sc-for list="{{seasons}}" as="s" hint-placeholder-count="5">
+            <span style="display: flex; flex-direction: column; justify-content: center; padding-right: 8px;"><span style="font-weight: 600; color: #e6eef5;">{{s.name}}</span><span style="font-size: 11px; color: #8da3b5;">{{s.where}}</span></span>
+            <sc-for list="{{s.cells}}" as="c" hint-placeholder-count="12"><span style="height: 36px; border-radius: 6px; background: {{c.bg}}; border: 1px solid {{c.border}};"></span></sc-for>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; gap: 18px; font-size: 12px; color: #8da3b5; font-family: 'Inter', system-ui, sans-serif; flex-wrap: wrap;">
+        <span><span class="g-dot" style="background: #4caf50;"></span> peak</span><span><span class="g-dot" style="background: rgba(76,175,80,0.3);"></span> fishable</span><span><span class="g-dot" style="background: #243447;"></span> slow</span><span style="margin-left: auto;">Beaver tailwater species data is still being added to PFG.</span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Target species" class="g-stage" style="border-top: 1px solid rgba(245,240,232,0.12); border-bottom: 1px solid rgba(245,240,232,0.12);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 12px;"><p class="g-eyebrow">The fish</p><h2 class="g-h2">The fish</h2></div>
+      <a href="Species.dc.html" style="font-size: 15px; color: #d4a843; text-decoration: none;">Records, seasons and the rules for each →</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); gap: 14px;">
+      <sc-for list="{{fish}}" as="f" hint-placeholder-count="5">
+        <a href="{{f.href}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: rgba(13,27,42,0.62); border: 1px solid rgba(245,240,232,0.22); color: #f5f0e8;">
+          <img class="g-plate" src="{{f.img}}" alt="{{f.name}}" style="width: 100%; height: 150px; object-fit: contain;">
+          <span style="font-family: 'Fraunces', serif; font-size: 20px;">{{f.name}}</span>
+          <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; color: #d4a843;">{{f.record}}</span>
+          <span style="font-size: 13px; color: rgba(245,240,232,0.7);">{{f.when}}</span>
+          <span style="font-size: 12px; color: #00bcd4; display: flex; align-items: center; gap: 4px;">Live on Pocket Fishing Guide <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+  </section>
+
+  <section id="trips" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 40px; display: flex; flex-direction: column; gap: 32px;">
+    <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p class="g-eyebrow">The trips</p>
+        <h2 class="g-h2">The trips</h2>
+        <p style="margin: 0; color: rgba(245,240,232,0.78); max-width: 600px;">Prices are for one or two anglers; a third is $100. Boat, fuel, rods, tackle and bait always included. Weekdays open; weekends by request.</p>
+      </div>
+      <div role="group" aria-label="Where you start" style="display: flex; gap: 6px; padding: 4px; border: 1px solid rgba(245,240,232,0.18); border-radius: 999px;">
+        <button type="button" onClick="{{atRiver}}" style="min-height: 44px; padding: 8px 18px; border-radius: 999px; border: 0; cursor: pointer; font-family: inherit; font-size: 15px; background: {{riverBg}}; color: {{riverFg}};">Meet at the river</button>
+        <button type="button" onClick="{{fromLR}}" style="min-height: 44px; padding: 8px 18px; border-radius: 999px; border: 0; cursor: pointer; font-family: inherit; font-size: 15px; background: {{lrBg}}; color: {{lrFg}};">From Little Rock</button>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px;">
+      <sc-for list="{{trips}}" as="t" hint-placeholder-count="3">
+        <article class="g-card" style="display: flex; flex-direction: column; gap: 12px; border-color: {{t.border}};">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">{{t.len}}</span>
+            <sc-if value="{{t.sig}}" hint-placeholder-val="{{false}}"><span class="g-chip" style="color: #d4a843;">{{t.tag}}</span></sc-if>
+          </div>
+          <h3 class="g-h3">{{t.name}}</h3>
+          <p style="margin: 0; font-family: 'Spline Sans Mono', monospace; font-size: 30px; color: #d4a843; font-variant-numeric: tabular-nums;">{{t.price}}</p>
+          <ul style="margin: 0; padding-left: 18px; color: rgba(245,240,232,0.78); font-size: 15px; display: grid; gap: 4px;">
+            <li>{{t.i1}}</li><li>{{t.i2}}</li><li>{{t.i3}}</li>
+          </ul>
+          <p style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7);">{{t.who}}</p>
+          <div style="display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;">
+            <a href="Flow.dc.html" class="g-btn" style="min-height: 44px; padding: 10px 18px; font-size: 15px;">Pick a weekday</a>
+            <a href="Trip.dc.html" class="g-btn g-btn-ghost" style="min-height: 44px; padding: 10px 18px; font-size: 15px;">Details</a>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+    <p id="from-lr" style="margin: 0; font-size: 14px; color: rgba(245,240,232,0.7);">{{footnote}}</p>
+  </section>
+
+  <section style="background: #0a1623; border-top: 1px solid rgba(245,240,232,0.12); border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p class="g-eyebrow">The approach</p>
+        <h2 class="g-h2">Why weekdays</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #d4a843;">01</span><h3 class="g-h3">Weekdays</h3><p style="margin: 0; color: rgba(245,240,232,0.78); font-size: 15px;">Quiet ramps, lower water, the stretch you want.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 8px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #d4a843;">02</span><h3 class="g-h3">Tackle or bait</h3><p style="margin: 0; color: rgba(245,240,232,0.78); font-size: 15px;">Trout first. When walleye or smallmouth are in the stretch we're fishing, we'll try for them. Spinning gear, all provided.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 8px;"><span style="font-family: 'Spline Sans Mono', monospace; color: #d4a843;">03</span><h3 class="g-h3">The story</h3><p style="margin: 0; color: rgba(245,240,232,0.78); font-size: 15px;">Photos and a written trip story within 48 hours.</p></div>
+    </div>
+  </section>
+
+  <section id="plan" style="background: #f5f0e8; color: #0d1b2a;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 48px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <p class="g-eyebrow g-eyebrow-ink">Your guide</p>
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 50%; background: #0d1b2a; border: 3px solid #d4a843; display: grid; place-items: center; color: #f5f0e8; font-family: 'Fraunces', serif; font-size: 26px;">CB</div>
+          <div><h2 class="g-h2" style="font-size: 30px;">Corey Boelkens</h2><p style="margin: 2px 0 0; font-size: 14px; color: #5d6b73;">Little Rock · White, Norfork and Beaver tailwaters</p></div>
+        </div>
+        <p style="margin: 0; color: #1d2b36; max-width: 520px;">My dad guided these rivers when I was a kid. I started on the White with a can of corn and a drift rig, learned the shoals from his boat, and never stopped: tackle, bait, spearfishing, and the north-central Ozark streams in between.</p>
+        <p style="margin: 0; color: #1d2b36; max-width: 520px;">I'm also a PADI Divemaster. I've spent hours under the surface photographing trout where they hold. That's the water I'll read for you.</p>
+        <div style="padding: 14px 16px; border-radius: 10px; background: #fffdf7; border: 1px solid rgba(13,27,42,0.14); max-width: 520px; display: flex; flex-direction: column; gap: 6px;">
+          <p class="g-eyebrow g-eyebrow-ink" style="font-size: 11px;">Why a software guy is in a jon boat</p>
+          <p style="margin: 0; font-size: 15px; color: #1d2b36;">I built <a href="https://pocketfishinguide.com" style="color: #0d1b2a;">Pocket Fishing Guide</a>. The booking flow you'll use here is its Guide platform, tested on real water with real clients. You're early, and it shows in the price.</p>
+          <p style="margin: 0; font-size: 13px; color: #5d6b73;">Consult · Build · Guides. This is the guiding.</p>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="g-chip" style="color: #8a6a1f;">Tackle &amp; bait</span><span class="g-chip" style="color: #8a6a1f;">Divemaster</span><span class="g-chip" style="color: #8a6a1f;">Builder of Pocket Fishing Guide</span><span class="g-chip" style="color: #8a6a1f;">Families welcome</span>
+        </div>
+        <a href="Species.dc.html" class="g-btn g-btn-dark" style="align-self: flex-start; min-height: 44px; padding: 10px 18px; font-size: 15px;">The fish, the records, the rules</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px;">
+        <div class="g-card-light" style="display: flex; flex-direction: column; gap: 6px;"><h3 class="g-h3">License</h3><p style="margin: 0; font-size: 15px; color: #1d2b36;">Anglers 16+ bring an Arkansas license, plus a trout permit on tailwaters. <a href="https://www.agfc.com/hunting-fishing/licenses-permits/" style="color: #0d1b2a;">Buy from AGFC</a>.</p></div>
+        <div class="g-card-light" style="display: flex; flex-direction: column; gap: 6px;"><h3 class="g-h3">What to wear</h3><p style="margin: 0; font-size: 15px; color: #1d2b36;">Layers, rain shell, closed-toe shoes. Tailwater runs 45–55°F all year.</p></div>
+        <div class="g-card-light" style="display: flex; flex-direction: column; gap: 6px;"><h3 class="g-h3">Where we meet</h3><p style="margin: 0; font-size: 15px; color: #1d2b36;">The ramp that fits the water and the generation that day. Map the week before.</p></div>
+        <div class="g-card-light" style="display: flex; flex-direction: column; gap: 6px;"><h3 class="g-h3">If the river says no</h3><p style="margin: 0; font-size: 15px; color: #1d2b36;">I call it by 7 PM the evening before, by text and email. You choose a new weekday, a different tailwater, or a full refund. Your own cancellation: full refund 14+ days out, credit 3–14 days, deposit kept inside 72 hours.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lunch" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 40px; display: flex; flex-direction: column; gap: 28px;">
+    <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p class="g-eyebrow">Midday</p>
+        <h2 class="g-h2">Lunch</h2>
+        <p style="margin: 0; color: rgba(245,240,232,0.78); max-width: 560px;">No camp stove, no hour lost to cooking. Pick your lunch when you book; it's ordered the evening before, after the go call.</p>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px;">
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px; border-color: #d4a843;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #d4a843;">Included on full days</span><span class="g-chip" style="color: #d4a843;">House</span></div>
+        <h3 class="g-h3">The chicken box</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Cold fried chicken, slaw, a roll, fruit and a cookie. Iced tea and water in the cooler all day.</p>
+        <p style="margin: 0; font-size: 13px; color: rgba(245,240,232,0.7);">Half day: add it for $15 a person.</p>
+      </article>
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Pre-order local</span>
+        <h3 class="g-h3">From a spot near the ramp</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Pick from a short menu at a Mountain Home or Cotter kitchen. I pick it up on the way to the water.</p>
+        <p style="margin: 0; font-size: 13px; color: rgba(245,240,232,0.7);">Menu price, charged with the balance.</p>
+      </article>
+      <article class="g-card" style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.7);">Bring your own</span>
+        <h3 class="g-h3">Your cooler, my ice</h3>
+        <p style="margin: 0; font-size: 15px; color: rgba(245,240,232,0.78);">Bring what you like. There's room in the boat and ice all day.</p>
+        <p style="margin: 0; font-size: 13px; color: rgba(245,240,232,0.7);">$20 off a full day.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="report" style="background: #0a1623; border-top: 1px solid rgba(245,240,232,0.12); border-bottom: 1px solid rgba(245,240,232,0.12);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 40px; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p class="g-eyebrow">Not booking yet?</p>
+        <h2 class="g-h2">The weekday river report</h2>
+        <p style="margin: 0; color: rgba(245,240,232,0.78); max-width: 520px;">One email a week, Sunday night: what's biting on all three tailwaters, the generation outlook, which weekdays are still open, and any open-seat deals when a boat has room.</p>
+        <ul style="margin: 0; padding-left: 18px; font-size: 15px; color: rgba(245,240,232,0.78); display: grid; gap: 4px;">
+          <li>Open-seat deals: a second angler's spot on a booked weekday, at a discount</li>
+          <li>Gift cards for the holidays</li>
+          <li>Underwater photos from the week</li>
+        </ul>
+      </div>
+      <form class="g-card" style="display: flex; flex-direction: column; gap: 12px; padding: 24px;">
+        <label class="g-label" style="color: #f5f0e8;">Email<input class="g-input" type="email" autocomplete="email" placeholder="you@example.com" style="background: #0d1b2a; color: #f5f0e8; border-color: rgba(245,240,232,0.3);"></label>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 600;">I'm mostly after</span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <sc-for list="{{interests}}" as="i" hint-placeholder-count="4"><button type="button" onClick="{{i.pick}}" style="min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(245,240,232,0.3); background: {{i.bg}}; color: {{i.fg}}; font-family: inherit; font-size: 14px; cursor: pointer;">{{i.name}}</button></sc-for>
+          </div>
+        </div>
+        <button type="button" class="g-btn" style="align-self: flex-start;">Send me the report</button>
+        <p style="margin: 0; font-size: 12px; color: rgba(245,240,232,0.7);">Weekly. Unsubscribe in one tap. No sharing.</p>
+      </form>
+    </div>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start;">
+    <p class="g-eyebrow">Ready?</p>
+    <h2 class="g-h2" style="max-width: 640px;">Pick a weekday</h2>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <a href="Flow.dc.html" class="g-btn">Pick a weekday</a>
+      <a href="mailto:corey@talewatersandtides.com" class="g-btn g-btn-ghost">Email Corey</a>
+    </div>
+  </section>
+
+  <footer style="border-top: 1px solid rgba(245,240,232,0.12); font-size: 14px; color: rgba(245,240,232,0.7);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px 40px; display: flex; flex-direction: column; gap: 8px;">
+      <span>Tale Waters and Tides, LLC · Little Rock, Arkansas · boat at Mountain Home</span>
+      <span><a href="https://talewatersandtides.com/" style="color: rgba(245,240,232,0.7);">Consult</a> · <a href="https://talewatersandtides.com/lab/" style="color: rgba(245,240,232,0.7);">Build</a> · <span style="color: #d4a843;">Guides</span> · <a href="Guides.dc.html" style="color: rgba(245,240,232,0.7);">All guides</a> · <a href="#plan" style="color: rgba(245,240,232,0.7);">Privacy</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"month":{"editor":"int","default":10,"min":1,"max":12,"section":"Season strip"},"$preview":{"width":1280,"height":2560}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { start: 'river', interest: 'trout' }; }
+  renderVals() {
+    const lr = this.state.start === 'lr';
+    const interests = [{ id: 'trout', name: 'Trout' }, { id: 'walleye', name: 'Walleye' }, { id: 'deals', name: 'Open-seat deals' }, { id: 'gift', name: 'A gift card' }]
+      .map(i => ({ ...i, bg: i.id === this.state.interest ? '#d4a843' : 'transparent', fg: i.id === this.state.interest ? '#0d1b2a' : '#f5f0e8', pick: () => this.setState({ interest: i.id }) }));
+    const now = this.props.month ?? 10;
+    const PFG = 'https://pocketfishinguide.com', U = '?utm_source=twt&utm_medium=referral&utm_campaign=guiding';
+    const twLink = id => PFG + '/water/' + id + U + '&tab=tailwaters';
+    const tw = [
+      { name: 'Beaver', sub: 'below Beaver Dam', verdict: 'SCOUT 61', color: '#ff9800', temp: '52.1°F', gen: '1 of 2 units', href: twLink('wb_white_river_beaver_tailwater'), aria: 'Beaver tailwater on Pocket Fishing Guide' },
+      { name: 'Bull Shoals', sub: 'dam to Buffalo mouth', verdict: 'GO 78', color: '#4caf50', temp: '54.5°F', gen: '2 of 8 · ▲ 2:00 PM', href: twLink('wb_white_river_bull_shoals_tailwater'), aria: 'Bull Shoals tailwater on Pocket Fishing Guide' },
+      { name: 'Norfork', sub: 'below Norfork Dam', verdict: 'GO 84', color: '#4caf50', temp: '49.8°F', gen: 'Off · wadeable', href: twLink('wb_north_fork_norfork_tailwater'), aria: 'Norfork tailwater on Pocket Fishing Guide' },
+    ];
+    const spLink = (id, water) => PFG + '/species/' + id + U + (water ? '&water=' + water : '');
+    const months = ['J','F','M','A','M','J','J','A','S','O','N','D'].map((n, i) => ({ n, color: i + 1 === now ? '#d4a843' : '#8da3b5', weight: i + 1 === now ? 700 : 400 }));
+    const row = (name, where, peak, ok) => ({ name, where, cells: Array.from({ length: 12 }, (_, i) => { const m = i + 1; const p = peak.includes(m), f = ok.includes(m); return { bg: p ? '#4caf50' : f ? 'rgba(76,175,80,0.3)' : '#243447', border: m === now ? '#d4a843' : 'transparent' }; }) });
+    const seasons = [
+      row('Rainbow trout', 'All three tailwaters', [10,11,12,1,2,3], [4,5,6,7,8,9]),
+      row('Brown trout', 'Bull Shoals · Norfork', [10,11,12,1,2], [3,4,9]),
+      row('Walleye', 'White River, spring run', [3,4,5], [10,11,12]),
+      row('Smallmouth', 'Near the Buffalo inflow', [5,6,7,8,9], [4,10]),
+      row('Cutthroat', 'Bull Shoals, stocked', [10,11,12,1,2,3], [4]),
+    ];
+    const river = [
+      { name: 'Full Day', len: '8 hours · any tailwater', price: '$550', i1: 'Boat, fuel, rods, tackle and bait', i2: 'Cold fried chicken riverside lunch', i3: 'Written trip story in 48 h', who: 'The default. Trout, with a shot at whatever else is in.', sig: true, tag: 'Most booked', border: '#d4a843' },
+      { name: 'Half Day', len: '4 hours · morning', price: '$400', i1: 'Boat, fuel, rods, tackle and bait', i2: 'Drinks and snacks', i3: 'Photo recap', who: 'Families, first-timers, a travel day.', sig: false, tag: '', border: 'rgba(245,240,232,0.18)' },
+      { name: 'Confluence Day', len: '9 hours · lower White', price: '$600', i1: 'Buffalo City down to the mouth', i2: 'Trout, and smallmouth when they\'re in', i3: 'Riverside lunch, trip story', who: 'The day you can only have here.', sig: true, tag: 'Signature', border: '#d4a843' },
+    ];
+    const fromLR = [
+      { name: 'Little Rock Departure · Full Day', len: 'Pickup 4:30 AM · home by 8 PM', price: '$750', i1: 'Round trip from Little Rock', i2: 'A full day on your pick of tailwater', i3: 'Riverside lunch, trip story', who: 'Opens once commercial auto is in place.', sig: true, tag: 'Most booked', border: '#d4a843' },
+      { name: 'Fly-in from Clinton National', len: 'Airport pickup · full day', price: '$750', i1: 'Pickup at arrivals, return to LIT', i2: 'A full day on the White', i3: 'Riverside lunch, trip story', who: 'Opens once commercial auto is in place.', sig: false, tag: '', border: 'rgba(245,240,232,0.18)' },
+      { name: 'Little Rock Overnight · Two Tailwaters', len: 'Two days · stay in Mountain Home', price: '$1,250', i1: 'Drive up the evening before', i2: 'Bull Shoals day one, Norfork day two', i3: 'Lodging at cost', who: 'Couples and small groups.', sig: true, tag: 'Signature', border: '#d4a843' },
+    ];
+    const fish = [
+      { name: 'Brown trout', img: '../assets/species/brown_trout.png', record: 'World record 40 lb 4 oz · AR', when: 'Peak Oct–Feb · Bull Shoals, Norfork', href: spLink('brown_trout', 'wb_white_river_bull_shoals_tailwater') },
+      { name: 'Rainbow trout', img: '../assets/species/rainbow_trout.png', record: 'State record 19 lb 1 oz · White River', when: 'Peak Oct–Mar · all three tailwaters', href: spLink('rainbow_trout', 'wb_white_river_bull_shoals_tailwater') },
+      { name: 'Walleye', img: '../assets/species/walleye.png', record: 'State record 22 lb 11 oz', when: 'Spring run Mar–May · White River', href: spLink('walleye', 'wb_white_river_bull_shoals_tailwater') },
+      { name: 'Smallmouth', img: '../assets/species/smallmouth_bass.png', record: 'State record 7 lb 5 oz · Bull Shoals', when: 'May–Sep · near the Buffalo inflow', href: spLink('smallmouth_bass', 'wb_white_river_bull_shoals_tailwater') },
+      { name: 'Brook trout', img: '../assets/species/brook_trout.png', record: 'State record 5 lb · Norfork', when: 'Oct–Mar · Norfork, stocked', href: spLink('brook_trout', 'wb_north_fork_norfork_tailwater') },
+    ];
+    return {
+      tw, months, seasons, fish, interests,
+      trips: lr ? fromLR : river,
+      footnote: lr ? 'A third guest on a pickup trip is $150. Pickup trips open once commercial auto coverage is in place.' : 'All three meet at a White-system ramp chosen for that day\'s water. Switch to From Little Rock for pickup trips.',
+      atRiver: () => this.setState({ start: 'river' }),
+      fromLR: () => this.setState({ start: 'lr' }),
+      riverBg: lr ? 'transparent' : '#d4a843', riverFg: lr ? '#f5f0e8' : '#0d1b2a',
+      lrBg: lr ? '#d4a843' : 'transparent', lrFg: lr ? '#0d1b2a' : '#f5f0e8',
+      false: false,
+    };
+  }
+}
+</script>
+</body>
+</html>

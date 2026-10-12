@@ -1,0 +1,88 @@
+# Design build: turn one board of the Guides design package into a PR.
+#
+# Trigger: add the `design-build` label to an issue created from the
+# "Design build" issue form (.github/ISSUE_TEMPLATE/design-build.yml), or
+# mention @claude on an issue or PR comment.
+#
+# What happens: Claude Code reads the board named in the issue, the docs in
+# docs/guides/, data/guiding.json and the rules in CLAUDE.md, builds the page
+# on a new branch, runs the same checks CI runs, and opens a PR titled
+# `[Feature] ...` for human review. It never pushes to main.
+#
+# Setup (one time, repo admin): run `claude` locally, then `/install-github-app`
+# to install the GitHub app and add ANTHROPIC_API_KEY as a repo secret.
+# Docs: https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md
+name: Design build
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+concurrency:
+  group: design-build-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: >-
+      (github.event_name == 'issues' && github.event.label.name == 'design-build') ||
+      (github.event_name != 'issues' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build from the design package
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          label_trigger: "design-build"
+          trigger_phrase: "@claude"
+          track_progress: true
+          use_sticky_comment: true
+          branch_prefix: "feature/design-"
+          base_branch: "main"
+          prompt: |
+            You are building one slice of Tale Waters & Tides · Guides from the design package in this repo.
+
+            Read first, in this order:
+            1. CLAUDE.md (branch and PR rules, the Guides rules section)
+            2. design/guides/README.md, then the board the issue names under design/guides/canvas/
+            3. docs/guides/GUIDES-PR-PLAN-DEV-ENVIRONMENT.md (the PR this issue maps to, its scope and acceptance list)
+            4. data/guiding.json (the only source for prices, hours, lunch options and policy text)
+            5. assets/css/site.css and assets/js/site.js (reuse tokens and window.TWT.intake; do not fork them)
+
+            Then build exactly the scope in the issue body. Keep copy short and literal. Do not invent prices,
+            catch claims, credentials or photos; use the placeholders data/guiding.json provides.
+
+            Before you open the PR, run and fix until green:
+              npx --yes htmlhint@1 "**/*.html" --ignore "design/**"
+              node scripts/check-site.mjs
+              node scripts/check-guiding.mjs   (once PR 1 has merged; skip if the file is absent)
+              node scripts/check-design.mjs
+            If a check cannot pass for a reason outside the issue's scope, say so in the PR body instead of
+            weakening the check.
+
+            Open one PR titled `[Feature] <short description>` against main. The PR body lists: what, why,
+            the issue's acceptance checklist with each box ticked only if you verified it, and what is not
+            included. Never commit to main. Never delete CNAME.
+          claude_args: >-
+            --max-turns 60
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(npx *),Bash(node *),Bash(git *),Bash(deno *)"
