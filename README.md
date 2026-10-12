@@ -11,6 +11,10 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | Path | Purpose | Primary action |
 |------|---------|----------------|
 | `/` | Services home: two doors (owners, marketing/ops leaders), five stages, week-by-week 90-day plan, proof, FAQ, routed contact form | Book a call |
+| `/ai-implementation/` | Service page: AI setup for 5–50 person businesses; who it is for, deliverables, 90 days week by week, pricing approach, measurement, tools, FAQ | Book a call |
+| `/fractional-ai-martech/` | Service page: one quarter as fractional AI and MarTech lead; deliverables, quarter plan, pricing approach, measurement, tools, FAQ | Book a call |
+| `/ai-workshops/` | Service page: executive sprints, team workshops, talks, community nights; formats, pricing approach, FAQ | Request a workshop |
+| `/work/pocket-fishing-guide/` | Case study with stated limits: role, what was built, result, what carries over | Open the app / see the client version |
 | `/readiness/` | One-page AI readiness check: site scan, three questions, gated reading and dated plan | Get my reading |
 | `/corey/` | Executive profile, career, principles, press; prints as a one-page profile | Work with Corey |
 | `/lab/` | Outdoor Recreation Innovation Lab: Pocket Fishing Guide and origin story | Open PFG |
@@ -23,6 +27,7 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 |------|-------|--------|
 | Pocket Fishing Guide coverage | 57 waters, 33 species | `pocket-fishing-guide` repo data files (validated 2026-10-07) |
 | PFG data sources | USGS, NWS, USACE, AGFC (+ Open-Meteo, USNO); 20-minute refresh | `pocket-fishing-guide/docs/data-sources.yaml` |
+| PFG users | 723 in the first 90 days after launch | Owner-reported from the app's analytics in the 2026-10 services rebuild (PR #78); used on `/`, `/lab/`, `/work/pocket-fishing-guide/`, `llms.txt`. Launch month and an analytics export still to be attached (#88) |
 | RaftUp | 30K+ users, $1M+ raised | Previous site |
 | Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 | Booking link | `https://calendar.app.google/MmHqpVo9QuN93jYt8` (Google Calendar appointment page), used by every "Book a call" button | Owner-provided |
