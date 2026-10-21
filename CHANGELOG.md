@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-- `/sales-kit/` — internal, `noindex` field playbook for Pocket Fishing Guide partner outreach: pipeline snapshot, actionable fix-list (each item carries the link or copy action that completes it), segments, scripts with tap-to-copy, objection search, the pack checklist, proof points, a day-by-day route with tap-to-call and per-business status/notes, the close cadence, a weekly scorecard and an open-decisions list that exports as markdown. State lives in `localStorage` only. No price appears on the page by design. Files: `sales-kit/index.html`, `assets/css/sales-kit.css`, `assets/js/sales-kit.js`; `robots.txt` disallows the path.
+- `/sales-kit/` — internal, `noindex` field playbook for Pocket Fishing Guide partner outreach: pipeline snapshot, actionable fix-list (each item carries the link or copy action that completes it), segments, scripts with tap-to-copy, objection search, the pack checklist, proof points, a day-by-day route with tap-to-call and per-business status/notes, the close cadence, a weekly scorecard and an open-decisions list that exports as markdown. State lives in `localStorage` only. No price appears on the page by design. Files: `sales-kit/index.html`, `assets/css/sales-kit.css`, `assets/js/sales-kit.js`; `robots.txt` disallows the path. Linked from the footer Proof column on every page and from the Pocket Fishing Guide section of `/lab/`.
 
 ### Changed
 - Clarity pass on `/` and `/corey/`, using Corey's June 2026 resume as the source of truth:
