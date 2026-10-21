@@ -40,8 +40,8 @@
       actions: [{ l: 'Open /admin/program', h: PFG + '/admin/program' }, { l: 'Copy rack line', c: 'Free listing. Sponsored seats for founding partners. Text Corey.' }, { l: 'Copy shows-up line', c: 'Every partner gets a page and a card on every water they work. Sponsored partners add their photo, logo and river note across those waters.' }] },
     { id: 'fix-3', owner: 'build', t: 'Rebuild the leave-behind PDF after invite-offer ships so no page carries a number.',
       actions: [{ l: 'Copy command', c: 'npm run guide:pdf' }, { l: 'Current PDF', h: PFG + '/partners/guide' }] },
-    { id: 'fix-4', owner: 'corey', t: 'Write the private rate card: offer by kind and market, the founding lock, the floor. One index card, never shown. Same number for neighbours on the same river.',
-      actions: [{ l: 'Copy the template', c: 'RATE CARD (private)\nMarket: Ozarks North Central\nSolo guide: $___/yr\nDock / resort: $___/yr\nLodge: $___/yr\nShop: $___/yr\nMarina: $___/yr\nFloor (never below): $___\nFounding: locked 24 months, first 25, through Mar 31 2027' }] },
+    { id: 'fix-4', owner: 'corey', t: 'Set the rate card in the partner manager, not on paper: offer by kind and market, the founding lock, the floor. The console is the only place a price lives; once invite-offer ships it is pricing.offers[kind] there. Same number for neighbours on the same river.',
+      actions: [{ l: 'Open the partner manager', h: PFG + '/admin/program' }, { l: 'Copy the kinds to set', c: 'Ozarks North Central: solo guide / dock or resort / lodge / shop / marina. Floor (never below). Founding: locked 24 months, first 25, through Mar 31 2027.' }] },
     { id: 'fix-5', owner: 'corey', t: 'Make the invite for The White River Inn; set an offer on all four invites once invite-offer ships.',
       actions: [{ l: 'Open leads', h: PFG + '/admin/partners/leads' }] },
     { id: 'fix-6', owner: 'corey', t: 'Archive the Riley\'s inbound lead (they are published; the open row is noise).',
@@ -162,16 +162,16 @@
     b.addEventListener('click', function () { show(p.id, true); });
     tabBar.appendChild(b);
   });
-  function show(id, scroll) {
+  // byUser is true only from a tab button: the initial render neither scrolls nor records a click.
+  function show(id, byUser) {
     panels.forEach(function (p) { p.classList.toggle('on', p.id === id); });
     $$('button', tabBar).forEach(function (b, i) { b.setAttribute('aria-selected', String(panels[i].id === id)); });
     S.tab = id;
     save();
     if (history.replaceState) history.replaceState(null, '', '#' + id);
-    if (scroll) {
-      var top = $('#kit-tabs').getBoundingClientRect().top + window.pageYOffset - 72;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-    }
+    if (!byUser) return;
+    var top = $('#kit-tabs').getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
     if (window.TWT) window.TWT.track('click', { event_category: 'engagement', event_label: 'saleskit_tab_' + id });
   }
   var initial = (location.hash || '').slice(1);
@@ -243,7 +243,11 @@
     var b = e.target.closest('[data-copy]');
     if (b) copy(b.getAttribute('data-copy'), 'Copied');
     var q = e.target.closest('.quote');
-    if (q) copy(q.getAttribute('data-say') || q.innerText, 'Line copied');
+    if (q) {
+      // Static cards carry their line in a .say element; the "Tap to copy" caption is never copied.
+      var say = q.querySelector('.say') || q.querySelector('p');
+      copy(q.getAttribute('data-say') || (say ? say.innerText : q.innerText), 'Line copied');
+    }
   });
 
   // ------------------------------------------------------------------
