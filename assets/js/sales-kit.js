@@ -162,16 +162,16 @@
     b.addEventListener('click', function () { show(p.id, true); });
     tabBar.appendChild(b);
   });
-  function show(id, scroll) {
+  // byUser is true only from a tab button: the initial render neither scrolls nor records a click.
+  function show(id, byUser) {
     panels.forEach(function (p) { p.classList.toggle('on', p.id === id); });
     $$('button', tabBar).forEach(function (b, i) { b.setAttribute('aria-selected', String(panels[i].id === id)); });
     S.tab = id;
     save();
     if (history.replaceState) history.replaceState(null, '', '#' + id);
-    if (scroll) {
-      var top = $('#kit-tabs').getBoundingClientRect().top + window.pageYOffset - 72;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-    }
+    if (!byUser) return;
+    var top = $('#kit-tabs').getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
     if (window.TWT) window.TWT.track('click', { event_category: 'engagement', event_label: 'saleskit_tab_' + id });
   }
   var initial = (location.hash || '').slice(1);
@@ -243,7 +243,11 @@
     var b = e.target.closest('[data-copy]');
     if (b) copy(b.getAttribute('data-copy'), 'Copied');
     var q = e.target.closest('.quote');
-    if (q) copy(q.getAttribute('data-say') || q.innerText, 'Line copied');
+    if (q) {
+      // Static cards carry their line in a .say element; the "Tap to copy" caption is never copied.
+      var say = q.querySelector('.say') || q.querySelector('p');
+      copy(q.getAttribute('data-say') || (say ? say.innerText : q.innerText), 'Line copied');
+    }
   });
 
   // ------------------------------------------------------------------
