@@ -1,118 +1,118 @@
-# NEWS AND UPDATES
-
-The public record of what the lab ships and learns: `/news/`, its RSS feed, and the "What shipped" block on `/lab/`. It borrows two things from Pocket Fishing Guide: the What's new feed (one entry per change an angler or guide can see or use, newest first, each naming the part of the app it changed) and the Friday digest's founder note, which ends with one ask.
-
-| | |
-|---|---|
-| Page | `/news/` (indexed, in the sitemap, strict SEO checks) |
-| Feed | `/news/feed.xml` (RSS 2.0: issues and release days, 20 items) |
-| Lab block | `/lab/`, between `<!-- lab-news:start -->` and `<!-- lab-news:end -->` |
-| Data | `data/news.json` (issues, metrics, asks) and `data/pfg-whats-new.json` (snapshot of `pocket-fishing-guide/data/whats-new.json`) |
-| Renderer | `node scripts/build-news.mjs`; `--check` in `html-lint.yml` |
-| Sync | `.github/workflows/news-sync.yml`, Fridays 15:40 UTC and on demand: fetches `https://www.pocketfishinguide.com/data/whats-new.json` (no token), opens a draft PR |
-| Status | Built 2026-10-23; the first issue carries numbers read by hand on 2026-10-22 |
-
----
-
-## How it fits together
-
-```mermaid
-flowchart LR
-  P[pocketfishinguide.com<br/>/data/whats-new.json, public] -- news-sync.yml, Fridays<br/>plain fetch, no token --> S[data/pfg-whats-new.json]
-  N[data/news.json<br/>Friday note · metrics · asks] --> B[scripts/build-news.mjs]
-  S --> B
-  B --> page[news/index.html]
-  B --> feed[news/feed.xml]
-  B --> lab[lab/index.html<br/>lab-news block]
-  B -- "--check" --> CI[html-lint.yml]
-```
-
-The site has no build step, so the rendered files are committed. The script is the one writer; CI fails when a rendered file is stale, the same pattern as the metrics function's committed sample payload.
-
-The public copy exists because the `pocket-fishing-guide` repo is private. Its validator (`scripts/validate-whats-new.js`) holds `web/public/data/whats-new.json` byte-identical to `data/whats-new.json`, and Vercel serves it at `/data/whats-new.json` with `access-control-allow-origin: *` and `must-revalidate`, so every Friday fetch is fresh.
-
----
-
-## The weekly loop (Friday)
-
-| Step | Who | What |
-|------|-----|------|
-| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens or updates a draft PR on `chore/news-sync-<date>` |
-| 2 | Corey (or Claude, drafted for Corey) | Writes this week's issue at the top of `issues` in `data/news.json`: `title`, `summary`, `note.lines`, `observations`, `ask`, `twt_updates`. Borrow the digest's founder note where it fits and say so in `note.source` |
-| 3 | Corey | Refreshes `metrics` from the sources below, sets `as_of` |
-| 4 | Anyone | `node scripts/build-news.mjs`, then the checks, then read the page at phone width |
-| 5 | Corey | Reviews and merges the PR; Pages deploys |
-
-A week with nothing to say gets no issue. The sync PR still refreshes the lab block.
-
-### Where the numbers come from
-
-| Metric | Source | How to read it |
-|--------|--------|----------------|
-| Visitors and pageviews per week, referrers, routes | Vercel Web Analytics, project `pfg`, team Tale Waters and Tides | Vercel dashboard, or the `metrics` Edge Function once its secrets are set (`docs/METRICS-DASHBOARD.md`) |
-| Accounts, new in 30 days, signed in 7 days | PFG `auth.users` minus `demo_accounts` | PFG `/api/metrics/summary` with `PFG_METRICS_TOKEN`, or the SQL editor |
-| Partners published, trip requests, buddy pairs, open days, invites, asks | PFG tables `partners`, `trip_requests` (source not `demo`), `connections` (accepted), `angler_open_days`, `invites`, `buddy_asks` | SQL editor, service role |
-| Waters, species, condition readings, cron jobs | PFG `water_conditions`, catalog mirrors, `conditions_history`, `cron.job` | `docs/readme/CLAIMS-AUDIT-2026-10-08.md` in the PFG repo shows the method |
-
-Rules for a number on the page:
-
-- It carries `source` and the `as_of` date. A number without a source does not render.
-- Aggregates only. Never a name, an email, a lead, a partner's private figures or anything from the TWT `leads` table.
-- `show: false` keeps a metric in the file for the record without rendering it. Account totals ship with `show: false` until the owner decides; the home page's "723 users in its first 90 days" is a different measure (site users in the static-app era) and the two should not sit side by side unlabelled.
-- Visitor counts include the team's own use. Vercel cannot exclude it; say so in `metrics.note`.
-- Pageviews are inflated by the app's catch-all route (the PFG claims audit notes it). Lead with visitors.
-
-### Copy rules (checked by the script)
-
-- No exclamation marks, no stock phrases (the list mirrors `web/lib/copy-rules.ts` in the PFG repo), no bracketed placeholder copy.
-- Short literal headlines. No catch counts, sizes or guarantees. A regulation line names where it came from.
-- Issues newest first, dated `YYYY-MM-DD`, title at most 90 characters.
-
----
-
-## Pocket Fishing Guide pictures
-
-An entry's `image.src` is a path under `/assets/whats-new/` on www.pocketfishinguide.com; the page hotlinks it with the width, height and alt the PFG workflow wrote. Nothing is copied into this repo. If PFG moves or renames the folder, the pictures 404 and the page still reads; the sync PR is where to notice.
-
----
-
-## Interlocks
-
-| Depends on | Why it matters | Owner |
-|------------|---------------|-------|
-| The public copy on pocketfishinguide.com | PFG serves `web/public/data/whats-new.json` at `/data/whats-new.json`, byte-identical to its source by `scripts/validate-whats-new.js`; the sync stops with a clear error while it is not yet deployed. No token, nothing expires | PFG |
-| "Allow GitHub Actions to create and approve pull requests" | The sync opens its PR with `GITHUB_TOKEN` | Corey |
-| What's new discipline in PFG | Every PR that ships an angler-visible change adds its entry (`web/AGENTS.md`, What's new); the page is only as current as that file | PFG agents |
-| Metrics refresh | Numbers are read by hand until the `metrics` function is deployed and the partner payload can feed `data/news.json` | Corey |
-| License | PFG source is proprietary; only the angler-facing What's new text, already public at `/whats-new` and `/data/whats-new.json`, is mirrored here | Corey |
-
----
-
-## Quality gates
-
-| Check | Command | CI |
-|-------|---------|----|
-| Data rules and rendered files current | `node scripts/build-news.mjs --check` | `html-lint.yml` |
-| HTML lint | `npx htmlhint@1 "**/*.html" --ignore "design/**"` | `html-lint.yml` |
-| SEO, links, anchors (strict for `/news/`) | `node scripts/check-site.mjs` | `html-lint.yml` |
-
-### Manual QC before merging an issue
-
-- [ ] Page reads whole at 390px wide: chips in one row per card, chart labels legible, no horizontal scroll
-- [ ] Every "Open in the app" link opens the right surface and carries `utm_campaign=news`
-- [ ] Pictures load from pocketfishinguide.com (the sandbox that builds the PR cannot reach the site; check in a browser)
-- [ ] Numbers match their source for the same window; `as_of` is this week
-- [ ] The Friday note's regulation or data lines name a source
-- [ ] RSS validates (paste `/news/feed.xml` into a reader)
-
----
-
-## Open decisions
-
-| Decision | Default in this slice |
-|----------|----------------------|
-| Publish account totals? | No (`show: false`). Visitors, waters, readings, buddies, partners and trip requests are shown |
-| Feed the metrics from the `metrics` Edge Function automatically? | Later: the partner payload already has the right shape; the sync job could write `metrics.series` and the tiles once `VERCEL_TOKEN` and `PFG_METRICS_TOKEN` are set on the function |
-| Email the issue? | Later, through Resend from the same JSON, as the digest does; the RSS feed is the first subscription path |
-| "News" in the main nav | Yes, on the five new-style pages; the legacy pages (`/projects/`, `/events/`) keep their own nav |
-| One page or one URL per issue? | One page with anchors (`#issue-<date>`) while issues are few; split when the archive passes a screen of entries |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |# NEWS AND UPDATES
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |The public record of what the lab ships and learns: `/news/`, its RSS feed, and the "What shipped" block on `/lab/`. It borrows two things from Pocket Fishing Guide: the What's new feed (one entry per change an angler or guide can see or use, newest first, each naming the part of the app it changed) and the Friday digest's founder note, which ends with one ask.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || | |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||---|---|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Page | `/news/` (indexed, in the sitemap, strict SEO checks) |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Feed | `/news/feed.xml` (RSS 2.0: issues and release days, 20 items) |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Lab block | `/lab/`, between `<!-- lab-news:start -->` and `<!-- lab-news:end -->` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Data | `data/news.json` (issues, metrics, asks) and `data/pfg-whats-new.json` (snapshot of `pocket-fishing-guide/data/whats-new.json`) |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Renderer | `node scripts/build-news.mjs`; `--check` in `html-lint.yml` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Sync | `.github/workflows/news-sync.yml`, Fridays 15:40 UTC and on demand: fetches `https://www.pocketfishinguide.com/data/whats-new.json` (no token), opens a draft PR |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Status | Built 2026-10-23; the first issue carries numbers read by hand on 2026-10-22 |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## How it fits together
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |```mermaid
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |flowchart LR
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  P[pocketfishinguide.com<br/>/data/whats-new.json, public] -- news-sync.yml, Fridays<br/>plain fetch, no token --> S[data/pfg-whats-new.json]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  N[data/news.json<br/>Friday note · metrics · asks] --> B[scripts/build-news.mjs]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  S --> B
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  B --> page[news/index.html]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  B --> feed[news/feed.xml]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  B --> lab[lab/index.html<br/>lab-news block]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |  B -- "--check" --> CI[html-lint.yml]
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |```
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |The site has no build step, so the rendered files are committed. The script is the one writer; CI fails when a rendered file is stale, the same pattern as the metrics function's committed sample payload.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |The public copy exists because the `pocket-fishing-guide` repo is private. Its validator (`scripts/validate-whats-new.js`) holds `web/public/data/whats-new.json` byte-identical to `data/whats-new.json`, and Vercel serves it at `/data/whats-new.json` with `access-control-allow-origin: *` and `must-revalidate`, so every Friday fetch is fresh.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## The weekly loop (Friday)
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Step | Who | What |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||------|-----|------|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens or updates a draft PR on `chore/news-sync-<date>` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || 2 | Corey (or Claude, drafted for Corey) | Writes this week's issue at the top of `issues` in `data/news.json`: `title`, `summary`, `note.lines`, `observations`, `ask`, `twt_updates`. Borrow the digest's founder note where it fits and say so in `note.source` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || 3 | Corey | Refreshes `metrics` from the sources below, sets `as_of` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || 4 | Anyone | `node scripts/build-news.mjs`, then the checks, then read the page at phone width |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || 5 | Corey | Reviews and merges the PR; Pages deploys |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |A week with nothing to say gets no issue. The sync PR still refreshes the lab block.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |### Where the numbers come from
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Metric | Source | How to read it |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||--------|--------|----------------|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Visitors and pageviews per week, referrers, routes | Vercel Web Analytics, project `pfg`, team Tale Waters and Tides | Vercel dashboard, or the `metrics` Edge Function once its secrets are set (`docs/METRICS-DASHBOARD.md`) |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Accounts, new in 30 days, signed in 7 days | PFG `auth.users` minus `demo_accounts` | PFG `/api/metrics/summary` with `PFG_METRICS_TOKEN`, or the SQL editor |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Partners published, trip requests, buddy pairs, open days, invites, asks | PFG tables `partners`, `trip_requests` (source not `demo`), `connections` (accepted), `angler_open_days`, `invites`, `buddy_asks` | SQL editor, service role |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Waters, species, condition readings, cron jobs | PFG `water_conditions`, catalog mirrors, `conditions_history`, `cron.job` | `docs/readme/CLAIMS-AUDIT-2026-10-08.md` in the PFG repo shows the method |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |Rules for a number on the page:
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- It carries `source` and the `as_of` date. A number without a source does not render.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- Aggregates only. Never a name, an email, a lead, a partner's private figures or anything from the TWT `leads` table.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- `show: false` keeps a metric in the file for the record without rendering it. Account totals ship with `show: false` until the owner decides; the home page's "723 users in its first 90 days" is a different measure (site users in the static-app era) and the two should not sit side by side unlabelled.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- Visitor counts include the team's own use. Vercel cannot exclude it; say so in `metrics.note`.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- Pageviews are inflated by the app's catch-all route (the PFG claims audit notes it). Lead with visitors.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |### Copy rules (checked by the script)
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- No exclamation marks, no stock phrases (the list mirrors `web/lib/copy-rules.ts` in the PFG repo), no bracketed placeholder copy.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- Short literal headlines. No catch counts, sizes or guarantees. A regulation line names where it came from.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- Issues newest first, dated `YYYY-MM-DD`, title at most 90 characters.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## Pocket Fishing Guide pictures
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |An entry's `image.src` is a path under `/assets/whats-new/` on www.pocketfishinguide.com; the page hotlinks it with the width, height and alt the PFG workflow wrote. Nothing is copied into this repo. If PFG moves or renames the folder, the pictures 404 and the page still reads; the sync PR is where to notice.
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## Interlocks
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Depends on | Why it matters | Owner |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||------------|---------------|-------|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || The public copy on pocketfishinguide.com | PFG serves `web/public/data/whats-new.json` at `/data/whats-new.json`, byte-identical to its source by `scripts/validate-whats-new.js`; the sync stops with a clear error while it is not yet deployed. No token, nothing expires | PFG |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || "Allow GitHub Actions to create and approve pull requests" | The sync opens its PR with `GITHUB_TOKEN` | Corey |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || What's new discipline in PFG | Every PR that ships an angler-visible change adds its entry (`web/AGENTS.md`, What's new); the page is only as current as that file | PFG agents |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Metrics refresh | Numbers are read by hand until the `metrics` function is deployed and the partner payload can feed `data/news.json` | Corey |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || License | PFG source is proprietary; only the angler-facing What's new text, already public at `/whats-new` and `/data/whats-new.json`, is mirrored here | Corey |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## Quality gates
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Check | Command | CI |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||-------|---------|----|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Data rules and rendered files current | `node scripts/build-news.mjs --check` | `html-lint.yml` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || HTML lint | `npx htmlhint@1 "**/*.html" --ignore "design/**"` | `html-lint.yml` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || SEO, links, anchors (strict for `/news/`) | `node scripts/check-site.mjs` | `html-lint.yml` |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |### Manual QC before merging an issue
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] Page reads whole at 390px wide: chips in one row per card, chart labels legible, no horizontal scroll
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] Every "Open in the app" link opens the right surface and carries `utm_campaign=news`
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] Pictures load from pocketfishinguide.com (the sandbox that builds the PR cannot reach the site; check in a browser)
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] Numbers match their source for the same window; `as_of` is this week
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] The Friday note's regulation or data lines name a source
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |- [ ] RSS validates (paste `/news/feed.xml` into a reader)
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |---
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |## Open decisions
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Decision | Default in this slice |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives ||----------|----------------------|
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Publish account totals? | No (`show: false`). Visitors, waters, readings, buddies, partners and trip requests are shown |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Feed the metrics from the `metrics` Edge Function automatically? | Later: the partner payload already has the right shape; the sync job could write `metrics.series` and the tiles once `VERCEL_TOKEN` and `PFG_METRICS_TOKEN` are set on the function |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || Email the issue? | Later, through Resend from the same JSON, as the digest does; the RSS feed is the first subscription path |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || "News" in the main nav | Yes, on the five new-style pages; the legacy pages (`/projects/`, `/events/`) keep their own nav |
+| 1 | `news-sync.yml` | Fetches the What's new snapshot, rebuilds, opens a draft PR on `chore/news-sync-<date>`. A rerun starts from that branch when it is open and merges main in, so a note committed there survives || One page or one URL per issue? | One page with anchors (`#issue-<date>`) while issues are few; split when the archive passes a screen of entries |

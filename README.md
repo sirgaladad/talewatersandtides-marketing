@@ -1,7 +1,3 @@
-| News page, feed and lab block match `data/` (and the copy rules: no exclamation marks, no stock phrases, no placeholders) | `node scripts/build-news.mjs --check` | `html-lint.yml` |
-| PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, fetched from `https://www.pocketfishinguide.com/data/whats-new.json` by `news-sync.yml` |
-| Numbers on `/news/` | Each carries its source and read date in `data/news.json` | Vercel Web Analytics (pfg), PFG database aggregates, read by hand or by the metrics function |
-| `/news/` | News and updates: what shipped in Pocket Fishing Guide, the Friday note, the numbers with sources, asks; RSS at `/news/feed.xml` | What's new in the app |
 # Tale Waters & Tides — Marketing Site
 
 > **AI your team actually uses.** · [talewatersandtides.com](https://talewatersandtides.com)
@@ -18,6 +14,7 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | `/readiness/` | One-page AI readiness check: site scan, three questions, gated reading and dated plan | Get my reading |
 | `/corey/` | Executive profile, career, principles, press; prints as a one-page profile | Work with Corey |
 | `/lab/` | Outdoor Recreation Innovation Lab: Pocket Fishing Guide and origin story | Open PFG |
+| `/news/` | News and updates: what shipped in Pocket Fishing Guide, the Friday note, the numbers with sources, asks; RSS at `/news/feed.xml` | What's new in the app |
 | `/privacy/` | What the forms and scan collect | — |
 | `/admin/metrics/` | Private progress dashboard for both businesses (noindex, sign-in) | — |
 | `/partners/progress/` | Partner view of the dashboard by share link: trends and totals only | — |
@@ -29,6 +26,8 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 |------|-------|--------|
 | Pocket Fishing Guide coverage | 57 waters, 33 species | `pocket-fishing-guide` repo data files (validated 2026-10-07) |
 | PFG data sources | USGS, NWS, USACE, AGFC (+ Open-Meteo, USNO); 20-minute refresh | `pocket-fishing-guide/docs/data-sources.yaml` |
+| PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, fetched from `https://www.pocketfishinguide.com/data/whats-new.json` by `news-sync.yml` |
+| Numbers on `/news/` | Each carries its source and read date in `data/news.json` | Vercel Web Analytics (pfg), PFG database aggregates, read by hand or by the metrics function |
 | RaftUp | 30K+ users, $1M+ raised | Previous site |
 | Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 | Booking link | `https://calendar.app.google/MmHqpVo9QuN93jYt8` (Google Calendar appointment page), used by every "Book a call" button | Owner-provided |
@@ -57,6 +56,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 |-------|---------|----|
 | HTML lint | `npx htmlhint@1 "**/*.html"` | `html-lint.yml` |
 | SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors | `node scripts/check-site.mjs` | `html-lint.yml` |
+| News page, feed and lab block match `data/` (and the copy rules: no exclamation marks, no stock phrases, no placeholders) | `node scripts/build-news.mjs --check` | `html-lint.yml` |
 | Intake function: lint, type-check, unit tests | `deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts` (in `supabase/functions/intake`) | `intake-function.yml` |
 | Metrics function: lint, type-check, unit tests, sample freshness | `deno lint && deno check index.ts fixture.ts && deno test --no-check=remote --allow-env metrics_test.ts` (in `supabase/functions/metrics`) | `metrics-function.yml` |
 
