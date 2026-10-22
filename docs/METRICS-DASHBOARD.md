@@ -28,10 +28,10 @@ Out of scope for this slice: editing leads, CRM workflows, revenue, and anything
 | PFG | Accounts, new in 30 days, signed in last 7 days, signups per week | PFG app endpoint | Yes |
 | PFG | Guide-trip requests and confirmations, published partners | PFG app endpoint | Yes |
 | TWT | Sessions per week and channel | Google Analytics 4 | Yes |
-| TWT | Leads per week, page and channel, leads not yet worked | `leads` table | No |
+| TWT | Leads per week, page and channel, where each lead stands, leads not yet worked | `leads` table | No |
 | Both | Google clicks per week | Search Console | Yes |
 
-Every chart has a table view. The current week is drawn faded because it is still in progress, and trend lines compare the last complete week with the four before it, so a Monday never reads as a drop.
+Every chart has a table view. The current week is drawn faded because it is still in progress, trend lines compare the last complete week with the four before it, and the 4-week totals compare the last four full weeks with the four before them, so a Monday never reads as a drop.
 
 ---
 

@@ -5,6 +5,7 @@ import {
   alignWeekly,
   bucketWeekly,
   type Business,
+  fullWeekWindows,
   gapLines,
   type Kpi,
   type Named,
@@ -116,10 +117,9 @@ export function buildPfg(raw: Raw, keys: string[], now: Date): Business {
     const views = alignWeekly(raw.pfgWeb.weekly.map((w) => ({ timestamp: w.timestamp, value: w.pageviews })), keys);
     series.visitors = visitors;
     series.pageviews = views;
-    const last4 = sum(visitors.slice(-4));
-    const prev4 = sum(visitors.slice(-8, -4));
-    kpis.push({ key: 'visitors_4w', label: 'Visitors, last 4 weeks', value: last4, prev: prev4 });
-    const v4 = sum(views.slice(-4));
+    const [last4, prev4] = fullWeekWindows(visitors);
+    kpis.push({ key: 'visitors_4w', label: 'Visitors, last 4 full weeks', value: last4, prev: prev4 });
+    const [v4] = fullWeekWindows(views);
     kpis.push({
       key: 'pages_per_visitor',
       label: 'Pages per visitor',
@@ -167,7 +167,8 @@ export function buildPfg(raw: Raw, keys: string[], now: Date): Business {
   if (raw.search?.pfg) {
     const clicks = alignWeekly(raw.search.pfg.map((s) => ({ timestamp: s.timestamp, value: s.clicks })), keys);
     series.search_clicks = clicks;
-    kpis.push({ key: 'search_clicks_4w', label: 'Google clicks, last 4 weeks', value: sum(clicks.slice(-4)), prev: sum(clicks.slice(-8, -4)) });
+    const [c4, cPrev] = fullWeekWindows(clicks);
+    kpis.push({ key: 'search_clicks_4w', label: 'Google clicks, last 4 full weeks', value: c4, prev: cPrev });
   }
 
   return { name: 'Pocket Fishing Guide', kpis, series, breakdowns, story };
@@ -183,7 +184,8 @@ export function buildTwt(raw: Raw, keys: string[], now: Date): Business {
   if (raw.twtWeb) {
     const visits = alignWeekly(raw.twtWeb.weekly.map((w) => ({ timestamp: w.timestamp, value: w.visitors })), keys);
     series.visitors = visits;
-    kpis.push({ key: 'visitors_4w', label: 'Sessions, last 4 weeks', value: sum(visits.slice(-4)), prev: sum(visits.slice(-8, -4)) });
+    const [s4, sPrev] = fullWeekWindows(visits);
+    kpis.push({ key: 'visitors_4w', label: 'Sessions, last 4 full weeks', value: s4, prev: sPrev });
     breakdowns.channels = raw.twtWeb.channels;
     const t = trendLine(visits, 'sessions', now);
     if (t) story.push(t);
@@ -220,7 +222,8 @@ export function buildTwt(raw: Raw, keys: string[], now: Date): Business {
   if (raw.search?.twt) {
     const clicks = alignWeekly(raw.search.twt.map((s) => ({ timestamp: s.timestamp, value: s.clicks })), keys);
     series.search_clicks = clicks;
-    kpis.push({ key: 'search_clicks_4w', label: 'Google clicks, last 4 weeks', value: sum(clicks.slice(-4)), prev: sum(clicks.slice(-8, -4)) });
+    const [c4, cPrev] = fullWeekWindows(clicks);
+    kpis.push({ key: 'search_clicks_4w', label: 'Google clicks, last 4 full weeks', value: c4, prev: cPrev });
   }
 
   return { name: 'Tale Waters and Tides', kpis, series, breakdowns, story, admin_only };
@@ -231,6 +234,11 @@ export function buildPayload(raw: Raw, sources: Record<string, SourceState>, now
   const pfg = buildPfg(raw, keys, now);
   const twt = buildTwt(raw, keys, now);
   const gaps = gapLines(sources);
+  // Search Console is one source for both sites; name a site whose property GSC_SITES leaves out.
+  if (sources.search?.status === 'ok') {
+    if (!raw.search?.pfg) pfg.story.push('Google Search Console has no property set for Pocket Fishing Guide, so its search clicks are blank.');
+    if (!raw.search?.twt) twt.story.push('Google Search Console has no property set for Tale Waters and Tides, so its search clicks are blank.');
+  }
   // Gaps go last in each story, so the reader sees what is known before what is missing.
   if (gaps.length) {
     pfg.story.push(...gaps.filter((g) => g.includes('Pocket Fishing Guide') || g.includes('Search Console')));

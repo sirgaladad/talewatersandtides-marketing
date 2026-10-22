@@ -19,6 +19,7 @@
     channels: ['Where sessions come from', 'Google Analytics default channel groups'],
     lead_sources: ['Which channel brought each lead', 'From the UTM tag or referrer captured on the form'],
     lead_pages: ['Which page each lead came from', 'Where the form was sent from'],
+    pipeline: ['Where each lead stands', 'Lead status; admin view only'],
   };
 
   function el(tag, attrs, kids) {
@@ -203,6 +204,9 @@
     ['referrers', 'channels', 'lead_pages', 'lead_sources'].forEach(function (k) {
       if (b.breakdowns[k] && b.breakdowns[k].length) charts.appendChild(breakdownCard(k, b.breakdowns[k]));
     });
+    // Never present in the partner payload; redactForPartner drops admin_only.
+    var pipeline = b.admin_only && b.admin_only.pipeline;
+    if (pipeline && pipeline.length) charts.appendChild(breakdownCard('pipeline', pipeline));
     if (charts.children.length) sec.appendChild(charts);
     sec._charts = drawn;
     return sec;

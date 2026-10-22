@@ -99,6 +99,15 @@ export function pctChange(value: number | null | undefined, prev: number | null 
 }
 
 /**
+ * The last four complete weeks and the four before them, as [current, previous].
+ * The last point is always the current, partial week, so it is left out of both.
+ */
+export function fullWeekWindows(points: Point[]): [number, number] {
+  const full = points.slice(0, -1);
+  return [sum(full.slice(-4)), sum(full.slice(-8, -4))];
+}
+
+/**
  * Last complete week against the average of the four complete weeks before it.
  * The current (partial) week is never compared, so a Monday morning never reads as a crash.
  */

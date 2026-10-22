@@ -32,9 +32,9 @@
       "kpis": [
         {
           "key": "visitors_4w",
-          "label": "Visitors, last 4 weeks",
-          "value": 535,
-          "prev": 190
+          "label": "Visitors, last 4 full weeks",
+          "value": 432,
+          "prev": 195
         },
         {
           "key": "pages_per_visitor",

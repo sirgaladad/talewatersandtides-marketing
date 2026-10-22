@@ -3,7 +3,7 @@
 
 import { assert, assertEquals } from 'jsr:@std/assert@1.0.13';
 import { buildPayload, groupReferrers, referrerName } from './build.ts';
-import { alignWeekly, bucketWeekly, pctChange, redactForPartner, trendLine, weekKeys, weekStart } from './shape.ts';
+import { alignWeekly, bucketWeekly, fullWeekWindows, pctChange, redactForPartner, trendLine, weekKeys, weekStart } from './shape.ts';
 import { adminEmails, matchPartner, sha256Hex } from './http.ts';
 import { NOW, RAW, SOURCES } from './fixture.ts';
 import { pemToDer } from './google.ts';
@@ -64,7 +64,9 @@ Deno.test('payload tells the story and names the gaps', () => {
   const p = buildPayload(RAW, SOURCES, NOW);
   const pfg = p.businesses.pfg;
   const twt = p.businesses.twt;
-  assertEquals(pfg.kpis.find((k) => k.key === 'visitors_4w')!.value, 120 + 210 + 150 + 55);
+  // Four full weeks; the partial current week (150) is left out of both windows.
+  assertEquals(pfg.kpis.find((k) => k.key === 'visitors_4w')!.value, 47 + 55 + 120 + 210);
+  assertEquals(pfg.kpis.find((k) => k.key === 'visitors_4w')!.prev, 52 + 48 + 45 + 50);
   assert(pfg.story.some((s) => s.includes('no referrer')));
   assert(pfg.story.some((s) => s.includes('none is confirmed')));
   assertEquals(twt.kpis.find((k) => k.key === 'leads_total')!.value, 6); // spam excluded
@@ -72,6 +74,18 @@ Deno.test('payload tells the story and names the gaps', () => {
   assert(twt.story.some((s) => s.includes('Google Analytics for Tale Waters and Tides is not connected')));
   assert(pfg.story.some((s) => s.includes('Search Console')));
   assertEquals((twt.admin_only!.pipeline as { name: string }[])[0].name, 'new');
+});
+
+Deno.test('a Search Console property missing from GSC_SITES is named, not shown as fine', () => {
+  const raw = { ...RAW, search: { twt: RAW.search?.twt ?? [] } };
+  const p = buildPayload(raw, { ...SOURCES, search: { status: 'ok' } }, NOW);
+  assert(p.businesses.pfg.story.some((s) => s.includes('no property set for Pocket Fishing Guide')));
+  assert(!p.businesses.twt.story.some((s) => s.includes('no property set')));
+});
+
+Deno.test('fullWeekWindows leaves out the partial current week', () => {
+  const pts = [1, 2, 3, 4, 5, 6, 7, 8, 100].map((value, i) => ({ week: `w${i}`, value }));
+  assertEquals(fullWeekWindows(pts), [5 + 6 + 7 + 8, 1 + 2 + 3 + 4]);
 });
 
 Deno.test('trip totals stay on the dashboard after the first confirmation', () => {
