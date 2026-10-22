@@ -51,6 +51,18 @@ async function showSample() {
 }
 
 let loading = false;
+function signOutButton() {
+  const out = document.createElement('button');
+  out.className = 'm-btn ghost'; out.type = 'button'; out.textContent = 'Sign out';
+  out.addEventListener('click', () => sb.auth.signOut().then(() => location.reload()));
+  app.appendChild(out);
+}
+// A failed load must never strand the page: show why, and keep a way to sign out.
+function fail(text) {
+  loading = false;
+  say(text);
+  signOutButton();
+}
 async function load(session) {
   if (loading) return;
   loading = true;
@@ -61,15 +73,19 @@ async function load(session) {
     headers: { Authorization: 'Bearer ' + session.access_token, apikey: SB_ANON, 'Content-Type': 'application/json' },
     body: '{}',
   }).catch(() => null);
-  if (!res) return say('The dashboard service did not answer. Check your connection and reload.');
+  if (!res) return fail('The dashboard service did not answer. Check your connection and reload.');
   const body = await res.json().catch(() => ({}));
-  if (res.status === 401) { loading = false; $('signin').hidden = false; return say(''); }
-  if (!res.ok) return say(body.error || 'The dashboard could not load. Reload in a minute.');
+  if (res.status === 401 || res.status === 403) {
+    // Expired, or signed in with an email that is not on the admin list: drop that
+    // session so the next reload does not retry it, and offer the sign-in form again.
+    await sb.auth.signOut().catch(() => null);
+    loading = false;
+    $('signin').hidden = false;
+    return say(res.status === 403 ? 'This account does not have dashboard access. Sign in with an admin email.' : '');
+  }
+  if (!res.ok) return fail(body.error || 'The dashboard could not load. Reload in a minute.');
   window.TWTMetrics.render(app, body);
-  const out = document.createElement('button');
-  out.className = 'm-btn ghost'; out.type = 'button'; out.textContent = 'Sign out';
-  out.addEventListener('click', () => sb.auth.signOut().then(() => location.reload()));
-  app.appendChild(out);
+  signOutButton();
 }
 
 $('signinForm').addEventListener('submit', async (e) => {
