@@ -1,5 +1,5 @@
 | News page, feed and lab block match `data/` (and the copy rules: no exclamation marks, no stock phrases, no placeholders) | `node scripts/build-news.mjs --check` | `html-lint.yml` |
-| PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, refreshed by `news-sync.yml` |
+| PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, fetched from `https://www.pocketfishinguide.com/data/whats-new.json` by `news-sync.yml` |
 | Numbers on `/news/` | Each carries its source and read date in `data/news.json` | Vercel Web Analytics (pfg), PFG database aggregates, read by hand or by the metrics function |
 | `/news/` | News and updates: what shipped in Pocket Fishing Guide, the Friday note, the numbers with sources, asks; RSS at `/news/feed.xml` | What's new in the app |
 # Tale Waters & Tides — Marketing Site
