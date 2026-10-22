@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Progress Dashboard | Tale Waters &amp; Tides</title>
+<meta name="description" content="Private progress dashboard for Tale Waters and Tides and Pocket Fishing Guide.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/css/metrics.css">
+</head>
+<body class="metrics">
+<main class="m-wrap" id="app">
+  <section class="m-card" id="signin" hidden>
+    <div class="m-eyebrow">Tale Waters and Tides &middot; admin</div>
+    <h1 class="m-title">Progress dashboard</h1>
+    <p>Enter your admin email. We'll send a one-time sign-in link; open it on this device.</p>
+    <form class="m-form" id="signinForm">
+      <label class="m-eyebrow" for="email" hidden>Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@talewatersandtides.com">
+      <button class="m-btn" type="submit">Send link</button>
+    </form>
+    <p class="m-msg" id="signinMsg" role="status"></p>
+    <p><button class="m-btn ghost" type="button" id="demoLink">See the layout with sample data</button></p>
+  </section>
+  <p class="m-msg" id="status" role="status">Loading&hellip;</p>
+</main>
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/metrics.js"></script>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+
+// Supabase URL and public anon key come from site.js (one copy for the site).
+const { supabaseUrl: SB_URL, anonKey: SB_ANON } = window.TWT;
+const FN = SB_URL + '/functions/v1/metrics/summary';
+const REDIRECT = 'https://talewatersandtides.com/admin/metrics/';
+const $ = (id) => document.getElementById(id);
+const app = $('app');
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+
+function say(text) { $('status').hidden = !text; $('status').textContent = text || ''; }
+
+async function showSample() {
+  say('Loading sample data…');
+  const res = await fetch('/admin/metrics/sample.json', { cache: 'no-store' });
+  window.TWTMetrics.render(app, await res.json());
+}
+
+let loading = false;
+async function load(session) {
+  if (loading) return;
+  loading = true;
+  $('signin').hidden = true;
+  say('Loading the latest numbers…');
+  const res = await fetch(FN, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + session.access_token, apikey: SB_ANON, 'Content-Type': 'application/json' },
+    body: '{}',
+  }).catch(() => null);
+  if (!res) return say('The dashboard service did not answer. Check your connection and reload.');
+  const body = await res.json().catch(() => ({}));
+  if (res.status === 401) { loading = false; $('signin').hidden = false; return say(''); }
+  if (!res.ok) return say(body.error || 'The dashboard could not load. Reload in a minute.');
+  window.TWTMetrics.render(app, body);
+  const out = document.createElement('button');
+  out.className = 'm-btn ghost'; out.type = 'button'; out.textContent = 'Sign out';
+  out.addEventListener('click', () => sb.auth.signOut().then(() => location.reload()));
+  app.appendChild(out);
+}
+
+$('signinForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = $('email').value.trim();
+  $('signinMsg').textContent = 'Sending…';
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT, shouldCreateUser: false } });
+  $('signinMsg').textContent = error ? 'That did not work: ' + error.message : 'Check your inbox for the sign-in link.';
+});
+
+$('demoLink').addEventListener('click', () => { history.replaceState(null, '', '#demo'); $('signin').hidden = true; showSample(); });
+
+if (location.hash === '#demo') {
+  showSample();
+} else {
+  const { data } = await sb.auth.getSession();
+  if (data.session) load(data.session);
+  else { $('signin').hidden = false; say(''); }
+  sb.auth.onAuthStateChange((event, session) => { if (event === 'SIGNED_IN' && session) load(session); });
+}
+</script>
+</body>
+</html>

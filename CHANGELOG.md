@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- Progress dashboard for both businesses. `/admin/metrics/` (magic-link sign-in, allowlisted emails) and `/partners/progress/#t=<token>` (trends and totals only) render the payload from a new Supabase Edge Function, `metrics`, which reads TWT leads, PFG traffic (Vercel Web Analytics), PFG account totals (PFG endpoint), GA4 and Search Console. Each source is optional and shows as not connected until its secrets are set. Weekly charts with a hover crosshair and table view, plain-language story lines, faded in-progress week. Files: `admin/metrics/`, `partners/progress/`, `assets/css/metrics.css`, `assets/js/metrics.js`, `supabase/functions/metrics/`, `.github/workflows/metrics-function.yml`, `docs/METRICS-DASHBOARD.md`; `robots.txt` disallows `/admin/` and `/partners/`. Not deployed.
 - `/sales-kit/` — internal, `noindex` field playbook for Pocket Fishing Guide partner outreach: pipeline snapshot, actionable fix-list (each item carries the link or copy action that completes it), segments, scripts with tap-to-copy, objection search, the pack checklist, proof points, a day-by-day route with tap-to-call and per-business status/notes, the close cadence, a weekly scorecard and an open-decisions list that exports as markdown. State lives in `localStorage` only. No price appears on the page by design. Files: `sales-kit/index.html`, `assets/css/sales-kit.css`, `assets/js/sales-kit.js`; `robots.txt` disallows the path. Linked from the footer Proof column on every page and from the Pocket Fishing Guide section of `/lab/`.
 
 ### Changed
+- `assets/js/site.js` exposes the Supabase URL and public anon key on `window.TWT`, so the dashboard pages reuse the one copy instead of adding their own.
 - Clarity pass on `/` and `/corey/`, using Corey's June 2026 resume as the source of truth:
   - Home hero says plainly what the practice does and for whom; the fishing-app panel is replaced by Corey's photo and credentials.
   - The unsourced 76%/14% stat band and the two identical "doors" are replaced by a track-record strip (25+ Fortune 500 programs, Harley-Davidson +20%, Dell CMO audit to $7M+, RaftUp 30K+) and "What you can hire me for" (three offers with who, what, how long).

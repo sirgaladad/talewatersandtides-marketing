@@ -15,6 +15,8 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | `/corey/` | Executive profile, career, principles, press; prints as a one-page profile | Work with Corey |
 | `/lab/` | Outdoor Recreation Innovation Lab: Pocket Fishing Guide and origin story | Open PFG |
 | `/privacy/` | What the forms and scan collect | — |
+| `/admin/metrics/` | Private progress dashboard for both businesses (noindex, sign-in) | — |
+| `/partners/progress/` | Partner view of the dashboard by share link: trends and totals only | — |
 | `/projects/`, `/prompt-play/`, `/events/`, `/first-contact/`, `/unbound/` | Existing lab, event and workshop pages (unchanged, out of the main nav) | — |
 
 ## Facts used on the site
@@ -52,6 +54,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 | HTML lint | `npx htmlhint@1 "**/*.html"` | `html-lint.yml` |
 | SEO + links: titles, descriptions, canonicals, one h1, JSON-LD, alt text, internal links and anchors | `node scripts/check-site.mjs` | `html-lint.yml` |
 | Intake function: lint, type-check, unit tests | `deno lint && deno check index.ts && deno test --no-check=remote --allow-env intake_test.ts` (in `supabase/functions/intake`) | `intake-function.yml` |
+| Metrics function: lint, type-check, unit tests, sample freshness | `deno lint && deno check index.ts fixture.ts && deno test --no-check=remote --allow-env metrics_test.ts` (in `supabase/functions/metrics`) | `metrics-function.yml` |
 
 Add a new top-level page to `sitemap.xml`, and it is checked automatically.
 
@@ -73,6 +76,7 @@ talewatersandtides-marketing/
 │   └── js/readiness.js        # Readiness check logic and scoring
 ├── supabase/
 │   ├── functions/intake/      # Lead intake + site scan Edge Function
+│   ├── functions/metrics/     # Progress dashboard data (aggregates only)
 │   └── migrations/            # Database migrations (applied via Supabase)
 ├── scripts/
 │   ├── check-site.mjs         # SEO and link checks
