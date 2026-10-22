@@ -66,7 +66,12 @@ const pfgHref = (path) => {
   const sep = base.includes('?') ? '&' : '?';
   return `${news.site.pfg_url}${base}${sep}${news.site.utm}${hash ? `#${hash}` : ''}`;
 };
-const extHref = (href) => (href.startsWith('http') && href.includes('pocketfishinguide.com') && !href.includes('utm_') ? `${href}${href.includes('?') ? '&' : '?'}${news.site.utm}` : href);
+// The hostname of an absolute URL, or "" for a relative path; hosts are compared whole, never by substring.
+const hostOf = (href) => { try { return new URL(href).hostname; } catch { return ''; } };
+const PFG_HOSTS = new Set(['pocketfishinguide.com', 'www.pocketfishinguide.com']);
+const isPfg = (href) => PFG_HOSTS.has(hostOf(href));
+const isOurs = (href) => hostOf(href) === '' || hostOf(href) === 'talewatersandtides.com';
+const extHref = (href) => (isPfg(href) && !/[?&]utm_/.test(href) ? `${href}${href.includes('?') ? '&' : '?'}${news.site.utm}` : href);
 const AUD = { angler: 'Anglers', guide: 'Guides', all: 'Everyone' };
 const num = (n) => Number(n).toLocaleString('en-US');
 
@@ -298,7 +303,7 @@ ${issue.observations.map((o) => `      <li>${esc(o)}</li>`).join('\n')}
   <p class="eyebrow">From the lab and the practice</p>
   <h2 class="h2 narrow" style="margin-bottom:36px">Tale Waters and Tides this week.</h2>
   <div class="grid cols-auto-280">
-${issue.twt_updates.map((u) => `    <div class="card change"><h4>${esc(u.title)}</h4><p>${esc(u.body)}</p><a class="change-link" href="${esc(extHref(u.href))}" data-ga="news_twt_${esc(u.label.toLowerCase().replace(/[^a-z0-9]+/g, '_'))}"${u.href.startsWith('http') && !u.href.includes('talewatersandtides.com') ? ' rel="noopener"' : ''}>${esc(u.label)} →</a></div>`).join('\n')}
+${issue.twt_updates.map((u) => `    <div class="card change"><h4>${esc(u.title)}</h4><p>${esc(u.body)}</p><a class="change-link" href="${esc(extHref(u.href))}" data-ga="news_twt_${esc(u.label.toLowerCase().replace(/[^a-z0-9]+/g, '_'))}"${isOurs(u.href) ? '' : ' rel="noopener"'}>${esc(u.label)} →</a></div>`).join('\n')}
   </div>
 </section>
 
@@ -307,7 +312,7 @@ ${issue.twt_updates.map((u) => `    <div class="card change"><h4>${esc(u.title)}
     <p class="eyebrow">${esc(news.asks.title)}</p>
     <h2 class="h2 narrow" style="margin-bottom:36px">Small things that move the numbers above.</h2>
     <ul class="ask-list">
-${news.asks.items.map((a) => `      <li class="card-light ask-item"><p class="label">${esc(a.who)}</p><p>${esc(a.text)}</p><a class="btn btn-dark btn-sm" href="${esc(extHref(a.href))}" data-ga="news_ask_${esc(a.label.toLowerCase().replace(/[^a-z0-9]+/g, '_'))}"${a.href.startsWith('http') && !a.href.includes('talewatersandtides.com') ? ' rel="noopener"' : ''}>${esc(a.label)} →</a></li>`).join('\n')}
+${news.asks.items.map((a) => `      <li class="card-light ask-item"><p class="label">${esc(a.who)}</p><p>${esc(a.text)}</p><a class="btn btn-dark btn-sm" href="${esc(extHref(a.href))}" data-ga="news_ask_${esc(a.label.toLowerCase().replace(/[^a-z0-9]+/g, '_'))}"${isOurs(a.href) ? '' : ' rel="noopener"'}>${esc(a.label)} →</a></li>`).join('\n')}
     </ul>
   </div>
 </section>
