@@ -1,0 +1,108 @@
+# News sync: refresh the Pocket Fishing Guide "What's new" snapshot and rebuild /news/ and the
+# lab block, then open a pull request for human review. Nothing is pushed to main.
+#
+# Why a schedule: Pocket Fishing Guide tags a release every day it ships an angler-visible
+# change and the Friday digest goes out Friday morning. Running Friday at 15:40 UTC (10:40 CT)
+# means the week's changes are in the PR before the Friday note is written. One run a week,
+# a few seconds of Actions minutes.
+#
+# Secret (one time, repo admin): PFG_READ_TOKEN, a fine-grained personal access token with
+# Contents: read on sirgaladad/pocket-fishing-guide only (that repo is private). Without it
+# the run stops at the fetch step and says so. The token never touches the rendered files.
+#
+# Repo setting: Settings → Actions → General → "Allow GitHub Actions to create and approve
+# pull requests" must be on for the gh pr create step.
+#
+# Runbook: docs/NEWS-AND-UPDATES.md
+name: News sync
+
+on:
+  schedule:
+    - cron: "40 15 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: news-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Fetch the What's new snapshot from pocket-fishing-guide
+        env:
+          PFG_READ_TOKEN: ${{ secrets.PFG_READ_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$PFG_READ_TOKEN" ]; then
+            echo "::error::PFG_READ_TOKEN is not set. Add a fine-grained PAT with Contents: read on sirgaladad/pocket-fishing-guide (see the workflow header)."
+            exit 1
+          fi
+          REPO="sirgaladad/pocket-fishing-guide"
+          META="$(curl -sS --fail -H "Authorization: Bearer $PFG_READ_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/contents/data/whats-new.json?ref=main")"
+          SHA="$(printf '%s' "$META" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).sha))')"
+          curl -sS --fail -H "Authorization: Bearer $PFG_READ_TOKEN" -H "Accept: application/vnd.github.raw" \
+            "https://api.github.com/repos/$REPO/contents/data/whats-new.json?ref=main" -o data/pfg-whats-new.json
+          node -e 'const j=require("./data/pfg-whats-new.json"); if(!Array.isArray(j.entries)||!Array.isArray(j.areas)) throw new Error("unexpected shape"); console.log(j.entries.length+" entries, newest "+j.entries[0].date)'
+          COMMIT="$(curl -sS --fail -H "Authorization: Bearer $PFG_READ_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/commits?path=data/whats-new.json&sha=main&per_page=1" \
+            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].sha))')"
+          node -e '
+            const fs=require("fs"); const p="data/news.json"; const j=JSON.parse(fs.readFileSync(p,"utf8"));
+            j.pfg_snapshot.commit=process.argv[1]; j.pfg_snapshot.synced_at=new Date().toISOString().slice(0,10);
+            fs.writeFileSync(p, JSON.stringify(j,null,2)+"\n");' "$COMMIT"
+          echo "blob $SHA, commit $COMMIT"
+
+      - name: Rebuild the news page, feed and lab block
+        run: node scripts/build-news.mjs
+
+      - name: Checks
+        run: |
+          npx --yes htmlhint@1 "news/*.html" "lab/*.html"
+          node scripts/check-site.mjs
+          node scripts/build-news.mjs --check
+
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- data/ news/ lab/; then
+            echo "Nothing changed since the last sync."
+            exit 0
+          fi
+          NEWEST="$(node -e 'console.log(require("./data/pfg-whats-new.json").entries[0].date)')"
+          BRANCH="chore/news-sync-$NEWEST"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add data/ news/ lab/
+          git commit -m "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST"
+          git push -u origin "$BRANCH" --force-with-lease
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            echo "PR for $BRANCH already open; updated its branch."
+          else
+            gh pr create --draft --base main --head "$BRANCH" \
+              --title "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST" \
+              --body "$(printf '%s\n' \
+                "Automated weekly sync (news-sync.yml)." \
+                "" \
+                "- data/pfg-whats-new.json refreshed from pocket-fishing-guide/data/whats-new.json" \
+                "- news/index.html, news/feed.xml and the lab block regenerated by scripts/build-news.mjs" \
+                "" \
+                "Before merging: write this week's Friday note and the metrics in data/news.json, run node scripts/build-news.mjs, and read the page at phone width. Runbook: docs/NEWS-AND-UPDATES.md.")"
+          fi

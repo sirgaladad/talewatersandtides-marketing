@@ -1,3 +1,7 @@
+| News page, feed and lab block match `data/` (and the copy rules: no exclamation marks, no stock phrases, no placeholders) | `node scripts/build-news.mjs --check` | `html-lint.yml` |
+| PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, refreshed by `news-sync.yml` |
+| Numbers on `/news/` | Each carries its source and read date in `data/news.json` | Vercel Web Analytics (pfg), PFG database aggregates, read by hand or by the metrics function |
+| `/news/` | News and updates: what shipped in Pocket Fishing Guide, the Friday note, the numbers with sources, asks; RSS at `/news/feed.xml` | What's new in the app |
 # Tale Waters & Tides — Marketing Site
 
 > **AI your team actually uses.** · [talewatersandtides.com](https://talewatersandtides.com)
@@ -68,6 +72,10 @@ talewatersandtides-marketing/
 ├── readiness/index.html       # AI readiness check (intake)
 ├── corey/index.html           # Executive profile
 ├── lab/index.html             # Outdoor Recreation Innovation Lab
+├── news/                      # News and updates page + RSS feed, rendered by scripts/build-news.mjs
+├── data/
+│   ├── news.json              # Issues (Friday note, observations, asks), metrics with sources
+│   └── pfg-whats-new.json     # Snapshot of pocket-fishing-guide/data/whats-new.json
 ├── privacy/index.html         # Privacy notice
 ├── assets/
 │   ├── css/site.css           # Design tokens and components (Tide Chart direction)
@@ -80,9 +88,10 @@ talewatersandtides-marketing/
 │   └── migrations/            # Database migrations (applied via Supabase)
 ├── scripts/
 │   ├── check-site.mjs         # SEO and link checks
+│   ├── build-news.mjs         # Renders news/ and the lab block from data/; --check in CI
 │   └── gen-md.mjs             # Prompt Play kit Markdown mirror
 ├── sitemap.xml, robots.txt, llms.txt, CNAME
-└── .github/workflows/         # Pages deploy, HTML lint + site checks, intake tests, triage
+└── .github/workflows/         # Pages deploy, HTML lint + site checks, intake tests, triage, Friday news sync
 ```
 
 ## Deployment

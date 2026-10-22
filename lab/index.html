@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Spline+Sans+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/news.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
 <script type="application/ld+json">
@@ -45,6 +46,7 @@
       <a href="/#proof" data-ga="nav_work">Work</a>
       <a href="/#teach" data-ga="nav_teach">Teach</a>
       <a href="/lab/" aria-current="page" data-ga="nav_lab">Lab</a>
+      <a href="/news/" data-ga="nav_news">News</a>
       <a href="/corey/" data-ga="nav_corey">About Corey</a>
     </div>
     <div class="nav-r">
@@ -53,7 +55,7 @@
     </div>
   </div>
   <div class="menu-panel" id="menu-panel" data-open="false">
-    <a href="/#how">How we work</a><a href="/#proof">Work</a><a href="/#teach">Teach</a><a href="/lab/">Lab</a><a href="/corey/">About Corey</a><a href="/readiness/">Readiness check</a>
+    <a href="/#how">How we work</a><a href="/#proof">Work</a><a href="/#teach">Teach</a><a href="/lab/">Lab</a><a href="/news/">News</a><a href="/guiding/">Guided fishing</a><a href="/corey/">About Corey</a><a href="/readiness/">Readiness check</a>
   </div>
 </nav>
 
@@ -73,12 +75,61 @@
       <h2 class="h2">Pocket Fishing Guide</h2>
       <p class="lab-p">Live fishing intelligence for Arkansas anglers. Water temperature, barometric pressure and spawn phase across 57 waters (16 reservoirs, 9 tailwaters, 12 lakes, 16 rivers, 4 streams) and 33 species.</p>
       <p class="lab-p">Data from USGS, NWS, USACE and AGFC weekly reports, with Open-Meteo and USNO, refreshed every 20 minutes. Built solo with AI agents; 723 users in its first 90 days.</p>
+      <p class="lab-p">It now carries a live waters map with dam generation, the Arkansas River's twelve pools read every hour, the weekly AGFC report scored by region, Fish Arkansas practice casts on today's real water, buddies who share free days, outfitter and guide pages with open days and a booking panel, and a Friday email built from each angler's own water.</p>
       <a class="link-u" href="https://pocketfishinguide.com" data-ga="lab_pfg_link">pocketfishinguide.com →</a>
+      <p class="lab-p" style="margin-top:18px"><a class="link-u" href="/news/" data-ga="lab_news_link">News and updates: what shipped, the Friday note, the numbers →</a></p>
       <p class="lab-p" style="margin-top:18px"><a class="link-u" href="/sales-kit/" data-ga="lab_sales_kit">Partner sales kit (internal) →</a></p>
     </div>
     <img class="lab-shot" src="/assets/pfg-beaver-lake.webp" alt="Pocket Fishing Guide on a phone: Beaver Lake at 57.2°F from a live USGS sensor, peak spawn phase, and a 7-day water temperature trend" width="660" height="1434" loading="lazy" decoding="async">
   </div>
 </section>
+
+<!-- lab-news:start (written by scripts/build-news.mjs from data/pfg-whats-new.json; do not edit by hand) -->
+<section class="wrap section lab-news" data-ga-section="lab_news" id="shipped">
+  <p class="eyebrow">What shipped · through October 22, 2026</p>
+  <h2 class="h2 narrow">The newest changes in Pocket Fishing Guide.</h2>
+  <p class="lab-p" style="margin-top:18px">69 changes since October 16, 2026, each one a thing an angler or a guide can see or use. The six newest are here; the rest, the Friday note and the numbers are on the news page.</p>
+  <ul class="changes">
+<li class="card change" id="2026-10-22-arkansas-whole-river-card">
+  <div class="change-top"><span class="chip-area">Waters</span><span class="chip-who">Anglers · Oct 22</span></div>
+  <h4>The whole Arkansas River on one card, with a week of release</h4>
+  <p>The Arkansas River page now opens with every lock and dam on one strip, like the Buffalo's: the release from the lowest dam to the highest, which pools are rising or falling, and a week of daily release for the pool you tap.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/water/wb_arkansas_river?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_waters">Open in the app →</a>
+</li>
+<li class="card change" id="2026-10-22-ozark-lake-page">
+  <div class="change-top"><span class="chip-area">Waters</span><span class="chip-who">Anglers · Oct 22</span></div>
+  <h4>Ozark Lake has its own page</h4>
+  <p>Ozark Lake, the Arkansas River pool behind Ozark-Jeta Taylor Lock and Dam, now has a page of its own like Lake Dardanelle: its signals, forecast and species, with the lock and dam on the Tailwaters tab.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/water/wb_ozark_lake?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_waters">Open in the app →</a>
+</li>
+<li class="card change" id="2026-10-22-map-expand">
+  <div class="change-top"><span class="chip-area">Map</span><span class="chip-who">Anglers · Oct 22</span></div>
+  <h4>Make the map bigger</h4>
+  <p>On the Live Waters Map, a button beside the zoom controls fills your screen with the map, its card and its legend; press it again or Escape to come back. The dam card now gives its access points the full card width, so their names read whole.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/map?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_map">Open in the app →</a>
+</li>
+<li class="card change" id="2026-10-22-one-lock-and-dam-per-pool">
+  <div class="change-top"><span class="chip-area">Waters</span><span class="chip-who">Anglers · Oct 22</span></div>
+  <h4>Each Arkansas River pool shows its own lock and dam</h4>
+  <p>Pick a pool on the Arkansas River page and the Tailwaters tab shows that lock and dam alone, laid out like the Bull Shoals dam card: the pool against normal, the release, what it means below the dam, and Upstream and Downstream to step along the river.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/water/wb_arkansas_river?reach=ar_pool_murray&amp;tab=tailwaters&amp;utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_waters">Open in the app →</a>
+</li>
+<li class="card change" id="2026-10-22-sign-out-shared-phone">
+  <div class="change-top"><span class="chip-area">Account &amp; settings</span><span class="chip-who">Everyone · Oct 22</span></div>
+  <h4>Signing out clears your saved waters and plans from the phone</h4>
+  <p>When you sign out, your saved waters, plans and kept trips leave that phone and come back when you sign in, so a buddy who borrows it sees none of them. Settings also has Sign out everywhere, which ends your sign-in on every phone and computer.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/settings?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_account">Open in the app →</a>
+</li>
+<li class="card change" id="2026-10-22-arkansas-pools-on-the-river">
+  <div class="change-top"><span class="chip-area">Waters</span><span class="chip-who">Anglers · Oct 22</span></div>
+  <h4>Arkansas River pools, tailwaters and locks on the map</h4>
+  <p>The Arkansas River page now lists its twelve pools, each with its level and its dam's release. Pick one to see its lock and dam, or open the Tailwaters tab. Each lock and dam has its own pin on the map, and a pool's Map button goes to its dam, not the middle of the river.</p>
+  <a class="change-link" href="https://www.pocketfishinguide.com/water/wb_arkansas_river?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="news_change_waters">Open in the app →</a>
+</li>
+  </ul>
+  <div class="btn-row"><a class="btn" href="/news/" data-ga="lab_news_all">All news and updates</a><a class="btn btn-ghost" href="https://www.pocketfishinguide.com/whats-new?utm_source=twt&amp;utm_medium=referral&amp;utm_campaign=news" data-ga="lab_whats_new">What's new in the app</a></div>
+</section>
+<!-- lab-news:end -->
 
 <section class="wrap section" data-ga-section="lab_origin">
   <p class="eyebrow">Where we come from</p>
@@ -121,7 +172,7 @@
         </div>
       </div>
       <div><h2>Services</h2><ul><li><a href="/#how">How we work</a></li><li><a href="/#engagement">90-day engagement</a></li><li><a href="/readiness/">Readiness check</a></li><li><a href="/#teach">Workshops and talks</a></li><li><a href="https://calendar.app.google/MmHqpVo9QuN93jYt8" target="_blank" rel="noopener" data-ga="footer_book">Book a call</a></li></ul></div>
-      <div><h2>Proof</h2><ul><li><a href="/#proof">Work</a></li><li><a href="/lab/">Lab</a></li><li><a href="https://pocketfishinguide.com">Pocket Fishing Guide</a></li><li><a href="/sales-kit/">Partner sales kit</a></li><li><a href="/projects/">Projects</a></li><li><a href="/prompt-play/">Prompt Play</a></li></ul></div>
+      <div><h2>Proof</h2><ul><li><a href="/#proof">Work</a></li><li><a href="/lab/">Lab</a></li><li><a href="/news/">News and updates</a></li><li><a href="https://pocketfishinguide.com">Pocket Fishing Guide</a></li><li><a href="/sales-kit/">Partner sales kit</a></li><li><a href="/projects/">Projects</a></li><li><a href="/prompt-play/">Prompt Play</a></li></ul></div>
       <div><h2>Corey</h2><ul><li><a href="/corey/">Profile</a></li><li><a href="https://www.linkedin.com/in/boelkens/" rel="noopener">LinkedIn</a></li><li><a href="/events/">Events</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></div>
     </div>
     <div class="press-strip" aria-label="As seen in">

@@ -1,0 +1,142 @@
+{
+  "$comment": "Single source for /news/ (the page, its RSS feed) and the 'What shipped' block on /lab/. scripts/build-news.mjs renders all three; CI fails when the rendered files are stale (node scripts/build-news.mjs --check). Pocket Fishing Guide changes come from data/pfg-whats-new.json, a snapshot of pocket-fishing-guide/data/whats-new.json refreshed by .github/workflows/news-sync.yml. Every number under metrics carries its source and the day it was read; a metric with show:false is kept for the record and never rendered. Runbook: docs/NEWS-AND-UPDATES.md.",
+  "site": {
+    "title": "News and updates",
+    "description": "What shipped in Pocket Fishing Guide this week, the Friday note, the numbers we watch, and what we are asking for. From the Tale Waters and Tides lab.",
+    "pfg_url": "https://www.pocketfishinguide.com",
+    "utm": "utm_source=twt&utm_medium=referral&utm_campaign=news",
+    "whats_new_open_days": 2,
+    "open_day_cards": 8,
+    "lab_block_entries": 6,
+    "feed_items": 20
+  },
+  "pfg_snapshot": {
+    "repo": "sirgaladad/pocket-fishing-guide",
+    "path": "data/whats-new.json",
+    "commit": "309ca6bcc2def25b68847f7604ee762e3ebb0b68",
+    "synced_at": "2026-10-22"
+  },
+  "issues": [
+    {
+      "id": "2026-10-23",
+      "date": "2026-10-23",
+      "title": "The whole Arkansas River, and new limits on the White",
+      "byline": "Corey Boelkens",
+      "summary": "Twelve locks and dams on one card, buddies who can ask about a day in the app, and a note on the White River rules that change November 1.",
+      "note": {
+        "eyebrow": "Friday note",
+        "lines": [
+          "This week Pocket Fishing Guide learned the Arkansas River. Every lock and dam from Trimble to Norrell is on one strip, each pool reads the Corps every hour, and Ozark Lake has a page of its own beside Lake Dardanelle. If you fish a pool, save it and the latest read follows you.",
+          "Buddies grew up too. Open a buddy's calendar, tap a day, and the ask goes to them in the app with the read for your water beside it. They answer with one tap, and once you are both in, the day goes on your calendar.",
+          "On the White from Bull Shoals Dam down to the Norfork access, you can keep two rainbows a day now, and anything 14 inches or longer goes back. On November 1 the water just below the dam closes, and browns are catch-and-release through the state park. Check the water's page in the app for the rule as AGFC posts it.",
+          "Anglers who chose the Friday email in the app get this note there, with their own water's week, the dam's week by the hour and anything new since they last looked. This page is the public copy."
+        ],
+        "source": "The regulation lines are from Corey's note in the Friday digest for 2026-10-23 (Pocket Fishing Guide), which quotes AGFC."
+      },
+      "shipped_through": "2026-10-22",
+      "observations": [
+        "Visitors to Pocket Fishing Guide ran between 8 and 26 a week through September. The weeks of October 12 and October 19 read 379 and 314. The step up follows the guide pages, Fish Arkansas and the buddy features going live in the first half of October.",
+        "Water pages and species pages are what people open: 254 and 227 visitors in the last 30 days against 156 for the home page. The read on a specific water is the product.",
+        "Most visits arrive with no referrer, which on a phone usually means a shared link or a saved home-screen app. Google sent 27 visitors, talewatersandtides.com 19, Facebook 25 across its hosts. Tagging the links we share is what will make this chart readable.",
+        "Three partners are published and nine real guide-trip requests have come in since the booking panel opened. None is confirmed yet, so the request-to-trip step is the one to watch and the one guides can help with by posting open days."
+      ],
+      "ask": {
+        "title": "One ask this week",
+        "lines": [
+          "If you fish an Arkansas River pool, open its card and tell us whether the level and release match what you saw at the ramp. Something off? Tell us under the note in the app; the feedback carries the change and the build you are on."
+        ],
+        "cta": { "label": "Open the Arkansas River", "path": "/water/wb_arkansas_river" }
+      },
+      "twt_updates": [
+        {
+          "title": "Guided weekday fishing starts November 2026",
+          "body": "Early trip requests are open for the White (Bull Shoals), Norfork and Beaver tailwaters. Requests are expressions of interest; dates are confirmed personally and no payment is taken online.",
+          "href": "/guiding/",
+          "label": "Explore guided trips"
+        },
+        {
+          "title": "Progress dashboard for both businesses",
+          "body": "One private page reads Pocket Fishing Guide traffic and accounts, Tale Waters and Tides leads, Google Analytics and Search Console week by week, with a plain-language line under each chart. Partners get a trimmed view by link. The numbers on this page come from the same sources, read by hand until the dashboard is wired in.",
+          "href": "https://github.com/sirgaladad/talewatersandtides-marketing/blob/main/docs/METRICS-DASHBOARD.md",
+          "label": "How it is built"
+        },
+        {
+          "title": "Partner field playbook",
+          "body": "The sales kit for outfitters, guides, marinas and tackle shops is an internal page: segments, scripts, the pack checklist and a day-by-day route. Partner pages, open days and the booking panel live in the app.",
+          "href": "https://www.pocketfishinguide.com/partners",
+          "label": "The partner program"
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "as_of": "2026-10-22",
+    "note": "Read on 2026-10-22 from Vercel Web Analytics for pocketfishinguide.com and the Pocket Fishing Guide database. Demo and test accounts are left out. Visitor counts include the team's own use; Vercel cannot exclude it. The current week is still in progress.",
+    "tiles": [
+      { "key": "visitors_week", "value": "379", "label": "visitors in the week of Oct 12", "hint": "The last complete week; 314 so far in the week of Oct 19", "source": "Vercel Web Analytics", "show": true },
+      { "key": "waters", "value": "57", "label": "Arkansas waters with a live read", "hint": "16 reservoirs, 9 tailwaters, 12 lakes, 16 rivers, 4 streams", "source": "PFG database, water_conditions", "show": true },
+      { "key": "species", "value": "33", "label": "species pages, trout to smallmouth", "source": "PFG catalog", "show": true },
+      { "key": "readings", "value": "478K", "label": "condition readings since June", "hint": "About 4,000 new readings a day, every 20 minutes across 57 waters", "source": "PFG database, conditions_history", "show": true },
+      { "key": "open_days", "value": "326", "label": "open days posted by anglers", "hint": "Days anglers marked free on their calendars", "source": "PFG database, angler_open_days", "show": true },
+      { "key": "buddies", "value": "16", "label": "buddy pairs connected", "hint": "17 invite links sent, 7 asks about a day", "source": "PFG database, connections", "show": true },
+      { "key": "partners", "value": "3", "label": "partners published", "hint": "Guides, outfitters and shops with a page in the app", "source": "PFG database, partners", "show": true },
+      { "key": "trip_requests", "value": "9", "label": "guide-trip requests", "hint": "None confirmed yet; the step we are watching", "source": "PFG database, trip_requests", "show": true },
+      { "key": "accounts", "value": "18", "label": "angler accounts", "hint": "8 new in the last 30 days; 10 signed in this week. First account 2026-06-07", "source": "PFG auth, demo accounts excluded", "show": false },
+      { "key": "jobs", "value": "13", "label": "scheduled data jobs", "hint": "pg_cron: conditions every 20 minutes, Corps levels and river forecasts hourly, lake temperatures every 6 hours", "source": "PFG database, cron.job", "show": false }
+    ],
+    "series": {
+      "title": "Visitors per week",
+      "sub": "Unique visitors to pocketfishinguide.com by week (Mondays). The last bar is the week in progress.",
+      "source": "Vercel Web Analytics, read 2026-10-22",
+      "points": [
+        { "week": "2026-07-27", "value": 17 },
+        { "week": "2026-08-03", "value": 10 },
+        { "week": "2026-08-10", "value": 16 },
+        { "week": "2026-08-17", "value": 43 },
+        { "week": "2026-08-24", "value": 84 },
+        { "week": "2026-08-31", "value": 26 },
+        { "week": "2026-09-07", "value": 26 },
+        { "week": "2026-09-14", "value": 8 },
+        { "week": "2026-09-21", "value": 9 },
+        { "week": "2026-09-28", "value": 17 },
+        { "week": "2026-10-05", "value": 90 },
+        { "week": "2026-10-12", "value": 379 },
+        { "week": "2026-10-19", "value": 314, "partial": true }
+      ]
+    },
+    "breakdowns": [
+      {
+        "title": "What people open",
+        "sub": "Visitors by part of the app, last 30 days",
+        "items": [
+          { "name": "Water pages", "value": 254 },
+          { "name": "Species pages", "value": 227 },
+          { "name": "Home: today's read", "value": 156 },
+          { "name": "Outfitter and guide pages", "value": 44 },
+          { "name": "Tackle Box boxes", "value": 24 }
+        ]
+      },
+      {
+        "title": "Where visitors come from",
+        "sub": "Visitors by referring site, last 30 days",
+        "items": [
+          { "name": "Direct, shared link or home screen", "value": 759 },
+          { "name": "Google", "value": 27 },
+          { "name": "Facebook", "value": 25 },
+          { "name": "talewatersandtides.com", "value": 19 },
+          { "name": "LinkedIn", "value": 13 },
+          { "name": "Bing, Yahoo, DuckDuckGo", "value": 12 }
+        ]
+      }
+    ]
+  },
+  "asks": {
+    "title": "How you can help",
+    "items": [
+      { "who": "Anglers", "text": "Open your water, then type your email under its read to get the Friday email. Reply to it with one thing it should do better.", "href": "https://www.pocketfishinguide.com/waters", "label": "Find your water" },
+      { "who": "Anglers", "text": "Invite one person you fish with. Buddies see each other's free days, never where you are.", "href": "https://www.pocketfishinguide.com/profile", "label": "Your profile" },
+      { "who": "Guides, outfitters, shops", "text": "Set up your listing and post your open days. Anglers see them on your page and in the Friday email.", "href": "https://www.pocketfishinguide.com/partners", "label": "Become a partner" },
+      { "who": "Business owners", "text": "The lab runs on public data feeds, scheduled refreshes and AI agents that draft while a person decides what ships. If that shape would help your business, book a call.", "href": "https://calendar.app.google/MmHqpVo9QuN93jYt8", "label": "Book a call" }
+    ]
+  }
+}
