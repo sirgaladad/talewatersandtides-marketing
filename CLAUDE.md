@@ -12,7 +12,7 @@
 - **Mission:** Build software, strategy, and field-tested execution for outdoor and marine environments
 
 **Active products:**
-- `pocket-fishing-guide` — live fishing intelligence app for Arkansas anglers (GitHub Pages)
+- `pocket-fishing-guide` — live fishing intelligence app for Arkansas anglers (Next.js on Vercel, Supabase backend)
 - `talewatersandtides-marketing` — marketing site for talewatersandtides.com
 
 ---
@@ -77,7 +77,7 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 ## This Repo: talewatersandtides-marketing
 
-**What it is:** Marketing site for talewatersandtides.com — static HTML page deployed to GitHub Pages.
+**What it is:** Marketing site for talewatersandtides.com — static HTML pages (no framework, no build step) deployed to GitHub Pages.
 
 **Live site:** https://talewatersandtides.com
 
@@ -87,11 +87,33 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | The entire site (static HTML/CSS/JS, no framework) |
+| `index.html` | Home page (Consult door) |
+| `lab/`, `guiding/`, `events/`, `partners/`, `projects/`, `first-contact/`, `prompt-play/`, `quest/`, `readiness/`, `unbound/`, `corey/`, `privacy/` | One folder per page or section, each with its own `index.html` |
+| `admin/`, `sales-kit/` | Internal pages (metrics, sales kit); public URLs, not linked from the nav |
+| `assets/css/site.css`, `assets/js/site.js` | Shared tokens and `window.TWT.intake`; reuse, do not fork |
+| `supabase/functions/intake`, `supabase/functions/metrics` | Edge Functions, deployed by hand (`supabase functions deploy <name>`) |
+| `supabase/migrations/` | Database migrations, applied by hand; no CI test yet |
 | `assets/` | Team photos, logos, background images |
 | `CNAME` | Custom domain configuration (`talewatersandtides.com`) |
 | `.github/workflows/static.yml` | Deploy to GitHub Pages on push to `main` |
 | `.github/workflows/triage.yml` | Green Team AI triage (triggers on `issues.labeled: user-feedback`) |
+| `.github/workflows/html-lint.yml` | HTMLHint + `scripts/check-design.mjs` + `scripts/check-site.mjs` on HTML changes |
+| `.github/workflows/intake-function.yml`, `metrics-function.yml` | Deno lint, type-check and tests for the Edge Functions |
+| `.github/workflows/workflow-lint.yml` | actionlint on any workflow change |
+
+### Before you open a PR
+
+Run what CI runs:
+
+```bash
+npx --yes htmlhint@1 "**/*.html" --ignore "design/**"
+node scripts/check-design.mjs
+node scripts/check-site.mjs
+```
+
+For a change under `supabase/functions/<name>/`: `deno lint && deno check index.ts && deno test --allow-env`.
+For a workflow change: `actionlint`. Pass untrusted text (titles, bodies, comments, branch names)
+to shell steps through `env:`, never inline as `${{ ... }}`.
 
 ### Development Notes
 
