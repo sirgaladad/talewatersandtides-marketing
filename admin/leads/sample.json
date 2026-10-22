@@ -1,0 +1,453 @@
+{
+  "summary": {
+    "generated_at": "2026-10-22T15:00:00.000Z",
+    "counts": {
+      "new": 2,
+      "contacted": 1,
+      "qualified": 1,
+      "won": 1,
+      "lost": 1,
+      "spam": 1
+    },
+    "funnel": [
+      {
+        "stage": "Came in",
+        "n": 6
+      },
+      {
+        "stage": "Reviewed",
+        "n": 4
+      },
+      {
+        "stage": "Contacted",
+        "n": 4
+      },
+      {
+        "stage": "Qualified",
+        "n": 2
+      },
+      {
+        "stage": "Won",
+        "n": 1
+      }
+    ],
+    "weekly": [
+      {
+        "week": "2026-08-03",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-08-10",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-08-17",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-08-24",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-08-31",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-09-07",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-09-14",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-09-21",
+        "readiness": 0,
+        "contact": 1,
+        "guiding": 0
+      },
+      {
+        "week": "2026-09-28",
+        "readiness": 0,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-10-05",
+        "readiness": 1,
+        "contact": 0,
+        "guiding": 0
+      },
+      {
+        "week": "2026-10-12",
+        "readiness": 0,
+        "contact": 1,
+        "guiding": 1
+      },
+      {
+        "week": "2026-10-19",
+        "readiness": 1,
+        "contact": 1,
+        "guiding": 0
+      }
+    ],
+    "first_contact_hours": 6,
+    "waiting": 1,
+    "story": [
+      "5 leads in the last 4 weeks, up from 1 the 4 weeks before.",
+      "Most leads come from the contact form (3 of 6).",
+      "1 new lead has waited more than a day for a first reply. Start there.",
+      "Median time to first contact is 6 hours, across 4 leads.",
+      "2 of 6 reached qualified and 1 was won. 1 marked lost.",
+      "1 lead sent on to Pocket Fishing Guide partner Leads.",
+      "1 submission filed as spam and left out of every number above."
+    ]
+  },
+  "leads": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "created_at": "2026-10-22T10:12:00.000Z",
+      "source": "readiness",
+      "status": "new",
+      "name": "Dana Example",
+      "email": "dana@example.com",
+      "role": "Owner",
+      "company": "Example Dental Group",
+      "looking_for": null,
+      "message": null,
+      "website": "example.com",
+      "facts": {
+        "industry": "Healthcare",
+        "size": "10-49"
+      },
+      "tools": [
+        "Google Workspace",
+        "Weave"
+      ],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [
+        "Follow-up",
+        "Scheduling"
+      ],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": 62,
+      "stage": "Exploring",
+      "fit": "Setup and training",
+      "kickoff": null,
+      "slot": null,
+      "page": "/readiness/",
+      "utm": {
+        "utm_source": "linkedin"
+      },
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": []
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "created_at": "2026-10-20T15:00:00.000Z",
+      "source": "contact",
+      "status": "new",
+      "name": "Riley Sample",
+      "email": "riley@example.com",
+      "role": null,
+      "company": "Example Chamber",
+      "looking_for": "A workshop or talk",
+      "message": "Could you run a 60 minute AI basics session for members in November?",
+      "website": null,
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": null,
+      "stage": null,
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/",
+      "utm": {
+        "ref": "google"
+      },
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": []
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "created_at": "2026-10-17T15:00:00.000Z",
+      "source": "contact",
+      "status": "contacted",
+      "name": "Sam Angler",
+      "email": "sam@example.com",
+      "role": null,
+      "company": null,
+      "looking_for": "Something else",
+      "message": "Two of us, a weekday in March on the White below Bull Shoals.",
+      "website": null,
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": null,
+      "stage": "guiding-early",
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/guiding/",
+      "utm": {},
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": [
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000003",
+          "created_at": "2026-10-17T19:48:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "new",
+          "to_status": "contacted",
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000004",
+      "created_at": "2026-10-13T15:00:00.000Z",
+      "source": "contact",
+      "status": "qualified",
+      "name": "Jordan Example",
+      "email": "jordan@example.com",
+      "role": null,
+      "company": "Example Fly Shop",
+      "looking_for": "A partnership",
+      "message": "We run trips on the Norfork and want to be listed in the app.",
+      "website": "https://example.com",
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": null,
+      "stage": null,
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/",
+      "utm": {},
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": "2026-10-14T15:00:00.000Z",
+      "pfg_lead_id": "00000000-0000-4000-8000-0000000000a4",
+      "events": [
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000004",
+          "created_at": "2026-10-13T17:24:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "new",
+          "to_status": "contacted",
+          "note": null
+        },
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000004",
+          "created_at": "2026-10-14T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "sent_to_pfg",
+          "from_status": "contacted",
+          "to_status": "qualified",
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "created_at": "2026-10-06T15:00:00.000Z",
+      "source": "readiness",
+      "status": "won",
+      "name": "Casey Sample",
+      "email": "casey@example.com",
+      "role": null,
+      "company": "Example Roofing",
+      "looking_for": null,
+      "message": null,
+      "website": null,
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": 48,
+      "stage": "Starting",
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/readiness/",
+      "utm": {},
+      "notes": "2026-10-07 16:02Z corey@talewatersandtides.com: Kickoff booked for Nov 3.",
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": [
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000005",
+          "created_at": "2026-10-06T22:12:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "new",
+          "to_status": "contacted",
+          "note": null
+        },
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000005",
+          "created_at": "2026-10-08T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "contacted",
+          "to_status": "qualified",
+          "note": null
+        },
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000005",
+          "created_at": "2026-10-09T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "qualified",
+          "to_status": "won",
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000006",
+      "created_at": "2026-09-22T15:00:00.000Z",
+      "source": "contact",
+      "status": "lost",
+      "name": "Morgan Example",
+      "email": "morgan@example.com",
+      "role": null,
+      "company": null,
+      "looking_for": "A fractional AI / MarTech lead",
+      "message": null,
+      "website": null,
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": null,
+      "stage": null,
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/",
+      "utm": {},
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": [
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": "2026-09-23T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "new",
+          "to_status": "contacted",
+          "note": null
+        },
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": "2026-10-02T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "contacted",
+          "to_status": "lost",
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "created_at": "2026-09-21T15:00:00.000Z",
+      "source": "contact",
+      "status": "spam",
+      "name": "Test Test",
+      "email": "test@example.com",
+      "role": null,
+      "company": null,
+      "looking_for": null,
+      "message": null,
+      "website": null,
+      "facts": {},
+      "tools": [],
+      "tools_other": null,
+      "stack_maturity": null,
+      "hurts": [],
+      "impacts": [],
+      "pain_note": null,
+      "ai_today": null,
+      "score": null,
+      "stage": null,
+      "fit": null,
+      "kickoff": null,
+      "slot": null,
+      "page": "/",
+      "utm": {},
+      "notes": null,
+      "updated_at": null,
+      "sent_to_pfg_at": null,
+      "pfg_lead_id": null,
+      "events": [
+        {
+          "lead_id": "00000000-0000-4000-8000-000000000007",
+          "created_at": "2026-09-21T15:00:00.000Z",
+          "actor": "corey@talewatersandtides.com",
+          "kind": "status",
+          "from_status": "new",
+          "to_status": "spam",
+          "note": null
+        }
+      ]
+    }
+  ],
+  "pfg_connected": true
+}

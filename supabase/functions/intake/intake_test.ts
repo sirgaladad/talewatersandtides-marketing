@@ -3,7 +3,7 @@
 
 import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.13';
 import { detectSignals, extractText, heuristicFacts, normaliseUrl, publicScan, scanSite, useCached } from './scan.ts';
-import { buildLead, LeadError, validDate } from './lead.ts';
+import { alertText, buildLead, LeadError, validDate } from './lead.ts';
 
 const meta = { ipHash: 'abc', userAgent: 'test' };
 
@@ -127,4 +127,12 @@ Deno.test('validDate rejects impossible calendar dates', () => {
   assertEquals(validDate('2026-02-31'), null);
   assertEquals(validDate('2026-13-01'), null);
   assertEquals(validDate(20261020), null);
+});
+
+Deno.test('the new-lead alert opens with the inbox link and leaves out network detail', () => {
+  const lead = buildLead({ source: 'contact', name: 'Sample Person', email: 'person@example.com', message: 'Hello' }, meta);
+  const text = alertText(lead, '00000000-0000-4000-8000-000000000001');
+  assertEquals(text.split('\n')[0], 'Review it: https://talewatersandtides.com/admin/leads/#lead-00000000-0000-4000-8000-000000000001');
+  assertEquals(text.includes('ip_hash') || text.includes('user_agent'), false);
+  assertEquals(text.includes('message: Hello'), true);
 });

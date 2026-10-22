@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leads Inbox | Tale Waters &amp; Tides</title>
+<meta name="description" content="Private inbox for reviewing and converting website leads for Tale Waters and Tides.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/css/metrics.css">
+<link rel="stylesheet" href="/assets/css/leads.css">
+</head>
+<body class="metrics">
+<main class="m-wrap" id="app">
+  <section class="m-card" id="signin" hidden>
+    <div class="m-eyebrow">Tale Waters and Tides &middot; admin</div>
+    <h1 class="m-title">Leads inbox</h1>
+    <p>Enter your admin email. We'll send a one-time sign-in link; open it on this device.</p>
+    <form class="m-form" id="signinForm">
+      <label class="m-eyebrow" for="email" hidden>Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@talewatersandtides.com">
+      <button class="m-btn" type="submit">Send link</button>
+    </form>
+    <p class="m-msg" id="signinMsg" role="status"></p>
+    <p><button class="m-btn ghost" type="button" id="demoLink">See the layout with sample data</button></p>
+  </section>
+  <p class="m-msg" id="status" role="status">Loading&hellip;</p>
+</main>
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/leads.js"></script>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.106.2';
+
+// Supabase URL and public anon key come from site.js (one copy for the site).
+const { supabaseUrl: SB_URL, anonKey: SB_ANON } = window.TWT;
+const FN = SB_URL + '/functions/v1/leads/';
+const REDIRECT = 'https://talewatersandtides.com/admin/leads/';
+const $ = (id) => document.getElementById(id);
+const app = $('app');
+const sb = createClient(SB_URL, SB_ANON, { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
+
+function say(text) { $('status').hidden = !text; $('status').textContent = text || ''; }
+
+function signOutButton() {
+  if ($('signout')) return;
+  const out = document.createElement('button');
+  out.id = 'signout'; out.className = 'm-btn ghost'; out.type = 'button'; out.textContent = 'Sign out';
+  out.addEventListener('click', () => sb.auth.signOut().then(() => location.reload()));
+  app.appendChild(out);
+}
+
+// Calls the leads function with the current session. Returns { status, body }.
+async function call(route, payload) {
+  const { data } = await sb.auth.getSession();
+  if (!data.session) return { status: 401, body: { error: 'Your sign-in expired. Reload to sign in again.' } };
+  const res = await fetch(FN + route, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + data.session.access_token, apikey: SB_ANON, 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload || {}),
+  }).catch(() => null);
+  if (!res) return { status: 0, body: { error: 'The leads service did not answer. Check your connection.' } };
+  return { status: res.status, body: await res.json().catch(() => ({})) };
+}
+
+// A lead link from the alert email (#lead-<id>) has to survive the sign-in round trip,
+// which uses the URL hash for its own tokens, so it is parked in sessionStorage.
+const LEAD_KEY = 'twt-leads-open';
+function rememberLead() {
+  try { if (/^#lead-[0-9a-f-]{36}$/.test(location.hash)) sessionStorage.setItem(LEAD_KEY, location.hash); } catch (_) { /* storage blocked */ }
+}
+function restoreLead() {
+  try {
+    const h = sessionStorage.getItem(LEAD_KEY);
+    sessionStorage.removeItem(LEAD_KEY);
+    if (h && !/^#lead-/.test(location.hash)) history.replaceState(null, '', h);
+  } catch (_) { /* storage blocked */ }
+}
+rememberLead();
+
+const live = {
+  update: (id, change) => call('update', { id, ...change }).then((r) => (r.status === 200 ? r.body : { error: r.body.error || 'That did not save.' })),
+  send: (id, req) => call('send-to-pfg', { id, ...req }).then((r) => (r.status === 200 ? r.body : { error: r.body.error || 'That did not send.' })),
+  refresh: () => call('list').then((r) => (r.status === 200 ? r.body : null)),
+};
+
+// Sample mode changes only this page's copy, so the flow can be tried with nothing saved.
+function sampleApi(payload) {
+  const find = (id) => payload.leads.find((l) => l.id === id);
+  const stamp = () => new Date().toISOString();
+  return {
+    update: (id, change) => {
+      const l = find(id);
+      const ev = { lead_id: id, created_at: stamp(), actor: 'sample', kind: change.status ? 'status' : 'note', from_status: change.status ? l.status : null, to_status: change.status || null, note: change.note || null };
+      l.events = [...(l.events || []), ev];
+      if (change.status) l.status = change.status;
+      return Promise.resolve({ lead: l });
+    },
+    send: (id, req) => {
+      if (!req.kind) return Promise.resolve({ error: 'Pick the kind of business.' });
+      const l = find(id);
+      l.sent_to_pfg_at = stamp();
+      l.events = [...(l.events || []), { lead_id: id, created_at: stamp(), actor: 'sample', kind: 'sent_to_pfg', from_status: l.status, to_status: 'qualified', note: 'Sent to PFG partner Leads as ' + req.business + ' (' + req.kind + ')' }];
+      if (l.status === 'new' || l.status === 'contacted') l.status = 'qualified';
+      return Promise.resolve({ lead: l });
+    },
+    refresh: () => Promise.resolve(null),
+  };
+}
+
+async function showSample() {
+  say('');
+  const res = await fetch('/admin/leads/sample.json', { cache: 'no-store' });
+  const payload = await res.json();
+  const banner = document.createElement('p');
+  banner.className = 'm-banner'; banner.setAttribute('data-render', '');
+  banner.textContent = 'Sample data with made-up people. Changes here are not saved anywhere.';
+  window.TWTLeads.render(app, payload, sampleApi(payload));
+  app.prepend(banner);
+}
+
+let loading = false;
+async function load() {
+  if (loading) return;
+  loading = true;
+  $('signin').hidden = true;
+  say('Loading leads…');
+  const r = await call('list');
+  loading = false;
+  if (r.status === 401 || r.status === 403) {
+    // Expired, or an email not on the admin list: drop that session and offer sign-in again.
+    await sb.auth.signOut().catch(() => null);
+    $('signin').hidden = false;
+    return say(r.status === 403 ? 'This account does not have leads access. Sign in with an admin email.' : '');
+  }
+  if (r.status !== 200) { say(r.body.error || 'The inbox could not load. Reload in a minute.'); return signOutButton(); }
+  say('');
+  restoreLead();
+  window.TWTLeads.render(app, r.body, live);
+  signOutButton();
+}
+
+$('signinForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = $('email').value.trim();
+  $('signinMsg').textContent = 'Sending…';
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT, shouldCreateUser: false } });
+  $('signinMsg').textContent = error ? 'That did not work: ' + error.message : 'Check your inbox for the sign-in link.';
+});
+
+$('demoLink').addEventListener('click', () => { history.replaceState(null, '', '#demo'); $('signin').hidden = true; showSample(); });
+
+if (location.hash === '#demo') {
+  $('signin').hidden = true;
+  showSample();
+} else {
+  const { data } = await sb.auth.getSession();
+  if (data.session) load();
+  else { $('signin').hidden = false; say(''); }
+}
+</script>
+</body>
+</html>

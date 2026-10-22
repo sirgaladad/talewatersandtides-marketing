@@ -98,17 +98,22 @@ export function buildLead(body: Body, meta: { ipHash: string; userAgent: string 
 export async function saveLead(db: SupabaseClient, lead: ReturnType<typeof buildLead>): Promise<string> {
   const { data, error } = await db.from('leads').insert(lead).select('id').single();
   if (error) throw new Error(error.message);
-  await notify(lead).catch((e) => console.error('notify failed', e.message));
+  await notify(lead, data.id as string).catch((e) => console.error('notify failed', e.message));
   return data.id as string;
 }
 
-async function notify(lead: ReturnType<typeof buildLead>): Promise<void> {
-  const key = Deno.env.get('RESEND_API_KEY');
-  const to = Deno.env.get('LEAD_NOTIFY_EMAIL');
-  if (!key || !to) return;
+/** The plain-text alert body: a link to the lead in the admin inbox, then every field it has. */
+export function alertText(lead: ReturnType<typeof buildLead>, id: string): string {
   const rows = Object.entries(lead)
     .filter(([k, v]) => !['user_agent', 'ip_hash'].includes(k) && v != null && !(Array.isArray(v) && !v.length))
     .map(([k, v]) => `${k}: ${typeof v === 'object' ? JSON.stringify(v) : v}`);
+  return [`Review it: https://talewatersandtides.com/admin/leads/#lead-${id}`, '', ...rows].join('\n');
+}
+
+async function notify(lead: ReturnType<typeof buildLead>, id: string): Promise<void> {
+  const key = Deno.env.get('RESEND_API_KEY');
+  const to = Deno.env.get('LEAD_NOTIFY_EMAIL');
+  if (!key || !to) return;
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
@@ -117,7 +122,7 @@ async function notify(lead: ReturnType<typeof buildLead>): Promise<void> {
       to: [to],
       reply_to: lead.email,
       subject: `New ${lead.source} lead: ${lead.name}${lead.company ? ' · ' + lead.company : ''}${lead.stage ? ' · ' + lead.stage : ''}`,
-      text: rows.join('\n'),
+      text: alertText(lead, id),
     }),
     signal: AbortSignal.timeout(5000),
   });
