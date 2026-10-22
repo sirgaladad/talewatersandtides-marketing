@@ -85,6 +85,10 @@ jobs:
           BRANCH="chore/news-sync-$NEWEST"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # A rerun on the same day: fetch the existing sync branch so --force-with-lease has a
+          # lease to check (the checkout is shallow and knows only main). Absent, the lease
+          # expects the branch not to exist, which is the first-run case.
+          git fetch origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 2>/dev/null || true
           git checkout -B "$BRANCH"
           git add data/ news/ lab/
           git commit -m "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST"
