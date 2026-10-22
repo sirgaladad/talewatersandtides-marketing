@@ -188,10 +188,14 @@
   function business(bizKey, b) {
     var sec = el('section', { class: 'm-biz', id: 'biz-' + bizKey, 'aria-labelledby': 'h-' + bizKey });
     sec.appendChild(el('h2', { id: 'h-' + bizKey, text: b.name }));
-    var story = el('ul', { class: 'm-story', 'aria-label': 'What the numbers say' }, b.story.map(function (s) {
-      return el('li', { text: s, class: /not connected|failed to load/.test(s) ? 'gap' : '' });
+    // Known facts first, then admin-only lead lines, then what is missing.
+    var isGap = function (s) { return /not connected|failed to load|no property set/.test(s); };
+    var lines = b.story.filter(function (s) { return !isGap(s); })
+      .concat(b.admin_story || [], b.story.filter(isGap));
+    var story = el('ul', { class: 'm-story', 'aria-label': 'What the numbers say' }, lines.map(function (s) {
+      return el('li', { text: s, class: isGap(s) ? 'gap' : '' });
     }));
-    if (!b.story.length) story.appendChild(el('li', { class: 'gap', text: 'No data has loaded for this business yet.' }));
+    if (!lines.length) story.appendChild(el('li', { class: 'gap', text: 'No data has loaded for this business yet.' }));
     sec.appendChild(el('div', { class: 'm-head' }, [story, el('div', { class: 'm-kpis' }, b.kpis.map(kpiTile))]));
     var charts = el('div', { class: 'm-charts' });
     var drawn = [];

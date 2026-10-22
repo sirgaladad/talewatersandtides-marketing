@@ -70,7 +70,8 @@ Deno.test('payload tells the story and names the gaps', () => {
   assert(pfg.story.some((s) => s.includes('no referrer')));
   assert(pfg.story.some((s) => s.includes('none is confirmed')));
   assertEquals(twt.kpis.find((k) => k.key === 'leads_total')!.value, 6); // spam excluded
-  assert(twt.story.some((s) => s.includes('unattributed')));
+  assert(twt.admin_story!.some((s) => s.includes('unattributed')));
+  assert(twt.admin_story!.some((s) => s.includes('early-interest')));
   assert(twt.story.some((s) => s.includes('Google Analytics for Tale Waters and Tides is not connected')));
   assert(pfg.story.some((s) => s.includes('Search Console')));
   assertEquals((twt.admin_only!.pipeline as { name: string }[])[0].name, 'new');
@@ -106,6 +107,9 @@ Deno.test('partner view drops leads, pipeline and source notes', () => {
   assertEquals('leads' in twt.series, false);
   assertEquals('lead_sources' in twt.breakdowns, false);
   assertEquals('admin_only' in twt, false);
+  assertEquals('admin_story' in twt, false);
+  // The fixture has a /guiding/ lead; its count must not reach partners in any wording.
+  assertEquals(JSON.stringify(twt.story).includes('guide service'), false);
   assertEquals(twt.story.some((s) => /lead|pipeline|unattributed/i.test(s)), false);
   assertEquals(Object.values(p.sources).some((s) => 'note' in s), false);
   assertEquals(JSON.stringify(p).includes('@'), false);

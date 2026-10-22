@@ -363,12 +363,14 @@
         ]
       },
       "story": [
+        "Google Analytics for Tale Waters and Tides is not connected yet, so that part of the picture is blank.",
+        "Google Search Console is not connected yet, so that part of the picture is blank."
+      ],
+      "admin_story": [
         "6 leads since the site relaunch; the readiness check brought 3 of them.",
         "83% of leads are unattributed, so it is not yet clear which channel produces them.",
         "5 leads have sat in the pipeline as new for more than 3 days.",
-        "The guide service has 1 early-interest request from its coming-soon page.",
-        "Google Analytics for Tale Waters and Tides is not connected yet, so that part of the picture is blank.",
-        "Google Search Console is not connected yet, so that part of the picture is blank."
+        "The guide service has 1 early-interest request from its coming-soon page."
       ],
       "admin_only": {
         "pipeline": [

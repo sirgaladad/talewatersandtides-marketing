@@ -34,6 +34,8 @@ export interface Business {
   series: Record<string, Point[]>;
   breakdowns: Record<string, Named[]>;
   story: string[];
+  /** Story lines built from lead rows. Admin view only; redactForPartner never copies them. */
+  admin_story?: string[];
   admin_only?: Record<string, unknown>;
 }
 
@@ -168,7 +170,7 @@ export function gapLines(sources: Record<string, SourceState>): string[] {
 
 /**
  * What a partner sees: trends and totals for both businesses, with consulting lead
- * counts, the lead pipeline and anything marked admin_only removed. Built by copying
+ * counts, lead story lines, the lead pipeline and anything marked admin_only removed. Built by copying
  * only allowed fields, so a field added later stays private until it is listed here.
  */
 export function redactForPartner(p: Payload): Payload {
@@ -177,7 +179,9 @@ export function redactForPartner(p: Payload): Payload {
     kpis: b.kpis.filter((k) => !hideKpis.includes(k.key)).map((k) => ({ ...k })),
     series: Object.fromEntries(Object.entries(b.series).filter(([k]) => !hideSeries.includes(k))),
     breakdowns: Object.fromEntries(Object.entries(b.breakdowns).filter(([k]) => !hideBreakdowns.includes(k))),
-    story: b.story.filter((line) => !/lead|pipeline|unattributed/i.test(line)),
+    // Lead lines live in admin_story, which is never copied. The pattern is a second guard
+    // in case a lead-derived line is ever added to story by mistake.
+    story: b.story.filter((line) => !/lead|pipeline|unattributed|early-interest/i.test(line)),
   });
   return {
     version: 1,

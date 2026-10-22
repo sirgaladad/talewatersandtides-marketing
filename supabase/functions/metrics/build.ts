@@ -179,6 +179,7 @@ export function buildTwt(raw: Raw, keys: string[], now: Date): Business {
   const series: Business['series'] = {};
   const breakdowns: Business['breakdowns'] = {};
   const story: string[] = [];
+  const admin_story: string[] = [];
   const admin_only: Record<string, unknown> = {};
 
   if (raw.twtWeb) {
@@ -207,15 +208,15 @@ export function buildTwt(raw: Raw, keys: string[], now: Date): Business {
 
     if (real.length) {
       const top = breakdowns.lead_pages[0];
-      story.push(`${real.length} leads since the site relaunch; the ${top.name.toLowerCase()} brought ${top.value} of them.`);
+      admin_story.push(`${real.length} leads since the site relaunch; the ${top.name.toLowerCase()} brought ${top.value} of them.`);
       const un = share(sources, 'Unattributed');
       if (un != null && un >= 50) {
-        story.push(`${un}% of leads are unattributed, so it is not yet clear which channel produces them.`);
+        admin_story.push(`${un}% of leads are unattributed, so it is not yet clear which channel produces them.`);
       }
       const stale = real.filter((l) => l.status === 'new' && now.getTime() - new Date(l.created_at).getTime() > 3 * 86_400_000).length;
-      if (stale) story.push(`${stale} lead${stale === 1 ? ' has' : 's have'} sat in the pipeline as new for more than 3 days.`);
+      if (stale) admin_story.push(`${stale} lead${stale === 1 ? ' has' : 's have'} sat in the pipeline as new for more than 3 days.`);
       const guiding = real.filter((l) => (l.page ?? '').startsWith('/guiding')).length;
-      if (guiding) story.push(`The guide service has ${guiding} early-interest request${guiding === 1 ? '' : 's'} from its coming-soon page.`);
+      if (guiding) admin_story.push(`The guide service has ${guiding} early-interest request${guiding === 1 ? '' : 's'} from its coming-soon page.`);
     }
   }
 
@@ -226,7 +227,7 @@ export function buildTwt(raw: Raw, keys: string[], now: Date): Business {
     kpis.push({ key: 'search_clicks_4w', label: 'Google clicks, last 4 full weeks', value: c4, prev: cPrev });
   }
 
-  return { name: 'Tale Waters and Tides', kpis, series, breakdowns, story, admin_only };
+  return { name: 'Tale Waters and Tides', kpis, series, breakdowns, story, admin_story, admin_only };
 }
 
 export function buildPayload(raw: Raw, sources: Record<string, SourceState>, now: Date): Payload {
