@@ -9,6 +9,7 @@
 
   var SERIES = {
     visitors: { pfg: ['Visitors per week', 'Unique visitors to pocketfishinguide.com'], twt: ['Sessions per week', 'Google Analytics sessions on talewatersandtides.com'], kind: 'line' },
+    pageviews: { title: 'Pageviews per week', sub: 'Pages viewed on pocketfishinguide.com', kind: 'line' },
     signups: { title: 'New angler accounts per week', sub: 'Accounts created in Pocket Fishing Guide', kind: 'bar' },
     leads: { title: 'Leads per week', sub: 'Contact form and readiness check, spam excluded', kind: 'bar' },
     search_clicks: { title: 'Google search clicks per week', sub: 'Search Console', kind: 'line' },
@@ -133,7 +134,7 @@
     var cfg = SERIES[key] || { title: key, sub: '', kind: 'line' };
     var title = cfg[bizKey] ? cfg[bizKey][0] : cfg.title;
     var sub = cfg[bizKey] ? cfg[bizKey][1] : cfg.sub;
-    var unit = key === 'leads' ? 'leads' : key === 'signups' ? 'accounts' : key === 'search_clicks' ? 'clicks' : bizKey === 'twt' ? 'sessions' : 'visitors';
+    var unit = key === 'pageviews' ? 'pageviews' : key === 'leads' ? 'leads' : key === 'signups' ? 'accounts' : key === 'search_clicks' ? 'clicks' : bizKey === 'twt' ? 'sessions' : 'visitors';
     var card = el('figure', { class: 'm-chart' }, [el('h3', { text: title }), el('p', { class: 'sub', text: sub })]);
     var box = el('div');
     card.appendChild(box);
@@ -193,7 +194,7 @@
     sec.appendChild(el('div', { class: 'm-head' }, [story, el('div', { class: 'm-kpis' }, b.kpis.map(kpiTile))]));
     var charts = el('div', { class: 'm-charts' });
     var drawn = [];
-    ['visitors', 'signups', 'leads', 'search_clicks'].forEach(function (k) {
+    ['visitors', 'pageviews', 'signups', 'leads', 'search_clicks'].forEach(function (k) {
       if (!b.series[k]) return;
       var c = seriesCard(bizKey, k, b.series[k]);
       drawn.push(c);

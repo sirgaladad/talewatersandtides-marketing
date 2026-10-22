@@ -74,6 +74,16 @@ Deno.test('payload tells the story and names the gaps', () => {
   assertEquals((twt.admin_only!.pipeline as { name: string }[])[0].name, 'new');
 });
 
+Deno.test('trip totals stay on the dashboard after the first confirmation', () => {
+  const raw = { ...RAW, pfgApp: { ...RAW.pfgApp!, trips_real: 9, trips_confirmed: 2 } };
+  const pfg = buildPayload(raw, SOURCES, NOW).businesses.pfg;
+  assertEquals(pfg.kpis.find((k) => k.key === 'trips_real')!.value, 9);
+  assertEquals(pfg.kpis.find((k) => k.key === 'trips_confirmed')!.value, 2);
+  assert(pfg.story.some((s) => s.includes('2 of 9 real guide-trip requests are confirmed')));
+  assert(!pfg.story.some((s) => s.includes('none is confirmed')));
+  assert(pfg.series.pageviews!.length > 0);
+});
+
 Deno.test('partner view drops leads, pipeline and source notes', () => {
   const p = redactForPartner(buildPayload(RAW, SOURCES, NOW));
   const twt = p.businesses.twt;

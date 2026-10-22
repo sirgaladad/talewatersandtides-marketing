@@ -62,6 +62,17 @@
           "key": "partners",
           "label": "Published partners",
           "value": 5
+        },
+        {
+          "key": "trips_real",
+          "label": "Guide-trip requests",
+          "value": 6,
+          "hint": "Demo requests excluded"
+        },
+        {
+          "key": "trips_confirmed",
+          "label": "Guide trips confirmed",
+          "value": 0
         }
       ],
       "series": {

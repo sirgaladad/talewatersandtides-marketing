@@ -155,8 +155,12 @@ export function buildPfg(raw: Raw, keys: string[], now: Date): Business {
         `${a.active_30d} of ${a.users_total} accounts signed in during the last 30 days, and ${a.new_30d} accounts were created in that time.`
       );
     }
+    kpis.push({ key: 'trips_real', label: 'Guide-trip requests', value: a.trips_real, hint: 'Demo requests excluded' });
+    kpis.push({ key: 'trips_confirmed', label: 'Guide trips confirmed', value: a.trips_confirmed });
     if (a.trips_real > 0 && a.trips_confirmed === 0) {
       story.push(`${a.trips_real} real guide-trip requests have come in and none is confirmed yet, so booking is the open step.`);
+    } else if (a.trips_confirmed > 0) {
+      story.push(`${a.trips_confirmed} of ${a.trips_real} real guide-trip requests are confirmed.`);
     }
   }
 
