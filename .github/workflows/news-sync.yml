@@ -85,14 +85,15 @@ jobs:
           BRANCH="chore/news-sync-$NEWEST"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # A rerun on the same day: fetch the existing sync branch so --force-with-lease has a
-          # lease to check (the checkout is shallow and knows only main). Absent, the lease
-          # expects the branch not to exist, which is the first-run case.
-          git fetch origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 2>/dev/null || true
+          # The lease is explicit: the branch's current remote tip, or empty on the first run
+          # (empty means "expect no such branch"). A bare --force-with-lease would read a
+          # remote-tracking ref this single-branch checkout never has, and reject a same-day
+          # rerun as stale.
+          EXPECTED="$(git ls-remote --heads origin "$BRANCH" | cut -f1)"
           git checkout -B "$BRANCH"
           git add data/ news/ lab/
           git commit -m "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST"
-          git push -u origin "$BRANCH" --force-with-lease
+          git push -u origin "$BRANCH" --force-with-lease="$BRANCH:$EXPECTED"
           if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
             echo "PR for $BRANCH already open; updated its branch."
           else
