@@ -62,7 +62,7 @@
     { id: 'dec-5', t: 'Who may upload brand assets; the 2 MB cap (blocks brand-assets-step).' },
     { id: 'dec-6', t: 'Regional seats are quoted in the proposal only, never on a page. The platinum conversation waits for 10 partners and 3 months of partner_hits.' },
     { id: 'dec-7', t: 'Is sponsorship taxable in Arkansas? Ask the accountant before the first Payment Link.' },
-    { id: 'dec-8', t: 'Warm-water list (bass and crappie guides, Capital and Ouachitas): after North Central, before Beaver.' },
+    { id: 'dec-8', t: 'Warm-water list (bass and crappie guides, Capital and Ouachitas): on hold. The species demand behind it was a crawler; revisit when US species views show up.' },
   ];
 
   var KINDS = {
@@ -89,8 +89,15 @@
   var OBJ = [
     ['I am on Facebook, that is where my customers are.', 'Keep it. Facebook is where you post the fish. This is where they decide the day. Your Facebook link is a counted door on the page.', 'Their social door on the draft'],
     ['I am booked solid through spring.', 'Then the free page costs you nothing and your open-days calendar says "full", which is the best ad you have. Paste your calendar address once and it stays right.', 'The open-days feed'],
-    ['How many people use this?', 'About 500 a month right now, almost all Arkansas, and the Bull Shoals page is the busiest. Small and honest; that is why the first 25 lock their price. I send you your own numbers Monday; you will not have to take my word for it.', 'The "This week" line on Riley\'s'],
-    ['What does Sponsored cost?', 'It is set for you, not posted. It is on your invite, and it is locked two years. It is under one platform booking fee a year; two booked days covers it. (Say the number out loud if they press; never write it anywhere but the invite.)', 'The offer card on the invite'],
+    ['How many people use this?', 'About 190 people in the US last month, and 66 to 85 a week since October. The Bull Shoals page is the busiest. That is small and I will not dress it up; it is why the first 25 lock their price now. Your own page gets its own count every Monday, so you never have to take my word for it.', 'The "This week" line on Riley\'s'],
+    ['Are those real people or bots?', 'Real. A crawler from overseas hit the site in October and I take it out before I quote a number. The 190 is US visitors only. The counts on your page are first-party doors: a tap on Call, Text or Directions, not a page load.', 'The door counts on Riley\'s'],
+    ['Has anyone booked a trip through it?', 'Not yet, not confirmed. The app does not take bookings; it sends the angler to your phone, your text or your booking link, and counts that tap. I will show you the count, not a booking I cannot prove.', 'Text to book on their draft'],
+    ['Who else is on it?', 'Riley\'s is live as the sponsored example, and my own guide service is on the same rules. Everyone else is a draft like yours. You would be one of the first, which is the point of the founding lock.', 'Riley\'s page, then the TWT Guides page'],
+    ['How many anglers actually sign up?', 'Few, and they do not need to. Anglers check the water and your page without an account; the account is for saving waters and buddies. What matters to you is the tap on your door, and that is counted either way.', 'Their draft opened signed out'],
+    ['What if the app goes away?', 'Your page is free and nothing is ever deleted. If you sponsor, there is a 30-day refund on a first term and a lapse drops you back to the free page, not off the river. I fish this water; I am not going anywhere.', 'Terms v1'],
+    ['I already post my own report or have my own app.', 'Keep it, it is good. Your report link goes on your page as a counted door. The angler checking generation on our page is one tap from your report instead of a stranger\'s.', 'Their website door on the draft'],
+    ['Is this AGFC?', 'No. It reads AGFC, USGS and the dam schedule; it is not endorsed by them. I will never say it is.', ''],
+    ['What does Sponsored cost?', 'It is set for you, not posted. It is on your invite, and it is locked two years. Work it out with them from their own day rate: how many booked days covers it. (Say the number out loud if they press; never write it anywhere but the invite.)', 'The offer card on the invite'],
     ['Why is the price not on the site?', 'Because it is not one price. A dock with four doors and a solo guide with one are not the same seat, and I would rather set it with you than post a number that is wrong for half the river.', ''],
     ['I already pay FishingBooker or Guidesly.', 'Good, that is your booking engine, and we deep-link to it. We never take a cut of the trip. We send the angler to your door.', 'Book online door'],
     ['Who sees my rates? I do not want them scraped.', 'They are already on your site; I copied them with the date. You confirm or change them. Order on every list is river distance then name; nobody buys a higher spot.', 'The "rates as of" line'],
