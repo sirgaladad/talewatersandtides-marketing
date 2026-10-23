@@ -1,0 +1,45 @@
+# Type-check, lint, and unit-test the Supabase `leads` Edge Function, and make
+# sure the committed sample payload matches what the fixture builds today.
+# Deploys are manual (`supabase functions deploy leads`); this is the gate before a merge.
+name: Leads function
+
+on:
+  pull_request:
+    paths:
+      - "supabase/functions/leads/**"
+      - "admin/leads/**"
+      - ".github/workflows/leads-function.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "supabase/functions/leads/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: leads-function-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: supabase/functions/leads
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Lint
+        run: deno lint
+      - name: Type-check
+        run: deno check index.ts fixture.ts
+      - name: Unit tests
+        run: deno test --no-check=remote --allow-env leads_test.ts
+      - name: Sample payload is current
+        run: deno run fixture.ts | diff - ../../../admin/leads/sample.json

@@ -34,13 +34,13 @@ Page content is treated as untrusted data in the prompt, and the output is const
 | `intake_events` | both | Rate-limit ledger (hashed IP, kind, time), checked atomically by `public.intake_rate_limit()`. Pruned after a day. |
 | `site_scans` | `/scan` | Cached scan result per domain. |
 
-RLS is enabled with no policies and anon/authenticated privileges are revoked: only the service role (this function) touches these tables. Read leads in the Supabase dashboard or with SQL.
+RLS is enabled with no policies and anon/authenticated privileges are revoked: only the service role touches these tables. Review and work leads in `/admin/leads/` (the `leads` function).
 
 ## Secrets
 
 ```bash
 supabase secrets set ANTHROPIC_API_KEY=...            # enables the Claude scan
-supabase secrets set LEAD_NOTIFY_EMAIL=corey@talewatersandtides.com RESEND_API_KEY=...   # optional email alert
+supabase secrets set LEAD_NOTIFY_EMAIL=corey@talewatersandtides.com RESEND_API_KEY=...   # new-lead email alert with a link to /admin/leads/
 supabase secrets set ALLOWED_ORIGINS=https://talewatersandtides.com,https://www.talewatersandtides.com   # optional
 supabase secrets set IP_HASH_SALT=...                 # optional
 ```

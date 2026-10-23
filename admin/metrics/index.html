@@ -85,6 +85,9 @@ async function load(session) {
   }
   if (!res.ok) return fail(body.error || 'The dashboard could not load. Reload in a minute.');
   window.TWTMetrics.render(app, body);
+  const inbox = document.createElement('a');
+  inbox.href = '/admin/leads/'; inbox.className = 'm-btn ghost'; inbox.textContent = 'Open the leads inbox';
+  app.appendChild(inbox);
   signOutButton();
 }
 
