@@ -6,10 +6,10 @@
 
 ## Organization Context
 
-**Tale Waters & Tides (TWT)** is an Arkansas-based outdoor recreation innovation lab.
+**Tale Waters & Tides (TWT)** is an AI implementation practice in Little Rock, Arkansas. It sets AI up inside the tools a business already pays for, trains the team on real work, and supports them for 90 days; it also provides fractional AI and MarTech leadership and runs workshops. Its Outdoor Recreation Innovation Lab (Pocket Fishing Guide) is the proof.
 - **Founder:** Corey Boelkens (@sirgaladad) — product, CRM, marine tech
 - **CTO:** Abby Sims — full-stack, government and nonprofit delivery
-- **Mission:** Build software, strategy, and field-tested execution for outdoor and marine environments
+- **Mission:** AI your team actually uses: set up in your tools, trained on your work, supported until it sticks. The lab proves the pattern in public.
 
 **Active products:**
 - `pocket-fishing-guide` — live fishing intelligence app for Arkansas anglers (Next.js on Vercel, Supabase backend)
@@ -81,13 +81,13 @@ Green Team / Red Team AI-assisted pipeline. Full SOP: `.github/TRIAGE.md`
 
 **Live site:** https://talewatersandtides.com
 
-**Purpose:** Brand presence, team bios, product portfolio (Pocket Fishing Guide, RaftUp, NMMA), and lead pipeline for the TWT innovation lab.
+**Purpose:** Services site and lead pipeline for the AI implementation practice (three service pages, readiness check, routed contact form), Corey's profile, and the lab as proof (Pocket Fishing Guide case study, projects, events).
 
 ### Architecture
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | Home page (Consult door) |
+| `index.html` | Services home (static HTML/CSS/JS, no framework); service pages live at `/ai-implementation/`, `/fractional-ai-martech/`, `/ai-workshops/`; case studies under `/work/` |
 | `lab/`, `guiding/`, `events/`, `partners/`, `projects/`, `first-contact/`, `prompt-play/`, `quest/`, `readiness/`, `unbound/`, `corey/`, `privacy/` | One folder per page or section, each with its own `index.html` |
 | `admin/`, `sales-kit/` | Internal pages (metrics, sales kit); public URLs, not linked from the nav |
 | `assets/css/site.css`, `assets/js/site.js` | Shared tokens and `window.TWT.intake`; reuse, do not fork |
@@ -117,7 +117,8 @@ to shell steps through `env:`, never inline as `${{ ... }}`.
 
 ### Development Notes
 
-- No build step — edit `index.html` directly, preview in browser
+- No build step — edit the HTML directly, preview with `python3 -m http.server 8080`; run `npx htmlhint@1 "**/*.html" --ignore "design/**"` and `node scripts/check-site.mjs` before a PR
+- Facts (dates, numbers, IDs) live in the README table; change them there first, then everywhere they appear
 - Custom domain via `CNAME` — do not delete or rename this file
 - Images in `assets/` are referenced directly from `index.html`
 - Deploy is automatic on merge to `main` via GitHub Actions

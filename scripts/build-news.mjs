@@ -148,7 +148,7 @@ const nav = (current) => `<nav class="nav" aria-label="Main">
     </div>
   </div>
   <div class="menu-panel" id="menu-panel" data-open="false">
-    <a href="/#how">How we work</a><a href="/#proof">Work</a><a href="/#teach">Teach</a><a href="/lab/">Lab</a><a href="/news/">News</a><a href="/guiding/">Guided fishing</a><a href="/corey/">About Corey</a><a href="/readiness/">Readiness check</a>
+    <a href="/ai-implementation/">AI implementation</a><a href="/fractional-ai-martech/">Fractional lead</a><a href="/ai-workshops/">Workshops</a><a href="/#how">How we work</a><a href="/#proof">Work</a><a href="/#teach">Teach</a><a href="/lab/">Lab</a><a href="/news/">News</a><a href="/guiding/">Guided fishing</a><a href="/corey/">About Corey</a><a href="/readiness/">Readiness check</a>
   </div>
 </nav>`;
 
@@ -234,13 +234,17 @@ const page = `<!DOCTYPE html>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Spline+Sans+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css">
 <link rel="stylesheet" href="/assets/css/news.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TZVTR5TG"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GTM-TZVTR5TG');</script>
+<!-- Analytics: Google Tag Manager (container manages the GA4 property). The gtag() shim below turns the
+     site's gtag('event', name, params) calls into dataLayer pushes GTM triggers can see; other commands
+     (consent, set) pass through unchanged. See README "Analytics". -->
+<script>window.dataLayer=window.dataLayer||[];(function(){var seen={};window.gtag=function(){var a=arguments;if(a[0]!=='event'){dataLayer.push(a);return;}var p=a[2]||{},reset={},k;for(k in seen)reset[k]=null;for(k in p)seen[k]=1;dataLayer.push(reset);dataLayer.push(Object.assign({event:a[1]},p));};})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TZVTR5TG');</script>
 <script type="application/ld+json">
 ${JSON.stringify(jsonLd, null, 2)}
 </script>
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZVTR5TG" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 
 ${nav('news')}
