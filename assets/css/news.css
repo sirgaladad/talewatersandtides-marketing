@@ -1,0 +1,93 @@
+/* ============================================================
+   News and updates: /news/ and the "What shipped" block on /lab/.
+   Tide Chart tokens from site.css (navy, cream, one gold; Fraunces,
+   DM Sans, Spline Sans Mono). No dependencies; the bar chart is
+   inline SVG written by scripts/build-news.mjs.
+   ============================================================ */
+
+.news-hero .lede { max-width: 640px; }
+.news-meta { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--text-4); margin: 0 0 10px; }
+.news-meta a { color: var(--text-3); }
+
+/* Friday note */
+.note { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); align-items: start; }
+.note-body p { font-size: 18px; line-height: 1.6; color: var(--text-2); margin: 0 0 16px; max-width: 640px; }
+.note-source { font-size: 13px; color: var(--text-4); margin-top: 20px; }
+.ask { background: var(--card); color: var(--navy); border-radius: var(--radius); padding: 28px; border-left: 4px solid var(--gold); }
+.ask .eyebrow { color: var(--gold-ink); }
+.ask p { margin: 0 0 18px; font-size: 16px; line-height: 1.55; color: var(--ink); }
+.ask .btn { background: var(--navy); color: var(--cream); }
+.ask .btn:hover { background: var(--gold); color: var(--navy); }
+
+/* What shipped */
+.release { margin-top: 36px; }
+.release-h { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 0 0 18px; }
+.release-h h3 { font-family: var(--f-display); font-weight: 500; font-size: 24px; margin: 0; }
+.release-h .label { margin: 0; }
+.changes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+.change { display: flex; flex-direction: column; gap: 10px; }
+.change-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.chip-area { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(212, 168, 67, 0.4); border-radius: 4px; padding: 3px 7px; white-space: nowrap; }
+.chip-who { font-family: var(--f-mono); font-size: 11px; color: var(--text-4); }
+.change h4 { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.2; margin: 0; }
+.change p { font-size: 15px; line-height: 1.5; color: var(--text-2); margin: 0; flex: 1; }
+.change img { width: 100%; max-width: 260px; height: auto; border-radius: 12px; border: 1px solid var(--line-2); margin-top: 6px; }
+.change-link { font-size: 14px; font-weight: 600; text-decoration: none; color: var(--gold); }
+.change-link:hover { color: var(--text); }
+.fold { margin-top: 28px; border-top: 1px solid var(--line-2); }
+.fold summary { cursor: pointer; padding: 18px 0; font-family: var(--f-display); font-size: 20px; list-style: none; display: flex; align-items: center; gap: 12px; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::before { content: '+'; font-family: var(--f-mono); color: var(--gold); width: 18px; }
+.fold[open] summary::before { content: '\2013'; }
+.fold summary .label { margin: 0; }
+.fold .release { margin-top: 8px; margin-bottom: 28px; }
+
+/* Numbers */
+.tiles { list-style: none; margin: 0 0 40px; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.tile { border: 1px solid var(--line-2); border-radius: var(--radius); padding: 20px; background: var(--panel); }
+.tile-v { font-family: var(--f-mono); font-size: 38px; line-height: 1; color: var(--gold); }
+.tile-k { font-size: 15px; margin: 8px 0 0; color: var(--text); }
+.tile-h { font-size: 13px; color: var(--text-4); margin: 6px 0 0; }
+.numbers { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
+.chart h3, .bars h3 { font-family: var(--f-display); font-weight: 500; font-size: 22px; margin: 0 0 4px; }
+.chart-sub { font-size: 14px; color: var(--text-3); margin: 0 0 14px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart-src { font-size: 12px; color: var(--text-4); margin: 10px 0 0; font-family: var(--f-mono); }
+.bars + .bars { margin-top: 32px; }
+.bar-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items: center; font-size: 15px; }
+.bar-row .mono { font-size: 14px; color: var(--text-2); }
+.bar-track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(245, 240, 232, 0.1); overflow: hidden; }
+.bar-fill { height: 100%; background: var(--gold); border-radius: 3px; }
+.observations { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid var(--line-2); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+.observations li { padding: 20px 20px 20px 0; border-bottom: 1px solid var(--line-2); font-size: 15px; line-height: 1.55; color: var(--text-2); }
+.observations li::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); margin-bottom: 12px; }
+.metrics-note { font-size: 13px; color: var(--text-4); margin: 24px 0 0; max-width: 720px; }
+
+/* Lab items and asks */
+.ask-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.ask-item { display: flex; flex-direction: column; gap: 10px; }
+.ask-item p { margin: 0; flex: 1; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.ask-item .label { margin: 0; }
+.ask-item .btn { align-self: flex-start; }
+
+/* Earlier issues */
+.issues { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.issues li { padding: 18px 0; border-bottom: 1px solid var(--line-2); display: grid; grid-template-columns: auto 1fr; gap: 6px 24px; align-items: baseline; }
+.issues .mono { font-size: 13px; color: var(--text-4); }
+.issues p { grid-column: 2; margin: 0; font-size: 15px; color: var(--text-3); }
+.issue-title { font-family: var(--f-display); font-size: 20px; }
+
+/* Lab block */
+.lab-news .changes { margin-top: 28px; }
+.lab-news .btn-row { margin-top: 32px; }
+
+@media (max-width: 599px) {
+  .tile-v { font-size: 32px; }
+  .note-body p { font-size: 17px; }
+}
+
+/* The rest of an open day */
+.fold-day { margin-top: 14px; border-top: 0; }
+.fold-day summary { font-size: 17px; padding: 12px 0; }
+.fold-day .changes { margin: 4px 0 20px; }

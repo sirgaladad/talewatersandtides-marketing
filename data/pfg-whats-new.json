@@ -1,0 +1,797 @@
+{
+  "$comment": "What's new in Pocket Fishing Guide, for anglers and guides: the angler-facing cut of CHANGELOG.md, one entry per change a person can see or use. Newest first. `areas` is the map of the app's parts (id, label, a wb-icons icon, the part's home `href`, the path prefixes it `match`es); every entry names one in `area`. An optional `image` is a capture of the part on a phone (`src` under /assets/whats-new/, `alt` in plain words, `width`/`height` of the file, `page` the same-origin path it was captured from, an optional `selector`), made by web/scripts/capture-whats-new.mjs. Validated by scripts/validate-whats-new.js; mirrored at web/lib/data/whats-new.json. Rules: AGENTS.md (web) 'What's new'; runbook docs/runbooks/whats-new.md.",
+  "areas": [
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "home",
+      "href": "/",
+      "match": [
+        "/"
+      ]
+    },
+    {
+      "id": "waters",
+      "label": "Waters",
+      "icon": "drop",
+      "href": "/waters",
+      "match": [
+        "/waters",
+        "/water/"
+      ]
+    },
+    {
+      "id": "map",
+      "label": "Map",
+      "icon": "map",
+      "href": "/map",
+      "match": [
+        "/map"
+      ]
+    },
+    {
+      "id": "generation",
+      "label": "Generation & levels",
+      "icon": "bolt",
+      "href": "/generation",
+      "match": [
+        "/generation"
+      ]
+    },
+    {
+      "id": "species",
+      "label": "Species",
+      "icon": "species",
+      "href": "/species",
+      "match": [
+        "/species"
+      ]
+    },
+    {
+      "id": "forecast",
+      "label": "Forecast",
+      "icon": "forecast",
+      "href": "/forecast",
+      "match": [
+        "/forecast"
+      ]
+    },
+    {
+      "id": "reports",
+      "label": "Reports",
+      "icon": "report",
+      "href": "/weekly-report",
+      "match": [
+        "/weekly-report",
+        "/reports"
+      ]
+    },
+    {
+      "id": "game",
+      "label": "Fish Arkansas",
+      "icon": "fish",
+      "href": "/fish-arkansas",
+      "match": [
+        "/fish-arkansas"
+      ]
+    },
+    {
+      "id": "tacklebox",
+      "label": "Tackle Box",
+      "icon": "tackle",
+      "href": "/tacklebox",
+      "match": [
+        "/tacklebox"
+      ]
+    },
+    {
+      "id": "buddies",
+      "label": "Buddies & plans",
+      "icon": "group",
+      "href": "/profile#buddies",
+      "match": [
+        "/buddies",
+        "/invite"
+      ]
+    },
+    {
+      "id": "profile",
+      "label": "Profile & calendar",
+      "icon": "user",
+      "href": "/profile",
+      "match": [
+        "/profile",
+        "/onboarding",
+        "/saved"
+      ]
+    },
+    {
+      "id": "account",
+      "label": "Account & settings",
+      "icon": "lock",
+      "href": "/settings",
+      "match": [
+        "/settings",
+        "/auth",
+        "/whats-new",
+        "/unsubscribe"
+      ]
+    },
+    {
+      "id": "guides",
+      "label": "Outfitters & guides",
+      "icon": "partnerGuide",
+      "href": "/outfitters",
+      "match": [
+        "/outfitters"
+      ]
+    },
+    {
+      "id": "business",
+      "label": "For businesses",
+      "icon": "license",
+      "href": "/partners",
+      "match": [
+        "/partners",
+        "/listing",
+        "/admin"
+      ]
+    },
+    {
+      "id": "health",
+      "label": "System health",
+      "icon": "gauge",
+      "href": "/health",
+      "match": [
+        "/health"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "2026-10-22-arkansas-whole-river-card",
+      "date": "2026-10-22",
+      "title": "The whole Arkansas River on one card, with a week of release",
+      "body": "The Arkansas River page now opens with every lock and dam on one strip, like the Buffalo's: the release from the lowest dam to the highest, which pools are rising or falling, and a week of daily release for the pool you tap.",
+      "link": "/water/wb_arkansas_river",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-ozark-lake-page",
+      "date": "2026-10-22",
+      "title": "Ozark Lake has its own page",
+      "body": "Ozark Lake, the Arkansas River pool behind Ozark-Jeta Taylor Lock and Dam, now has a page of its own like Lake Dardanelle: its signals, forecast and species, with the lock and dam on the Tailwaters tab.",
+      "link": "/water/wb_ozark_lake",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-map-expand",
+      "date": "2026-10-22",
+      "title": "Make the map bigger",
+      "body": "On the Live Waters Map, a button beside the zoom controls fills your screen with the map, its card and its legend; press it again or Escape to come back. The dam card now gives its access points the full card width, so their names read whole.",
+      "link": "/map",
+      "audience": "angler",
+      "area": "map"
+    },
+    {
+      "id": "2026-10-22-one-lock-and-dam-per-pool",
+      "date": "2026-10-22",
+      "title": "Each Arkansas River pool shows its own lock and dam",
+      "body": "Pick a pool on the Arkansas River page and the Tailwaters tab shows that lock and dam alone, laid out like the Bull Shoals dam card: the pool against normal, the release, what it means below the dam, and Upstream and Downstream to step along the river.",
+      "link": "/water/wb_arkansas_river?reach=ar_pool_murray&tab=tailwaters",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-sign-out-shared-phone",
+      "date": "2026-10-22",
+      "title": "Signing out clears your saved waters and plans from the phone",
+      "body": "When you sign out, your saved waters, plans and kept trips leave that phone and come back when you sign in, so a buddy who borrows it sees none of them. Settings also has Sign out everywhere, which ends your sign-in on every phone and computer.",
+      "link": "/settings",
+      "area": "account",
+      "audience": "all"
+    },
+    {
+      "id": "2026-10-22-arkansas-pools-on-the-river",
+      "date": "2026-10-22",
+      "title": "Arkansas River pools, tailwaters and locks on the map",
+      "body": "The Arkansas River page now lists its twelve pools, each with its level and its dam's release. Pick one to see its lock and dam, or open the Tailwaters tab. Each lock and dam has its own pin on the map, and a pool's Map button goes to its dam, not the middle of the river.",
+      "link": "/water/wb_arkansas_river",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-arkansas-in-the-menu",
+      "date": "2026-10-22",
+      "title": "Arkansas River pools in the menu and on Generation & Levels",
+      "body": "Under Generation & Levels in the menu, Arkansas River · All pools opens every lock and dam on the river, with each pool's level and release. Search by pool, dam or town to find one.",
+      "link": "/generation?show=arkansas#arkansas",
+      "audience": "angler",
+      "area": "generation"
+    },
+    {
+      "id": "2026-10-22-arkansas-save-a-pool",
+      "date": "2026-10-22",
+      "title": "Save an Arkansas River pool and see its latest read",
+      "body": "Save a pool from its card to see its latest Corps read on Saved, and open it on the Arkansas River page from there.",
+      "link": "/saved",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-22-whats-new-areas",
+      "date": "2026-10-22",
+      "title": "What's new says where a change lives, and takes your word on it",
+      "body": "Every note here now names the part of the app it changed, with a filter at the top and a link into that part. A picture rides along where one helps. Something off since an update? Tell us under the note: the feedback carries the change and the build you are on, so we can tie the two together.",
+      "link": "/whats-new",
+      "audience": "all",
+      "area": "account",
+      "image": {
+        "src": "/assets/whats-new/2026-10-22-whats-new-areas.webp",
+        "alt": "What's new on a phone: chips for the parts of the app along the top, then the newest note with its part, its Open link and Something off? Tell us",
+        "width": 780,
+        "height": 1688,
+        "page": "/whats-new"
+      }
+    },
+    {
+      "id": "2026-10-22-arkansas-pools-hourly",
+      "date": "2026-10-22",
+      "title": "Arkansas River pool levels now update every hour",
+      "body": "The Arkansas River pool cards on Waters now read the Corps every hour: each lock and dam's pool level, which way it moved over the day and the dam's release, with the time of its own reading. A pool that misses an hour says how old its reading is.",
+      "link": "/waters",
+      "audience": "angler",
+      "area": "waters",
+      "image": {
+        "src": "/assets/whats-new/2026-10-22-arkansas-pools-hourly.webp",
+        "alt": "One Arkansas River pool card on Waters on a phone: Trimble Pool rising, its level against normal pool and the dam's 24-hour release",
+        "width": 780,
+        "height": 662,
+        "page": "/waters",
+        "selector": ".lv5-ark-card"
+      }
+    },
+    {
+      "id": "2026-10-22-dam-generation-map",
+      "date": "2026-10-22",
+      "title": "Dam generation on the map",
+      "body": "On the Live Waters Map, Beaver, Bull Shoals, Norfork and Greers Ferry now show how many units are running and whether the water is off, partial or full, with the reading's age. Tap a dam for the tailwater read without leaving the map.",
+      "link": "/map",
+      "audience": "angler",
+      "area": "map"
+    },
+    {
+      "id": "2026-10-22-arkansas-pool-tips-share",
+      "date": "2026-10-22",
+      "title": "Arkansas River pool cards turn over for a tip",
+      "body": "Each Arkansas River pool card on Waters now turns over for what today's level means on the water, a tip for below the dam and a fact with its source. Share sends the pool's level and release with the time the Corps read it.",
+      "link": "/waters",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-profile-quick-links",
+      "date": "2026-10-22",
+      "title": "Quick links on your profile, and plans you tap anywhere",
+      "body": "Your profile has a row of quick links that stays in reach as you scroll: Fishing plans with what waits on you, Buddies, My days, Tanks and Saved. A fishing plan now shows its day as a calendar tile with the time beside it, and tapping anywhere on it opens the conversation.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-22-fishing-plans",
+      "date": "2026-10-22",
+      "title": "Fishing plans: answer an ask in one tap",
+      "body": "The badge on your picture now opens Fishing plans when a buddy asks or answers. Each plan shows the day and time with I'm in, Can't make it or Suggest another time, plus your messages. Once you're both in, Add to calendar saves it.",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-22-arkansas-twelve-locks",
+      "date": "2026-10-22",
+      "title": "Every Arkansas River lock and dam, from Trimble to Norrell",
+      "body": "The Arkansas River pools on Waters now cover all twelve locks and dams in Arkansas. Each read pool shows its level and its dam's release over the last day, and the Ormond pool opens Arkansas River at Morrilton. Two dams with no Corps reading show their facts only.",
+      "link": "/waters",
+      "audience": "angler",
+      "area": "waters",
+      "image": {
+        "src": "/assets/whats-new/2026-10-22-arkansas-twelve-locks.webp",
+        "alt": "The Arkansas River band on Waters on a phone: the pools listed upstream to downstream, each card with its pool level and the dam's release",
+        "width": 780,
+        "height": 1688,
+        "page": "/waters",
+        "selector": ".lv5-arkriver"
+      }
+    },
+    {
+      "id": "2026-10-22-arkansas-pools-dated",
+      "date": "2026-10-22",
+      "title": "Arkansas River pools say when they were read",
+      "body": "The Arkansas River pool cards on Waters now show the day the Corps reading was taken once it is more than a few hours old, instead of Rising or Falling. Each card opens a page: Lake Dardanelle its own, the other pools the Arkansas River.",
+      "link": "/waters",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-friday-read-strip",
+      "date": "2026-10-22",
+      "title": "Get your water's read every Friday, from the water's page",
+      "body": "Under a water's read, type your email and tap Go. The 6-digit code makes your free account and the Friday read box starts checked; you can clear it. A new box asks if you want to hear when a guide on your water has a day open. In the game, a signed-out read now offers to save your stamps to an account.",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-22-sign-in-brings-you-back",
+      "date": "2026-10-22",
+      "title": "Sign in brings you back to what you tapped",
+      "body": "Tap a box on a species page, the game's sign-up, Start your Tackle Box, or a buddy's link while signed out and, after the code, you land on that page, not the Tackle Box. A page that needs an account now opens sign-in and says why, instead of dropping you on the home page.",
+      "audience": "angler",
+      "area": "account",
+      "image": {
+        "src": "/assets/whats-new/2026-10-22-sign-in-brings-you-back.webp",
+        "alt": "The sign-in box on a phone after opening Profile while signed out: it says Sign in to open your profile above the email field",
+        "width": 780,
+        "height": 1688,
+        "page": "/profile",
+        "selector": ".ob-modal--auth"
+      }
+    },
+    {
+      "id": "2026-10-22-buddy-day-sheet",
+      "date": "2026-10-22",
+      "title": "Tap a day on a buddy's calendar to plan it",
+      "body": "On a buddy's card, tap any day from today on. The day opens with the read for your water, their hours beside yours and the bite window. Ask them sends a text to that buddy, and Plan this day saves the day and adds it to your calendar.",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-22-buddy-day-ask",
+      "date": "2026-10-22",
+      "title": "Ask a buddy about a day, right in the app",
+      "body": "On a buddy's calendar, open a day and tap Ask. They see it under Asked you to fish on their Buddies card, with a count on their profile picture, and See the day opens your card on that day. Text still sends it from your phone. A buddy of under two weeks wears a New buddy tag.",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-22-visual-onboarding",
+      "date": "2026-10-22",
+      "title": "Setting up is three pictures and a name",
+      "body": "Pick where you fish from a picture, tap the fish you want most, say how you like to fish, then add a name. Each tap saves, so you can come back. Your fish is your picture now, and it hatches into your tank at the end.",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-21-calendar-conditions",
+      "date": "2026-10-21",
+      "title": "See the fishing on your calendar, and each day's forecast",
+      "body": "Conditions on your free-days calendar now marks each day with an icon: a fish for a hot bite, the forecast sky, wind or storm warnings, and full or new moons. A line counts the hot days ahead and how many fall on days you're free. Tap a day for its forecast and fishing window.",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-21-calendar-past-weeks",
+      "date": "2026-10-21",
+      "title": "Your calendar starts at this week",
+      "body": "The free-days calendar on your profile and on a buddy's card no longer fills the screen with weeks that are already over. This month now opens on the week you're in, so the days still ahead sit higher on the screen.",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-21-partner-account-setup",
+      "date": "2026-10-21",
+      "title": "Set up your business account from one email link",
+      "body": "We can now email your business a setup link. Sign in with the address it was sent to and tap Link my account, and that login runs your page: your days, trips, prices and requests. The link works once, for a week.",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-21-buddy-badge-waits",
+      "date": "2026-10-21",
+      "title": "The buddy badge waits until you see Buddies",
+      "body": "Opening your profile no longer clears the buddy count before you reach the Buddies card. It clears once the card has been on screen for a moment, and the people who were waiting say New for that visit.",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-21-entry-consistency",
+      "date": "2026-10-21",
+      "title": "The home page's guide card opens the guide's page",
+      "body": "The Outfitters & Guides card on the home page now opens the business's page, where their days, trips and doors are, instead of calling or leaving the app. On a guide's page, Check availability opens the booking panel.",
+      "audience": "all",
+      "area": "home"
+    },
+    {
+      "id": "2026-10-21-per-guide-days",
+      "date": "2026-10-21",
+      "title": "Every guide on a listing posts their own open days",
+      "body": "Set up your listing now asks whose days you're marking, so each guide keeps their own. Saving another step no longer refreshes the posted date: tick These days still hold when they do, and step 4 tells you when anglers stop seeing old days.",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-21-desk-hardening",
+      "date": "2026-10-21",
+      "title": "Reopen asks first, and the Guide desk waits for each save",
+      "body": "On the Guide desk, Reopen on a booked trip now asks before it frees the day. A form stays open until the save comes back, says what went wrong in plain words if it didn't, and past trips no longer offer buttons. Every button is large enough for a thumb.",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-21-water-spotlight",
+      "date": "2026-10-21",
+      "title": "A water's Partner Spotlight is local",
+      "body": "On a water's Signals tab, the Partner Spotlight now shows only the businesses that work that water, nearest first, with where they are. It stays put until you swipe.",
+      "audience": "angler",
+      "area": "waters"
+    },
+    {
+      "id": "2026-10-21-calendar-months",
+      "date": "2026-10-21",
+      "title": "Page through a guide's calendar month by month",
+      "body": "A guide's booking panel now shows one month at a time with Previous and Next, out to the last day they posted, so a spring trip they opened in the autumn is there to pick. Each month says how many days are open.",
+      "audience": "angler",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-21-day-place-pick",
+      "date": "2026-10-21",
+      "title": "Pick the water and the day when you plan a trip",
+      "body": "The day sheet on your profile no longer assumes your home water. Change the water to any lake, river or tailwater (your saved ones first) and the read follows it, pick any day up to a year out, or tap Plan a day. Ask them now names the water.",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-21-outfitters-search",
+      "date": "2026-10-21",
+      "title": "Search and filter Outfitters & Guides",
+      "body": "Outfitters & Guides now has the same search and filters as Waters and Species: pick a kind, search by name, town, water or guide, filter by water or what you need, and switch between cards and a compact list. The order stays by name.",
+      "audience": "angler",
+      "area": "guides",
+      "image": {
+        "src": "/assets/whats-new/2026-10-21-outfitters-search.webp",
+        "alt": "Outfitters & Guides on a phone: kind chips with icons, a search box, the Any water and What you need filters, and the Cards or List switch",
+        "width": 780,
+        "height": 1688,
+        "page": "/outfitters"
+      }
+    },
+    {
+      "id": "2026-10-21-buddy-names-and-days",
+      "date": "2026-10-21",
+      "title": "New buddies arrive with a name and can share their days",
+      "body": "Saying yes to a buddy link now asks for your name first, so your buddy never sees \"An angler\", and a ticked box shows your free days to your buddies. If your days are set to Only me, your Buddies card and theirs say so, with one tap to show them.",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-21-water-sponsor-mark",
+      "date": "2026-10-21",
+      "title": "Sponsors show at the top of the water they work",
+      "body": "A sponsored business now shows at the top of each water page it works, with its logo. The map is now an icon beside Share, so the top of the page has more room. Where several sponsor one water, the first changes each visit and the rest are a swipe away.",
+      "link": "/partners#place-water-page",
+      "audience": "guide",
+      "area": "business",
+      "image": {
+        "src": "/assets/whats-new/2026-10-21-water-sponsor-mark.webp",
+        "alt": "The top of the White River below Bull Shoals Dam page on a phone, with a sponsor's logo and the word Sponsored under the pills",
+        "width": 780,
+        "height": 1688,
+        "page": "/water/wb_white_river_bull_shoals_tailwater"
+      }
+    },
+    {
+      "id": "2026-10-21-profile-photos",
+      "date": "2026-10-21",
+      "title": "Put your own photo and cover on your profile",
+      "body": "Tap the camera on your profile to add your photo, or Cover to set the picture behind your name and slide it up or down. Your photo shows in the top bar and on your buddies' view of you, and the location and camera details come off before it uploads.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-21-booking-panel",
+      "date": "2026-10-21",
+      "title": "A guide's booking panel keeps your trip in view",
+      "body": "On a guide's page the doors now take one row at the foot of the panel, so the trip you picked stays in sight. A day opened from a card or the Friday email opens the panel on that day, and a day that was booked or has passed says so instead of vanishing.",
+      "audience": "angler",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-21-anglers",
+      "date": "2026-10-21",
+      "title": "Pick how many anglers and see that trip's own price",
+      "body": "On a guide's page that prices by party size, choose 2 or 3 anglers once: every trip shows that party's price, the request and your message say how many of you are coming, and their rates show one row per trip instead of one per party.",
+      "audience": "angler",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-21-invite-landing-newcomer",
+      "date": "2026-10-21",
+      "title": "A buddy invite now explains itself",
+      "body": "Someone you invite now reads what Pocket Fishing Guide is and the three steps from their side, then sets up a profile right after saying yes, so you see their name and the days they can fish. Opening your own link shows what your buddy will see.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-21-trip-request-sent",
+      "date": "2026-10-21",
+      "title": "A guide's page now says when your trip request was sent",
+      "body": "After you text, call or email a guide from their page, the panel says what you asked for and where it lives next: Your trips, or sign in to keep it there. Tapping twice never sends the same ask twice, and signed in, you choose whether the guide sees your angler profile.",
+      "audience": "angler",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-21-lure-details",
+      "date": "2026-10-21",
+      "title": "Tap a lure on a species or water page to open it",
+      "body": "The lures and baits on a species page, in the tackle box and on a water's Techniques tab now open when you tap them: a big picture of the lure on the fish's water, why it works, the water it does best in, and How-To and Shop.",
+      "link": "/species",
+      "audience": "angler",
+      "area": "species"
+    },
+    {
+      "id": "2026-10-20-calendar-view-mode",
+      "date": "2026-10-20",
+      "title": "Tap a day on your free-days calendar to open it",
+      "body": "Your free-days calendar now opens a day when you tap it: who's free, the read and Ask them, with a row to mark that one day. To mark many days at once, switch to Edit my days, then Save.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-20-buddy-invite-card",
+      "date": "2026-10-20",
+      "title": "Buddy invites arrive as one message with a new card",
+      "body": "A buddy invite sent by text now shows up once: your note and one preview card, not the card twice. The card shows a river, your name and a small day chart of when the bite lands while you're both free.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-20-report-trust-label",
+      "date": "2026-10-20",
+      "title": "Angler reports say whether they were verified at the water",
+      "body": "Each angler report on a water's Reports tab and the weekly board now carries the label the submit sheet promised: Verified at the water when the report came with a fresh location fix there, otherwise Unverified. Your tank also stops counting reports that were turned down.",
+      "link": "/weekly-report",
+      "audience": "angler",
+      "area": "reports"
+    },
+    {
+      "id": "2026-10-20-sponsor-species-report",
+      "date": "2026-10-20",
+      "title": "Sponsors on species pages and the weekly report",
+      "body": "A sponsored guide now shows on the page for a fish found where they guide, with the water named. On the weekly report, a sponsored business on a water in that week's edition shows with its own river note, posted from its profile and dated.",
+      "link": "/partners#place-river-report",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-20-buddy-calendar",
+      "date": "2026-10-20",
+      "title": "See a buddy's free days on a calendar",
+      "body": "A buddy's card now shows when they can fish as a month calendar instead of a long list: their free days filled in, yours marked underneath, the days you're both free ringed in green and the best one starred.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-20-founder-welcome",
+      "date": "2026-10-20",
+      "title": "A hello from the founder when you join",
+      "body": "When you finish setting up, Corey, who built Pocket Fishing Guide, asks to be your fishing buddy. Say yes and you see each other's free days; Not now is fine, nobody is told, and the ask never comes back.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-20-buddys-take",
+      "date": "2026-10-20",
+      "title": "Buddy's tips on the Go-Fishing cards",
+      "body": "After you pick a fish in Go-Fishing, the best read gets Buddy's take beside it: a few tips for that fish and what it does this season, swipe for the next. Pick the wrong fish and Buddy still leaves you a tip on the one you chose.",
+      "link": "/fish-arkansas/go",
+      "audience": "angler",
+      "area": "game"
+    },
+    {
+      "id": "2026-10-20-keep-a-trip",
+      "date": "2026-10-20",
+      "title": "Keep a guided trip for later, or share it",
+      "body": "On a guide's page, pick a trip and its day shows as one card with what the morning or afternoon is like and the trout you may meet. Tap Keep to hold it on your Saved page, or Share to send it to a fishing buddy.",
+      "link": "/saved",
+      "audience": "angler",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-20-invite-names",
+      "date": "2026-10-20",
+      "title": "Name who a buddy link is for",
+      "body": "Invite a buddy now asks who it's for, so Links you sent shows Rick waiting and Erin said yes instead of five identical rows. Only you see the name. Send again makes a fresh link for the same person; links without a name fold into one row you can take back at once.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-buddy-card",
+      "date": "2026-10-19",
+      "title": "Open a buddy's profile to see their fish tanks and catches",
+      "body": "Tap a buddy's name on your Buddies card to see their fish tanks, home water, when they're free and, if they share them, their catches with photos. You choose what your buddies see in Settings, under What your buddies see.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-the-day-and-the-season",
+      "date": "2026-10-19",
+      "title": "Guide pages show what a half day looks like",
+      "body": "A guide's page now lays out the morning half, the evening half and the full day on the day's real sunrise and sunset, with their prices and the next open day for each. On the White, the trout year shows what each season brings, with a source for every fact.",
+      "link": "/outfitters",
+      "audience": "all",
+      "area": "guides"
+    },
+    {
+      "id": "2026-10-19-buddy-links-sent",
+      "date": "2026-10-19",
+      "title": "See the buddy links you sent, and take one back",
+      "body": "Your Buddies card now lists the links you sent: still open, used and by whom, taken back or expired. Sent one to the wrong person? Tap Take back and it stops working. A buddy request that waits 30 days now drops off on its own.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-your-week",
+      "date": "2026-10-19",
+      "title": "Your week on Pocket Fishing Guide, first on your profile",
+      "body": "Businesses now see their week at the top of the Guide view: how often anglers saw them, opened their card, tapped a door and asked for a day, each with last week beside it, a bar for every day, where anglers found them, and one next thing to do.",
+      "link": "/profile",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-19-buddies-remove-say-yes",
+      "date": "2026-10-19",
+      "title": "Remove a buddy, and say yes to an invite with a tap",
+      "body": "You can now remove a buddy from the menu on their row without blocking them; you stop seeing each other's free days and they are not told. An invite link now waits for you to tap Say yes, so a link passed along in a group text cannot add the wrong person.",
+      "link": "/profile#buddies",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-sign-in-code",
+      "date": "2026-10-19",
+      "title": "Signing in is sturdier: a button and a 6-digit code",
+      "body": "The sign-in email now opens a page with one Sign in button, so an email app that checks links can no longer use yours up first. The same email has a 6-digit code you can type in the sign-in box, handy when the email is on your phone and you are on a computer.",
+      "link": "/",
+      "audience": "all",
+      "area": "account"
+    },
+    {
+      "id": "2026-10-19-open-days-year",
+      "date": "2026-10-19",
+      "title": "Mark free days up to a year ahead",
+      "body": "Your open-days calendar now shows one month at a time with big Previous and Next buttons and a Go to month list, so you can mark days as far as a year out. Every weekend fills the month you are looking at. Guides can post a year of open days too.",
+      "link": "/profile",
+      "audience": "all",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-19-day-sheet",
+      "date": "2026-10-19",
+      "title": "Tap a day to see if the bite lines up with your crew",
+      "body": "A day on the 14-day calendar or your open days now opens one sheet: the day as a timeline with the bite window, your time and each buddy's, one line saying who it suits, and Ask them. Your open days get a Buddies or Conditions view and the best days together up top.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-19-partners-showcase",
+      "date": "2026-10-19",
+      "title": "See your business in the app before you sign up",
+      "body": "The partner page now lets a guide, lodge, marina, boat rental or tackle shop pick what they are, type their name and see their listing card, the lead they would get and what each plan includes.",
+      "link": "/partners",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-19-shared-calendar",
+      "date": "2026-10-19",
+      "title": "One calendar for you and your buddies",
+      "body": "Your buddies' free days now sit on your own calendar as dots in their colors. Tick who to count, or ask for only the days you're all free; the best shared day is named. Weekends and holidays are marked, a pip says how your home water reads for two weeks, and tapping a day shows who's free.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-profile-role-strip",
+      "date": "2026-10-19",
+      "title": "Your listing and the console, one tap under your name",
+      "body": "A guide business or an admin now finds their page, Set up your listing and the console right under their name on the profile, not at the bottom of the page. Saved & planned shows your first three and a See all link to the full list.",
+      "link": "/profile",
+      "audience": "all",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-19-buddy-rows",
+      "date": "2026-10-19",
+      "title": "Your buddies show when they're free",
+      "body": "Each buddy on your profile now shows the days they've marked free and the days you're both free, with the best one named. A buddy who runs a guide service carries a Guide tag that opens their page. Block and Report sit behind the three dots.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-simpler-days",
+      "date": "2026-10-19",
+      "title": "A simpler open-days card",
+      "body": "Who sees your days sits at the top, the picked days read as one line that opens to the list, and setting up a profile asks for one name.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-19-buddies",
+      "date": "2026-10-19",
+      "title": "Fish with a buddy",
+      "body": "Invite someone you fish with by link. When they tap it and sign in, you're buddies: each of you can see the days the other marks free, never where you are. The Buddies card is on your profile; a number on your avatar says who is waiting on you.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "buddies"
+    },
+    {
+      "id": "2026-10-19-open-days",
+      "date": "2026-10-19",
+      "title": "Mark the days you could fish",
+      "body": "Your profile has a six-week calendar: all day, a morning or an afternoon. They stay yours unless you switch them to My buddies.",
+      "link": "/profile",
+      "audience": "angler",
+      "area": "profile"
+    },
+    {
+      "id": "2026-10-19-nudges-off",
+      "date": "2026-10-19",
+      "title": "Nudges are off until you say so",
+      "body": "Nothing is sent unless you pick a cadence and a channel. Settings keeps the same switch.",
+      "link": "/settings",
+      "audience": "angler",
+      "area": "account"
+    },
+    {
+      "id": "2026-10-19-feed-open-days",
+      "date": "2026-10-19",
+      "title": "Guides: your open days from the calendar you already keep",
+      "body": "Make a calendar named PFG Open days, add an all-day Open (or Open AM, Open PM) on each day you can guide, and paste its iCal address on the Open days step of Set up your listing. It is read every hour.",
+      "link": "/listing/setup?step=4",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-19-partner-numbers",
+      "date": "2026-10-19",
+      "title": "Guides: your week in one line",
+      "body": "The Guide view on your profile says how often your listing was seen, opened and had a door tapped, and which surface sent anglers to you. Counts only; no visitor is kept.",
+      "link": "/profile",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-17-request-details",
+      "date": "2026-10-17",
+      "title": "Guides: evaluate a request before you answer, and record the deposit",
+      "body": "Each request on your desk opens to what the angler saw and asked for, the day's season bands and your deposit policy; Confirm prefills the posted price, and a deposit you received is recorded with its date.",
+      "link": "/profile",
+      "audience": "guide",
+      "area": "business"
+    },
+    {
+      "id": "2026-10-16-water-now",
+      "date": "2026-10-16",
+      "title": "A guide's page shows the water they work, now",
+      "body": "Under the business's name, one card per dam that sets their water, with the same status the dam cards print.",
+      "link": "/outfitters",
+      "audience": "angler",
+      "area": "guides"
+    }
+  ]
+}
