@@ -1,0 +1,390 @@
+{
+  "version": 1,
+  "scope": "admin",
+  "generated_at": "2026-10-22T14:00:00.000Z",
+  "range": {
+    "since": "2026-08-03",
+    "until": "2026-10-22",
+    "weeks": 12
+  },
+  "sources": {
+    "twt_leads": {
+      "status": "ok"
+    },
+    "pfg_web": {
+      "status": "ok"
+    },
+    "pfg_app": {
+      "status": "ok"
+    },
+    "google": {
+      "status": "not_connected",
+      "note": "GOOGLE_SERVICE_ACCOUNT_JSON not set"
+    },
+    "search": {
+      "status": "not_connected",
+      "note": "GOOGLE_SERVICE_ACCOUNT_JSON not set"
+    }
+  },
+  "businesses": {
+    "pfg": {
+      "name": "Pocket Fishing Guide",
+      "kpis": [
+        {
+          "key": "visitors_4w",
+          "label": "Visitors, last 4 full weeks",
+          "value": 432,
+          "prev": 195
+        },
+        {
+          "key": "pages_per_visitor",
+          "label": "Pages per visitor",
+          "value": 5,
+          "hint": "Pageviews divided by visitors over the same 4 weeks"
+        },
+        {
+          "key": "accounts",
+          "label": "Angler accounts",
+          "value": 120,
+          "hint": "Demo accounts excluded"
+        },
+        {
+          "key": "new_30d",
+          "label": "New accounts, 30 days",
+          "value": 30
+        },
+        {
+          "key": "active_7d",
+          "label": "Signed in, last 7 days",
+          "value": 25
+        },
+        {
+          "key": "partners",
+          "label": "Published partners",
+          "value": 5
+        },
+        {
+          "key": "trips_real",
+          "label": "Guide-trip requests",
+          "value": 6,
+          "hint": "Demo requests excluded"
+        },
+        {
+          "key": "trips_confirmed",
+          "label": "Guide trips confirmed",
+          "value": 0
+        }
+      ],
+      "series": {
+        "visitors": [
+          {
+            "week": "2026-08-03",
+            "value": 40
+          },
+          {
+            "week": "2026-08-10",
+            "value": 36
+          },
+          {
+            "week": "2026-08-17",
+            "value": 44
+          },
+          {
+            "week": "2026-08-24",
+            "value": 52
+          },
+          {
+            "week": "2026-08-31",
+            "value": 48
+          },
+          {
+            "week": "2026-09-07",
+            "value": 45
+          },
+          {
+            "week": "2026-09-14",
+            "value": 50
+          },
+          {
+            "week": "2026-09-21",
+            "value": 47
+          },
+          {
+            "week": "2026-09-28",
+            "value": 55
+          },
+          {
+            "week": "2026-10-05",
+            "value": 120
+          },
+          {
+            "week": "2026-10-12",
+            "value": 210
+          },
+          {
+            "week": "2026-10-19",
+            "value": 150
+          }
+        ],
+        "pageviews": [
+          {
+            "week": "2026-08-03",
+            "value": 200
+          },
+          {
+            "week": "2026-08-10",
+            "value": 180
+          },
+          {
+            "week": "2026-08-17",
+            "value": 220
+          },
+          {
+            "week": "2026-08-24",
+            "value": 260
+          },
+          {
+            "week": "2026-08-31",
+            "value": 240
+          },
+          {
+            "week": "2026-09-07",
+            "value": 225
+          },
+          {
+            "week": "2026-09-14",
+            "value": 250
+          },
+          {
+            "week": "2026-09-21",
+            "value": 235
+          },
+          {
+            "week": "2026-09-28",
+            "value": 275
+          },
+          {
+            "week": "2026-10-05",
+            "value": 600
+          },
+          {
+            "week": "2026-10-12",
+            "value": 1050
+          },
+          {
+            "week": "2026-10-19",
+            "value": 750
+          }
+        ],
+        "signups": [
+          {
+            "week": "2026-08-03",
+            "value": 2
+          },
+          {
+            "week": "2026-08-10",
+            "value": 1
+          },
+          {
+            "week": "2026-08-17",
+            "value": 3
+          },
+          {
+            "week": "2026-08-24",
+            "value": 2
+          },
+          {
+            "week": "2026-08-31",
+            "value": 2
+          },
+          {
+            "week": "2026-09-07",
+            "value": 1
+          },
+          {
+            "week": "2026-09-14",
+            "value": 2
+          },
+          {
+            "week": "2026-09-21",
+            "value": 3
+          },
+          {
+            "week": "2026-09-28",
+            "value": 2
+          },
+          {
+            "week": "2026-10-05",
+            "value": 6
+          },
+          {
+            "week": "2026-10-12",
+            "value": 9
+          },
+          {
+            "week": "2026-10-19",
+            "value": 5
+          }
+        ]
+      },
+      "breakdowns": {
+        "referrers": [
+          {
+            "name": "Direct or app",
+            "value": 300
+          },
+          {
+            "name": "Google",
+            "value": 60
+          },
+          {
+            "name": "Facebook",
+            "value": 45
+          },
+          {
+            "name": "LinkedIn",
+            "value": 18
+          },
+          {
+            "name": "Tale Waters and Tides",
+            "value": 12
+          },
+          {
+            "name": "Team and previews",
+            "value": 4
+          }
+        ]
+      },
+      "story": [
+        "Visitors reached 210 in the week of Oct 12, about 3 times the 4-week average of 68.",
+        "68% of visitors arrive with no referrer: typed links, the installed app, texts and shares. Tagging shared links is how that group becomes readable.",
+        "Google is the largest named source (60 visitors), then Facebook and LinkedIn.",
+        "48 of 120 accounts signed in during the last 30 days, and 30 accounts were created in that time.",
+        "6 real guide-trip requests have come in and none is confirmed yet, so booking is the open step.",
+        "Google Search Console is not connected yet, so that part of the picture is blank."
+      ]
+    },
+    "twt": {
+      "name": "Tale Waters and Tides",
+      "kpis": [
+        {
+          "key": "leads_total",
+          "label": "Leads since launch",
+          "value": 6
+        },
+        {
+          "key": "leads_window",
+          "label": "Leads, last 12 weeks",
+          "value": 6
+        },
+        {
+          "key": "leads_open",
+          "label": "Leads not yet worked",
+          "value": 5,
+          "hint": "Status still new"
+        }
+      ],
+      "series": {
+        "leads": [
+          {
+            "week": "2026-08-03",
+            "value": 0
+          },
+          {
+            "week": "2026-08-10",
+            "value": 0
+          },
+          {
+            "week": "2026-08-17",
+            "value": 0
+          },
+          {
+            "week": "2026-08-24",
+            "value": 0
+          },
+          {
+            "week": "2026-08-31",
+            "value": 0
+          },
+          {
+            "week": "2026-09-07",
+            "value": 0
+          },
+          {
+            "week": "2026-09-14",
+            "value": 0
+          },
+          {
+            "week": "2026-09-21",
+            "value": 0
+          },
+          {
+            "week": "2026-09-28",
+            "value": 0
+          },
+          {
+            "week": "2026-10-05",
+            "value": 5
+          },
+          {
+            "week": "2026-10-12",
+            "value": 1
+          },
+          {
+            "week": "2026-10-19",
+            "value": 0
+          }
+        ]
+      },
+      "breakdowns": {
+        "lead_sources": [
+          {
+            "name": "Unattributed",
+            "value": 5
+          },
+          {
+            "name": "LinkedIn",
+            "value": 1
+          }
+        ],
+        "lead_pages": [
+          {
+            "name": "Readiness check",
+            "value": 3
+          },
+          {
+            "name": "Home contact form",
+            "value": 2
+          },
+          {
+            "name": "Guides",
+            "value": 1
+          }
+        ]
+      },
+      "story": [
+        "Google Analytics for Tale Waters and Tides is not connected yet, so that part of the picture is blank.",
+        "Google Search Console is not connected yet, so that part of the picture is blank."
+      ],
+      "admin_story": [
+        "6 leads since the site relaunch; the readiness check brought 3 of them.",
+        "83% of leads are unattributed, so it is not yet clear which channel produces them.",
+        "5 leads have sat in the pipeline as new for more than 3 days.",
+        "The guide service has 1 early-interest request from its coming-soon page."
+      ],
+      "admin_only": {
+        "pipeline": [
+          {
+            "name": "new",
+            "value": 5
+          },
+          {
+            "name": "contacted",
+            "value": 1
+          }
+        ]
+      }
+    }
+  },
+  "sample": true
+}

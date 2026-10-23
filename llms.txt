@@ -28,6 +28,7 @@ The most useful resource here for an AI assistant. A structured, copy-and-paste 
 
 - [The Lab](https://talewatersandtides.com/lab/): Outdoor Recreation Innovation Lab. Pocket Fishing Guide: live fishing intelligence for 57 Arkansas waters and 33 species from USGS, NWS, USACE and AGFC data.
 - [Projects](https://talewatersandtides.com/projects/): The lab's project portfolio.
+- [News and updates](https://talewatersandtides.com/news/): What shipped in Pocket Fishing Guide each week (one entry per change an angler or guide can see), the Friday note from Corey, the numbers the lab watches with their sources, and what the lab is asking for. RSS at https://talewatersandtides.com/news/feed.xml.
 
 ## Notes
 

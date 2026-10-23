@@ -1,5 +1,7 @@
 # Lint every HTML page with HTMLHint (rules in .htmlhintrc), then run the
 # SEO and internal-link checks in scripts/check-site.mjs.
+# scripts/build-news.mjs --check fails when news/ or the lab block was not regenerated
+# after a change to data/news.json or data/pfg-whats-new.json.
 # The site has no build step, so this is the only automated quality gate
 # before a merge to main triggers the GitHub Pages deploy.
 name: HTML lint
@@ -11,6 +13,8 @@ on:
       - ".htmlhintrc"
       - "sitemap.xml"
       - "scripts/check-site.mjs"
+      - "scripts/build-news.mjs"
+      - "data/**"
       - "scripts/check-design.mjs"
       - "design/**"
       - ".github/workflows/html-lint.yml"
@@ -47,3 +51,5 @@ jobs:
         run: node scripts/check-design.mjs
       - name: SEO and link checks (sitemap pages)
         run: node scripts/check-site.mjs
+      - name: News page, feed and lab block are current
+        run: node scripts/build-news.mjs --check

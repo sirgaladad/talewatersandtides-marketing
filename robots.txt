@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /first-contact/facilitator/
 Disallow: /first-contact/dashboard/
+Disallow: /sales-kit/
+Disallow: /admin/
+Disallow: /partners/
 
 Sitemap: https://talewatersandtides.com/sitemap.xml

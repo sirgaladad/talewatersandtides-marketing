@@ -34,9 +34,17 @@ concurrency:
 
 jobs:
   build:
+    # This repo is public, so anyone can comment. Only the owner and collaborators start
+    # the agent (it holds contents: write and the Anthropic key); a stranger's or a bot's
+    # "@claude" no longer spins up a runner or waits for approval (17 runs sat in
+    # action_required in the 30 days to 2026-10-22). claude-code-action also checks write
+    # access itself; this is the cheap first gate.
     if: >-
       (github.event_name == 'issues' && github.event.label.name == 'design-build') ||
-      (github.event_name != 'issues' && contains(github.event.comment.body, '@claude'))
+      (github.event_name != 'issues' &&
+        contains(github.event.comment.body, '@claude') &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    timeout-minutes: 45
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
