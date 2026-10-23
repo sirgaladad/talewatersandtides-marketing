@@ -29,7 +29,7 @@ jobs:
         working-directory: supabase/functions/intake
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
