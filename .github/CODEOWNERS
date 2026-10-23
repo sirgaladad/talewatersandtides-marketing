@@ -1,0 +1,9 @@
+# Every change requests review from the owner. Pair with a ruleset that requires a pull
+# request before merging to main (CLAUDE.md: "no direct push to main").
+* @sirgaladad
+
+# Paths that reach production or hold secrets-backed automation.
+/.github/workflows/ @sirgaladad
+/supabase/ @sirgaladad
+/CNAME @sirgaladad
+/data/guiding.json @sirgaladad
