@@ -50,7 +50,14 @@ news.issues.forEach((it, i) => {
 });
 const areaById = new Map((pfg.areas || []).map((a) => [a.id, a]));
 for (const e of pfg.entries || []) if (!areaById.has(e.area)) problems.push(`pfg entry ${e.id}: unknown area ${e.area}`);
-for (const t of news.metrics.tiles) if (typeof t.show !== 'boolean') problems.push(`metric ${t.key}: show must be true or false`);
+for (const t of news.metrics.tiles) {
+  if (typeof t.show !== 'boolean') problems.push(`metric ${t.key}: show must be true or false`);
+  // A number never renders without its value, its label and where it came from (README: every
+  // number carries its source and read date); a hint is optional.
+  for (const k of ['key', 'value', 'label', 'source']) if (typeof t[k] !== 'string' || !t[k].trim()) problems.push(`metric ${t.key ?? '?'}: ${k} must be a non-empty string`);
+}
+if (!/^\d{4}-\d{2}-\d{2}$/.test(news.metrics.as_of || '')) problems.push('metrics.as_of must be YYYY-MM-DD');
+for (const b of news.metrics.breakdowns || []) for (const i of b.items || []) if (typeof i.name !== 'string' || typeof i.value !== 'number') problems.push(`breakdown ${b.title}: every item needs a name and a numeric value`);
 if (problems.length) {
   for (const p of problems) console.error(`✗ ${p}`);
   process.exit(1);

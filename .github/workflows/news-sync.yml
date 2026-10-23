@@ -128,7 +128,9 @@ jobs:
           # such branch). Building on that tip makes the push a fast-forward; the lease only guards
           # against a push that landed on the branch while this run was working.
           git push -u origin "$BRANCH" --force-with-lease="$BRANCH:$EXPECTED"
-          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+          # An open PR only: gh pr view would also resolve a merged PR for a branch left behind.
+          OPEN="$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')"
+          if [ "$OPEN" != "0" ]; then
             echo "PR for $BRANCH already open; updated its branch."
           else
             gh pr create --draft --base main --head "$BRANCH" \
