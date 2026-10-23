@@ -365,7 +365,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <atom:link href="${ORIGIN}/news/feed.xml" rel="self" type="application/rss+xml"/>
 <description>${esc(news.site.description)}</description>
 <language>en-us</language>
-<lastBuildDate>${rfc822(issue.date)}</lastBuildDate>
+<lastBuildDate>${rfc822(feedItems[0]?.date ?? issue.date)}</lastBuildDate>
 ${feedItems.map((i) => `<item>
 <title>${esc(i.title)}</title>
 <link>${esc(i.link)}</link>
