@@ -1,0 +1,145 @@
+# News sync: refresh the Pocket Fishing Guide "What's new" snapshot and rebuild /news/ and the
+# lab block, then open a pull request for human review. Nothing is pushed to main.
+#
+# Why a schedule: Pocket Fishing Guide tags a release every day it ships an angler-visible
+# change and the Friday digest goes out Friday morning. Running Friday at 15:40 UTC (10:40 CT)
+# means the week's changes are in the PR before the Friday note is written. One run a week,
+# a few seconds of Actions minutes.
+#
+# No token: the app serves its What's new file publicly at
+# https://www.pocketfishinguide.com/data/whats-new.json (pocket-fishing-guide
+# web/public/data/whats-new.json, byte-identical to data/whats-new.json by its validator), the
+# same text anglers read at /whats-new. A 404 there means the PFG side has not deployed the
+# public copy yet; the run stops and says so.
+#
+# A rerun (manual, or a second deploy the same day) starts from the open sync branch when one
+# exists and merges main into it, so a Friday note or metrics committed there by hand survive;
+# only the snapshot and the rendered files are regenerated on top. A merge conflict stops the
+# run and says so; nothing is force-replaced.
+#
+# Repo setting: Settings -> Actions -> General -> "Allow GitHub Actions to create and approve
+# pull requests" must be on for the gh pr create step.
+#
+# Runbook: docs/NEWS-AND-UPDATES.md
+name: News sync
+
+on:
+  schedule:
+    - cron: "40 15 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: news-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history: a rerun merges main into the open sync branch, which needs the merge base.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Fetch the What's new snapshot from pocketfishinguide.com
+        run: |
+          set -euo pipefail
+          URL="https://www.pocketfishinguide.com/data/whats-new.json"
+          TMP="$RUNNER_TEMP/whats-new.json"
+          CODE="$(curl -sS -L --max-time 30 -o "$TMP" -w '%{http_code}' -H 'Accept: application/json' -H 'User-Agent: twt-news-sync (+https://talewatersandtides.com/news/)' "$URL")"
+          if [ "$CODE" != "200" ]; then
+            echo "::error::$URL answered $CODE. The public copy is web/public/data/whats-new.json in pocket-fishing-guide; it must be deployed before this sync can run."
+            exit 1
+          fi
+          NEWEST="$(node -e 'const j=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")); if(!Array.isArray(j.entries)||!Array.isArray(j.areas)||!j.entries.length) throw new Error("unexpected shape"); console.log(j.entries[0].date)' "$TMP")"
+          echo "newest release day $NEWEST"
+          {
+            echo "SNAPSHOT=$TMP"
+            echo "NEWEST=$NEWEST"
+            echo "BRANCH=chore/news-sync-$NEWEST"
+          } >> "$GITHUB_ENV"
+
+      - name: Start from the open sync branch when there is one
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          EXPECTED="$(git ls-remote --heads origin "$BRANCH" | cut -f1)"
+          if [ -n "$EXPECTED" ]; then
+            # Keep what a person committed on the branch (the Friday note, the metrics); bring main in.
+            git checkout -B "$BRANCH" "$EXPECTED"
+            if ! git merge --no-edit origin/main; then
+              echo "::error::$BRANCH does not merge cleanly with main. Resolve it by hand on the open PR, then rerun."
+              exit 1
+            fi
+            echo "building on $BRANCH at ${EXPECTED:0:7}, main merged"
+          else
+            git checkout -B "$BRANCH"
+            echo "new branch $BRANCH from main"
+          fi
+          echo "EXPECTED=$EXPECTED" >> "$GITHUB_ENV"
+
+      - name: Place the snapshot
+        run: |
+          set -euo pipefail
+          mv "$SNAPSHOT" data/pfg-whats-new.json
+          SHA="$(sha256sum data/pfg-whats-new.json | cut -c1-64)"
+          node -e '
+            const fs=require("fs"); const p="data/news.json"; const j=JSON.parse(fs.readFileSync(p,"utf8"));
+            j.pfg_snapshot.synced_at=new Date().toISOString().slice(0,10); j.pfg_snapshot.sha256=process.argv[1];
+            fs.writeFileSync(p, JSON.stringify(j,null,2)+"\n");' "$SHA"
+          echo "sha256 $SHA"
+
+      - name: Rebuild the news page, feed and lab block
+        run: node scripts/build-news.mjs
+
+      - name: Checks
+        run: |
+          npx --yes htmlhint@1 "news/*.html" "lab/*.html"
+          node scripts/check-site.mjs
+          node scripts/build-news.mjs --check
+
+      - name: Commit, push, open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git add data/ news/ lab/
+          if ! git diff --cached --quiet; then
+            git commit -m "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST"
+          fi
+          BASE="${EXPECTED:-$(git rev-parse origin/main)}"
+          if [ "$(git rev-parse HEAD)" = "$BASE" ]; then
+            echo "Nothing changed since the last sync."
+            exit 0
+          fi
+          # The lease is explicit: the tip this run built on, or empty on the first run (expect no
+          # such branch). Building on that tip makes the push a fast-forward; the lease only guards
+          # against a push that landed on the branch while this run was working.
+          git push -u origin "$BRANCH" --force-with-lease="$BRANCH:$EXPECTED"
+          # An open PR only: gh pr view would also resolve a merged PR for a branch left behind.
+          OPEN="$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')"
+          if [ "$OPEN" != "0" ]; then
+            echo "PR for $BRANCH already open; updated its branch."
+          else
+            gh pr create --draft --base main --head "$BRANCH" \
+              --title "[Chore] News sync: Pocket Fishing Guide changes through $NEWEST" \
+              --body "$(printf '%s\n' \
+                "Automated weekly sync (news-sync.yml)." \
+                "" \
+                "- data/pfg-whats-new.json refreshed from https://www.pocketfishinguide.com/data/whats-new.json" \
+                "- news/index.html, news/feed.xml and the lab block regenerated by scripts/build-news.mjs" \
+                "" \
+                "Before merging: write this week's Friday note and the metrics in data/news.json, run node scripts/build-news.mjs, and read the page at phone width. A rerun keeps what you commit here and merges main in. Runbook: docs/NEWS-AND-UPDATES.md.")"
+          fi

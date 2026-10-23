@@ -6,7 +6,9 @@
 
   // Public anon key: safe to ship. The function verifies it, and the leads
   // tables have no anon access; only the function's service role writes them.
-  var INTAKE_URL = 'https://feldynpqhzvstpssztra.supabase.co/functions/v1/intake';
+  // Exposed on window.TWT so other pages reuse this one copy of the key.
+  var SUPABASE_URL = 'https://feldynpqhzvstpssztra.supabase.co';
+  var INTAKE_URL = SUPABASE_URL + '/functions/v1/intake';
   var ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbGR5bnBxaHp2c3Rwc3N6dHJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMzA5NzMsImV4cCI6MjA5NTkwNjk3M30.fs2YJDZEyJ_FLe524kKpul8uTitrZa6VYCmEe69ahzQ';
   var loadedAt = Date.now();
@@ -167,5 +169,5 @@
     });
   }
 
-  window.TWT = { intake: intake, track: track };
+  window.TWT = { intake: intake, track: track, supabaseUrl: SUPABASE_URL, anonKey: ANON_KEY };
 })();

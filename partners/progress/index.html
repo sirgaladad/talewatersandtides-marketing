@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Partner Progress | Tale Waters &amp; Tides</title>
+<meta name="description" content="Progress report for Tale Waters and Tides partners: trends and totals.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="icon" type="image/png" href="/assets/twt_favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/css/metrics.css">
+</head>
+<body class="metrics">
+<main class="m-wrap" id="app">
+  <section class="m-card" id="nolink" hidden>
+    <div class="m-eyebrow">Partner progress report</div>
+    <h1 class="m-title">This report needs its link</h1>
+    <p id="nolinkMsg">Open the full link Corey sent you. It ends with a private code after the # sign.</p>
+  </section>
+  <p class="m-msg" id="status" role="status">Loading&hellip;</p>
+</main>
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/metrics.js"></script>
+<script>
+(function () {
+  // Supabase URL and public anon key come from site.js (one copy for the site).
+  var SB_URL = window.TWT.supabaseUrl;
+  var SB_ANON = window.TWT.anonKey;
+  var status = document.getElementById('status');
+  var m = /[#&]t=([A-Za-z0-9_-]{24,200})/.exec(location.hash);
+  function stop(msg) {
+    status.hidden = true;
+    document.getElementById('nolink').hidden = false;
+    if (msg) document.getElementById('nolinkMsg').textContent = msg;
+  }
+  if (!m) return stop();
+  fetch(SB_URL + '/functions/v1/metrics/summary', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + SB_ANON, apikey: SB_ANON, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ partner_token: m[1] }),
+  })
+    .then(function (res) { return res.json().then(function (b) { return { ok: res.ok, body: b }; }); })
+    .then(function (r) {
+      if (!r.ok) return stop(r.body.error || 'This report could not load.');
+      status.hidden = true;
+      window.TWTMetrics.render(document.getElementById('app'), r.body);
+    })
+    .catch(function () { stop('The report service did not answer. Check your connection and reload.'); });
+})();
+</script>
+</body>
+</html>
