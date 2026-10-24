@@ -1,5 +1,5 @@
 {
-  "$comment": "What's new in Pocket Fishing Guide, for anglers and guides: the angler-facing cut of CHANGELOG.md, one entry per change a person can see or use. Newest first. `areas` is the map of the app's parts (id, label, a wb-icons icon, the part's home `href`, the path prefixes it `match`es); every entry names one in `area`. An optional `image` is a capture of the part on a phone (`src` under /assets/whats-new/, `alt` in plain words, `width`/`height` of the file, `page` the same-origin path it was captured from, an optional `selector`), made by web/scripts/capture-whats-new.mjs. Validated by scripts/validate-whats-new.js; mirrored at web/lib/data/whats-new.json. Rules: AGENTS.md (web) 'What's new'; runbook docs/runbooks/whats-new.md.",
+  "$comment": "What's new in Pocket Fishing Guide, for anglers and guides: the angler-facing cut of CHANGELOG.md, one entry per change a person can see or use. Newest first. `areas` is the map of the app's parts (id, label, a wb-icons icon, the part's home `href`, the path prefixes it `match`es); every entry names one in `area`. An optional `image` is a capture of the part on a phone (`src` under /assets/whats-new/, `alt` in plain words, `width`/`height` of the file, `page` the same-origin path it was captured from, an optional `selector`), made by web/scripts/capture-whats-new.mjs. Validated by scripts/validate-whats-new.js; mirrored at web/lib/data/whats-new.json (the bundle) and web/public/data/whats-new.json (served at /data/whats-new.json, read by talewatersandtides.com/news/). Rules: AGENTS.md (web) 'What's new'; runbook docs/runbooks/whats-new.md.",
   "areas": [
     {
       "id": "home",
@@ -149,6 +149,40 @@
   ],
   "entries": [
     {
+      "id": "2026-10-22-ned-rig-and-clouser",
+      "date": "2026-10-22",
+      "title": "A Ned rig and a Clouser Minnow join the lure picks",
+      "body": "Smallmouth bass pages now lead with the Ned rig, the light finesse jig Ozark stream anglers fish on spinning gear, and the Clouser Minnow joins the smallmouth and white bass picks for the fly rod. Each opens to why it works and the water it does best in.",
+      "link": "/species/smallmouth_bass",
+      "audience": "angler",
+      "area": "species"
+    },
+    {
+      "id": "2026-10-22-throw-this-in-season",
+      "date": "2026-10-22",
+      "title": "Throw this leads with the lures for the season",
+      "body": "On a water's Techniques tab each fish's lures are now ordered for the season the fish are in, read from today's water temperature. The ones tuned for it come first with an In season now tag, and a line under the heading says which season and what water temperature drove the order.",
+      "link": "/water/wb_calico_rock_area?tab=techniques",
+      "audience": "angler",
+      "area": "species"
+    },
+    {
+      "id": "2026-10-22-friday-read-on-phones",
+      "date": "2026-10-22",
+      "title": "The Friday read sign-up now shows on phones",
+      "body": "On a phone, a water's Signals tab now offers that water's read every Friday under the read, as it already did on a computer: type your email and tap Go. The Go button is gold again on both.",
+      "audience": "angler",
+      "area": "waters",
+      "image": {
+        "src": "/assets/whats-new/2026-10-22-friday-read-on-phones.webp",
+        "alt": "The Friday read sign-up on the White River below Bull Shoals Dam page on a phone: one email a week, stop any time with one tap, an email field and a gold Go button",
+        "width": 780,
+        "height": 588,
+        "page": "/water/wb_white_river_bull_shoals_tailwater",
+        "selector": ".pfg-wb-mobile .frs"
+      }
+    },
+    {
       "id": "2026-10-22-arkansas-whole-river-card",
       "date": "2026-10-22",
       "title": "The whole Arkansas River on one card, with a week of release",
@@ -167,10 +201,19 @@
       "area": "waters"
     },
     {
+      "id": "2026-10-22-map-gauges-live",
+      "date": "2026-10-22",
+      "title": "River gauges read live on the map",
+      "body": "The Live Waters Map's USGS gauges now show what the river is doing: each dot takes its level colour, turns amber while rising and shows its flow. Tap one for a small card with the flow, the change over two hours, and whether to wade or paddle.",
+      "link": "/map",
+      "audience": "angler",
+      "area": "map"
+    },
+    {
       "id": "2026-10-22-map-expand",
       "date": "2026-10-22",
       "title": "Make the map bigger",
-      "body": "On the Live Waters Map, a button beside the zoom controls fills your screen with the map, its card and its legend; press it again or Escape to come back. The dam card now gives its access points the full card width, so their names read whole.",
+      "body": "On the Live Waters Map, a button beside the zoom controls fills your screen with the map, its card and its legend; press it again or Escape to come back. The dam card's access points now read as a bar, an icon and one word, with the pulse time below.",
       "link": "/map",
       "audience": "angler",
       "area": "map"
@@ -424,7 +467,15 @@
       "title": "A water's Partner Spotlight is local",
       "body": "On a water's Signals tab, the Partner Spotlight now shows only the businesses that work that water, nearest first, with where they are. It stays put until you swipe.",
       "audience": "angler",
-      "area": "waters"
+      "area": "waters",
+      "image": {
+        "src": "/assets/whats-new/2026-10-21-water-spotlight.webp",
+        "alt": "The Partner Spotlight on a water page on a phone: an outfitter that works this water, how far down from the dam it is, and arrows to swipe to the next",
+        "width": 780,
+        "height": 863,
+        "page": "/water/wb_white_river_bull_shoals_tailwater",
+        "selector": ".pfg-wb-mobile .lp-partner-card"
+      }
     },
     {
       "id": "2026-10-21-calendar-months",

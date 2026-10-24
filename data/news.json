@@ -13,8 +13,8 @@
   "pfg_snapshot": {
     "url": "https://www.pocketfishinguide.com/data/whats-new.json",
     "source": "sirgaladad/pocket-fishing-guide data/whats-new.json (public copy at web/public/data/whats-new.json)",
-    "synced_at": "2026-10-22",
-    "sha256": "aa6901fb845c891be81698a288d869de36614c71a6a834303de46e68f98c78ad"
+    "synced_at": "2026-10-23",
+    "sha256": "be7b52d1fa53c4a0e9a279682151ece96d792d60e7421ddd49193a53f9da874c"
   },
   "issues": [
     {
