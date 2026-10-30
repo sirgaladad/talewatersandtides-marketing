@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Removed
+- `competitive-dashboard.html` — the public copy of the PFG competitive dashboard, frozen since early July. The watch now lives in the Pocket Fishing Guide repo as data (`data/competitive/`) behind the admin-only `/admin/competitive` page ([pocket-fishing-guide#1465](https://github.com/sirgaladad/pocket-fishing-guide/pull/1465)). Closes #83.
+
 ### Added
 - `/news/` — News and updates: the latest Friday note, what shipped in Pocket Fishing Guide (one card per angler-visible change, grouped by release day, the two newest days open and earlier days folded, pictures from the app where it has them), the numbers the lab watches with their source and read date (visitors per week as an inline SVG chart, what people open, where they come from), observations, Tale Waters and Tides updates, standing asks, and an RSS feed at `/news/feed.xml`. Everything renders from `data/news.json` and `data/pfg-whats-new.json` through `scripts/build-news.mjs`; `--check` runs in `html-lint.yml` so a stale page or a copy-rule break (exclamation mark, stock phrase, bracketed placeholder) fails CI. Files: `news/`, `data/`, `assets/css/news.css`, `scripts/build-news.mjs`, `docs/NEWS-AND-UPDATES.md`.
 - `.github/workflows/news-sync.yml` — Fridays 15:40 UTC and on demand: fetches the What's new snapshot from the app's public copy at `https://www.pocketfishinguide.com/data/whats-new.json` (no token; the PFG side serves `web/public/data/whats-new.json`), rebuilds the page, feed and lab block, runs the checks and opens a draft PR. Never pushes to `main`.
