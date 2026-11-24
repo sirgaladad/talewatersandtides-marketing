@@ -291,3 +291,48 @@
     url('/assets/neptune/scene-tailwater-dawn.webp') center / cover no-repeat;
 }
 .np-nextgrid .card { background: rgba(17, 35, 58, 0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+/* ---------- icons and short rows (less text, more picture) ---------- */
+.np-ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: var(--gold); }
+.np-ic-lg { width: 30px; height: 30px; stroke-width: 1.6; }
+.np-ic-xl { width: 46px; height: 46px; stroke-width: 1.4; margin-bottom: 18px; }
+.np-pills { list-style: none; margin: 0 0 28px; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.np-pills li { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 99px; border: 1px solid var(--line-3); background: rgba(13, 27, 42, 0.55); font-weight: 500; font-size: 15px; }
+.np-hero .lede { margin-bottom: 20px; font-size: clamp(19px, 1.9vw, 24px); }
+.np-track > div { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; }
+.np-track .np-ic-lg { grid-row: span 2; }
+.np-track p { margin: 4px 0 0; }
+.np-tile .h3 { font-size: 24px; }
+.np-rows { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; }
+.np-rows li { display: flex; align-items: center; gap: 12px; font-size: 16px; color: var(--text); }
+.np-r3card .np-rows { margin: 16px 24px 26px; padding: 0; }
+.np-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.np-duo b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: clamp(30px, 3vw, 40px); line-height: 1; color: var(--text); }
+.np-duo .np-out { color: var(--error); }
+.np-duo span { display: block; margin-top: 8px; font-size: 14px; color: var(--text-3); }
+.np-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.np-stats b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); line-height: 1; color: var(--gold); }
+.np-stats span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-3); }
+.np-panel p { font-size: 18px; }
+.np-flip { min-height: 200px; }
+.np-face .np-ic-lg { margin-bottom: 2px; }
+.np-back .np-ic { color: var(--gold-ink); }
+.np-bizic { display: flex; gap: 8px; margin-bottom: 6px; }
+.np-biz li > span:not(.np-bizic) { font: 400 12px var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.np-biz .np-bizic .np-ic { width: 22px; height: 22px; color: var(--text-2); }
+.np-doors .mono { display: flex; align-items: center; gap: 8px; }
+.np-doors li { grid-template-columns: 150px minmax(0, 1fr); align-items: center; }
+.np-nextgrid .card p:not(.label) { font-size: 16px; }
+
+/* ---------- thesis ---------- */
+.np-thesis { text-align: center; }
+.np-belief { font-family: var(--f-display); font-weight: 500; font-size: clamp(30px, 4.2vw, 56px); line-height: 1.1; letter-spacing: -0.015em; max-width: 980px; margin: 0 auto 48px; text-wrap: balance; }
+.np-pillars { list-style: none; margin: 0 auto; padding: 0; max-width: 1000px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 20px; }
+.np-pillars li { display: grid; justify-items: center; gap: 6px; padding: 28px 16px; border-radius: 14px; background: var(--panel); border: 1px solid rgba(245, 240, 232, 0.14); transition: transform 0.25s, border-color 0.25s; }
+.np-pillars li:hover { transform: translateY(-6px); border-color: var(--gold); }
+.np-pillars .np-ic-xl { margin-bottom: 8px; }
+.np-pillars b { font-family: var(--f-display); font-weight: 500; font-size: 24px; }
+.np-pillars span { font-size: 15px; color: var(--text-3); }
+.np-learning { margin: 40px 0 0; font: 400 13px var(--f-mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+
+.np-r3 .np-r3card > .label { margin: 20px 24px 8px; }
