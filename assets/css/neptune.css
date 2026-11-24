@@ -18,20 +18,10 @@
 .np-water {
   position: absolute; inset: 0; z-index: -1; overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(13, 27, 42, 0.9) 0%, rgba(13, 27, 42, 0.62) 55%, rgba(10, 22, 35, 0.96) 100%),
-    url('/assets/guiding/underwater-stage.webp') center bottom / cover no-repeat;
+    linear-gradient(90deg, rgba(13, 27, 42, 0.94) 0%, rgba(13, 27, 42, 0.8) 46%, rgba(13, 27, 42, 0.35) 100%),
+    linear-gradient(180deg, rgba(13, 27, 42, 0.5) 0%, rgba(13, 27, 42, 0) 40%, rgba(10, 22, 35, 0.95) 100%),
+    url('/assets/neptune/scene-tailwater-dawn.webp') center / cover no-repeat;
 }
-.np-fish { position: absolute; width: clamp(120px, 16vw, 230px); height: auto; opacity: 0.5; filter: saturate(0.85); will-change: transform; }
-.np-fish-1 { top: 62%; left: -20%; animation: np-swim 46s linear infinite; }
-.np-fish-2 { top: 78%; left: -20%; width: clamp(110px, 13vw, 190px); opacity: 0.38; animation: np-swim 64s linear infinite 9s; }
-.np-fish-3 { top: 18%; right: -20%; opacity: 0.3; animation: np-swim-back 58s linear infinite 4s; }
-.np-fish-4 { top: 44%; right: -20%; width: clamp(90px, 10vw, 150px); opacity: 0.32; animation: np-swim-back 72s linear infinite 20s; }
-@keyframes np-swim { from { transform: translateX(0) translateY(0); } 50% { transform: translateX(75vw) translateY(-14px); } to { transform: translateX(150vw) translateY(0); } }
-@keyframes np-swim-back { from { transform: translateX(0) scaleX(-1); } 50% { transform: translateX(-75vw) translateY(12px) scaleX(-1); } to { transform: translateX(-150vw) scaleX(-1); } }
-@media (prefers-reduced-motion: reduce) {
-  .np-fish-1 { left: 4%; } .np-fish-2 { left: 30%; } .np-fish-3 { right: 6%; } .np-fish-4 { display: none; }
-}
-
 .np-hero-in {
   display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 56px; align-items: center;
   padding-top: 84px; padding-bottom: 84px;
@@ -54,14 +44,6 @@
 .np-in[aria-pressed='true'] .np-in-long { display: inline; }
 .np-name-note { font-size: 14px; color: var(--text-3); }
 .np-name-note b { color: var(--gold); font-weight: 600; }
-
-.np-phone { margin: 0; justify-self: center; text-align: center; }
-.np-phone img {
-  width: min(300px, 70vw); height: auto; aspect-ratio: 9 / 16; object-fit: cover; object-position: top;
-  border-radius: 34px; border: 8px solid #06101b; outline: 1px solid var(--line-3);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); transform: rotate(2deg);
-}
-.np-phone figcaption { margin-top: 18px; }
 
 /* ---------- the loop ---------- */
 .np-loop { display: grid; grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); gap: 56px; align-items: center; }
@@ -146,18 +128,6 @@
   .np-flip[aria-pressed='true'] .np-back { display: flex; }
 }
 
-/* ---------- screenshots ---------- */
-.np-shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 32px; }
-.np-shots figure { margin: 0; }
-.np-shots img {
-  width: 100%; height: auto; max-width: 320px; margin: 0 auto; aspect-ratio: 9 / 15; object-fit: cover; object-position: top;
-  border-radius: 26px; border: 6px solid #06101b; outline: 1px solid var(--line-2);
-  transition: transform 0.35s;
-}
-.np-shots figure:hover img { transform: translateY(-8px); }
-.np-shots figcaption { max-width: 320px; margin: 18px auto 0; font-size: 15px; color: var(--text-2); }
-.np-shots figcaption b { display: block; font-family: var(--f-display); font-weight: 500; font-size: 20px; color: var(--text); margin-bottom: 4px; }
-
 /* ---------- R3 ---------- */
 .np-r3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px; }
 .np-r3 .card p { color: var(--text-2); font-size: 15px; margin: 10px 0 0; }
@@ -187,7 +157,7 @@
 
 /* ---------- print: the page doubles as the entry PDF ---------- */
 @media print {
-  .nav, .skip, .np-water, .np-toggle, .np-turn, .btn-row, .footer, .np-name-note { display: none !important; }
+  .nav, .skip, .np-water, .np-toggle, .np-turn, .btn-row, .footer, .np-name-note, .np-chips { display: none !important; }
   body.np { background: #fff; color: #111; }
   .np .h1, .np .h2, .np .h3, .np p, .np li, .np b, .np .lede, .np .muted, .np figcaption { color: #111 !important; }
   .np .eyebrow, .np .label, .np-proof b, .np-stat b { color: #7a5c14 !important; }
@@ -205,15 +175,93 @@
   section, article, figure { break-inside: avoid; }
 }
 
-/* ---------- phones: screenshots become a swipe row, not a tall stack ---------- */
-@media (max-width: 699px) {
-  .np-phone img { width: min(210px, 56vw); border-width: 6px; border-radius: 26px; }
-  .np-shots {
-    display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
-    margin: 0 calc(var(--gutter) * -1); padding: 4px var(--gutter) 16px; -webkit-overflow-scrolling: touch;
-  }
-  .np-shots figure { flex: 0 0 68%; scroll-snap-align: center; }
-  .np-shots img { max-width: none; border-radius: 22px; border-width: 5px; }
-  .np-shots figcaption { max-width: none; }
-  .np-shots figure:hover img { transform: none; }
+
+/* ---------- hero collage ---------- */
+.np-collage { position: relative; width: min(420px, 100%); aspect-ratio: 1; margin: 0 auto; }
+.np-collage img { position: absolute; height: auto; }
+.np-state { inset: 4% 4% auto 4%; width: 92%; border-radius: 50%; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); outline: 1px solid var(--line-3); }
+.np-tile { border-radius: 14px; outline: 1px solid var(--line-3); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6); }
+.np-tile-dam { width: 58%; left: -6%; bottom: -2%; transform: rotate(-4deg); animation: np-bob 7s ease-in-out infinite; }
+.np-tile-moon { width: 30%; right: -4%; top: 2%; transform: rotate(5deg); animation: np-bob 8s ease-in-out infinite 1.2s; }
+.np-buddy { width: 26%; right: 2%; bottom: 4%; border-radius: 50%; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55); }
+@keyframes np-bob { 50% { translate: 0 -8px; } }
+@media (max-width: 899px) { .np-collage { width: min(320px, 82%); margin-top: 8px; } }
+
+/* ---------- results extras ---------- */
+.np-chart-kpi { margin: 28px 0 0; font-size: 15px; color: var(--text-2); }
+.np-chart-kpi b { font-family: var(--f-display); font-weight: 500; font-size: clamp(34px, 4vw, 48px); color: var(--gold); margin-right: 10px; }
+.np-chart-story { margin-top: 10px; }
+.np-top { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+.np-rank { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; max-width: 760px; }
+.np-rank li { display: grid; grid-template-columns: minmax(120px, 220px) minmax(0, 1fr) 48px; gap: 14px; align-items: center; font-size: 15px; color: var(--text-2); }
+.np-rank i { display: block; height: 14px; width: var(--w); border-radius: 4px; background: linear-gradient(90deg, #1d756c, #4fb3a8); }
+.np-rank li:nth-child(2) i { background: linear-gradient(90deg, var(--gold), #e8c66a); }
+.np-rank li:nth-child(2) span, .np-rank li:nth-child(2) b { color: var(--gold); }
+.np-rank b { font-family: var(--f-mono); font-weight: 500; text-align: right; }
+.np-rank-note { max-width: 720px; margin: 22px 0 0; color: var(--text-2); }
+
+/* ---------- picture stages ---------- */
+.np-stages { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 24px; }
+.np-stage { margin: 0; border-radius: 14px; overflow: hidden; background: var(--panel); border: 1px solid rgba(245, 240, 232, 0.14); display: flex; flex-direction: column; }
+.np-stage > img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; transition: opacity 0.25s; }
+.np-stage > img.is-swap { opacity: 0; }
+.np-stage figcaption { padding: 18px 20px 22px; display: grid; gap: 12px; }
+.np-stage .label { margin: 0; color: var(--gold); }
+.np-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.np-chip { font: 500 14px var(--f-body); color: var(--text-2); background: transparent; border: 1px solid var(--line-3); border-radius: 99px; padding: 8px 14px; cursor: pointer; }
+.np-chip:hover { border-color: var(--gold); color: var(--text); }
+.np-chip[aria-pressed='true'] { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.np-cap { margin: 0; font-size: 15px; color: var(--text-2); min-height: 3em; }
+
+/* ---------- play: game, cards, tackle ---------- */
+.np-play { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 28px; }
+.np-playcard p { color: var(--text-2); font-size: 15px; margin: 8px 0 0; }
+.np-playcard .label { color: var(--gold); margin: 20px 0 6px; }
+.np-play-art { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; background: var(--navy-deep); border: 1px solid rgba(245, 240, 232, 0.14); display: grid; place-items: center; }
+.np-play-arcade .np-play-art { background: radial-gradient(circle at 50% 40%, #1b3350 0%, var(--navy-deep) 70%); }
+.np-play-arcade img { position: absolute; top: 6%; left: 50%; translate: -50% 0; height: 88%; width: auto; image-rendering: pixelated; border-radius: 6px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6); transition: transform 0.3s; }
+.np-play-arcade:hover img { transform: scale(1.04) rotate(-1.5deg); }
+.np-fan { background: radial-gradient(circle at 50% 100%, #173a4a 0%, var(--navy-deep) 70%); }
+.np-card {
+  position: absolute; width: 36%; aspect-ratio: 5 / 7; left: 32%; top: 14%; padding: 8% 4% 0; border-radius: 10px;
+  background: linear-gradient(180deg, var(--cream) 0%, #e6dcc6 100%); border: 3px solid var(--gold);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; align-items: center; gap: 8%;
+  transform-origin: 50% 120%; transition: transform 0.35s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
+.np-card img { width: 100%; height: auto; }
+.np-card b { font: 500 clamp(11px, 1.1vw, 14px) var(--f-display); color: var(--navy); text-align: center; }
+.np-card-1 { transform: translateX(-34%) rotate(-14deg); }
+.np-card-2 { transform: rotate(0deg); z-index: 1; }
+.np-card-3 { transform: translateX(34%) rotate(14deg); }
+.np-play-cards:hover .np-card-1 { transform: translateX(-52%) rotate(-20deg); }
+.np-play-cards:hover .np-card-2 { transform: translateY(-7%); }
+.np-play-cards:hover .np-card-3 { transform: translateX(52%) rotate(20deg); }
+.np-play-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.np-lure { position: absolute; width: 40%; height: auto; left: 6%; bottom: 4%; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.6)); transition: transform 0.4s; }
+.np-play-tackle:hover .np-lure { transform: rotate(-10deg) translateY(-6%); }
+
+/* ---------- local businesses ---------- */
+.np-partners {
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(10, 22, 35, 0.93) 0%, rgba(10, 22, 35, 0.8) 50%, rgba(10, 22, 35, 0.95) 100%),
+    url('/assets/neptune/scene-ozark-dusk.webp') center / cover no-repeat;
+}
+.np-biz { list-style: none; margin: 0 0 40px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px; }
+.np-biz li { display: grid; gap: 6px; padding: 20px; border-radius: var(--radius); background: rgba(17, 35, 58, 0.82); border: 1px solid var(--line-2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.np-biz b { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.2; }
+.np-biz span { font: 400 12px var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.np-biz em { font-style: normal; font-size: 14px; color: var(--text-3); }
+.np-funnel { display: grid; gap: 10px; max-width: 820px; }
+.np-fun { width: max(var(--w), 260px); max-width: 100%; display: flex; align-items: baseline; gap: 12px; padding: 14px 18px; border-radius: 8px; background: rgba(79, 179, 168, 0.22); border: 1px solid rgba(79, 179, 168, 0.5); }
+.np-fun b { font-family: var(--f-mono); font-weight: 500; font-size: 24px; }
+.np-fun span { font-size: 14px; color: var(--text-2); }
+.np-fun-gold { background: rgba(212, 168, 67, 0.2); border-color: var(--gold); }
+.np-fun-gold b { color: var(--gold); }
+
+/* ---------- then and now ---------- */
+.np-then-now { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: end; }
+.np-corey { margin: 0; }
+.np-corey img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line-2); }
+.np-corey figcaption { margin-top: 12px; }
+@media (max-width: 520px) { .np-then-now { grid-template-columns: 1fr; } }

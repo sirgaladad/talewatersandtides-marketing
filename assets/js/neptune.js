@@ -43,22 +43,31 @@
 
   /* ---- the tide chart ---- */
   var CHARTS = {
-    built: {
-      title: 'Changes merged per month, 2026',
-      story: 'Two surges: June, when the app moved to accounts and a database, and October, when clubs, events and the partner program shipped. 562 changes in one month, by one person with AI.',
-      rows: [['Feb', 65], ['Mar', 36], ['Apr', 10], ['May', 24], ['Jun', 327], ['Jul', 111], ['Aug', 11], ['Sep', 8], ['Oct', 562], ['Nov', 58]]
-    },
-    reached: {
+    reach: {
       title: 'U.S. visitors per month, 2026',
-      story: 'In-person outreach to guides and outfitters began on October 21. U.S. visitors went from 63 in September to 843 in the first 23 days of November.',
+      kpi: ['13x', 'more U.S. visitors in two months'],
+      story: 'The audience grew when the selling started. In-person visits to guides and outfitters began on October 21, with rack cards and QR codes left on the counter. U.S. visitors went from 63 in September to 843 in the first 23 days of November.',
       rows: [['Sep', 63], ['Oct', 425], ['Nov 1 to 23', 843]]
+    },
+    leads: {
+      title: 'Local business listings, October 19 to November 24',
+      kpi: ['22%', 'of people who opened a listing tapped to call, book or visit'],
+      story: 'A listing works like an ad with a measured result. Anglers saw a local business 2,566 times, opened the listing 334 times and tapped through to call, book or visit 73 times. Each business gets its own count.',
+      rows: [['Seen', 2566], ['Opened', 334], ['Call, book or visit', 73]]
+    },
+    output: {
+      title: 'Updates shipped per month, 2026',
+      kpi: ['1,212', 'updates shipped by one person with AI since February'],
+      story: 'This is the production a marketing team would need a studio for. Two surges: June, when the app added accounts, and October, when clubs, events and the partner program launched, 562 updates in a single month.',
+      rows: [['Feb', 65], ['Mar', 36], ['Apr', 10], ['May', 24], ['Jun', 327], ['Jul', 111], ['Aug', 11], ['Sep', 8], ['Oct', 562], ['Nov', 58]]
     }
   };
   var chart = document.getElementById('np-chart');
   var chartTitle = document.getElementById('np-chart-title');
   var chartStory = document.getElementById('np-chart-story');
   var chartSeen = false;
-  var current = 'built';
+  var current = 'reach';
+  var chartKpi = document.getElementById('np-chart-kpi');
 
   function fmt(n) { return n.toLocaleString('en-US'); }
 
@@ -80,6 +89,11 @@
     });
     if (chartTitle) chartTitle.textContent = c.title;
     if (chartStory) chartStory.textContent = c.story;
+    if (chartKpi) {
+      chartKpi.textContent = '';
+      var k = document.createElement('b'); k.textContent = c.kpi[0];
+      chartKpi.appendChild(k); chartKpi.appendChild(document.createTextNode(c.kpi[1]));
+    }
     if (chartSeen) grow();
   }
   function grow() {
@@ -94,6 +108,29 @@
     });
   });
   draw(current);
+
+  /* ---- picture stages: chips swap the scene and its caption ---- */
+  [].forEach.call(document.querySelectorAll('[data-pick]'), function (stage) {
+    var img = stage.querySelector('[data-pick-img]');
+    var cap = stage.querySelector('[data-pick-cap]');
+    var chips = [].slice.call(stage.querySelectorAll('.np-chip'));
+    chips.forEach(function (chip) {
+      // Warm the next image so the swap does not flash.
+      chip.addEventListener('pointerenter', function () { new Image().src = chip.getAttribute('data-src'); }, { once: true });
+      chip.addEventListener('click', function () {
+        chips.forEach(function (o) { o.setAttribute('aria-pressed', String(o === chip)); });
+        var apply = function () {
+          img.src = chip.getAttribute('data-src');
+          img.alt = chip.getAttribute('data-alt');
+          img.classList.remove('is-swap');
+        };
+        if (cap) cap.textContent = chip.getAttribute('data-cap');
+        if (reduce) { apply(); return; }
+        img.classList.add('is-swap');
+        setTimeout(apply, 220);
+      });
+    });
+  });
 
   /* ---- flip cards ---- */
   [].forEach.call(document.querySelectorAll('.np-flip'), function (card) {
