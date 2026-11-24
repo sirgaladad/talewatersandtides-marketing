@@ -46,19 +46,19 @@
     reach: {
       title: 'U.S. visitors per month, 2026',
       kpi: ['13x', 'more U.S. visitors in two months'],
-      story: 'The audience grew when the selling started. In-person visits to guides and outfitters began on October 21, with rack cards and QR codes left on the counter. U.S. visitors went from 63 in September to 843 in the first 23 days of November.',
+      story: 'The audience grew when in-person selling started on October 21.',
       rows: [['Sep', 63], ['Oct', 425], ['Nov 1 to 23', 843]]
     },
     leads: {
       title: 'Local business listings, October 19 to November 24',
       kpi: ['22%', 'of people who opened a listing tapped to call, book or visit'],
-      story: 'A listing works like an ad with a measured result. Anglers saw a local business 2,566 times, opened the listing 334 times and tapped through to call, book or visit 73 times. Each business gets its own count.',
+      story: 'A listing works like an ad with a measured result.',
       rows: [['Seen', 2566], ['Opened', 334], ['Call, book or visit', 73]]
     },
     output: {
       title: 'Updates shipped per month, 2026',
       kpi: ['1,212', 'updates shipped by one person with AI since February'],
-      story: 'This is the production a marketing team would need a studio for. Two surges: June, when the app added accounts, and October, when clubs, events and the partner program launched, 562 updates in a single month.',
+      story: 'Two surges: accounts in June, clubs and the partner program in October.',
       rows: [['Feb', 65], ['Mar', 36], ['Apr', 10], ['May', 24], ['Jun', 327], ['Jul', 111], ['Aug', 11], ['Sep', 8], ['Oct', 562], ['Nov', 58]]
     }
   };
