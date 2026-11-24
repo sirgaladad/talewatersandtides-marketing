@@ -132,11 +132,6 @@
 .np-r3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px; }
 .np-r3 .card p { color: var(--text-2); font-size: 15px; margin: 10px 0 0; }
 .np-r3 .card .label { margin: 0; color: var(--text-4); }
-.np-meter { height: 10px; border-radius: 99px; background: rgba(245, 240, 232, 0.1); margin: 14px 0 10px; overflow: hidden; }
-.np-meter i { display: block; height: 100%; width: var(--fill); border-radius: 99px; background: var(--gold); }
-.np-r3 .card .np-rate { font-family: var(--f-display); font-size: 24px; color: var(--text); margin: 0; }
-.np-r3 .card .np-stat { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; }
-.np-stat b { font-family: var(--f-mono); font-weight: 500; color: var(--gold); }
 .np-doors { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
 .np-doors li { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--text-2); }
 .np-doors .mono { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); padding-top: 4px; }
@@ -267,11 +262,32 @@
 .np-corey figcaption { margin-top: 12px; }
 @media (max-width: 520px) { .np-then-now { grid-template-columns: 1fr; } }
 
-/* ---------- limits ---------- */
-.np-limits { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 20px; }
-.np-limits .card { padding: 26px; }
-.np-limit-n { font-family: var(--f-mono); font-size: clamp(40px, 4.4vw, 56px); line-height: 1; color: var(--gold); margin: 0 0 18px; }
-.np-limits .card p:last-child { color: var(--text-2); font-size: 16px; margin: 10px 0 0; }
+/* ---------- closing claim ---------- */
 .np-claim { font-family: var(--f-display); font-size: clamp(24px, 2.8vw, 36px); line-height: 1.25; max-width: 980px; margin: 56px 0 0; color: var(--text-2); text-wrap: pretty; }
 .np-claim b { font-weight: 500; color: var(--text); }
 .np-claim-link { margin: 24px 0 0; font-size: 17px; }
+
+/* ---------- entry at a glance ---------- */
+.np-glance, .np-nextgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; }
+.np-glance .card, .np-nextgrid .card { padding: 28px; }
+.np-glance .label, .np-nextgrid .label, .np-r3card .label { color: var(--gold); margin: 0 0 10px; }
+.np-glance .card p:not(.label), .np-nextgrid .card p:not(.label) { color: var(--text-2); margin: 12px 0 0; }
+.np-who { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; color: var(--text-2); font-size: 16px; }
+.np-who b { color: var(--text); font-weight: 600; }
+
+/* ---------- R3 as capabilities ---------- */
+.np-r3card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.np-r3card > .label { margin: 22px 24px 8px; }
+.np-r3card > .h3 { margin: 0 24px; }
+.np-r3card ul { margin: 14px 24px 26px; padding-left: 18px; display: grid; gap: 9px; color: var(--text-2); font-size: 15px; }
+.np-r3art { width: 100%; height: 190px; object-fit: cover; }
+.np-r3art-pixel { object-position: 50% 22%; image-rendering: pixelated; }
+
+/* ---------- envision ---------- */
+.np-next {
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(10, 22, 35, 0.94) 0%, rgba(10, 22, 35, 0.82) 50%, rgba(10, 22, 35, 0.96) 100%),
+    url('/assets/neptune/scene-tailwater-dawn.webp') center / cover no-repeat;
+}
+.np-nextgrid .card { background: rgba(17, 35, 58, 0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
