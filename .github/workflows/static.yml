@@ -14,6 +14,8 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  # deploy-pages looks the artifact up through the Actions artifacts API.
+  actions: read
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -22,11 +24,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying static HTML
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # Two jobs, GitHub's own Pages starter shape. With upload and deploy in one job,
+  # deploy-pages@v5 asked for the artifact a fraction of a second after
+  # upload-pages-artifact@v5 finalized it and got an empty list (run 45436146739,
+  # actions/deploy-pages#451). The job boundary puts the upload fully behind the lookup.
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,6 +41,15 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
