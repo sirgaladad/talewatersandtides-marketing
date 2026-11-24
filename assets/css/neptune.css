@@ -420,3 +420,20 @@
   .np .np-who p, .np .np-hop p { color: #111 !important; }
   .np .np-hop .np-ic, .np .np-who .np-ic, .np .np-also .np-ic { color: var(--gold-ink) !important; }
 }
+
+/* ---------- mission: goal, then what happened ---------- */
+.np-goals { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.np-goals li { display: grid; justify-items: start; align-content: start; gap: 6px; padding: 26px 24px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line-2); }
+.np-goals .np-ic { color: var(--gold); margin-bottom: 6px; }
+.np-goals .label { color: var(--text-3); }
+.np-goal { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.25; }
+.np-arrow { color: var(--gold); font-size: 20px; line-height: 1; margin: 6px 0 2px; }
+.np-result { font-family: var(--f-mono); font-weight: 500; font-size: clamp(30px, 3vw, 40px); line-height: 1; color: var(--gold); }
+.np-goals li > span:last-child { font-size: 14px; color: var(--text-2); }
+#mission { padding-bottom: 0; }
+@media (max-width: 899px) { .np-goals { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .np-goals { grid-template-columns: 1fr; } }
+@media print {
+  .np-goals li { background: #fff !important; border-color: #ccc !important; break-inside: avoid; }
+  .np .np-result, .np .np-arrow, .np .np-goals .np-ic { color: var(--gold-ink) !important; }
+}
