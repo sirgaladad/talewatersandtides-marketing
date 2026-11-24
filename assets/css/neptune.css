@@ -167,6 +167,7 @@
   .np-ring { display: none; }
   .np-flip { min-height: 0; break-inside: avoid; }
   .np-face { position: static; transform: none !important; backface-visibility: visible; }
+  .np-front, .np-back, .np-flip[aria-pressed='true'] .np-front, .np-flip[aria-pressed='true'] .np-back { display: flex !important; }
   .np-back { border-top: 0 !important; }
   .np-table { display: block; }
   .np-table > summary { display: none; }
@@ -265,3 +266,12 @@
 .np-corey img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line-2); }
 .np-corey figcaption { margin-top: 12px; }
 @media (max-width: 520px) { .np-then-now { grid-template-columns: 1fr; } }
+
+/* ---------- limits ---------- */
+.np-limits { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 20px; }
+.np-limits .card { padding: 26px; }
+.np-limit-n { font-family: var(--f-mono); font-size: clamp(40px, 4.4vw, 56px); line-height: 1; color: var(--gold); margin: 0 0 18px; }
+.np-limits .card p:last-child { color: var(--text-2); font-size: 16px; margin: 10px 0 0; }
+.np-claim { font-family: var(--f-display); font-size: clamp(24px, 2.8vw, 36px); line-height: 1.25; max-width: 980px; margin: 56px 0 0; color: var(--text-2); text-wrap: pretty; }
+.np-claim b { font-weight: 500; color: var(--text); }
+.np-claim-link { margin: 24px 0 0; font-size: 17px; }
