@@ -375,4 +375,7 @@
   .np-sport { break-inside: avoid; }
   .np-sport-in .h3, .np-sport-in p { color: #fff !important; }
   .np-collage { display: none; }
+  /* both faces print, one under the other, not stacked in one grid cell */
+  .np-flip { display: block; }
+  .np-face { grid-area: auto; min-height: 0; transition: none !important; }
 }
