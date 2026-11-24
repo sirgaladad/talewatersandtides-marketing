@@ -36,4 +36,6 @@
 <symbol id="i-hook" viewBox="0 0 24 24"><circle cx="15" cy="4.5" r="1.5" /><path d="M15 6v9a4.5 4.5 0 01-9 0v-3l3 2.5" /></symbol>
 <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10l1.2-5h13.6L20 10" /><path d="M4 10a2.7 2.7 0 005.3 0 2.7 2.7 0 005.4 0A2.7 2.7 0 0020 10" /><path d="M5.5 12.5V20h13v-7.5" /><path d="M10 20v-4h4v4" /></symbol>
 <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M4 10v4h3l8 4V6l-8 4H4z" /><path d="M18 9.5a4 4 0 010 5" /><path d="M7 14l1 5h2.5l-1-4.5" /></symbol>
+<symbol id="i-mask" viewBox="0 0 24 24"><rect x="3" y="7" width="15" height="8" rx="3" /><path d="M10.5 15v1.5a2 2 0 01-4 0" /><path d="M18 9h1.5a1.5 1.5 0 011.5 1.5V4" /></symbol>
+<symbol id="i-kayak" viewBox="0 0 24 24"><path d="M2 14c3 2.5 17 2.5 20 0-3-2.5-17-2.5-20 0z" /><path d="M6 5l12 16" /><path d="M5 3.5l2.5 1.8L5.7 7.6z" /><path d="M19 22l-2.4-1.9 1.9-2.2z" /></symbol>
 </svg>

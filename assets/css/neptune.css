@@ -336,3 +336,29 @@
 .np-learning { margin: 40px 0 0; font: 400 13px var(--f-mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
 
 .np-r3 .np-r3card > .label { margin: 20px 24px 8px; }
+
+/* ---------- every sport on the water ---------- */
+.np-sports { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px; }
+.np-sport { position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3 / 4; border: 1px solid var(--line-2); isolation: isolate; }
+.np-sport > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: transform 0.5s; }
+.np-sport:hover > img { transform: scale(1.06); }
+.np-sport::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 22, 35, 0.15) 0%, rgba(10, 22, 35, 0.35) 45%, rgba(10, 22, 35, 0.94) 100%); }
+.np-sport-in { position: absolute; inset: auto 0 0 0; padding: 18px; display: grid; gap: 6px; justify-items: start; }
+.np-sport-in .h3 { font-size: 26px; }
+.np-sport-in p { margin: 0; font-size: 14px; color: var(--text-2); }
+.np-status { position: absolute; top: calc(-100% + 0px); font: 500 11px var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 10px; border-radius: 99px; }
+.np-sport .np-status { position: absolute; top: auto; bottom: calc(100% + 0px); left: 18px; }
+.np-live { background: var(--gold); color: var(--navy); }
+.np-started { background: #4fb3a8; color: var(--navy); }
+.np-next-chip { background: rgba(13, 27, 42, 0.7); color: var(--text); border: 1px solid var(--line-3); }
+.np-brandline { display: flex; gap: 22px; align-items: center; margin-top: 40px; padding: 26px 28px; border-radius: 14px; background: rgba(17, 35, 58, 0.82); border: 1px solid var(--gold); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.np-brandline .np-ic-xl { margin: 0; }
+.np-brandline p { margin: 0; font-size: 18px; color: var(--text-2); }
+.np-brandline b { color: var(--text); font-family: var(--f-display); font-weight: 500; font-size: 24px; display: block; margin-bottom: 4px; }
+@media (max-width: 520px) { .np-brandline { flex-direction: column; align-items: flex-start; } .np-sport { aspect-ratio: 16 / 10; } }
+
+/* ---------- closing line ---------- */
+.np-wave { font-family: var(--f-display); font-weight: 500; font-size: clamp(28px, 3.8vw, 52px); line-height: 1.12; letter-spacing: -0.015em; max-width: 1040px; margin: 64px 0 0; text-wrap: balance; }
+.np-tsunami { white-space: nowrap; }
+.np-tsunami b { font-weight: 500; color: var(--navy); background: var(--gold); border-radius: 8px; padding: 0 0.14em; margin-left: 0.04em; }
+.np-claim-sub { margin: 20px 0 0; font-size: 18px; color: var(--text-2); max-width: 720px; }
