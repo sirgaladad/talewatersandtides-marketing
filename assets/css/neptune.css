@@ -362,3 +362,17 @@
 .np-tsunami { white-space: nowrap; }
 .np-tsunami b { font-weight: 500; color: var(--navy); background: var(--gold); border-radius: 8px; padding: 0 0.14em; margin-left: 0.04em; }
 .np-claim-sub { margin: 20px 0 0; font-size: 18px; color: var(--text-2); max-width: 720px; }
+
+/* ---------- flip cards size themselves from the taller face ---------- */
+.np-flip { display: grid; }
+.np-face { position: static; grid-area: 1 / 1; min-height: 200px; }
+
+/* ---------- print: light surfaces for everything added after the first print block ---------- */
+@media print {
+  .np-next, .np-partners, .np-pillars li, .np-biz li, .np-brandline, .np-nextgrid .card, .np-fun, .np-stage, .np-play-art { background: #fff !important; border-color: #ccc !important; backdrop-filter: none !important; }
+  .np .np-wave, .np .np-claim-sub, .np .np-belief, .np .np-pillars b, .np .np-pillars span, .np .np-rows li, .np .np-biz b, .np .np-brandline b, .np .np-duo b, .np .np-stats span, .np .np-cap, .np .np-doors li { color: #111 !important; }
+  .np .np-ic, .np .np-stats b, .np .np-learning, .np .np-biz li > span, .np .np-doors .mono, .np .np-fun-gold b { color: #7a5c14 !important; }
+  .np-sport { break-inside: avoid; }
+  .np-sport-in .h3, .np-sport-in p { color: #fff !important; }
+  .np-collage { display: none; }
+}
