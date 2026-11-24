@@ -34,6 +34,11 @@ Tale Waters and Tides, LLC is an AI implementation practice in Little Rock, Arka
 | PFG changes on `/news/` and `/lab/` | Rendered from `data/pfg-whats-new.json` | Snapshot of `pocket-fishing-guide/data/whats-new.json`, fetched from `https://www.pocketfishinguide.com/data/whats-new.json` by `news-sync.yml` |
 | Numbers on `/news/` | Each carries its source and read date in `data/news.json` | Vercel Web Analytics (pfg), PFG database aggregates, read by hand or by the metrics function |
 | RaftUp | 30K+ users, $1M+ raised | Previous site |
+| `/neptune/` build history | Repo created 2026-02-10; 4,702 commits; 1,212 merged pull requests (by month: Feb 65, Mar 36, Apr 10, May 24, Jun 327, Jul 111, Aug 11, Sep 8, Oct 562, Nov to the 24th 58); 34 workflows; 214 what's-new entries | `pocket-fishing-guide` GitHub history and `data/whats-new.json`, read 2026-11-24 |
+| `/neptune/` app counts | 58 waters; 598,006 condition readings; 64 Friday Read editions; 52 partner listings, 6 published; 2,954 listing views, 460 opens; 25 buddy connections and 8 clubs (demo accounts excluded); 0 lifecycle sends; 29 confirmed accounts since sign-in opened 2026-06-07; 318 AGFC weekly reports (13,013 entries, 39 waters, from 2020-03-04) | PFG database aggregates, read 2026-11-24 |
+| `/neptune/` U.S. visitors | Sep 63, Oct 425, Nov 1 to 23 843 | Vercel Web Analytics (pfg), `country = US`, read 2026-11-24. All-country totals are not used: October and November carry bot traffic from outside the U.S. |
+| `/neptune/` Miami 2019 | Water taxi wait 2 hours (2018) to 45 minutes (2019); rides up 18 percent to nearly 60,000 | Marina Dock Age, 2019-03-04; Boating Industry, 2018-11-06 |
+| `/neptune/` fishing participation | 57.9 million anglers in 2024; 16.6 million left | RBFF 2025 Special Report on Fishing, via NMMA and SGB |
 | Social | LinkedIn `/in/boelkens`, TikTok `@coreytheideaguy`, Facebook `talewatersandtides`, GitHub `sirgaladad` | Owner-confirmed |
 | Booking link | `https://calendar.app.google/MmHqpVo9QuN93jYt8` (Google Calendar appointment page), used by every "Book a call" button | Owner-provided |
 | Analytics | Google Tag Manager container `GTM-TZVTR5TG` on every indexable page; the GA4 property lives inside the container (expected `G-929WWD4EZ4`, confirm in GA4 admin) | Commits `5cb2786`, `17a1348`; owner to confirm the property |
