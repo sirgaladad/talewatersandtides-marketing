@@ -355,40 +355,80 @@
 
 <section id="loop" class="wrap section" data-ga-section="np_loop">
   <div class="section-head">
-    <div><p class="eyebrow">How AI was used</p><h2 class="h2">One loop, three jobs for AI</h2></div>
-    <p class="muted np-head-note">Pick a stage. Each one feeds the next.</p>
+    <div><p class="eyebrow">How AI was used</p><h2 class="h2">Built together, every day</h2></div>
+    <p class="muted np-head-note">Tap a step to see who does what.</p>
   </div>
-  <div class="np-loop">
-    <div class="np-ring" role="tablist" aria-label="The loop">
-      <svg viewBox="0 0 320 320" aria-hidden="true" class="np-ring-svg">
-        <circle cx="160" cy="160" r="112" class="np-ring-track"/>
-        <circle cx="160" cy="160" r="112" class="np-ring-run" id="np-ring-run"/>
-        <path d="M160 34 l10 14 h-20z" class="np-ring-arrow"/>
-        <path d="M269 223 l-17 2 l10 -17z" class="np-ring-arrow"/>
-        <path d="M51 223 l7 -15 l10 17z" class="np-ring-arrow"/>
-      </svg>
-      <button type="button" role="tab" id="np-tab-build" class="np-node np-node-1" aria-selected="true" aria-controls="np-panel-build" data-ga="np_loop_build"><span class="np-node-n">01</span>Build</button>
-      <button type="button" role="tab" id="np-tab-market" class="np-node np-node-2" aria-selected="false" aria-controls="np-panel-market" tabindex="-1" data-ga="np_loop_market"><span class="np-node-n">02</span>Market</button>
-      <button type="button" role="tab" id="np-tab-teach" class="np-node np-node-3" aria-selected="false" aria-controls="np-panel-teach" tabindex="-1" data-ga="np_loop_teach"><span class="np-node-n">03</span>Teach</button>
-      <div class="np-ring-core"><span class="label">Fishing is the</span><b>common language</b></div>
+  <div class="np-cycle">
+    <ol class="np-steps" role="tablist" aria-label="How Corey and AI build the app">
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-research" aria-selected="true" aria-controls="np-say-research" data-ga="np_step_research"><span class="np-step-n">01</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-source"/></svg><b>Research</b></button></li>
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-fish" aria-selected="false" aria-controls="np-say-fish" tabindex="-1" data-ga="np_step_fish"><span class="np-step-n">02</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-hook"/></svg><b>Fish it</b></button></li>
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-sketch" aria-selected="false" aria-controls="np-say-sketch" tabindex="-1" data-ga="np_step_sketch"><span class="np-step-n">03</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-pen"/></svg><b>Sketch</b></button></li>
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-build" aria-selected="false" aria-controls="np-say-build" tabindex="-1" data-ga="np_step_build"><span class="np-step-n">04</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><b>Build</b></button></li>
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-ship" aria-selected="false" aria-controls="np-say-ship" tabindex="-1" data-ga="np_step_ship"><span class="np-step-n">05</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-check"/></svg><b>Ship</b></button></li>
+      <li role="presentation"><button type="button" role="tab" class="np-step" id="np-step-listen" aria-selected="false" aria-controls="np-say-listen" tabindex="-1" data-ga="np_step_listen"><span class="np-step-n">06</span><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-chat"/></svg><b>Listen</b></button></li>
+    </ol>
+    <p class="np-return"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-loop"/></svg><span>Feedback starts the next lap.</span></p>
+    <div class="np-say" id="np-say-research" role="tabpanel" aria-labelledby="np-step-research">
+      <p class="label np-say-step">01 Research</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Picks the question and the waters.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Reads reports, rules and other apps, then writes the scoping doc.</p></div>
     </div>
-    <div class="np-panels">
-      <article class="card np-panel" id="np-panel-build" role="tabpanel" aria-labelledby="np-tab-build">
-        <h3 class="h3">AI helps design and build it</h3>
-        <p>Agents scope, write and review. Corey approves every merge and fishes with it.</p>
-        <div class="np-stats"><div><b>4,702</b><span>commits</span></div><div><b>1,212</b><span>updates shipped</span></div><div><b>34</b><span>automated workflows</span></div></div>
-      </article>
-      <article class="card np-panel" id="np-panel-market" role="tabpanel" aria-labelledby="np-tab-market" hidden>
-        <h3 class="h3">AI helps promote it</h3>
-        <p>A weekly read for each water, and a listing built before the first sales call.</p>
-        <div class="np-stats"><div><b>64</b><span>Friday Read editions</span></div><div><b>52</b><span>listings pre-built</span></div><div><b>73</b><span>taps to call or book</span></div></div>
-      </article>
-      <article class="card np-panel" id="np-panel-teach" role="tabpanel" aria-labelledby="np-tab-teach" hidden>
-        <h3 class="h3">Then the app teaches AI</h3>
-        <p>Anglers see how the call for their lake was made, and where AI needs checking.</p>
-        <div class="np-stats"><div><b>30+</b><span>at a UA Little Rock meetup</span></div><div><b>9</b><span>episodes on the signals</span></div><div><b>2</b><span>workshop and podcast series</span></div></div>
-      </article>
+    <div class="np-say" id="np-say-fish" role="tabpanel" aria-labelledby="np-step-fish" hidden>
+      <p class="label np-say-step">02 Fish it</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Uses every release on the water.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Turns his notes and screenshots into issues.</p></div>
     </div>
+    <div class="np-say" id="np-say-sketch" role="tabpanel" aria-labelledby="np-step-sketch" hidden>
+      <p class="label np-say-step">03 Sketch</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Draws, mocks up and marks up screenshots.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Turns the sketch into a spec and a working screen.</p></div>
+    </div>
+    <div class="np-say" id="np-say-build" role="tabpanel" aria-labelledby="np-step-build" hidden>
+      <p class="label np-say-step">04 Build</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Reviews the change and plays with the preview.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Agents write the code, test it and review each other.</p></div>
+    </div>
+    <div class="np-say" id="np-say-ship" role="tabpanel" aria-labelledby="np-step-ship" hidden>
+      <p class="label np-say-step">05 Ship</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Sets the rules every change must pass.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Checks and a review bot gate the merge. Live the same day.</p></div>
+    </div>
+    <div class="np-say" id="np-say-listen" role="tabpanel" aria-labelledby="np-step-listen" hidden>
+      <p class="label np-say-step">06 Listen</p>
+      <div class="np-who np-who-corey"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">Corey</span><p>Talks with anglers, guides and outfitters.</p></div>
+      <div class="np-who np-who-ai"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">AI</span><p>Routes in-app feedback straight into the build.</p></div>
+    </div>
+  </div>
+  <div class="np-stats np-stats-wide">
+    <div><b>950</b><span>of 1,212 updates written by AI agents</span></div>
+    <div><b>50</b><span>research and scoping docs</span></div>
+    <div><b>1</b><span>person directing the work</span></div>
+  </div>
+
+  <div class="np-harness">
+    <div class="np-harness-head">
+      <p class="eyebrow">The feedback harness</p>
+      <h3 class="h3">Built to help build itself</h3>
+      <p class="muted">Feedback from the app goes straight into the build queue. Corey sets the rules every change must pass.</p>
+    </div>
+    <ol class="np-hops">
+      <li class="np-hop np-hop-live"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-chat"/></svg><span class="np-status np-live">Live</span><p>An angler taps Feedback in the app</p></li>
+      <li class="np-hop np-hop-live"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-report"/></svg><span class="np-status np-live">Live</span><p>It is saved and opened as an issue</p></li>
+      <li class="np-hop np-hop-live"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="np-status np-live">Live</span><p>An AI agent is assigned to scope it</p></li>
+      <li class="np-hop np-hop-next"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-branch"/></svg><span class="np-status np-next-chip">Next</span><p>The agent drafts the fix as a pull request</p></li>
+      <li class="np-hop np-hop-live"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-shield"/></svg><span class="np-status np-live">Live</span><p>Checks and a review bot pass, then it ships</p></li>
+    </ol>
+  </div>
+
+  <div class="np-also">
+    <article class="card">
+      <h3 class="h3"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-megaphone"/></svg> AI markets it</h3>
+      <div class="np-stats"><div><b>64</b><span>Friday Read editions</span></div><div><b>52</b><span>listings pre-built</span></div><div><b>73</b><span>taps to call or book</span></div></div>
+    </article>
+    <article class="card">
+      <h3 class="h3"><svg class="np-ic" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-learn"/></svg> Then it teaches AI</h3>
+      <div class="np-stats"><div><b>30+</b><span>at a UA Little Rock meetup</span></div><div><b>9</b><span>episodes on the signals</span></div><div><b>2</b><span>workshop and podcast series</span></div></div>
+    </article>
   </div>
 </section>
 
@@ -405,7 +445,7 @@
     </button>
     <button type="button" class="np-flip" aria-pressed="false" data-ga="np_flip_product">
       <span class="np-face np-front"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-sparkle"/></svg><span class="label">Product</span><b>AI agents write and review every change.</b><span class="np-turn">Who decides?</span></span>
-      <span class="np-face np-back"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">The person</span><b>Corey approves every merge.</b><span class="np-turn">Back</span></span>
+      <span class="np-face np-back"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-user"/></svg><span class="label">The person</span><b>Corey sets the work. Checks gate every merge.</b><span class="np-turn">Back</span></span>
     </button>
     <button type="button" class="np-flip" aria-pressed="false" data-ga="np_flip_read">
       <span class="np-face np-front"><svg class="np-ic np-ic-lg" aria-hidden="true"><use href="/assets/neptune/icons.svg#i-mail"/></svg><span class="label">Personal content</span><b>AI drafts the Friday Read for each water.</b><span class="np-turn">Who decides?</span></span>
