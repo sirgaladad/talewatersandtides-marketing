@@ -174,7 +174,7 @@
 .np-chip { font: 500 14px var(--f-body); color: var(--text-2); background: transparent; border: 1px solid var(--line-3); border-radius: 99px; padding: 8px 14px; cursor: pointer; }
 .np-chip:hover { border-color: var(--gold); color: var(--text); }
 .np-chip[aria-pressed='true'] { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.np-cap { margin: 0; font-size: 15px; color: var(--text-2); min-height: 3em; }
+.np-cap { margin: 0; font-size: 18px; color: var(--text); min-height: 1.6em; }
 
 /* ---------- play: game, cards, tackle ---------- */
 .np-play { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 28px; }
@@ -218,7 +218,7 @@
 .np-funnel { display: grid; gap: 10px; max-width: 820px; }
 .np-fun { width: max(var(--w), 260px); max-width: 100%; display: flex; align-items: baseline; gap: 12px; padding: 14px 18px; border-radius: 8px; background: var(--panel); border: 1px solid var(--line-3); }
 .np-fun b { font-family: var(--f-mono); font-weight: 500; font-size: 24px; }
-.np-fun span { font-size: 14px; color: var(--text-2); }
+.np-fun span { font-size: 16px; color: var(--text-2); }
 .np-fun-gold { background: rgba(212, 168, 67, 0.2); border-color: var(--gold); }
 .np-fun-gold b { color: var(--gold); }
 
@@ -279,7 +279,7 @@
 .np-duo span { display: block; margin-top: 8px; font-size: 14px; color: var(--text-3); }
 .np-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
 .np-stats b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); line-height: 1; color: var(--gold); }
-.np-stats span { display: block; margin-top: 8px; font-size: 13px; color: var(--text-3); }
+.np-stats span { display: block; margin-top: 8px; font-size: 15px; color: var(--text-3); }
 .np-flip { min-height: 200px; }
 .np-face .np-ic-lg { margin-bottom: 2px; }
 .np-back .np-ic { color: var(--gold-ink); }
@@ -356,7 +356,7 @@
   transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.25s;
 }
 .np-step b { font-family: var(--f-display); font-weight: 500; font-size: 19px; }
-.np-step-n { font: 400 11px var(--f-mono); letter-spacing: 0.18em; color: var(--text-4); }
+.np-step-n { font: 400 12px var(--f-mono); letter-spacing: 0.18em; color: var(--text-4); }
 .np-step .np-ic { color: var(--gold); }
 .np-step:hover { border-color: var(--gold); transform: translateY(-2px); }
 .np-step[aria-selected='true'] { background: var(--gold); border-color: var(--gold); color: var(--navy); }
@@ -385,7 +385,7 @@
 .np-hops { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; counter-reset: hop; }
 .np-hop { position: relative; display: grid; justify-items: start; align-content: start; gap: 10px; }
 .np-hop .np-ic { color: var(--gold); }
-.np-hop p { margin: 0; font-size: 15px; color: var(--text-2); }
+.np-hop p { margin: 0; font-size: 17px; color: var(--text-2); }
 .np-hop .np-status { position: static; }
 .np-hop:not(:last-child)::after { content: ''; position: absolute; top: 15px; left: 44px; right: -22px; height: 1px; background: var(--line-3); }
 .np-hop-next .np-ic { color: var(--text-3); }
@@ -429,7 +429,7 @@
 .np-goal { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.25; }
 .np-arrow { color: var(--gold); font-size: 20px; line-height: 1; margin: 6px 0 2px; }
 .np-result { font-family: var(--f-mono); font-weight: 500; font-size: clamp(30px, 3vw, 40px); line-height: 1; color: var(--gold); }
-.np-goals li > span:last-child { font-size: 14px; color: var(--text-2); }
+.np-goals li > span:last-child { font-size: 16px; color: var(--text-2); }
 @media (max-width: 899px) { .np-goals { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .np-goals { grid-template-columns: 1fr; } }
 @media print {
@@ -439,7 +439,7 @@
 
 /* ---------- AI at work for local businesses ---------- */
 .np-flow { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
-.np-flow li { position: relative; display: grid; gap: 10px; align-content: start; font-size: 15px; color: var(--text-2); }
+.np-flow li { position: relative; display: grid; gap: 10px; align-content: start; font-size: 17px; color: var(--text-2); }
 .np-flow .np-ic { color: var(--gold); }
 .np-flow li:not(:last-child)::after { content: ''; position: absolute; top: 15px; left: 44px; right: -18px; height: 1px; background: var(--line-3); }
 .np-also-one { grid-template-columns: 1fr; }
