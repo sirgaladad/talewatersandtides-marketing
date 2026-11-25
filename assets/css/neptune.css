@@ -467,4 +467,9 @@
   .np-spot-logo { width: 84px; height: 84px; }
   .np-biz-3 { grid-template-columns: 1fr; }
 }
-@media print { .np-spot-bg { opacity: 1; } .np-spot { break-inside: avoid; } }
+@media print {
+  /* the spotlight keeps its photo, so its caption stays light on the dark scrim */
+  .np-spot { break-inside: avoid; background: #0a1522 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .np .np-spot figcaption, .np .np-spot figcaption b, .np .np-spot .np-spot-ic { color: #f5f0e8 !important; }
+  .np .np-spot .label, .np .np-spot .np-spot-ic .np-ic { color: #d4a843 !important; }
+}
