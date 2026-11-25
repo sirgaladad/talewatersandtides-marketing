@@ -16,11 +16,8 @@
     });
   }
 
-  /* ---- the loop: three tabs on a ring ---- */
-  var tabs = [].slice.call(document.querySelectorAll('.np-node'));
-  var run = document.getElementById('np-ring-run');
-  // The gold arc covers one third of the ring and rotates to sit behind the selected node.
-  var ANGLES = [-150, -30, 90];
+  /* ---- the build cycle: six steps as tabs ---- */
+  var tabs = [].slice.call(document.querySelectorAll('.np-step'));
   function selectTab(i, focus) {
     tabs.forEach(function (t, n) {
       var on = n === i;
@@ -29,7 +26,6 @@
       var panel = document.getElementById(t.getAttribute('aria-controls'));
       if (panel) panel.hidden = !on;
     });
-    if (run) run.style.transform = 'rotate(' + ANGLES[i] + 'deg)';
     if (focus) tabs[i].focus();
   }
   tabs.forEach(function (t, i) {
@@ -38,8 +34,18 @@
       var k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); selectTab((i + 1) % tabs.length, true); }
       if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); selectTab((i + tabs.length - 1) % tabs.length, true); }
+      if (k === 'Home') { e.preventDefault(); selectTab(0, true); }
+      if (k === 'End') { e.preventDefault(); selectTab(tabs.length - 1, true); }
     });
   });
+  // One lap of light around the steps when the cycle first scrolls into view.
+  var cycle = document.querySelector('.np-cycle');
+  if (cycle && !reduce && 'IntersectionObserver' in window) {
+    var seen = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { cycle.classList.add('is-lap'); seen.disconnect(); } });
+    }, { threshold: 0.4 });
+    seen.observe(cycle);
+  }
 
   /* ---- the tide chart ---- */
   var CHARTS = {
