@@ -52,7 +52,7 @@
     reach: {
       title: 'U.S. visitors per month, 2026',
       kpi: ['13x', 'more U.S. visitors in two months'],
-      story: 'The audience grew when in-person selling started on October 21.',
+      story: 'Growth began with in-person selling on October 21.',
       rows: [['Sep', 63], ['Oct', 425], ['Nov 1 to 23', 843]]
     },
     leads: {
@@ -64,7 +64,7 @@
     output: {
       title: 'Updates shipped per month, 2026',
       kpi: ['1,212', 'updates shipped by one person with AI since February'],
-      story: 'Two surges: accounts in June, clubs and the partner program in October.',
+      story: 'Two surges: accounts in June, clubs in October.',
       rows: [['Feb', 65], ['Mar', 36], ['Apr', 10], ['May', 24], ['Jun', 327], ['Jul', 111], ['Aug', 11], ['Sep', 8], ['Oct', 562], ['Nov', 58]]
     }
   };
