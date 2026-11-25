@@ -446,3 +446,30 @@
 .np-nameline { font-family: var(--f-display); font-style: italic; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); text-align: center; margin: 48px auto 12px; max-width: 640px; }
 @media (max-width: 899px) { .np-flow { grid-template-columns: 1fr 1fr; } .np-flow li::after { display: none; } }
 @media print { .np .np-flow li, .np .np-nameline { color: #111 !important; } .np .np-flow .np-ic { color: var(--gold-ink) !important; } }
+
+/* ---------- outfitter spotlight (their brand assets) ---------- */
+.np-spot { position: relative; margin: 0 0 16px; display: grid; grid-template-columns: minmax(0, 1fr) 260px; min-height: 300px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); background: var(--navy-deep); }
+.np-spot-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.np-spot-in { position: relative; display: flex; align-items: flex-end; gap: 20px; padding: 28px; background: linear-gradient(0deg, rgba(8, 18, 30, 0.88) 0%, rgba(8, 18, 30, 0) 75%); }
+.np-spot-logo { width: 112px; height: 112px; border-radius: var(--radius); flex: none; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4); }
+.np-spot figcaption { display: grid; gap: 6px; }
+.np-spot figcaption b { font-family: var(--f-display); font-weight: 500; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; color: var(--text); }
+.np-spot .label { color: var(--gold); }
+.np-spot-ic { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 14px; color: var(--text-2); }
+.np-spot-ic .np-ic { color: var(--gold); margin-left: 8px; }
+.np-spot-ic .np-ic:first-child { margin-left: 0; }
+.np-spot-guide { position: relative; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.np-biz-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 760px) {
+  .np-spot { grid-template-columns: 1fr; }
+  .np-spot-guide { height: 260px; order: -1; }
+  .np-spot-in { padding: 20px; }
+  .np-spot-logo { width: 84px; height: 84px; }
+  .np-biz-3 { grid-template-columns: 1fr; }
+}
+@media print {
+  /* the spotlight keeps its photo, so its caption stays light on the dark scrim */
+  .np-spot { break-inside: avoid; background: #0a1522 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .np .np-spot figcaption, .np .np-spot figcaption b, .np .np-spot .np-spot-ic { color: #f5f0e8 !important; }
+  .np .np-spot .label, .np .np-spot .np-spot-ic .np-ic { color: #d4a843 !important; }
+}
