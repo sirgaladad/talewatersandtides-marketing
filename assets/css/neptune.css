@@ -430,10 +430,19 @@
 .np-arrow { color: var(--gold); font-size: 20px; line-height: 1; margin: 6px 0 2px; }
 .np-result { font-family: var(--f-mono); font-weight: 500; font-size: clamp(30px, 3vw, 40px); line-height: 1; color: var(--gold); }
 .np-goals li > span:last-child { font-size: 14px; color: var(--text-2); }
-#mission { padding-bottom: 0; }
 @media (max-width: 899px) { .np-goals { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .np-goals { grid-template-columns: 1fr; } }
 @media print {
   .np-goals li { background: #fff !important; border-color: #ccc !important; break-inside: avoid; }
   .np .np-result, .np .np-arrow, .np .np-goals .np-ic { color: var(--gold-ink) !important; }
 }
+
+/* ---------- AI at work for local businesses ---------- */
+.np-flow { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.np-flow li { position: relative; display: grid; gap: 10px; align-content: start; font-size: 15px; color: var(--text-2); }
+.np-flow .np-ic { color: var(--gold); }
+.np-flow li:not(:last-child)::after { content: ''; position: absolute; top: 15px; left: 44px; right: -18px; height: 1px; background: var(--line-3); }
+.np-also-one { grid-template-columns: 1fr; }
+.np-nameline { font-family: var(--f-display); font-style: italic; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); text-align: center; margin: 48px auto 12px; max-width: 640px; }
+@media (max-width: 899px) { .np-flow { grid-template-columns: 1fr 1fr; } .np-flow li::after { display: none; } }
+@media print { .np .np-flow li, .np .np-nameline { color: #111 !important; } .np .np-flow .np-ic { color: var(--gold-ink) !important; } }
